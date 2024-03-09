@@ -17,7 +17,9 @@ import {
   IconTwitter,
   IconArxiv,
   IconResearchGate,
+  IconSemanticScholar,
 } from '@components/icons';
+import IconGmail from './gmail';
 
 const Icon = ({ name }) => {
   switch (name) {
@@ -53,6 +55,10 @@ const Icon = ({ name }) => {
       return <IconArxiv />;
     case 'ResearchGate':
       return <IconResearchGate />;
+    case 'SemanticScholar':
+      return <IconSemanticScholar />;
+      case 'Gmail':
+        return <IconGmail />;
     default:
       return <IconExternal />;
   }
