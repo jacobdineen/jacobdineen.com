@@ -19,8 +19,8 @@ const StyledLoader = styled.div`
 
   .logo-wrapper {
     width: max-content;
-    max-width: 100px;
-    transition: var(--transition);
+    max-width: 50px; /* Adjust size as needed */
+    transition: opacity 0.3s ease-in-out;
     opacity: ${props => (props.isMounted ? 1 : 0)};
     svg {
       display: block;
@@ -29,8 +29,10 @@ const StyledLoader = styled.div`
       margin: 0 auto;
       fill: none;
       user-select: none;
-      #B {
-        opacity: 0;
+      path {
+        stroke: var(--green);
+        stroke-width: 2;
+        opacity: 1;
       }
     }
   }
@@ -44,35 +46,6 @@ const Loader = ({ finishLoading }) => {
       complete: () => finishLoading(),
     });
 
-    loader
-      .add({
-        targets: '#logo path',
-        delay: 300,
-        duration: 1500,
-        easing: 'easeInOutQuart',
-        strokeDashoffset: [anime.setDashoffset, 0],
-      })
-      .add({
-        targets: '#logo #B',
-        duration: 700,
-        easing: 'easeInOutQuart',
-        opacity: 1,
-      })
-      .add({
-        targets: '#logo',
-        delay: 500,
-        duration: 300,
-        easing: 'easeInOutQuart',
-        opacity: 0,
-        scale: 0.1,
-      })
-      .add({
-        targets: '.loader',
-        duration: 200,
-        easing: 'easeInOutQuart',
-        opacity: 0,
-        zIndex: -1,
-      });
   };
 
   useEffect(() => {

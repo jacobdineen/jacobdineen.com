@@ -6,7 +6,7 @@ import { GlobalStyle, theme } from '@styles';
 import About from '@components/sections/about';
 import { Link } from 'gatsby';
 
-const sections = ['research','projects', 'contact'];
+const sections = ['experience', 'contact'];
 
 const StyledContainer = styled.div`
   display: flex;

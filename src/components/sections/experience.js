@@ -259,7 +259,7 @@ const StyledTabPanel = styled.div`
   }
 `;
 
-const Research = () => {
+const Experience = () => {
   const data = useStaticQuery(graphql`
     query {
       jobs: allMarkdownRemark(
@@ -389,7 +389,7 @@ const Research = () => {
 
   const activeData = activeContentType === 'jobs' ? jobsData : activeContentType === 'rjobs' ? rjobsData : publicationsData;  
   return (
-    <StyledJobsSection id="research" ref={revealContainer}>
+    <StyledJobsSection id="experience" ref={revealContainer}>
     <h2 className="numbered-heading">A little about me</h2>
 
     {/* Toggle buttons for switching between jobs and publications */}
@@ -558,4 +558,4 @@ const Research = () => {
   );
 };
 
-export default Research;
+export default Experience;

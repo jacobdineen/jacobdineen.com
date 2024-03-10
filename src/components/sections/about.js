@@ -86,7 +86,7 @@ const StyledPic = styled.div`
     position: relative;
     width: 100%;
     border-radius: var(--border-radius);
-    background-color: var(--green);
+    background-color: var(--black-tint);
 
     &:hover,
     &:focus {
@@ -130,7 +130,7 @@ const StyledPic = styled.div`
     }
 
     &:after {
-      border: 2px solid var(--green);
+      border: 2px solid var(--blue);
       top: 14px;
       left: 14px;
       z-index: -1;
@@ -158,7 +158,6 @@ const About = () => {
 
       {/* Main content */}
       <StyledAboutSection id="about" ref={revealContainer}>
-        <h2 className="numbered-heading">About Me</h2>
         <div className="inner">
           <StyledText>
             <div>
@@ -168,11 +167,8 @@ const About = () => {
               <p>
                 I am passionate about Machine Learning & Deep Learning, but have focused mainly on eXplainable Artificial Intelligence and Multi-agent Systems academically, and Recommender Systems professionally. If interested, please reach out to me via one of the methods noted to the left (email/linkedin).
               </p>
-              <p>Here are a few technologies I’ve been working with recently:</p>
             </div>
-            <ul className="skills-list">
-              {skills && skills.map((skill, i) => <li key={i}>{skill}</li>)}
-            </ul>
+
           </StyledText>
           <StyledPic>
             <div className="wrapper">
@@ -196,7 +192,7 @@ const About = () => {
               <IconLinkedin />
             </a>
 
-        <a href="jdineen82194@gmail.com" aria-label="Gmail">
+        <a href="jdineen82194@gmail.com" aria-label="Gm">
           <IconGmail />
         </a>
       </SidebarIcons>
