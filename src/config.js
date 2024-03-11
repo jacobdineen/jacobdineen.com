@@ -1,14 +1,14 @@
 module.exports = {
-  email: 'brittany.chiang@gmail.com',
+  email: 'jdineen81294@gmail.com',
 
   socialMedia: [
     {
       name: 'GitHub',
-      url: 'https://github.com/bchiang7',
+      url: 'https://github.com/jacobdineen',
     },
     {
       name: 'Linkedin',
-      url: 'https://www.linkedin.com/in/bchiang7',
+      url: 'https://www.linkedin.com/in/jacobdineen/',
     },
   ],
 
@@ -18,8 +18,8 @@ module.exports = {
       url: '/#about',
     },
     {
-      name: 'Research',
-      url: '/#research',
+      name: 'Experience',
+      url: '/#experience',
     },
     {
       name: 'Experience',

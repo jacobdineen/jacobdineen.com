@@ -1,6 +1,6 @@
 ---
 date: '2024-12-28'
-title: 'Data Scientist'
+title: 'Software Engineer Co-op'
 company: 'Buffalo Check LLC'
 location: "Phoenix, AZ"
 range: '2015 - 2019'

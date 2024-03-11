@@ -4,9 +4,34 @@ import styled from 'styled-components';
 import { srConfig } from '@config';
 import sr from '@utils/sr';
 import { usePrefersReducedMotion } from '@hooks';
+import { IconGitHub, IconLinkedin, IconGmail, } from '@components/icons';
+
+const SidebarIcons = styled.aside`
+  position: fixed;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  a {
+    &:not(:last-child) {
+      margin-bottom: 20px;
+    }
+
+    svg {
+      fill: currentColor; // This will take the color from the 'color' property
+      width: 24px; // Adjust the size as needed
+      height: 24px; // Adjust the size as needed
+    }
+  }
+`;
+
+
 
 const StyledAboutSection = styled.section`
-  max-width: 900px;
+  max-width: 500px;
 
   .inner {
     display: grid;
@@ -19,36 +44,41 @@ const StyledAboutSection = styled.section`
   }
 `;
 const StyledText = styled.div`
-  ul.skills-list {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(140px, 200px));
-    grid-gap: 0 10px;
-    padding: 0;
-    margin: 20px 0 0 0;
-    overflow: hidden;
-    list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; // Align text to the left
+  padding: 0;
+  margin: 0;
+  
+  h1 {
+    font-size: 1.5rem; // Large font size for the main title
+    font-weight: 100; // Large font weight for the main title
+    font-family: var(--font-mono); // Monospace font for the main title
+    color: #ccd6f6; // Light text color
+    margin: 0 0 20px 0; // Spacing after the title
+  }
 
-    li {
-      position: relative;
-      margin-bottom: 10px;
-      padding-left: 20px;
-      font-family: var(--font-mono);
-      font-size: var(--fz-xs);
+  h2 {
+    font-size: 1.0rem; // Medium font size for the subtitle
+    font-weight: 100; // Medium font weight for the subtitle
+    font-family: var(--font-mono); // Monospace font for the main title
+    color: #8892b0; // Subdued text color
+    margin: 0 0 20px 0; // Spacing after the subtitle
+  }
 
-      &:before {
-        content: '▹';
-        position: absolute;
-        left: 0;
-        color: var(--green);
-        font-size: var(--fz-sm);
-        line-height: 12px;
-      }
-    }
+  p {
+    font-size: 1.0rem; // Medium font size for the subtitle
+    font-weight: 100; // Medium font weight for the subtitle
+    font-family: var(--font-mono); // Monospace font for the main title
+    color: #89CFEF; // Regular text color
+    max-width: 540px; // Max width for paragraph text, adjust as necessary
+    line-height: 1.5; // Line height for paragraph text
   }
 `;
 const StyledPic = styled.div`
   position: relative;
-  max-width: 300px;
+  max-width: 200px;
+  display: flex;
 
   @media (max-width: 768px) {
     margin: 50px auto 0;
@@ -61,7 +91,7 @@ const StyledPic = styled.div`
     position: relative;
     width: 100%;
     border-radius: var(--border-radius);
-    background-color: var(--green);
+    background-color: var(--black-tint);
 
     &:hover,
     &:focus {
@@ -105,7 +135,7 @@ const StyledPic = styled.div`
     }
 
     &:after {
-      border: 2px solid var(--green);
+      border: 2px solid var(--blue);
       top: 14px;
       left: 14px;
       z-index: -1;
@@ -125,46 +155,47 @@ const About = () => {
     sr.reveal(revealContainer.current, srConfig());
   }, []);
 
-  const skills = ['PyTorch', 'TensorFlow', 'scikit-learn', 'Keras', 'OpenCV', 'Natural Language Processing (NLP)', 'Deep Learning', 'Machine Learning Engineering'];
+  // const skills = ['PyTorch', 'TensorFlow', 'scikit-learn', 'Keras', 'OpenCV', 'Natural Language Processing (NLP)', 'Deep Learning', 'Machine Learning Engineering'];
 
   return (
-    <StyledAboutSection id="about" ref={revealContainer}>
-      <h2 className="">About Me</h2>
+    <>
+      {/* Sidebar with icons */}
 
-      <div className="inner">
-  
-    <StyledText>
-      <div>
-        <p>
-          My name is Jacob (Jake) Dineen and I am a PhD Student at Arizona State University, as part of SEFCOM.
-        </p>
-
-        <p>
-          I am passionate about Machine Learning & Deep Learning, but have focused mainly on eXplainable Artificial Intelligence and Multi-agent Systems academically, and Recommender Systems professionally. If interested, please reach out to me via one of the methods noted to the left (email/linkedin).
-        </p>
-
-        <p>Here are a few technologies I’ve been working with recently:</p>
-      </div>
-
-      <ul className="skills-list">
-        {skills && skills.map((skill, i) => <li key={i}>{skill}</li>)}
-      </ul>
-    </StyledText>
-
+      {/* Main content */}
+      <StyledAboutSection id="about" ref={revealContainer}>
+        <div className="inner">
         <StyledPic>
-          <div className="wrapper">
-            <StaticImage
-              className="img"
-              src="../../images/me.jpg"
-              width={500}
-              quality={95}
-              formats={['AUTO', 'WEBP', 'AVIF']}
-              alt="Headshot"
-            />
-          </div>
-        </StyledPic>
-      </div>
-    </StyledAboutSection>
+            <div className="wrapper">
+              <StaticImage
+                className="img"
+                src="../../images/me.jpg"
+                width={500}
+                quality={95}
+                formats={['AUTO', 'WEBP', 'AVIF']}
+                alt="Headshot"
+              />
+            </div>
+          </StyledPic>
+        <StyledText>
+        <h1>Jacob Dineen</h1>
+        <h2>Machine Learning Engineer & PhD Student</h2>
+      </StyledText>
+
+        </div>
+      </StyledAboutSection>
+      <SidebarIcons>
+            <a href="https://github.com/jacobdineen" aria-label="GitHub">
+              <IconGitHub />
+            </a>
+            <a href="https://www.linkedin.com/in/jacobdineen/" aria-label="Linkedin">
+              <IconLinkedin />
+            </a>
+
+        <a href="jdineen82194@gmail.com" aria-label="Gm">
+          <IconGmail />
+        </a>
+      </SidebarIcons>
+    </>
   );
 };
 

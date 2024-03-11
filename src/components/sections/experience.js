@@ -8,6 +8,51 @@ import sr from '@utils/sr';
 import { usePrefersReducedMotion } from '@hooks';
 import { Icon } from '@components/icons';
 
+
+const StyledText = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; // Align text to the left
+  padding: 0;
+  margin: 0;
+  
+  h1 {
+    font-size: 1.0rem; // Large font size for the main title
+    font-weight: 75; // Large font weight for the main title
+    font-family: var(--font-mono); // Monospace font for the main title
+    color: #ccd6f6; // Light text color
+    margin: 0 0 20px 0; // Spacing after the title
+  }
+
+`;
+
+const TechTagsContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; // This will center the tags
+  gap: 5px; // This creates a gap between the tags
+`;
+
+const TechTag = styled.a`
+  display: inline-flex; // Use inline-flex so that tags can be in a line and centered
+  align-items: center; // Center the content of the tag
+  margin: 1px; // Provides space between tags, adjust as necessary
+  padding: 1px 10px; // Adjust padding as needed
+  font-size: 0.75em; // Adjust the font size as needed
+  background-color: #112240; // The tag background color
+  color: #64ffda; // The tag text color
+  border-radius: 4px; // Rounded corners
+  text-decoration: none; // Remove underline from the link
+  transition: background-color 0.3s, color 0.3s; // Smooth transition for background and text color
+
+  &:hover, &:focus {
+    background-color: #0a192f; // Darker background color on hover
+    color: #fff; // White text color on hover
+  }
+`;
+
+
+
 const IconContainer = styled.div`
   display: flex;
   justify-content: center; // Centers the icons horizontally in the container
@@ -16,12 +61,6 @@ const IconContainer = styled.div`
   flex-wrap: wrap; // Allows the icons to wrap to the next line if the container is too narrow
 `;
 
-const IconSection = styled.section`
-  display: flex;
-  justify-content: center; // Centers the IconContainer in the section
-  align-items: center; // Vertically centers
-  width: 100%; // Takes the full width of its parent container
-`;
 
 const IconLink = styled.a`
   display: flex;
@@ -30,8 +69,8 @@ const IconLink = styled.a`
   color: inherit; // Adjust as needed
 
   svg {
-    width: 20px; // Adjust the icon size as needed
-    height: 20px; // Adjust the icon size as needed
+    width: 30px; // Adjust the icon size as needed
+    height: 30px; // Adjust the icon size as needed
     fill: currentColor; // This ensures the SVG icon inherits the color from the parent
   }
 `;
@@ -102,9 +141,8 @@ const StyledTabButton = styled.button`
   width: 100%;
   height: var(--tab-height);
   padding: 0 20px 2px;
-  border-left: 2px solid var(--lightest-navy);
+  border-left: 4px solid var(--lightest-navy);
   background-color: transparent;
-  color: ${({ isActive }) => (isActive ? 'var(--green)' : 'var(--slate)')};
   font-family: var(--font-mono);
   font-size: var(--fz-xs);
   text-align: left;
@@ -166,9 +204,9 @@ const StyledTabPanels = styled.div`
 `;
 
 const StyledTabPanel = styled.div`
-  width: 100%;
+  width: 159%;
   height: auto;
-  padding: 10px 5px;
+  padding: 10px 1px;
 
   ul {
     ${({ theme }) => theme.mixins.fancyList};
@@ -176,28 +214,45 @@ const StyledTabPanel = styled.div`
 
   h3 {
     margin-bottom: 2px;
-    font-size: var(--fz-xxl);
-    font-weight: 500;
+    font-size: var(--fz-s);
+    font-weight: 1000;
     line-height: 1.3;
 
     .company {
       color: var(--green);
+      font-size: 0.75em; // Adjust the font size as needed
+
     }
   }
 
-  .range {
-    margin-bottom: 25px;
-    color: var(--light-slate);
-    font-family: var(--font-mono);
-    font-size: var(--fz-xs);
+  .authors, .venue, .range {
+    font-family: 'Open Sans', sans-serif; // Example font family
+    font-size: 0.50em; // Adjust the font size as needed
+    color: #666; // Example text color
+    margin-bottom: 0.5rem;
+  }
+
+  ${IconContainer} {
+    display: flex;
+    justify-content: start; // Align icons to the start
+    gap: 10px; // Space between icons
+  }
+
+  ${IconLink} {
+    display: inline-flex;
+    align-items: center;
+    svg {
+      width: 24px; // Adjust icon size
+      height: 24px; // Adjust icon size
+    }
   }
 `;
 
-const Research = () => {
+const Experience = () => {
   const data = useStaticQuery(graphql`
     query {
       jobs: allMarkdownRemark(
-        filter: { fileAbsolutePath: { regex: "/content/research/" }, frontmatter: { collection: { ne: "publications" } } }
+        filter: { fileAbsolutePath: { regex: "/content/jobs/" } }
         sort: { fields: [frontmatter___date], order: DESC }
       ) {
         edges {
@@ -207,13 +262,37 @@ const Research = () => {
               company
               location
               range
+              technologies {
+                name
+                url
+              }
+            }
+            html
+          }
+        }
+      }
+      rjobs: allMarkdownRemark(
+        filter: { fileAbsolutePath: { regex: "/content/research/" } }
+        sort: { fields: [frontmatter___date], order: DESC }
+      ) {
+        edges {
+          node {
+            frontmatter {
+              title
+              company
+              location
+              range
+              technologies {
+                name
+                url
+              }
             }
             html
           }
         }
       }
       publications: allMarkdownRemark(
-        filter: { fileAbsolutePath: { regex: "/content/publications/" }, frontmatter: { collection: { eq: "publications" } } }
+        filter: { fileAbsolutePath: { regex: "/content/publications/" } }
         sort: { fields: [frontmatter___date], order: DESC }
       ) {
         edges {
@@ -227,6 +306,10 @@ const Research = () => {
               semanticscholar
               paperurl
               code
+              technologies {
+                name
+                url
+              }
             }
             html
           }
@@ -237,6 +320,7 @@ const Research = () => {
 
 
   const jobsData = data.jobs.edges;
+  const rjobsData = data.rjobs.edges;
   const publicationsData = data.publications.edges;
   const [activeTabId, setActiveTabId] = useState(0);
   const [tabFocus, setTabFocus] = useState(null);
@@ -271,24 +355,6 @@ const Research = () => {
   // Only re-run the effect if tabFocus changes
   useEffect(() => focusTab(), [tabFocus]);
 
-  const ToggleButtons = () => (
-    <div style={{ marginBottom: '20px', textAlign: 'center' }}> {/* Adjust styles as needed */}
-      <button
-        onClick={() => setActiveContentType('jobs')}
-        disabled={activeContentType === 'jobs'}
-        aria-pressed={activeContentType === 'jobs'}
-      >
-        Research Jobs
-      </button>
-      <button
-        onClick={() => setActiveContentType('publications')}
-        disabled={activeContentType === 'publications'}
-        aria-pressed={activeContentType === 'publications'}
-      >
-        Publications
-      </button>
-    </div>
-  );
   // Focus on tabs when using up & down arrow keys
   const onKeyDown = e => {
     switch (e.key) {
@@ -310,28 +376,76 @@ const Research = () => {
     }
   };
 
-  const activeData = activeContentType === 'jobs' ? jobsData : publicationsData;
+  const activeData = activeContentType === 'jobs' ? jobsData : activeContentType === 'rjobs' ? rjobsData : publicationsData;  
   return (
-    <StyledJobsSection id="research" ref={revealContainer}>
-      <h2 className="numbered-heading">Research Experience (Academic & Industry)</h2>
-  
-      {/* Toggle buttons for switching between jobs and publications */}
-      <div style={{ marginBottom: '20px', textAlign: 'center' }}>
-        <button
-          onClick={() => setActiveContentType('jobs')}
-          disabled={activeContentType === 'jobs'}
-          aria-pressed={activeContentType === 'jobs'}
-        >
-          Research Jobs
-        </button>
-        <button
-          onClick={() => setActiveContentType('publications')}
-          disabled={activeContentType === 'publications'}
-          aria-pressed={activeContentType === 'publications'}
-        >
-          Publications
-        </button>
-      </div>
+    <StyledJobsSection id="experience" ref={revealContainer}>
+      <StyledText>
+    <h1>I am passionate about Machine Learning & Deep Learning, but have focused mainly on eXplainable Artificial Intelligence and Multi-agent Systems academically, and Recommender Systems professionally. If interested, please reach out to me via one of the methods noted to the left (email/linkedin).</h1>
+    </StyledText>
+    <h2 className="numbered-heading">A little about me</h2>
+
+    {/* Toggle buttons for switching between jobs and publications */}
+    <div style={{ marginBottom: '20px', textAlign: 'center' }}>
+    <button
+        onClick={() => setActiveContentType('jobs')}
+        disabled={activeContentType === 'jobs'}
+        aria-pressed={activeContentType === 'jobs'}
+        style={{
+          backgroundColor: activeContentType === 'jobs' ? '#007bff' : '#f8f9fa',
+          color: activeContentType === 'jobs' ? '#ffffff' : '#212529',
+          border: '1px solid',
+          borderColor: activeContentType === 'jobs' ? '#007bff' : '#ced4da',
+          borderRadius: '20px',
+          padding: '10px 20px',
+          margin: '0 5px',
+          cursor: 'pointer',
+          transition: 'all 0.3s ease',
+          outline: 'none',
+        }}
+      >
+        Jobs
+      </button>
+
+      <button
+      onClick={() => setActiveContentType('rjobs')}
+      disabled={activeContentType === 'rjobs'}
+      aria-pressed={activeContentType === 'rjobs'}
+      style={{
+        backgroundColor: activeContentType === 'rjobs' ? '#007bff' : '#f8f9fa',
+        color: activeContentType === 'rjobs' ? '#ffffff' : '#212529',
+        border: '1px solid',
+        borderColor: activeContentType === 'rjobs' ? '#007bff' : '#ced4da',
+        borderRadius: '20px',
+        padding: '10px 20px',
+        margin: '0 5px',
+        cursor: 'pointer',
+        transition: 'all 0.3s ease',
+        outline: 'none',
+      }}
+    >
+      Research Jobs
+    </button>
+
+      <button
+        onClick={() => setActiveContentType('publications')}
+        disabled={activeContentType === 'publications'}
+        aria-pressed={activeContentType === 'publications'}
+        style={{
+          backgroundColor: activeContentType === 'publications' ? '#007bff' : '#f8f9fa',
+          color: activeContentType === 'publications' ? '#ffffff' : '#212529',
+          border: '1px solid',
+          borderColor: activeContentType === 'publications' ? '#007bff' : '#ced4da',
+          borderRadius: '20px',
+          padding: '10px 20px',
+          margin: '0 5px',
+          cursor: 'pointer',
+          transition: 'all 0.3s ease',
+          outline: 'none',
+        }}
+      >
+        Publications
+      </button>
+    </div>
   
       <div className="inner">
         <StyledTabList role="tablist" aria-label="Job tabs" onKeyDown={onKeyDown}>
@@ -340,8 +454,7 @@ const Research = () => {
           const { company, venue } = frontmatter; // Extract both company and venue from frontmatter
 
           // Determine the label based on the active content type
-          const label = activeContentType === 'jobs' ? company : venue;
-
+          const label = (activeContentType === 'jobs' || activeContentType === 'rjobs') ? company : venue;
           return (
             <StyledTabButton
               key={i}
@@ -364,7 +477,7 @@ const Research = () => {
         <StyledTabPanels>
           {activeData.map(({ node }, i) => {
             const { frontmatter, html } = node;
-            const { title, url, company, range } = frontmatter; // Adjust for publications
+            const { title,  range } = frontmatter; // Adjust for publications
   
             return (
               <CSSTransition
@@ -389,35 +502,44 @@ const Research = () => {
                   </h3>
   
                   {frontmatter.authors && <p className="authors">Authors: {frontmatter.authors}</p>}
-                  {frontmatter.venue && <p className="venue">Venue: {frontmatter.venue}</p>}
 
                   <IconContainer>
                   {frontmatter.arxiv && (
                     <IconLink href={frontmatter.arxiv} target="_blank" rel="noopener noreferrer" aria-label="arXiv">
-                      <Icon name="Arxiv" /> {/* No text if you want just the icon */}
+                      <Icon name="Arxiv" /> 
                     </IconLink>
                   )}
                   {frontmatter.semanticscholar && (
                     <IconLink href={frontmatter.semanticscholar} target="_blank" rel="noopener noreferrer" aria-label="Semantic Scholar">
-                      <Icon name="External" /> {/* No text if you want just the icon */}
+                      <Icon name="SemanticScholar" /> 
                     </IconLink>
                   )}
                   {frontmatter.paperurl && (
                     <IconLink href={frontmatter.paperurl} target="_blank" rel="noopener noreferrer" aria-label="Paper URL">
-                      <Icon name="External" /> {/* No text if you want just the icon */}
+                      <Icon name="External" /> 
                     </IconLink>
                   )}
                   {frontmatter.code && (
                     <IconLink href={frontmatter.code} target="_blank" rel="noopener noreferrer" aria-label="Code Repository">
-                      <Icon name="GitHub" /> {/* No text if you want just the icon */}
+                      <Icon name="GitHub" /> 
                     </IconLink>
                   )}
                 </IconContainer>
                   <p className="range">{range}</p>
-
+   
                   <div dangerouslySetInnerHTML={{ __html: html }} />
-  
-                  <div dangerouslySetInnerHTML={{ __html: html }} />
+                  <TechTagsContainer>
+                  {frontmatter.technologies && frontmatter.technologies.map((tech, index) => (
+                      <TechTag
+                        key={index}
+                        href={tech.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {tech.name}
+                      </TechTag>
+                    ))}
+                  </TechTagsContainer>
                 </StyledTabPanel>
               </CSSTransition>
             );
@@ -428,4 +550,4 @@ const Research = () => {
   );
 };
 
-export default Research;
+export default Experience;
