@@ -1,24 +1,31 @@
-import React, { useEffect, useRef } from 'react';
-import { StaticImage } from 'gatsby-plugin-image';
-import styled from 'styled-components';
-import { srConfig } from '@config';
-import sr from '@utils/sr';
-import { usePrefersReducedMotion } from '@hooks';
-import { IconGitHub, IconLinkedin, IconGmail, } from '@components/icons';
+import React, { useEffect, useRef } from "react"
+import { StaticImage } from "gatsby-plugin-image"
+import styled from "styled-components"
+import { srConfig } from "@config"
+import sr from "@utils/sr"
+import { usePrefersReducedMotion } from "@hooks"
+import {
+  IconGitHub,
+  IconLinkedin,
+  IconGmail,
+  IconGScholar,
+  IconSemanticScholar,
+} from "@components/icons"
 
 const SidebarIcons = styled.aside`
-  position: fixed;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
   display: flex;
-  flex-direction: column;
+  flex-direction: row; // Icons in a row below the picture
+  justify-content: center; // Center the icons
   align-items: center;
+  margin-top: 20px; // Space between the picture and icons
 
   a {
     &:not(:last-child) {
-      margin-bottom: 20px;
+      margin-right: 20px; // Spacing between icons
     }
+
+    // ... other styles ...
+  }
 
     svg {
       fill: currentColor; // This will take the color from the 'color' property
@@ -26,9 +33,7 @@ const SidebarIcons = styled.aside`
       height: 24px; // Adjust the size as needed
     }
   }
-`;
-
-
+`
 
 const StyledAboutSection = styled.section`
   max-width: 500px;
@@ -42,14 +47,14 @@ const StyledAboutSection = styled.section`
       display: block;
     }
   }
-`;
+`
 const StyledText = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start; // Align text to the left
   padding: 0;
   margin: 0;
-  
+
   h1 {
     font-size: 1.5rem; // Large font size for the main title
     font-weight: 100; // Large font weight for the main title
@@ -59,7 +64,7 @@ const StyledText = styled.div`
   }
 
   h2 {
-    font-size: 1.0rem; // Medium font size for the subtitle
+    font-size: 1rem; // Medium font size for the subtitle
     font-weight: 100; // Medium font weight for the subtitle
     font-family: var(--font-mono); // Monospace font for the main title
     color: #8892b0; // Subdued text color
@@ -67,14 +72,14 @@ const StyledText = styled.div`
   }
 
   p {
-    font-size: 1.0rem; // Medium font size for the subtitle
+    font-size: 1rem; // Medium font size for the subtitle
     font-weight: 100; // Medium font weight for the subtitle
     font-family: var(--font-mono); // Monospace font for the main title
-    color: #89CFEF; // Regular text color
+    color: #89cfef; // Regular text color
     max-width: 540px; // Max width for paragraph text, adjust as necessary
     line-height: 1.5; // Line height for paragraph text
   }
-`;
+`
 const StyledPic = styled.div`
   position: relative;
   max-width: 200px;
@@ -118,7 +123,7 @@ const StyledPic = styled.div`
 
     &:before,
     &:after {
-      content: '';
+      content: "";
       display: block;
       position: absolute;
       width: 100%;
@@ -141,19 +146,19 @@ const StyledPic = styled.div`
       z-index: -1;
     }
   }
-`;
+`
 
 const About = () => {
-  const revealContainer = useRef(null);
-  const prefersReducedMotion = usePrefersReducedMotion();
+  const revealContainer = useRef(null)
+  const prefersReducedMotion = usePrefersReducedMotion()
 
   useEffect(() => {
     if (prefersReducedMotion) {
-      return;
+      return
     }
 
-    sr.reveal(revealContainer.current, srConfig());
-  }, []);
+    sr.reveal(revealContainer.current, srConfig())
+  }, [])
 
   // const skills = ['PyTorch', 'TensorFlow', 'scikit-learn', 'Keras', 'OpenCV', 'Natural Language Processing (NLP)', 'Deep Learning', 'Machine Learning Engineering'];
 
@@ -164,39 +169,53 @@ const About = () => {
       {/* Main content */}
       <StyledAboutSection id="about" ref={revealContainer}>
         <div className="inner">
-        <StyledPic>
+          <StyledPic>
             <div className="wrapper">
               <StaticImage
                 className="img"
                 src="../../images/me.jpg"
                 width={500}
                 quality={95}
-                formats={['AUTO', 'WEBP', 'AVIF']}
+                formats={["AUTO", "WEBP", "AVIF"]}
                 alt="Headshot"
               />
             </div>
           </StyledPic>
-        <StyledText>
-        <h1>Jacob Dineen</h1>
-        <h2>Machine Learning Engineer & PhD Student</h2>
-      </StyledText>
+          <StyledText>
+            <h1>Jacob Dineen</h1>
+            <h2>Machine Learning Engineer & PhD Student</h2>
+            <SidebarIcons>
+              <a href="https://github.com/jacobdineen" aria-label="GitHub">
+                <IconGitHub />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/jacobdineen/"
+                aria-label="Linkedin"
+              >
+                <IconLinkedin />
+              </a>
+              <a
+                href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiDv7jF5-yEAxXDIEQIHQzsCHEQFnoECBIQAQ&url=https%3A%2F%2Fscholar.google.com%2Fcitations%3Fuser%3DWKurvcoAAAAJ%26hl%3Den&usg=AOvVaw329Uar6xNQ9B1keI_PT4Oc&opi=89978449"
+                aria-label="Google Scholar"
+              >
+                <IconGScholar />
+              </a>
+              <a
+                href="https://www.semanticscholar.org/author/Jacob-Dineen/1576998836"
+                aria-label="Semantic Scholar"
+              >
+                <IconSemanticScholar />
+              </a>
 
+              <a href="mailto:jdineen82194@gmail.com" aria-label="Send email">
+                <IconGmail />
+              </a>
+            </SidebarIcons>
+          </StyledText>
         </div>
       </StyledAboutSection>
-      <SidebarIcons>
-            <a href="https://github.com/jacobdineen" aria-label="GitHub">
-              <IconGitHub />
-            </a>
-            <a href="https://www.linkedin.com/in/jacobdineen/" aria-label="Linkedin">
-              <IconLinkedin />
-            </a>
-
-        <a href="jdineen82194@gmail.com" aria-label="Gm">
-          <IconGmail />
-        </a>
-      </SidebarIcons>
     </>
-  );
-};
+  )
+}
 
-export default About;
+export default About
