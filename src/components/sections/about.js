@@ -14,24 +14,22 @@ import {
 
 const SidebarIcons = styled.aside`
   display: flex;
-  flex-direction: row; // Icons in a row below the picture
-  justify-content: center; // Center the icons
-  align-items: center;
+  flex-direction: row; // Keep icons in a row
+  justify-content: center; // Center icons horizontally
+  align-items: center; // Center icons vertically
+  width: 100%; // Ensure the container takes full width
   margin-top: 20px; // Space between the picture and icons
 
   a {
     &:not(:last-child) {
       margin-right: 20px; // Spacing between icons
     }
-
-    // ... other styles ...
   }
 
-    svg {
-      fill: currentColor; // This will take the color from the 'color' property
-      width: 24px; // Adjust the size as needed
-      height: 24px; // Adjust the size as needed
-    }
+  svg {
+    fill: currentColor;
+    width: 24px;
+    height: 24px;
   }
 `
 

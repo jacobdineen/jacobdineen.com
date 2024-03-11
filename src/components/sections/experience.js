@@ -142,6 +142,17 @@ const StyledJobsSection = styled.section`
       font-size: 0.64rem; // Set a different font size for list items
     }
   }
+  @media (max-width: 768px) {
+    font-size: var(
+      --fz-xs
+    ); // You can have a slightly larger font size for small tablets if needed
+  }
+
+  @media (max-width: 600px) {
+    margin-left: 0; // Remove the margin for mobile screens
+    padding: 0 10px; // Add some padding on the sides for mobile screens
+    font-size: var(--fz-sm); // Adjust font size for readability on mobile
+  }
 `
 
 const StyledTabList = styled.div`
@@ -198,15 +209,15 @@ const StyledTabButton = styled.button`
   text-align: left;
 
   @media (max-width: 768px) {
-    padding: 0 15px 2px;
+    font-size: var(
+      --fz-xs
+    ); // You can have a slightly larger font size for small tablets if needed
   }
+
   @media (max-width: 600px) {
-    ${({ theme }) => theme.mixins.flexCenter};
-    min-width: 120px;
-    padding: 0 px;
-    border-left: 0;
-    border-bottom: 2px solid var(--lightest-navy);
-    text-align: center;
+    margin-left: 0; // Remove the margin for mobile screens
+    padding: 0 10px; // Add some padding on the sides for mobile screens
+    font-size: var(--fz-sm); // Adjust font size for readability on mobile
   }
 
   &:hover,
@@ -230,38 +241,55 @@ const StyledHighlight = styled.div`
   transition: transform 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
   transition-delay: 0.1s;
 
-  @media (max-width: 600px) {
-    top: auto;
-    bottom: 0;
-    width: 100%;
-    max-width: var(--tab-width);
-    height: 2px;
-    margin-left: 50px;
-    transform: translateX(
-      calc(${({ activeTabId }) => activeTabId} * var(--tab-width))
-    );
+  @media (max-width: 768px) {
+    font-size: var(--fz-xs); // You can have a slightly larger font size for small tablets if needed
   }
-  @media (max-width: 480px) {
-    margin-left: 25px;
+
+  @media (max-width: 600px) {
+    margin-left: 0; // Remove the margin for mobile screens
+    padding: 0 10px; // Add some padding on the sides for mobile screens
+    font-size: var(--fz-sm); // Adjust font size for readability on mobile
+  }
   }
 `
 
 const StyledTabPanels = styled.div`
   position: relative;
-  width: 100%;
-  margin-left: 20px;
-  font-size: var(--fz-xss);
-  font-family: var(--font-mono);
+  width: 100%; // Ensure it takes up the full width
+  margin-left: 20px; // Space from the sidebar or any adjacent content
+  font-size: var(
+    --fz-xss
+  ); // Small font size, make sure it's defined in your variables
+  font-family: var(--font-mono); // Monospace font, also should be defined
+
+  @media (max-width: 768px) {
+    font-size: var(
+      --fz-xs
+    ); // You can have a slightly larger font size for small tablets if needed
+  }
+
   @media (max-width: 600px) {
-    margin-left: 0;
+    margin-left: 0; // Remove the margin for mobile screens
+    padding: 0 10px; // Add some padding on the sides for mobile screens
+    font-size: var(--fz-sm); // Adjust font size for readability on mobile
   }
 `
 
 const StyledTabPanel = styled.div`
-  width: 159%;
+  width: 100%;
   height: auto;
   padding: 10px 1px;
+  @media (max-width: 768px) {
+    font-size: var(
+      --fz-xs
+    ); // You can have a slightly larger font size for small tablets if needed
+  }
 
+  @media (max-width: 600px) {
+    margin-left: 0; // Remove the margin for mobile screens
+    padding: 0 10px; // Add some padding on the sides for mobile screens
+    font-size: var(--fz-sm); // Adjust font size for readability on mobile
+  }
   // ul {
   //   ${({ theme }) => theme.mixins.fancyList};
 
