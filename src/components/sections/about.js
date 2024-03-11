@@ -31,7 +31,7 @@ const SidebarIcons = styled.aside`
 
 
 const StyledAboutSection = styled.section`
-  max-width: 900px;
+  max-width: 500px;
 
   .inner {
     display: grid;
@@ -44,36 +44,39 @@ const StyledAboutSection = styled.section`
   }
 `;
 const StyledText = styled.div`
-  ul.skills-list {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(140px, 200px));
-    grid-gap: 0 10px;
-    padding: 0;
-    margin: 20px 0 0 0;
-    overflow: hidden;
-    list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; // Align text to the left
+  padding: 0;
+  margin: 0;
+  
+  h1 {
+    font-size: 1.5rem; // Large font size for the main title
+    font-weight: 100; // Large font weight for the main title
+    font-family: var(--font-mono); // Monospace font for the main title
+    color: #ccd6f6; // Light text color
+    margin: 0 0 20px 0; // Spacing after the title
+  }
 
-    li {
-      position: relative;
-      margin-bottom: 10px;
-      padding-left: 20px;
-      font-family: var(--font-mono);
-      font-size: var(--fz-xs);
+  h2 {
+    font-size: 1.0rem; // Medium font size for the subtitle
+    font-weight: 100; // Medium font weight for the subtitle
+    font-family: var(--font-mono); // Monospace font for the main title
+    color: #8892b0; // Subdued text color
+    margin: 0 0 20px 0; // Spacing after the subtitle
+  }
 
-      &:before {
-        content: '▹';
-        position: absolute;
-        left: 0;
-        color: var(--green);
-        font-size: var(--fz-sm);
-        line-height: 12px;
-      }
-    }
+  p {
+    font-size: 1rem; // Regular font size for the paragraph
+    color: #89CFEF; // Regular text color
+    max-width: 540px; // Max width for paragraph text, adjust as necessary
+    line-height: 1.5; // Line height for paragraph text
   }
 `;
 const StyledPic = styled.div`
   position: relative;
-  max-width: 300px;
+  max-width: 200px;
+  display: flex;
 
   @media (max-width: 768px) {
     margin: 50px auto 0;
@@ -150,7 +153,7 @@ const About = () => {
     sr.reveal(revealContainer.current, srConfig());
   }, []);
 
-  const skills = ['PyTorch', 'TensorFlow', 'scikit-learn', 'Keras', 'OpenCV', 'Natural Language Processing (NLP)', 'Deep Learning', 'Machine Learning Engineering'];
+  // const skills = ['PyTorch', 'TensorFlow', 'scikit-learn', 'Keras', 'OpenCV', 'Natural Language Processing (NLP)', 'Deep Learning', 'Machine Learning Engineering'];
 
   return (
     <>
@@ -159,18 +162,7 @@ const About = () => {
       {/* Main content */}
       <StyledAboutSection id="about" ref={revealContainer}>
         <div className="inner">
-          <StyledText>
-            <div>
-              <p>
-                My name is Jacob (Jake) Dineen and I am a PhD Student at Arizona State University, as part of SEFCOM.
-              </p>
-              <p>
-                I am passionate about Machine Learning & Deep Learning, but have focused mainly on eXplainable Artificial Intelligence and Multi-agent Systems academically, and Recommender Systems professionally. If interested, please reach out to me via one of the methods noted to the left (email/linkedin).
-              </p>
-            </div>
-
-          </StyledText>
-          <StyledPic>
+        <StyledPic>
             <div className="wrapper">
               <StaticImage
                 className="img"
@@ -182,6 +174,11 @@ const About = () => {
               />
             </div>
           </StyledPic>
+        <StyledText>
+        <h1>Jacob Dineen</h1>
+        <h2>Machine Learning Engineer & PhD Student</h2>
+      </StyledText>
+
         </div>
       </StyledAboutSection>
       <SidebarIcons>

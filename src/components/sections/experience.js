@@ -9,19 +9,36 @@ import { usePrefersReducedMotion } from '@hooks';
 import { Icon } from '@components/icons';
 
 
+const StyledText = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; // Align text to the left
+  padding: 0;
+  margin: 0;
+  
+  h1 {
+    font-size: 1.0rem; // Large font size for the main title
+    font-weight: 75; // Large font weight for the main title
+    font-family: var(--font-mono); // Monospace font for the main title
+    color: #ccd6f6; // Light text color
+    margin: 0 0 20px 0; // Spacing after the title
+  }
+
+`;
+
 const TechTagsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center; // This will center the tags
-  gap: 10px; // This creates a gap between the tags
+  gap: 5px; // This creates a gap between the tags
 `;
 
 const TechTag = styled.a`
   display: inline-flex; // Use inline-flex so that tags can be in a line and centered
   align-items: center; // Center the content of the tag
-  margin: 5px; // Provides space between tags, adjust as necessary
-  padding: 5px 15px; // Adjust padding as needed
-  font-size: 0.8em; // Adjust the font size as needed
+  margin: 1px; // Provides space between tags, adjust as necessary
+  padding: 1px 10px; // Adjust padding as needed
+  font-size: 0.75em; // Adjust the font size as needed
   background-color: #112240; // The tag background color
   color: #64ffda; // The tag text color
   border-radius: 4px; // Rounded corners
@@ -34,30 +51,7 @@ const TechTag = styled.a`
   }
 `;
 
-const ButtonContainer = styled.div`
-  margin-bottom: 20px;
-  text-align: center;
-`;
 
-const ToggleButton = styled.button`
-  background-color: ${props => props.isActive ? '#007bff' : '#f8f9fa'};
-  color: ${props => props.isActive ? '#ffffff' : '#212529'};
-  border: 1px solid ${props => props.isActive ? '#007bff' : '#ced4da'};
-  padding: 8px 16px;
-  margin: 0 5px;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: ${props => props.isActive ? '#0056b3' : '#e2e6ea'};
-  }
-
-  &:disabled {
-    opacity: 0.65;
-    cursor: not-allowed;
-  }
-`;
 
 const IconContainer = styled.div`
   display: flex;
@@ -67,12 +61,6 @@ const IconContainer = styled.div`
   flex-wrap: wrap; // Allows the icons to wrap to the next line if the container is too narrow
 `;
 
-const IconSection = styled.section`
-  display: flex;
-  justify-content: center; // Centers the IconContainer in the section
-  align-items: center; // Vertically centers
-  width: 100%; // Takes the full width of its parent container
-`;
 
 const IconLink = styled.a`
   display: flex;
@@ -153,9 +141,8 @@ const StyledTabButton = styled.button`
   width: 100%;
   height: var(--tab-height);
   padding: 0 20px 2px;
-  border-left: 2px solid var(--lightest-navy);
+  border-left: 4px solid var(--lightest-navy);
   background-color: transparent;
-  color: ${({ isActive }) => (isActive ? 'var(--green)' : 'var(--slate)')};
   font-family: var(--font-mono);
   font-size: var(--fz-xs);
   text-align: left;
@@ -217,9 +204,9 @@ const StyledTabPanels = styled.div`
 `;
 
 const StyledTabPanel = styled.div`
-  width: 100%;
+  width: 159%;
   height: auto;
-  padding: 10px 5px;
+  padding: 10px 1px;
 
   ul {
     ${({ theme }) => theme.mixins.fancyList};
@@ -227,18 +214,20 @@ const StyledTabPanel = styled.div`
 
   h3 {
     margin-bottom: 2px;
-    font-size: var(--fz-xxl);
-    font-weight: 500;
+    font-size: var(--fz-s);
+    font-weight: 1000;
     line-height: 1.3;
 
     .company {
       color: var(--green);
+      font-size: 0.75em; // Adjust the font size as needed
+
     }
   }
 
   .authors, .venue, .range {
     font-family: 'Open Sans', sans-serif; // Example font family
-    font-size: 1rem; // Example font size
+    font-size: 0.50em; // Adjust the font size as needed
     color: #666; // Example text color
     margin-bottom: 0.5rem;
   }
@@ -390,6 +379,9 @@ const Experience = () => {
   const activeData = activeContentType === 'jobs' ? jobsData : activeContentType === 'rjobs' ? rjobsData : publicationsData;  
   return (
     <StyledJobsSection id="experience" ref={revealContainer}>
+      <StyledText>
+    <h1>I am passionate about Machine Learning & Deep Learning, but have focused mainly on eXplainable Artificial Intelligence and Multi-agent Systems academically, and Recommender Systems professionally. If interested, please reach out to me via one of the methods noted to the left (email/linkedin).</h1>
+    </StyledText>
     <h2 className="numbered-heading">A little about me</h2>
 
     {/* Toggle buttons for switching between jobs and publications */}

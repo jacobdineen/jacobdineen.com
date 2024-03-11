@@ -13,19 +13,30 @@ const StyledContainer = styled.div`
 `;
 
 const StyledSidebar = styled.aside`
-  width: 40vw;
+  width:65%; // Start with a percentage width
   height: 100vh;
   position: fixed;
-  top: 0;
-  left: 0;
-  background-color: #020c1b; // Assuming this is the color you want
   padding: 0 25px;
   display: flex;
   flex-direction: column;
-  justify-content: center; // This will keep the nav centered vertically
-  align-items: flex-start; // Change to flex-start to align items to the left
-  z-index: 10;
-  font-family: 'Font Name', sans-serif; // Replace 'Font Name' with your actual font
+  justify-content: center;
+  z-index: 5;
+  
+  // Use media queries to adjust layout at different breakpoints
+  @media (max-width: 1080px) {
+    width: 40%; // Increase the sidebar width on smaller screens
+  }
+  
+  @media (max-width: 768px) {
+    width: 50%; // Further increase the sidebar width on even smaller screens
+  }
+
+  @media (max-width: 600px) {
+    position: relative; // Switch to relative positioning on very small screens
+    width: 100%; // Sidebar takes full width
+    height: auto; // Height adjusts to content
+    padding: 20px; // Adjust padding as needed
+  }
 
   nav {
     width: 100%; // Take the full width of the sidebar
@@ -38,11 +49,10 @@ const StyledSidebar = styled.aside`
       align-items: center; // Center align items for the nav
 
       li {
-        width: 100%; // Ensure the full width for center alignment
-        margin: 10px 0; // Adjust space between links
+        margin: 8px 0; // Adjust space between links
 
         a {
-          color: white; // Text color for the links
+          color: #89CFEF; // Text color for the links
           text-decoration: none; // No underline
           font-size: 1em; // Adjust the font size as necessary
           transition: color 0.3s ease; // Transition for the color change
@@ -83,13 +93,30 @@ const StyledSidebar = styled.aside`
 `;
 
 const StyledMainContent = styled.main`
-  width: 60vw;
-  margin-left: 40vw;
+  width: 80%;
+  margin-left: 38%; /* Adjust based on sidebar width */
   min-height: 100vh;
-  overflow-y: scroll;
+  overflow-y: auto;
   position: relative;
-  padding-top: 100px;
-  padding-bottom: 100px;
+  padding-top: 70px;
+  padding-bottom: 70px;
+  display: flex;
+  z-index: 10; /* Lower than sidebar if overlay issues occur */
+
+  @media (max-width: 1080px) {
+    width: 60%;
+    margin-left: 40%; /* Adjust to match sidebar */
+  }
+
+  @media (max-width: 768px) {
+    width: 50%;
+    margin-left: 50%; /* Adjust to match sidebar */
+  }
+
+  @media (max-width: 600px) {
+    width: 100%;
+    margin-left: 0;
+  }
 `;
 
 const Layout = ({ children, location }) => {
