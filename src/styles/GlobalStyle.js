@@ -1,8 +1,8 @@
-import { createGlobalStyle } from 'styled-components';
-import fonts from './fonts';
-import variables from './variables';
-import TransitionStyles from './TransitionStyles';
-import PrismStyles from './PrismStyles';
+import { createGlobalStyle } from "styled-components"
+import fonts from "./fonts"
+import variables from "./variables"
+import TransitionStyles from "./TransitionStyles"
+import PrismStyles from "./PrismStyles"
 
 const GlobalStyle = createGlobalStyle`
   ${fonts};
@@ -316,7 +316,7 @@ const GlobalStyle = createGlobalStyle`
       padding: 0;
       margin: 0;
       list-style: none;
-      font-size: var(--fz-lg);
+      font-size: 12px;
       li {
         position: relative;
         padding-left: 30px;
@@ -446,6 +446,6 @@ const GlobalStyle = createGlobalStyle`
   ${TransitionStyles};
 
   ${PrismStyles};
-`;
+`
 
-export default GlobalStyle;
+export default GlobalStyle

@@ -11,10 +11,15 @@ const sections = ["experience", "contact"]
 
 const StyledContainer = styled.div`
   display: flex;
+  flex-direction: column; // Stack children vertically on mobile by default
+
+  @media (min-width: 600px) {
+    flex-direction: row; // Switch to horizontal layout for larger screens
+  }
 `
 
 const StyledSidebar = styled.aside`
-  width: 56%; // Start with a percentage width
+  width: 30%; // Start with a percentage width
   height: 100vh;
   position: fixed;
   padding: 0 25px;
@@ -95,9 +100,8 @@ const StyledSidebar = styled.aside`
 
 const StyledMainContent = styled.main`
   width: 80%;
-  margin-left: 38%; /* Adjust based on sidebar width */
+  margin-left: 30%; /* Adjust based on sidebar width */
   min-height: 100vh;
-  overflow-y: auto;
   position: relative;
   padding-top: 70px;
   padding-bottom: 70px;
@@ -110,7 +114,7 @@ const StyledMainContent = styled.main`
   }
 
   @media (max-width: 768px) {
-    width: 50%;
+    width: 40%;
     margin-left: 50%; /* Adjust to match sidebar */
   }
 
@@ -158,12 +162,10 @@ const Layout = ({ children, location }) => {
                 </ul>
               </nav>
             </StyledSidebar>
-            <StyledMainContent id="content">
-              {children}
-              <Footer />
-            </StyledMainContent>
+            <StyledMainContent id="content">{children}</StyledMainContent>
           </StyledContainer>
         )}
+        <Footer />
       </ThemeProvider>
     </>
   )

@@ -11,16 +11,62 @@ import { Icon } from "@components/icons"
 const StyledText = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start; // Align text to the left
+  align-items: flex-start;
   padding: 0;
   margin: 0;
 
   h1 {
-    font-size: 1rem; // Large font size for the main title
-    font-weight: 75; // Large font weight for the main title
-    font-family: var(--font-mono); // Monospace font for the main title
-    color: #ccd6f6; // Light text color
-    margin: 0 0 20px 0; // Spacing after the title
+    font-size: 0.75rem;
+    font-weight: 75;
+    font-family: var(--font-mono);
+    color: #ccd6f6;
+    margin: 0 0 20px 0;
+  }
+
+  ul {
+    padding-left: 1.5rem;
+    margin: 0;
+    list-style-position: outside;
+  }
+
+  li {
+    font-size: 0.75rem;
+    margin: 0.25rem 0;
+    padding: 0.25rem 0;
+    overflow-wrap: break-word;
+    word-break: break-word;
+
+    &:before {
+      content: "▹";
+      position: absolute;
+      left: 0;
+      color: var(--green);
+      font-size: 0.75rem;
+      line-height: 0.75rem;
+      margin-right: 0.5rem;
+    }
+  }
+
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 0.65rem;
+    }
+
+    li {
+      font-size: 0.65rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 1rem;
+
+    h1 {
+      font-size: 0.6rem;
+    }
+
+    li {
+      font-size: 0.6rem;
+    }
   }
 `
 
@@ -39,10 +85,10 @@ const TechTag = styled.a`
   font-size: 0.75em; // Adjust the font size as needed
   background-color: #112240; // The tag background color
   color: #64ffda; // The tag text color
-  border-radius: 4px; // Rounded corners
+  border-radius: 2px; // Rounded corners
   text-decoration: none; // Remove underline from the link
   transition: background-color 0.3s, color 0.3s; // Smooth transition for background and text color
-
+  cursor: crosshair;
   &:hover,
   &:focus {
     background-color: #0a192f; // Darker background color on hover
@@ -73,6 +119,7 @@ const IconLink = styled.a`
 
 const StyledJobsSection = styled.section`
   max-width: 700px;
+  font-size: var(--fz-lg); // Set the default font size for the section here
 
   .inner {
     display: flex;
@@ -84,6 +131,15 @@ const StyledJobsSection = styled.section`
     // Prevent container from jumping
     @media (min-width: 700px) {
       min-height: 340px;
+    }
+  }
+
+  ul.fancy-list li {
+    font-size: 0.64rem; // Set a different font size for list items
+    // If you want to make the bullets smaller as well, you could add:
+    &:before {
+      // Content and color same as you have now
+      font-size: 0.64rem; // Set a different font size for list items
     }
   }
 `
@@ -139,10 +195,7 @@ const StyledTabButton = styled.button`
   padding: 0 20px 2px;
   border-left: 4px solid var(--lightest-navy);
   background-color: transparent;
-  font-family: var(--font-mono);
-  font-size: var(--fz-xs);
   text-align: left;
-  white-space: nowrap;
 
   @media (max-width: 768px) {
     padding: 0 15px 2px;
@@ -150,7 +203,7 @@ const StyledTabButton = styled.button`
   @media (max-width: 600px) {
     ${({ theme }) => theme.mixins.flexCenter};
     min-width: 120px;
-    padding: 0 15px;
+    padding: 0 px;
     border-left: 0;
     border-bottom: 2px solid var(--lightest-navy);
     text-align: center;
@@ -197,7 +250,8 @@ const StyledTabPanels = styled.div`
   position: relative;
   width: 100%;
   margin-left: 20px;
-
+  font-size: var(--fz-xss);
+  font-family: var(--font-mono);
   @media (max-width: 600px) {
     margin-left: 0;
   }
@@ -208,13 +262,14 @@ const StyledTabPanel = styled.div`
   height: auto;
   padding: 10px 1px;
 
-  ul {
-    ${({ theme }) => theme.mixins.fancyList};
-  }
+  // ul {
+  //   ${({ theme }) => theme.mixins.fancyList};
+
+  // }
 
   h3 {
     margin-bottom: 2px;
-    font-size: var(--fz-s);
+    font-size: var(--fz-xs);
     font-weight: 1000;
     line-height: 1.3;
 
@@ -393,215 +448,226 @@ const Experience = () => {
           interested, please reach out to me via one of the methods noted to the
           left (email/linkedin).
         </h1>
-      </StyledText>
-      <h2 className="numbered-heading">A little about me</h2>
 
-      {/* Toggle buttons for switching between jobs and publications */}
-      <div style={{ marginBottom: "20px", textAlign: "center" }}>
-        <button
-          onClick={() => setActiveContentType("jobs")}
-          disabled={activeContentType === "jobs"}
-          aria-pressed={activeContentType === "jobs"}
-          style={{
-            backgroundColor:
-              activeContentType === "jobs" ? "#007bff" : "#f8f9fa",
-            color: activeContentType === "jobs" ? "#ffffff" : "#212529",
-            border: "1px solid",
-            borderColor: activeContentType === "jobs" ? "#007bff" : "#ced4da",
-            borderRadius: "20px",
-            padding: "10px 20px",
-            margin: "0 5px",
-            cursor: "pointer",
-            transition: "all 0.3s ease",
-            outline: "none",
-          }}
-        >
-          Jobs
-        </button>
+        <h1 className="numbered-heading">A little about me</h1>
+        {/* Toggle buttons for switching between jobs and publications */}
+        <div style={{ marginBottom: "20px", textAlign: "center" }}>
+          <button
+            onClick={() => setActiveContentType("jobs")}
+            disabled={activeContentType === "jobs"}
+            aria-pressed={activeContentType === "jobs"}
+            style={{
+              backgroundColor:
+                activeContentType === "jobs" ? "#007bff" : "#f8f9fa",
+              color: activeContentType === "jobs" ? "#ffffff" : "#212529",
+              border: "1px solid",
+              borderColor: activeContentType === "jobs" ? "#007bff" : "#ced4da",
+              borderRadius: "20px",
+              padding: "10px 20px",
+              margin: "0 5px",
+              cursor: "crosshair",
+              fontSize: "0.75rem",
+              fontWeight: "600",
+              fontFamily: "var(--font-mono)",
+              transition: "all 0.3s ease",
+              outline: "none",
+            }}
+          >
+            Jobs
+          </button>
 
-        <button
-          onClick={() => setActiveContentType("rjobs")}
-          disabled={activeContentType === "rjobs"}
-          aria-pressed={activeContentType === "rjobs"}
-          style={{
-            backgroundColor:
-              activeContentType === "rjobs" ? "#007bff" : "#f8f9fa",
-            color: activeContentType === "rjobs" ? "#ffffff" : "#212529",
-            border: "1px solid",
-            borderColor: activeContentType === "rjobs" ? "#007bff" : "#ced4da",
-            borderRadius: "20px",
-            padding: "10px 20px",
-            margin: "0 5px",
-            cursor: "pointer",
-            transition: "all 0.3s ease",
-            outline: "none",
-          }}
-        >
-          Research Jobs
-        </button>
+          <button
+            onClick={() => setActiveContentType("rjobs")}
+            disabled={activeContentType === "rjobs"}
+            aria-pressed={activeContentType === "rjobs"}
+            style={{
+              backgroundColor:
+                activeContentType === "rjobs" ? "#007bff" : "#f8f9fa",
+              color: activeContentType === "rjobs" ? "#ffffff" : "#212529",
+              border: "1px solid",
+              borderColor:
+                activeContentType === "rjobs" ? "#007bff" : "#ced4da",
+              borderRadius: "20px",
+              padding: "10px 20px",
+              margin: "0 5px",
+              cursor: "crosshair",
+              fontSize: "0.75rem",
+              fontWeight: "600",
+              fontFamily: "var(--font-mono)",
+              transition: "all 0.3s ease",
+              outline: "none",
+            }}
+          >
+            Research Jobs
+          </button>
 
-        <button
-          onClick={() => setActiveContentType("publications")}
-          disabled={activeContentType === "publications"}
-          aria-pressed={activeContentType === "publications"}
-          style={{
-            backgroundColor:
-              activeContentType === "publications" ? "#007bff" : "#f8f9fa",
-            color: activeContentType === "publications" ? "#ffffff" : "#212529",
-            border: "1px solid",
-            borderColor:
-              activeContentType === "publications" ? "#007bff" : "#ced4da",
-            borderRadius: "20px",
-            padding: "10px 20px",
-            margin: "0 5px",
-            cursor: "pointer",
-            transition: "all 0.3s ease",
-            outline: "none",
-          }}
-        >
-          Publications
-        </button>
-      </div>
+          <button
+            onClick={() => setActiveContentType("publications")}
+            disabled={activeContentType === "publications"}
+            aria-pressed={activeContentType === "publications"}
+            style={{
+              backgroundColor:
+                activeContentType === "publications" ? "#007bff" : "#f8f9fa",
+              color:
+                activeContentType === "publications" ? "#ffffff" : "#212529",
+              border: "1px solid",
+              borderColor:
+                activeContentType === "publications" ? "#007bff" : "#ced4da",
+              borderRadius: "50px",
+              padding: "10px 20px",
+              margin: "0 5px",
+              cursor: "crosshair",
+              fontSize: "0.75rem",
+              fontWeight: "600",
+              fontFamily: "var(--font-mono)",
+              transition: "all 0.3s ease",
+              outline: "none",
+            }}
+          >
+            Publications
+          </button>
+        </div>
 
-      <div className="inner">
-        <StyledTabList
-          role="tablist"
-          aria-label="Job tabs"
-          onKeyDown={onKeyDown}
-        >
-          {activeData.map(({ node }, i) => {
-            const { frontmatter } = node
-            const { company, venue } = frontmatter // Extract both company and venue from frontmatter
+        <div className="inner">
+          <StyledTabList
+            role="tablist"
+            aria-label="Job tabs"
+            onKeyDown={onKeyDown}
+          >
+            {activeData.map(({ node }, i) => {
+              const { frontmatter } = node
+              const { company, venue } = frontmatter // Extract both company and venue from frontmatter
 
-            // Determine the label based on the active content type
-            const label =
-              activeContentType === "jobs" || activeContentType === "rjobs"
-                ? company
-                : venue
-            return (
-              <StyledTabButton
-                key={i}
-                isActive={activeTabId === i}
-                onClick={() => setActiveTabId(i)}
-                ref={el => (tabs.current[i] = el)}
-                id={`tab-${i}`}
-                role="tab"
-                tabIndex={activeTabId === i ? "0" : "-1"}
-                aria-selected={activeTabId === i ? true : false}
-                aria-controls={`panel-${i}`}
-              >
-                <span>{label || "N/A"}</span>{" "}
-                {/* Use label, and fallback to 'N/A' if neither is available */}
-              </StyledTabButton>
-            )
-          })}
-          <StyledHighlight activeTabId={activeTabId} />
-        </StyledTabList>
-
-        <StyledTabPanels>
-          {activeData.map(({ node }, i) => {
-            const { frontmatter, html } = node
-            const { title, range } = frontmatter // Adjust for publications
-
-            return (
-              <CSSTransition
-                key={i}
-                in={activeTabId === i}
-                timeout={250}
-                classNames="fade"
-                unmountOnExit
-              >
-                <StyledTabPanel
-                  id={`panel-${i}`}
-                  role="tabpanel"
+              // Determine the label based on the active content type
+              const label =
+                activeContentType === "jobs" || activeContentType === "rjobs"
+                  ? company
+                  : venue
+              return (
+                <StyledTabButton
+                  key={i}
+                  isActive={activeTabId === i}
+                  onClick={() => setActiveTabId(i)}
+                  ref={el => (tabs.current[i] = el)}
+                  id={`tab-${i}`}
+                  role="tab"
                   tabIndex={activeTabId === i ? "0" : "-1"}
-                  aria-labelledby={`tab-${i}`}
-                  aria-hidden={activeTabId !== i}
-                  hidden={activeTabId !== i}
+                  aria-selected={activeTabId === i ? true : false}
+                  aria-controls={`panel-${i}`}
                 >
-                  <h3>
-                    <span>{title}</span>
-                    <span className="company"></span>
-                  </h3>
+                  <span>{label || "N/A"}</span>{" "}
+                  {/* Use label, and fallback to 'N/A' if neither is available */}
+                </StyledTabButton>
+              )
+            })}
+            <StyledHighlight activeTabId={activeTabId} />
+          </StyledTabList>
 
-                  {frontmatter.authors && (
-                    <p className="authors">Authors: {frontmatter.authors}</p>
-                  )}
+          <StyledTabPanels>
+            {activeData.map(({ node }, i) => {
+              const { frontmatter, html } = node
+              const { title, range } = frontmatter // Adjust for publications
 
-                  <IconContainer>
-                    {frontmatter.googlescholar && (
-                      <IconLink
-                        href={frontmatter.googlescholar}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="gscholar"
-                      >
-                        <Icon name="GScholar" />
-                      </IconLink>
-                    )}
-                    {frontmatter.arxiv && (
-                      <IconLink
-                        href={frontmatter.arxiv}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="arXiv"
-                      >
-                        <Icon name="Arxiv" />
-                      </IconLink>
-                    )}
-                    {frontmatter.semanticscholar && (
-                      <IconLink
-                        href={frontmatter.semanticscholar}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Semantic Scholar"
-                      >
-                        <Icon name="SemanticScholar" />
-                      </IconLink>
-                    )}
-                    {frontmatter.paperurl && (
-                      <IconLink
-                        href={frontmatter.paperurl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Paper URL"
-                      >
-                        <Icon name="External" />
-                      </IconLink>
-                    )}
-                    {frontmatter.code && (
-                      <IconLink
-                        href={frontmatter.code}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Code Repository"
-                      >
-                        <Icon name="GitHub" />
-                      </IconLink>
-                    )}
-                  </IconContainer>
-                  <p className="range">{range}</p>
+              return (
+                <CSSTransition
+                  key={i}
+                  in={activeTabId === i}
+                  timeout={250}
+                  classNames="fade"
+                  unmountOnExit
+                >
+                  <StyledTabPanel
+                    id={`panel-${i}`}
+                    role="tabpanel"
+                    tabIndex={activeTabId === i ? "0" : "-1"}
+                    aria-labelledby={`tab-${i}`}
+                    aria-hidden={activeTabId !== i}
+                    hidden={activeTabId !== i}
+                  >
+                    <h3>
+                      <span>{title}</span>
+                      <span className="company"></span>
+                    </h3>
 
-                  <div dangerouslySetInnerHTML={{ __html: html }} />
-                  <TechTagsContainer>
-                    {frontmatter.technologies &&
-                      frontmatter.technologies.map((tech, index) => (
-                        <TechTag
-                          key={index}
-                          href={tech.url}
+                    {frontmatter.authors && (
+                      <p className="authors">Authors: {frontmatter.authors}</p>
+                    )}
+
+                    <IconContainer>
+                      {frontmatter.googlescholar && (
+                        <IconLink
+                          href={frontmatter.googlescholar}
                           target="_blank"
                           rel="noopener noreferrer"
+                          aria-label="gscholar"
                         >
-                          {tech.name}
-                        </TechTag>
-                      ))}
-                  </TechTagsContainer>
-                </StyledTabPanel>
-              </CSSTransition>
-            )
-          })}
-        </StyledTabPanels>
-      </div>
+                          <Icon name="GScholar" />
+                        </IconLink>
+                      )}
+                      {frontmatter.arxiv && (
+                        <IconLink
+                          href={frontmatter.arxiv}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label="arXiv"
+                        >
+                          <Icon name="Arxiv" />
+                        </IconLink>
+                      )}
+                      {frontmatter.semanticscholar && (
+                        <IconLink
+                          href={frontmatter.semanticscholar}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label="Semantic Scholar"
+                        >
+                          <Icon name="SemanticScholar" />
+                        </IconLink>
+                      )}
+                      {frontmatter.paperurl && (
+                        <IconLink
+                          href={frontmatter.paperurl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label="Paper URL"
+                        >
+                          <Icon name="External" />
+                        </IconLink>
+                      )}
+                      {frontmatter.code && (
+                        <IconLink
+                          href={frontmatter.code}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label="Code Repository"
+                        >
+                          <Icon name="GitHub" />
+                        </IconLink>
+                      )}
+                    </IconContainer>
+                    <p className="range">{range}</p>
+
+                    <div dangerouslySetInnerHTML={{ __html: html }} />
+                    <TechTagsContainer>
+                      {frontmatter.technologies &&
+                        frontmatter.technologies.map((tech, index) => (
+                          <TechTag
+                            key={index}
+                            href={tech.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            {tech.name}
+                          </TechTag>
+                        ))}
+                    </TechTagsContainer>
+                  </StyledTabPanel>
+                </CSSTransition>
+              )
+            })}
+          </StyledTabPanels>
+        </div>
+      </StyledText>
     </StyledJobsSection>
   )
 }
