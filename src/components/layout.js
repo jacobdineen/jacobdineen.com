@@ -6,7 +6,7 @@ import { GlobalStyle, theme } from "@styles"
 import About from "@components/sections/about"
 // import { Link } from 'gatsby';
 import { Analytics } from "@vercel/analytics/react"
-
+import { SpeedInsights } from "@vercel/speed-insights/react"
 const sections = ["experience", "contact"]
 
 const StyledContainer = styled.div`
@@ -130,6 +130,7 @@ const Layout = ({ children, location }) => {
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <Analytics />
+        <SpeedInsights />
         {isLoading ? (
           <Loader finishLoading={() => setIsLoading(false)} />
         ) : (
