@@ -166,13 +166,13 @@ const StyledTabList = styled.div`
   @media (max-width: 600px) {
     display: flex;
     overflow-x: auto;
-    width: calc(100% + 100px);
+    width: 75%;
     padding-left: 50px;
     margin-left: -50px;
     margin-bottom: 30px;
   }
   @media (max-width: 480px) {
-    width: calc(100% + 50px);
+    width: 75%;
     padding-left: 25px;
     margin-left: -25px;
   }
@@ -207,17 +207,16 @@ const StyledTabButton = styled.button`
   border-left: 4px solid var(--lightest-navy);
   background-color: transparent;
   text-align: left;
+  box-sizing: border-box; // Ensure padding and border are included in the element's width
 
   @media (max-width: 768px) {
-    font-size: var(
-      --fz-xs
-    ); // You can have a slightly larger font size for small tablets if needed
+    width: 100%; // Use full width for better space utilization
   }
 
   @media (max-width: 600px) {
     margin-left: 0; // Remove the margin for mobile screens
-    padding: 0 10px; // Add some padding on the sides for mobile screens
-    font-size: var(--fz-sm); // Adjust font size for readability on mobile
+    padding: 0 10px; // Adjust padding for mobile screens
+    font-size: 14px; // Smaller font size for mobile screens to fit content better
   }
 
   &:hover,
@@ -269,6 +268,7 @@ const StyledTabPanels = styled.div`
   }
 
   @media (max-width: 600px) {
+    width: 75%; // Ensure it takes up the full width
     margin-left: 0; // Remove the margin for mobile screens
     padding: 0 10px; // Add some padding on the sides for mobile screens
     font-size: var(--fz-sm); // Adjust font size for readability on mobile
@@ -286,6 +286,7 @@ const StyledTabPanel = styled.div`
   }
 
   @media (max-width: 600px) {
+    width: 75%;
     margin-left: 0; // Remove the margin for mobile screens
     padding: 0 10px; // Add some padding on the sides for mobile screens
     font-size: var(--fz-sm); // Adjust font size for readability on mobile
