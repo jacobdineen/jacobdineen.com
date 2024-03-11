@@ -207,16 +207,29 @@ const StyledTabButton = styled.button`
   border-left: 4px solid var(--lightest-navy);
   background-color: transparent;
   text-align: left;
+  font-size: var(--fz-xs); // Adjust font size for small tablets if needed
+  font-family: var(--font-mono); // Monospace font, also should be defined
   box-sizing: border-box; // Ensure padding and border are included in the element's width
 
-  @media (max-width: 768px) {
+  @media (max-width: 600px) {
     width: 100%; // Use full width for better space utilization
+  }
+
+  @media (max-width: 480px) {
+    width: 100%; // Use full width for better space utilization
+  }
+
+  @media (max-width: 400px) {
+    width: 100%; // Use full width for better space utilization
+  }
+
+  @media (max-width: 768px) {
+    width: 75%;
   }
 
   @media (max-width: 600px) {
     margin-left: 0; // Remove the margin for mobile screens
-    padding: 0 10px; // Adjust padding for mobile screens
-    font-size: 14px; // Smaller font size for mobile screens to fit content better
+    padding: 0 10px; // Add some padding on the sides for mobile screens
   }
 
   &:hover,
