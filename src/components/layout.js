@@ -1,19 +1,20 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import PropTypes from 'prop-types';
-import styled, { ThemeProvider } from 'styled-components';
-import { Head, Loader, Nav, Social, Email, Footer } from '@components';
-import { GlobalStyle, theme } from '@styles';
-import About from '@components/sections/about';
-import { Link } from 'gatsby';
+import React, { useState } from "react"
+import PropTypes from "prop-types"
+import styled, { ThemeProvider } from "styled-components"
+import { Head, Loader, Footer } from "@components"
+import { GlobalStyle, theme } from "@styles"
+import About from "@components/sections/about"
+// import { Link } from 'gatsby';
+import { Analytics } from "@vercel/analytics/react"
 
-const sections = ['experience', 'contact'];
+const sections = ["experience", "contact"]
 
 const StyledContainer = styled.div`
   display: flex;
-`;
+`
 
 const StyledSidebar = styled.aside`
-  width:65%; // Start with a percentage width
+  width: 65%; // Start with a percentage width
   height: 100vh;
   position: fixed;
   padding: 0 25px;
@@ -21,12 +22,12 @@ const StyledSidebar = styled.aside`
   flex-direction: column;
   justify-content: center;
   z-index: 5;
-  
+
   // Use media queries to adjust layout at different breakpoints
   @media (max-width: 1080px) {
     width: 40%; // Increase the sidebar width on smaller screens
   }
-  
+
   @media (max-width: 768px) {
     width: 50%; // Further increase the sidebar width on even smaller screens
   }
@@ -52,7 +53,7 @@ const StyledSidebar = styled.aside`
         margin: 8px 0; // Adjust space between links
 
         a {
-          color: #89CFEF; // Text color for the links
+          color: #89cfef; // Text color for the links
           text-decoration: none; // No underline
           font-size: 1em; // Adjust the font size as necessary
           transition: color 0.3s ease; // Transition for the color change
@@ -63,7 +64,7 @@ const StyledSidebar = styled.aside`
 
           // Horizontal line for each item
           &::after {
-            content: '';
+            content: "";
             position: absolute;
             bottom: -5px; // Adjust this value to move the line up or down
             left: 50%; // Start at the center
@@ -90,7 +91,7 @@ const StyledSidebar = styled.aside`
       }
     }
   }
-`;
+`
 
 const StyledMainContent = styled.main`
   width: 80%;
@@ -117,42 +118,44 @@ const StyledMainContent = styled.main`
     width: 100%;
     margin-left: 0;
   }
-`;
+`
 
 const Layout = ({ children, location }) => {
-  const [isLoading, setIsLoading] = useState(location.pathname === '/');
-  const [activeSection, setActiveSection] = useState('');
-
+  const [isLoading, setIsLoading] = useState(location.pathname === "/")
+  const [activeSection] = useState("")
 
   return (
     <>
       <Head />
       <ThemeProvider theme={theme}>
         <GlobalStyle />
+        <Analytics />
         {isLoading ? (
           <Loader finishLoading={() => setIsLoading(false)} />
         ) : (
           <StyledContainer>
             <StyledSidebar>
               <About />
-            <nav>
-              <ul>
-                {sections.map((section) => (
-                  <li key={section}>
-                    <a
-                      href={`#${section}`}
-                      className={activeSection === section ? 'active' : ''}
-                      onClick={(e) => {
-                        e.preventDefault();
-                        document.getElementById(section)?.scrollIntoView({ behavior: 'smooth' });
-                      }}
-                    >
-                      {section.charAt(0).toUpperCase() + section.slice(1)}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </nav>
+              <nav>
+                <ul>
+                  {sections.map(section => (
+                    <li key={section}>
+                      <a
+                        href={`#${section}`}
+                        className={activeSection === section ? "active" : ""}
+                        onClick={e => {
+                          e.preventDefault()
+                          document
+                            .getElementById(section)
+                            ?.scrollIntoView({ behavior: "smooth" })
+                        }}
+                      >
+                        {section.charAt(0).toUpperCase() + section.slice(1)}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
             </StyledSidebar>
             <StyledMainContent id="content">
               {children}
@@ -162,12 +165,12 @@ const Layout = ({ children, location }) => {
         )}
       </ThemeProvider>
     </>
-  );
-};
+  )
+}
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
   location: PropTypes.object.isRequired,
-};
+}
 
-export default Layout;
+export default Layout
