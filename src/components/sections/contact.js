@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from 'react';
-import styled from 'styled-components';
-import { srConfig, email } from '@config';
-import sr from '@utils/sr';
-import { usePrefersReducedMotion } from '@hooks';
+import React, { useEffect, useRef } from "react"
+import styled from "styled-components"
+import { srConfig, email } from "@config"
+import sr from "@utils/sr"
+import { usePrefersReducedMotion } from "@hooks"
 
 const StyledContactSection = styled.section`
   max-width: 600px;
@@ -39,36 +39,36 @@ const StyledContactSection = styled.section`
     ${({ theme }) => theme.mixins.bigButton};
     margin-top: 50px;
   }
-`;
+`
 
 const Contact = () => {
-  const revealContainer = useRef(null);
-  const prefersReducedMotion = usePrefersReducedMotion();
+  const revealContainer = useRef(null)
+  const prefersReducedMotion = usePrefersReducedMotion()
 
   useEffect(() => {
     if (prefersReducedMotion) {
-      return;
+      return
     }
 
-    sr.reveal(revealContainer.current, srConfig());
-  }, []);
+    sr.reveal(revealContainer.current, srConfig())
+  }, [])
 
   return (
     <StyledContactSection id="contact" ref={revealContainer}>
-      <h2 className="numbered-heading overline">What’s Next?</h2>
-
       <h2 className="title">Get In Touch</h2>
 
       <p>
-        Although I’m not currently looking for any new opportunities, my inbox is always open.
-        Whether you have a question or just want to say hi, I’ll try my best to get back to you!
+        I am not actively seeking new positions at the moment, but my virtual
+        door is always open. If you are curious about something or would simply
+        like to drop a greeting, feel free to reach out. I endeavor to respond
+        when possible!
       </p>
 
       <a className="email-link" href={`mailto:${email}`}>
-        Say Hello
+        Email me
       </a>
     </StyledContactSection>
-  );
-};
+  )
+}
 
-export default Contact;
+export default Contact
