@@ -14,7 +14,7 @@ const StyledContainer = styled.div`
 `
 
 const StyledSidebar = styled.aside`
-  width: 65%; // Start with a percentage width
+  width: 56%; // Start with a percentage width
   height: 100vh;
   position: fixed;
   padding: 0 25px;
