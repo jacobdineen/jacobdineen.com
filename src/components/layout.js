@@ -5,6 +5,7 @@ import { Head, Loader, Nav, Social, Email, Footer } from '@components';
 import { GlobalStyle, theme } from '@styles';
 import About from '@components/sections/about';
 import { Link } from 'gatsby';
+import { Analytics } from "@vercel/analytics/react"
 
 const sections = ['experience', 'contact'];
 

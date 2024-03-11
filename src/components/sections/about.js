@@ -67,7 +67,9 @@ const StyledText = styled.div`
   }
 
   p {
-    font-size: 1rem; // Regular font size for the paragraph
+    font-size: 1.0rem; // Medium font size for the subtitle
+    font-weight: 100; // Medium font weight for the subtitle
+    font-family: var(--font-mono); // Monospace font for the main title
     color: #89CFEF; // Regular text color
     max-width: 540px; // Max width for paragraph text, adjust as necessary
     line-height: 1.5; // Line height for paragraph text
