@@ -54,7 +54,7 @@ const StyledText = styled.div`
   margin: 0;
 
   h1 {
-    font-size: 1.5rem; // Large font size for the main title
+    font-size: 1.2rem; // Large font size for the main title
     font-weight: 100; // Large font weight for the main title
     font-family: var(--font-mono); // Monospace font for the main title
     color: #ccd6f6; // Light text color
@@ -62,8 +62,7 @@ const StyledText = styled.div`
   }
 
   h2 {
-    font-size: 1rem; // Medium font size for the subtitle
-    font-weight: 100; // Medium font weight for the subtitle
+    font-size: 0.85rem; // Medium font size for the subtitle
     font-family: var(--font-mono); // Monospace font for the main title
     color: #8892b0; // Subdued text color
     margin: 0 0 20px 0; // Spacing after the subtitle
@@ -122,7 +121,7 @@ const StyledPic = styled.div`
     &:before,
     &:after {
       content: "";
-      display: block;
+      display: flex;
       position: absolute;
       width: 100%;
       height: 100%;
@@ -131,7 +130,7 @@ const StyledPic = styled.div`
     }
 
     &:before {
-      top: 0;
+      top: 20;
       left: 0;
       background-color: var(--navy);
       mix-blend-mode: screen;
@@ -139,7 +138,7 @@ const StyledPic = styled.div`
 
     &:after {
       border: 2px solid var(--blue);
-      top: 14px;
+      top: 1px;
       left: 14px;
       z-index: -1;
     }

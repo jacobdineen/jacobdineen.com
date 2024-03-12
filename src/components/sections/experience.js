@@ -38,12 +38,12 @@ const StyledText = styled.div`
 
     &:before {
       content: "▹";
-      position: absolute;
+      position: left;
       left: 0;
       color: var(--green);
       font-size: 0.75rem;
       line-height: 0.75rem;
-      margin-right: 0.5rem;
+      margin-right: 0.35rem;
     }
   }
 
@@ -135,7 +135,7 @@ const StyledJobsSection = styled.section`
   }
 
   ul.fancy-list li {
-    font-size: 0.64rem; // Set a different font size for list items
+    font-size: 0.4rem; // Set a different font size for list items
     // If you want to make the bullets smaller as well, you could add:
     &:before {
       // Content and color same as you have now
@@ -156,80 +156,45 @@ const StyledJobsSection = styled.section`
 `
 
 const StyledTabList = styled.div`
-  position: relative;
-  z-index: 3;
-  width: max-content;
-  padding: 0;
-  margin: 0;
-  list-style: none;
+  max-width: 700px;
+  font-size: var(--fz-lg); // Set the default font size for the section here
+  padding: 50px 0;
 
   @media (max-width: 600px) {
-    display: flex;
-    overflow-x: auto;
-    width: 75%;
-    padding-left: 50px;
-    margin-left: -50px;
-    margin-bottom: 30px;
-  }
-  @media (max-width: 480px) {
-    width: 75%;
-    padding-left: 25px;
-    margin-left: -25px;
-  }
-
-  li {
-    &:first-of-type {
-      @media (max-width: 600px) {
-        margin-left: 50px;
-      }
-      @media (max-width: 480px) {
-        margin-left: 25px;
-      }
-    }
-    &:last-of-type {
-      @media (max-width: 600px) {
-        padding-right: 50px;
-      }
-      @media (max-width: 480px) {
-        padding-right: 25px;
-      }
-    }
+    flex-shrink: 0; // Prevent the tabs from shrinking
+    width: var(
+      --tab-width-mobile
+    ); // Assign a width that works for your design on mobile
   }
 `
 
 const StyledTabButton = styled.button`
-  ${({ theme }) => theme.mixins.link};
   display: flex;
+  color: var(--green);
+  font-family: var(--font-mono);
+  font-size: var(--fz-xs);
   align-items: center;
-  width: 100%;
+  width: var(--tab-width);
   height: var(--tab-height);
   padding: 0 20px 2px;
   border-left: 4px solid var(--lightest-navy);
   background-color: transparent;
   text-align: left;
-  font-size: var(--fz-xs); // Adjust font size for small tablets if needed
-  font-family: var(--font-mono); // Monospace font, also should be defined
   box-sizing: border-box; // Ensure padding and border are included in the element's width
 
   @media (max-width: 600px) {
-    width: 100%; // Use full width for better space utilization
+    flex-shrink: 0; // Prevent the tabs from shrinking
+    width: var(
+      --tab-width-mobile
+    ); // Assign a width that works for your design on mobile
+    height: var(--tab-height);
+    padding: 0 20px 2px;
   }
 
   @media (max-width: 480px) {
-    width: 100%; // Use full width for better space utilization
-  }
-
-  @media (max-width: 400px) {
-    width: 100%; // Use full width for better space utilization
-  }
-
-  @media (max-width: 768px) {
-    width: 75%;
-  }
-
-  @media (max-width: 600px) {
-    margin-left: 0; // Remove the margin for mobile screens
-    padding: 0 10px; // Add some padding on the sides for mobile screens
+    width: auto; // Buttons should only be as wide as their content
+    height: var(--tab-height);
+    padding: 0 20px 2px;
   }
 
   &:hover,
@@ -254,19 +219,23 @@ const StyledHighlight = styled.div`
   transition-delay: 0.1s;
 
   @media (max-width: 768px) {
-    font-size: var(--fz-xs); // You can have a slightly larger font size for small tablets if needed
+    // Adjustments for tablets if necessary
   }
 
   @media (max-width: 600px) {
-    margin-left: 0; // Remove the margin for mobile screens
-    padding: 0 10px; // Add some padding on the sides for mobile screens
-    font-size: var(--fz-sm); // Adjust font size for readability on mobile
+    width: var(--tab-width); // The width should match the tab width
+    height: 2px; // Assuming you want a horizontal highlight now
+    transform: translateX(
+      calc(${({ activeTabId }) => activeTabId} * var(--tab-width))
+    ); // Move horizontally now
+    top: auto; // Set to auto or a specific value if you want the bar at the bottom
+    bottom: 0; // Align the highlight to the bottom of the tab button
   }
-  }
+}
 `
 
 const StyledTabPanels = styled.div`
-  position: relative;
+  position: flex;
   width: 100%; // Ensure it takes up the full width
   margin-left: 20px; // Space from the sidebar or any adjacent content
   font-size: var(
@@ -283,8 +252,12 @@ const StyledTabPanels = styled.div`
   @media (max-width: 600px) {
     width: 75%; // Ensure it takes up the full width
     margin-left: 0; // Remove the margin for mobile screens
-    padding: 0 10px; // Add some padding on the sides for mobile screens
+    padding: 0 0px; // Add some padding on the sides for mobile screens
     font-size: var(--fz-sm); // Adjust font size for readability on mobile
+    flex-shrink: 0; // Prevent the tabs from shrinking
+    width: var(
+      --tab-width-mobile
+    ); // Assign a width that works for your design on mobile
   }
 `
 
@@ -293,16 +266,12 @@ const StyledTabPanel = styled.div`
   height: auto;
   padding: 10px 1px;
   @media (max-width: 768px) {
-    font-size: var(
-      --fz-xs
-    ); // You can have a slightly larger font size for small tablets if needed
   }
 
   @media (max-width: 600px) {
     width: 75%;
     margin-left: 0; // Remove the margin for mobile screens
     padding: 0 10px; // Add some padding on the sides for mobile screens
-    font-size: var(--fz-sm); // Adjust font size for readability on mobile
   }
   // ul {
   //   ${({ theme }) => theme.mixins.fancyList};
