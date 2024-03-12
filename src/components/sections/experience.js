@@ -41,7 +41,7 @@ const StyledText = styled.div`
       position: left;
       left: 0;
       color: var(--green);
-      font-size: 0.75rem;
+      font-size: 1.05rem;
       line-height: 0.75rem;
       margin-right: 0.35rem;
     }
@@ -171,13 +171,14 @@ const StyledTabList = styled.div`
 const StyledTabButton = styled.button`
   display: flex;
   color: var(--green);
-  font-family: var(--font-mono);
   font-size: var(--fz-xs);
   align-items: center;
   width: var(--tab-width);
   height: var(--tab-height);
-  padding: 0 20px 2px;
-  border-left: 4px solid var(--lightest-navy);
+  border-left: 2px solid var(--lightest-navy);
+  // border-right: 2px solid var(--lightest-navy);
+  // border-top: 2px solid var(--lightest-navy);
+  // border-bottom: 2px solid var(--lightest-navy);
   background-color: transparent;
   text-align: left;
   box-sizing: border-box; // Ensure padding and border are included in the element's width
@@ -237,6 +238,7 @@ const StyledHighlight = styled.div`
 const StyledTabPanels = styled.div`
   position: flex;
   width: 100%; // Ensure it takes up the full width
+  margin-top: 40px;
   margin-left: 20px; // Space from the sidebar or any adjacent content
   font-size: var(
     --fz-xss
@@ -245,7 +247,7 @@ const StyledTabPanels = styled.div`
 
   @media (max-width: 768px) {
     font-size: var(
-      --fz-xs
+      --fz-xs margin-top: 40px;
     ); // You can have a slightly larger font size for small tablets if needed
   }
 
@@ -462,7 +464,17 @@ const Experience = () => {
 
         <h1 className="numbered-heading">A little about me</h1>
         {/* Toggle buttons for switching between jobs and publications */}
-        <div style={{ marginBottom: "20px", textAlign: "center" }}>
+        <div
+          style={{
+            display: "flex", // Enable Flexbox layout
+            justifyContent: "center", // Center children horizontally in the container
+            alignItems: "center", // Center children vertically in the container
+            flexDirection: "row", // Stack children vertically
+            width: "100%", // Adjust the width as needed, 100% for full width
+            textAlign: "center",
+            marginBottom: "10px",
+          }}
+        >
           <button
             onClick={() => setActiveContentType("jobs")}
             disabled={activeContentType === "jobs"}
@@ -474,11 +486,11 @@ const Experience = () => {
               border: "1px solid",
               borderColor: activeContentType === "jobs" ? "#007bff" : "#ced4da",
               borderRadius: "20px",
-              padding: "10px 20px",
+              padding: "10px 10px",
               margin: "0 5px",
               cursor: "crosshair",
-              fontSize: "0.75rem",
-              fontWeight: "600",
+              fontSize: "0.65rem",
+              fontWeight: "800",
               fontFamily: "var(--font-mono)",
               transition: "all 0.3s ease",
               outline: "none",
@@ -499,11 +511,11 @@ const Experience = () => {
               borderColor:
                 activeContentType === "rjobs" ? "#007bff" : "#ced4da",
               borderRadius: "20px",
-              padding: "10px 20px",
+              padding: "10px 10px",
               margin: "0 5px",
               cursor: "crosshair",
-              fontSize: "0.75rem",
-              fontWeight: "600",
+              fontSize: "0.65rem",
+              fontWeight: "800",
               fontFamily: "var(--font-mono)",
               transition: "all 0.3s ease",
               outline: "none",
@@ -524,12 +536,12 @@ const Experience = () => {
               border: "1px solid",
               borderColor:
                 activeContentType === "publications" ? "#007bff" : "#ced4da",
-              borderRadius: "50px",
-              padding: "10px 20px",
+              borderRadius: "20px",
+              padding: "10px 10px",
               margin: "0 5px",
               cursor: "crosshair",
-              fontSize: "0.75rem",
-              fontWeight: "600",
+              fontSize: "0.65rem",
+              fontWeight: "800",
               fontFamily: "var(--font-mono)",
               transition: "all 0.3s ease",
               outline: "none",
