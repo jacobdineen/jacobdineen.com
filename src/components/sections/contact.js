@@ -8,9 +8,24 @@ const StyledContactSection = styled.section`
   max-width: 600px;
   margin: 0 auto 100px;
   text-align: center;
-
+  padding-top: 80px;
+  h1 {
+    font-size: 0.5rem;
+    font-weight: 75;
+    font-family: var(--font-mono);
+    color: #ccd6f6;
+    margin: 0 0 20px 0;
+  }
+  h2 {
+    font-size: 0.5rem;
+    font-weight: 75;
+    font-family: var(--font-mono);
+    color: #ccd6f6;
+    margin: 0 0 20px 0;
+  }
   @media (max-width: 768px) {
     margin: 0 auto 50px;
+    padding-top: 0px;
   }
 
   .overline {

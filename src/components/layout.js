@@ -101,12 +101,11 @@ const StyledSidebar = styled.aside`
 const StyledMainContent = styled.main`
   width: 80%;
   margin-left: 30%; /* Adjust based on sidebar width */
-  min-height: 100vh;
   position: relative;
-  padding-top: 70px;
-  padding-bottom: 70px;
+  padding-bottom: 0px;
   display: flex;
   z-index: 10; /* Lower than sidebar if overlay issues occur */
+  padding-top: 80px;
 
   @media (max-width: 1080px) {
     width: 60%;
@@ -115,6 +114,8 @@ const StyledMainContent = styled.main`
 
   @media (max-width: 768px) {
     width: 40%;
+    padding-top: 0px;
+
     margin-left: 50%; /* Adjust to match sidebar */
   }
 
