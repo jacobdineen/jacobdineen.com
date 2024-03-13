@@ -7,7 +7,7 @@ import About from "@components/sections/about"
 // import { Link } from 'gatsby';
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/react"
-const sections = ["experience", "contact"]
+const sections = ["experience", "contact", "resume"]
 
 const StyledContainer = styled.div`
   display: flex;
@@ -127,7 +127,20 @@ const StyledMainContent = styled.main`
 
 const Layout = ({ children, location }) => {
   const [isLoading, setIsLoading] = useState(location.pathname === "/")
-  const [activeSection] = useState("")
+  const [activeSection, setActiveSection] = useState("")
+
+  const handleSectionClick = (e, section) => {
+    e.preventDefault()
+    // Check if the clicked section is 'resume'
+    if (section === "resume") {
+      // Redirect to the resume.pdf file, adjust the path as necessary
+      window.location.href = "/Academic_Resume.pdf"
+    } else {
+      // Scroll to the selected section
+      document.getElementById(section)?.scrollIntoView({ behavior: "smooth" })
+      setActiveSection(section) // Optionally, mark the section as active
+    }
+  }
 
   return (
     <>
@@ -149,12 +162,7 @@ const Layout = ({ children, location }) => {
                       <a
                         href={`#${section}`}
                         className={activeSection === section ? "active" : ""}
-                        onClick={e => {
-                          e.preventDefault()
-                          document
-                            .getElementById(section)
-                            ?.scrollIntoView({ behavior: "smooth" })
-                        }}
+                        onClick={e => handleSectionClick(e, section)}
                       >
                         {section.charAt(0).toUpperCase() + section.slice(1)}
                       </a>

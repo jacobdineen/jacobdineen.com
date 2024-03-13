@@ -10,7 +10,6 @@ yarn-error.log
 package-lock.json
 
 # Build directory
-/public
 .DS_Store
 
 .vscode/
@@ -66,7 +65,15 @@ typings/
 
 # gatsby files
 .cache/
-public
+# Ignore everything in the public directory
+# public/*
+
+# Except for the Academic_Resume.pdf file
+# Ignore everything in the public directory
+public/*
+
+# Except for the Academic_Resume.pdf file
+!public/Academic_Resume.pdf
 
 # Mac files
 .DS_Store
