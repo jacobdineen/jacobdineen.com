@@ -385,12 +385,33 @@ const Experience = () => {
           }
         }
       }
+      education: allMarkdownRemark(
+        filter: { fileAbsolutePath: { regex: "/content/education/" } }
+        sort: { fields: [frontmatter___date], order: DESC }
+      ) {
+        edges {
+          node {
+            frontmatter {
+              venue
+              degree
+              gpa
+              range
+              technologies {
+                name
+                url
+              }
+            }
+            html
+          }
+        }
+      }
     }
   `)
 
   const jobsData = data.jobs.edges
   const rjobsData = data.rjobs.edges
   const publicationsData = data.publications.edges
+  const educationData = data.education.edges
   const [activeTabId, setActiveTabId] = useState(0)
   const [tabFocus, setTabFocus] = useState(null)
   const tabs = useRef([])
@@ -450,7 +471,10 @@ const Experience = () => {
       ? jobsData
       : activeContentType === "rjobs"
       ? rjobsData
-      : publicationsData
+      : activeContentType === "publications"
+      ? publicationsData
+      : educationData // This line is where the update for "education" goes
+
   return (
     <StyledJobsSection id="experience" ref={revealContainer}>
       <StyledText>
@@ -549,6 +573,30 @@ const Experience = () => {
           >
             Publications
           </button>
+          <button
+            onClick={() => setActiveContentType("education")}
+            disabled={activeContentType === "education"}
+            aria-pressed={activeContentType === "education"}
+            style={{
+              backgroundColor:
+                activeContentType === "education" ? "#007bff" : "#f8f9fa",
+              color: activeContentType === "education" ? "#ffffff" : "#212529",
+              border: "1px solid",
+              borderColor:
+                activeContentType === "education" ? "#007bff" : "#ced4da",
+              borderRadius: "20px",
+              padding: "10px 10px",
+              margin: "0 5px",
+              cursor: "crosshair",
+              fontSize: "0.65rem",
+              fontWeight: "800",
+              fontFamily: "var(--font-mono)",
+              transition: "all 0.3s ease",
+              outline: "none",
+            }}
+          >
+            Education
+          </button>
         </div>
 
         <div className="inner">
@@ -615,7 +663,14 @@ const Experience = () => {
                     {frontmatter.authors && (
                       <p className="authors">Authors: {frontmatter.authors}</p>
                     )}
-
+                    {/* Conditional rendering based on activeContentType */}
+                    {activeContentType === "education" && (
+                      <>
+                        <h3>{frontmatter.degree}</h3>
+                        <h1>{frontmatter.gpa}</h1>
+                        {/* Additional education details */}
+                      </>
+                    )}
                     <IconContainer>
                       {frontmatter.googlescholar && (
                         <IconLink
