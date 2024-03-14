@@ -1,4 +1,5 @@
 ---
+date: "2024-12-31"
 venue: "Arizona State University"
 degree: "Ph.D. in Artificial Intelligence"
 gpa: "4.00/4.00"

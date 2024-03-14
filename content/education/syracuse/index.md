@@ -1,4 +1,5 @@
 ---
+date: "2024-12-29"
 venue: "Syracuse University"
 degree: " M.S. Data Science"
 gpa: "4.00/4.00"

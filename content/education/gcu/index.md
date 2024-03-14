@@ -1,4 +1,5 @@
 ---
+date: "2024-12-28"
 venue: "Grand Canyon University"
 degree: "B.S. Finance and Economics"
 gpa: "3.65/4.00"
