@@ -8,7 +8,7 @@ const StyledContactSection = styled.section`
   max-width: 600px;
   margin: 0 auto 100px;
   text-align: center;
-  padding-top: 80px;
+  padding-top: 0px;
   h1 {
     font-size: 0.5rem;
     font-weight: 75;

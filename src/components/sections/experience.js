@@ -37,7 +37,6 @@ const StyledText = styled.div`
     word-break: break-word;
 
     &:before {
-      content: "▹";
       position: left;
       left: 0;
       color: var(--green);
