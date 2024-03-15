@@ -156,6 +156,8 @@ const StyledJobsSection = styled.section`
 
 const StyledTabList = styled.div`
   max-width: 700px;
+  position: relative;
+
   font-size: var(--fz-lg); // Set the default font size for the section here
   padding: 50px 0;
 
@@ -205,7 +207,7 @@ const StyledTabButton = styled.button`
 
 const StyledHighlight = styled.div`
   position: absolute;
-  top: 0;
+  top: 50px;
   left: 0;
   z-index: 10;
   width: 2px;
