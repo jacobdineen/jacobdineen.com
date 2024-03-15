@@ -225,13 +225,13 @@ const StyledHighlight = styled.div`
   }
 
   @media (max-width: 600px) {
-    width: var(--tab-width); // The width should match the tab width
-    height: 2px; // Assuming you want a horizontal highlight now
-    transform: translateX(
-      calc(${({ activeTabId }) => activeTabId} * var(--tab-width))
-    ); // Move horizontally now
-    top: auto; // Set to auto or a specific value if you want the bar at the bottom
-    bottom: 0; // Align the highlight to the bottom of the tab button
+    // width: var(--tab-width); // The width should match the tab width
+    // height: 2px; // Assuming you want a horizontal highlight now
+    // transform: translateX(
+    //   calc(${({ activeTabId }) => activeTabId} * var(--tab-width))
+    // ); // Move horizontally now
+    // top: auto; // Set to auto or a specific value if you want the bar at the bottom
+    // bottom: 0; // Align the highlight to the bottom of the tab button
   }
 }
 `
