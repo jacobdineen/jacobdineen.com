@@ -506,18 +506,18 @@ const Experience = () => {
             aria-pressed={activeContentType === "jobs"}
             style={{
               backgroundColor:
-                activeContentType === "jobs" ? "#007bff" : "#f8f9fa",
-              color: activeContentType === "jobs" ? "#ffffff" : "#212529",
-              border: "1px solid",
-              borderColor: activeContentType === "jobs" ? "#007bff" : "#ced4da",
+                activeContentType === "jobs" ? "#89CFEF" : "#f8f9fa",
+              color: activeContentType === "jobs" ? "#000000" : "#212529",
+              border: "3px solid",
+              borderColor: activeContentType === "jobs" ? "#000000" : "#ced4da", // Border color black when active
               borderRadius: "20px",
-              padding: "10px 10px",
+              padding: "5px 5px",
               margin: "0 5px",
               cursor: "crosshair",
               fontSize: "0.65rem",
               fontWeight: "800",
               fontFamily: "var(--font-mono)",
-              transition: "all 0.3s ease",
+              transition: "all .5s ease",
               outline: "none",
             }}
           >
@@ -530,19 +530,19 @@ const Experience = () => {
             aria-pressed={activeContentType === "rjobs"}
             style={{
               backgroundColor:
-                activeContentType === "rjobs" ? "#007bff" : "#f8f9fa",
-              color: activeContentType === "rjobs" ? "#ffffff" : "#212529",
-              border: "1px solid",
+                activeContentType === "rjobs" ? "#89CFEF" : "#f8f9fa",
+              color: activeContentType === "rjobs" ? "#000000" : "#212529",
+              border: "3px solid",
               borderColor:
-                activeContentType === "rjobs" ? "#007bff" : "#ced4da",
+                activeContentType === "rjobs" ? "#000000" : "#ced4da", // Border color black when active
               borderRadius: "20px",
-              padding: "10px 10px",
+              padding: "5px 5px",
               margin: "0 5px",
               cursor: "crosshair",
               fontSize: "0.65rem",
-              fontWeight: "800",
+              fontWeight: "80px",
               fontFamily: "var(--font-mono)",
-              transition: "all 0.3s ease",
+              transition: "all .5s ease",
               outline: "none",
             }}
           >
@@ -555,20 +555,20 @@ const Experience = () => {
             aria-pressed={activeContentType === "publications"}
             style={{
               backgroundColor:
-                activeContentType === "publications" ? "#007bff" : "#f8f9fa",
+                activeContentType === "publications" ? "#89CFEF" : "#f8f9fa",
               color:
-                activeContentType === "publications" ? "#ffffff" : "#212529",
-              border: "1px solid",
+                activeContentType === "publications" ? "#000000" : "#212529",
+              border: "3px solid",
               borderColor:
-                activeContentType === "publications" ? "#007bff" : "#ced4da",
+                activeContentType === "publications" ? "#000000" : "#ced4da", // Border color black when active
               borderRadius: "20px",
-              padding: "10px 10px",
+              padding: "5px 5px",
               margin: "0 5px",
               cursor: "crosshair",
               fontSize: "0.65rem",
               fontWeight: "800",
               fontFamily: "var(--font-mono)",
-              transition: "all 0.3s ease",
+              transition: "all .5s ease",
               outline: "none",
             }}
           >
@@ -580,19 +580,19 @@ const Experience = () => {
             aria-pressed={activeContentType === "education"}
             style={{
               backgroundColor:
-                activeContentType === "education" ? "#007bff" : "#f8f9fa",
-              color: activeContentType === "education" ? "#ffffff" : "#212529",
-              border: "1px solid",
+                activeContentType === "education" ? "#89CFEF" : "#f8f9fa",
+              color: activeContentType === "education" ? "#000000" : "#212529",
+              border: "3px solid",
               borderColor:
-                activeContentType === "education" ? "#007bff" : "#ced4da",
-              borderRadius: "20px",
-              padding: "10px 10px",
+                activeContentType === "education" ? "#000000" : "#ced4da", // Border color black when active
+              borderRadius: "50px",
+              padding: "5px 5px",
               margin: "0 5px",
               cursor: "crosshair",
               fontSize: "0.65rem",
               fontWeight: "800",
               fontFamily: "var(--font-mono)",
-              transition: "all 0.3s ease",
+              transition: "all .5s ease",
               outline: "none",
             }}
           >
