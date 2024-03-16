@@ -479,12 +479,22 @@ const Experience = () => {
   return (
     <StyledJobsSection id="experience" ref={revealContainer}>
       <StyledText>
+        <h1>Hey, I&apos;m Jake.</h1>
         <h1>
-          I am passionate about Machine Learning & Deep Learning, but have
-          focused mainly on eXplainable Artificial Intelligence and Multi-agent
-          Systems academically, and Recommender Systems professionally. If
-          interested, please reach out to me via one of the methods noted to the
-          left (email/linkedin).
+          I am passionate about Machine Learning & Deep Learning and have spent
+          close to ten years working in various Data Science and Machine
+          Learning Engineering roles, mostly within the fintech sector.
+          Additionally, I&apos;ve engaged in academic research across several
+          institutions in pursuit of my PhD, collecting Master of Science
+          degrees in DS and CS along the way.
+        </h1>
+        <h1>
+          Beyond my professional and academic pursuits, I&apos;m an avid sports
+          fan, currently basking in the Phx Suns&apos; recent success (2021). My
+          interests are varied and include planning trips to explore the world
+          with my fiance, spending quality time with the guys or my family,
+          memorizing IMDB catalogues, tinkering with my computers or speakers,
+          and finding ways to stay active in the Arizona heat.
         </h1>
 
         <h1 className="numbered-heading">A little about me</h1>

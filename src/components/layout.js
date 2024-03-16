@@ -24,6 +24,7 @@ const StyledSidebar = styled.aside`
   position: fixed;
   padding: 0 25px;
   display: flex;
+  margin-left: 90px;
   flex-direction: column;
   justify-content: center;
   z-index: 5;
@@ -41,7 +42,7 @@ const StyledSidebar = styled.aside`
     position: relative; // Switch to relative positioning on very small screens
     width: 100%; // Sidebar takes full width
     height: auto; // Height adjusts to content
-    padding: 20px; // Adjust padding as needed
+    padding-right: 210px;
   }
 
   nav {

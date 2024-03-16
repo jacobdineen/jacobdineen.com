@@ -10,8 +10,9 @@ const StyledContactSection = styled.section`
   text-align: center;
   padding-top: 0px;
   h1 {
-    font-size: 0.5rem;
+    font-size: 0.75rem;
     font-weight: 75;
+    padding-bottom: -20px;
     font-family: var(--font-mono);
     color: #ccd6f6;
     margin: 0 0 20px 0;
@@ -72,12 +73,12 @@ const Contact = () => {
     <StyledContactSection id="contact" ref={revealContainer}>
       <h2 className="title">Get In Touch</h2>
 
-      <p>
+      <h1>
         I am not actively seeking new positions at the moment, but my virtual
         door is always open. If you are curious about something or would simply
         like to drop a greeting, feel free to reach out. I endeavor to respond
         when possible!
-      </p>
+      </h1>
 
       <a className="email-link" href={`mailto:${email}`}>
         Email me
