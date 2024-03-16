@@ -24,6 +24,7 @@ const StyledSidebar = styled.aside`
   position: fixed;
   padding: 0 25px;
   display: flex;
+  margin-left: 90px;
   flex-direction: column;
   justify-content: center;
   z-index: 5;
