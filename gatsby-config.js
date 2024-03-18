@@ -3,8 +3,7 @@ const config = require("./src/config")
 module.exports = {
   siteMetadata: {
     title: "Jacob Dineen",
-    description:
-      "Jacob Dineen is a software engineer who specializes i (and occasionally designing) exceptional digital experiences.",
+    description: "Jacob Dineen: CS PhD Student / ML Engineer",
     siteUrl: "https://jacobdineen.github.io", // No trailing slash allowed!
     image: "/og.png", // Path to your image you placed in the 'static' folder
   },
