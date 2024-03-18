@@ -7,11 +7,11 @@ googlescholar: https://scholar.google.com/citations?view_op=view_citation&hl=en&
 semanticscholar: https://www.semanticscholar.org/paper/Unified-Explanations-in-Machine-Learning-Models%3A-A-Dineen-Kridel/24c79f9a4985d4503d7300eca987f874a7e8491e
 venue: "HICSS 2023"
 collection: publications
-technologies:
-  - name: "Python"
-    url: "https://python.org"
-  - name: "TensorFlow"
-    url: "https://tensorflow.org"
-  - name: "Kubernetes"
-    url: "https://kubernetes.io"
+# technologies:
+#   - name: "Python"
+#     url: "https://python.org"
+#   - name: "TensorFlow"
+#     url: "https://tensorflow.org"
+#   - name: "Kubernetes"
+#     url: "https://kubernetes.io"
 ---

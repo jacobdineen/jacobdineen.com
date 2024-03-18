@@ -9,11 +9,11 @@ semanticscholar: https://www.semanticscholar.org/reader/d9926dc56bd67f2f1b3f9caf
 paperurl: "https://link.springer.com/chapter/10.1007%2F978-3-030-80387-2_14"
 code: https://github.com/jacobdineen/RL4DataPoisoning
 collection: publications
-technologies:
-  - name: "Python"
-    url: "https://python.org"
-  - name: "TensorFlow"
-    url: "https://tensorflow.org"
-  - name: "Kubernetes"
-    url: "https://kubernetes.io"
+# technologies:
+#   - name: "Python"
+#     url: "https://python.org"
+#   - name: "TensorFlow"
+#     url: "https://tensorflow.org"
+#   - name: "Kubernetes"
+#     url: "https://kubernetes.io"
 ---

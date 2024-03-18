@@ -9,11 +9,11 @@ semanticscholar: https://www.semanticscholar.org/reader/020c978cbbf92d960ce486eb
 paperurl: "https://link.springer.com/chapter/10.1007%2F978-3-030-80387-2_8"
 code: https://github.com/jacobdineen/volunteergame_
 collection: publications
-technologies:
-  - name: "Python"
-    url: "https://python.org"
-  - name: "TensorFlow"
-    url: "https://tensorflow.org"
-  - name: "Kubernetes"
-    url: "https://kubernetes.io"
+# technologies:
+#   - name: "Python"
+#     url: "https://python.org"
+#   - name: "TensorFlow"
+#     url: "https://tensorflow.org"
+#   - name: "Kubernetes"
+#     url: "https://kubernetes.io"
 ---

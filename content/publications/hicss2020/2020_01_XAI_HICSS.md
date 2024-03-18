@@ -8,11 +8,11 @@ semanticscholar: https://pdfs.semanticscholar.org/5643/1886ac2ed20255ee1fa598354
 paperurl: "https://scholarspace.manoa.hawaii.edu/handle/10125/63859"
 code: https://github.com/jacobdineen/explainability
 collection: publications
-technologies:
-  - name: "Python"
-    url: "https://python.org"
-  - name: "TensorFlow"
-    url: "https://tensorflow.org"
-  - name: "Kubernetes"
-    url: "https://kubernetes.io"
+# technologies:
+#   - name: "Python"
+#     url: "https://python.org"
+#   - name: "TensorFlow"
+#     url: "https://tensorflow.org"
+#   - name: "Kubernetes"
+#     url: "https://kubernetes.io"
 ---
