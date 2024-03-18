@@ -180,7 +180,7 @@ const About = () => {
           </StyledPic>
           <StyledText>
             <h1>Jacob Dineen</h1>
-            <h2>Machine Learning Engineer & PhD Student</h2>
+            <h2> CS PhD Student / MLE</h2>
             <SidebarIcons>
               <a href="https://github.com/jacobdineen" aria-label="GitHub">
                 <IconGitHub />
