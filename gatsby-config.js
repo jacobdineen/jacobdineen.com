@@ -1,12 +1,12 @@
-const config = require('./src/config');
+const config = require("./src/config")
 
 module.exports = {
   siteMetadata: {
-    title: 'Jacob Dineen',
+    title: "Jacob Dineen",
     description:
-      'Jacob Dineen is a software engineer who specializes in building (and occasionally designing) exceptional digital experiences.',
-    siteUrl: 'https://jacobdineen.github.io', // No trailing slash allowed!
-    image: '/og.png', // Path to your image you placed in the 'static' folder
+      "Jacob Dineen is a software engineer who specializes i (and occasionally designing) exceptional digital experiences.",
+    siteUrl: "https://jacobdineen.github.io", // No trailing slash allowed!
+    image: "/og.png", // Path to your image you placed in the 'static' folder
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -19,13 +19,13 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: 'Jacob Dineen',
-        short_name: 'Jacob Dineen',
-        start_url: '/',
+        name: "Jacob Dineen",
+        short_name: "Jacob Dineen",
+        start_url: "/",
         background_color: config.colors.darkNavy,
         theme_color: config.colors.navy,
-        display: 'minimal-ui',
-        icon: 'src/images/logo.png',
+        display: "minimal-ui",
+        icon: "src/images/logo.png",
       },
     },
     `gatsby-plugin-offline`,
@@ -37,13 +37,12 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-source-filesystem',
+      resolve: "gatsby-source-filesystem",
       options: {
-        name: 'content',
+        name: "content",
         path: `${__dirname}/content/`,
       },
     },
-
 
     {
       resolve: `gatsby-transformer-remark`,
@@ -51,15 +50,15 @@ module.exports = {
         plugins: [
           {
             // https://www.gatsbyjs.org/packages/gatsby-remark-external-links
-            resolve: 'gatsby-remark-external-links',
+            resolve: "gatsby-remark-external-links",
             options: {
-              target: '_blank',
-              rel: 'nofollow noopener noreferrer',
+              target: "_blank",
+              rel: "nofollow noopener noreferrer",
             },
           },
           {
             // https://www.gatsbyjs.org/packages/gatsby-remark-images
-            resolve: 'gatsby-remark-images',
+            resolve: "gatsby-remark-images",
             options: {
               maxWidth: 700,
               linkImagesToOriginal: true,
@@ -69,7 +68,7 @@ module.exports = {
           },
           {
             // https://www.gatsbyjs.org/packages/gatsby-remark-code-titles/
-            resolve: 'gatsby-remark-code-titles',
+            resolve: "gatsby-remark-code-titles",
           }, // IMPORTANT: this must be ahead of other plugins that use code blocks
           {
             // https://www.gatsbyjs.org/packages/gatsby-remark-prismjs
@@ -82,7 +81,7 @@ module.exports = {
               // you may use this to prevent Prism from re-processing syntax.
               // This is an uncommon use-case though;
               // If you're unsure, it's best to use the default value.
-              classPrefix: 'language-',
+              classPrefix: "language-",
               // This is used to allow setting a language for inline code
               // (i.e. single backticks) by creating a separator.
               // This separator is a string and will do no white-space
@@ -112,8 +111,8 @@ module.exports = {
               // existing language" below.
               languageExtensions: [
                 {
-                  language: 'superscript',
-                  extend: 'javascript',
+                  language: "superscript",
+                  extend: "javascript",
                   definition: {
                     superscript_types: /(SuperType)/,
                   },
@@ -127,8 +126,8 @@ module.exports = {
               // Customize the prompt used in shell output
               // Values below are default
               prompt: {
-                user: 'root',
-                host: 'localhost',
+                user: "root",
+                host: "localhost",
                 global: false,
               },
             },
@@ -139,8 +138,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        trackingId: 'UA-45666519-2',
+        trackingId: "UA-45666519-2",
       },
     },
   ],
-};
+}
