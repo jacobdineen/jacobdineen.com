@@ -10,4 +10,7 @@ technologies:
   - name: "Software Security"
   - name: "Planning and Learning Methods in AI"
   - name: "Algorithms"
+  - name: "LLMs"
 ---
+
+Advised by [Professor Ben Zhou](http://xuanyu.me/).
