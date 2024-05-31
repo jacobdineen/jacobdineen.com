@@ -17,4 +17,4 @@ technologies:
   - name: "Research Hours"
 ---
 
-- Advised by Professor Madhav Marathe.
+Advised by [Professor Madhav Marathe](https://engineering.virginia.edu/faculty/madhav-marathe).
