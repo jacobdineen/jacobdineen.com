@@ -204,7 +204,7 @@ const About = () => {
                 <IconSemanticScholar />
               </a>
 
-              <a href="mailto:jdineen82194@gmail.com" aria-label="Send email">
+              <a href="mailto:jdineen81294@gmail.com" aria-label="Send email">
                 <IconGmail />
               </a>
             </SidebarIcons>
