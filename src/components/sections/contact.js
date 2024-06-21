@@ -72,14 +72,6 @@ const Contact = () => {
   return (
     <StyledContactSection id="contact" ref={revealContainer}>
       <h2 className="title">Get In Touch</h2>
-
-      <h1>
-        I am not actively seeking new positions at the moment, but my virtual
-        door is always open. If you are curious about something or would simply
-        like to drop a greeting, feel free to reach out. I endeavor to respond
-        when possible!
-      </h1>
-
       <a className="email-link" href={`mailto:${email}`}>
         Email me
       </a>
