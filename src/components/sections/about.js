@@ -19,7 +19,6 @@ const SidebarIcons = styled.aside`
   align-items: center; // Center icons vertically
   width: 100%; // Ensure the container takes full width
   margin-top: 20px; // Space between the picture and icons
-
   a {
     &:not(:last-child) {
       margin-right: 20px; // Spacing between icons
@@ -35,11 +34,13 @@ const SidebarIcons = styled.aside`
 
 const StyledAboutSection = styled.section`
   max-width: 500px;
+  margin: 0 auto; // Center the section
 
   .inner {
-    display: grid;
-    grid-template-columns: 3fr 2fr;
-    grid-gap: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    grid-gap: 20px; // Space between elements
 
     @media (max-width: 768px) {
       display: block;
@@ -49,7 +50,7 @@ const StyledAboutSection = styled.section`
 const StyledText = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start; // Align text to the left
+  align-items: center; // Center text
   padding: 0;
   margin: 0;
 
@@ -58,7 +59,7 @@ const StyledText = styled.div`
     font-weight: 100; // Large font weight for the main title
     font-family: var(--font-mono); // Monospace font for the main title
     color: #ccd6f6; // Light text color
-    margin: 0 0 20px 0; // Spacing after the title
+    margin: 0 0 10px 0; // Spacing after the title
   }
 
   h2 {
@@ -157,13 +158,8 @@ const About = () => {
     sr.reveal(revealContainer.current, srConfig())
   }, [])
 
-  // const skills = ['PyTorch', 'TensorFlow', 'scikit-learn', 'Keras', 'OpenCV', 'Natural Language Processing (NLP)', 'Deep Learning', 'Machine Learning Engineering'];
-
   return (
     <>
-      {/* Sidebar with icons */}
-
-      {/* Main content */}
       <StyledAboutSection id="about" ref={revealContainer}>
         <div className="inner">
           <StyledPic>
