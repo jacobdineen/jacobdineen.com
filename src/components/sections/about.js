@@ -1,16 +1,16 @@
-import React, { useEffect, useRef } from "react"
-import { StaticImage } from "gatsby-plugin-image"
-import styled from "styled-components"
-import { srConfig } from "@config"
-import sr from "@utils/sr"
-import { usePrefersReducedMotion } from "@hooks"
+import React, { useEffect, useRef } from "react";
+import { StaticImage } from "gatsby-plugin-image";
+import styled from "styled-components";
+import { srConfig } from "@config";
+import sr from "@utils/sr";
+import { usePrefersReducedMotion } from "@hooks";
 import {
   IconGitHub,
   IconLinkedin,
   IconGmail,
   IconGScholar,
   IconSemanticScholar,
-} from "@components/icons"
+} from "@components/icons";
 
 const SidebarIcons = styled.aside`
   display: flex;
@@ -30,7 +30,7 @@ const SidebarIcons = styled.aside`
     width: 24px;
     height: 24px;
   }
-`
+`;
 
 const StyledAboutSection = styled.section`
   max-width: 500px;
@@ -46,7 +46,7 @@ const StyledAboutSection = styled.section`
       display: block;
     }
   }
-`
+`;
 const StyledText = styled.div`
   display: flex;
   flex-direction: column;
@@ -77,7 +77,7 @@ const StyledText = styled.div`
     max-width: 540px; // Max width for paragraph text, adjust as necessary
     line-height: 1.5; // Line height for paragraph text
   }
-`
+`;
 const StyledPic = styled.div`
   position: relative;
   max-width: 200px;
@@ -144,71 +144,139 @@ const StyledPic = styled.div`
       z-index: -1;
     }
   }
-`
+`;
 
-const About = () => {
-  const revealContainer = useRef(null)
-  const prefersReducedMotion = usePrefersReducedMotion()
+const ThemeToggleWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+`;
+
+const ThemeToggleLabel = styled.label`
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+
+  & input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  & input:checked + span {
+    background-color: ${(props) => (props.isDarkMode ? "#2196F3" : "#ccc")};
+  }
+
+  & input:checked + span:before {
+    transform: translateX(26px);
+  }
+`;
+
+const ThemeToggleSlider = styled.span`
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: ${(props) => (props.isDarkMode ? "#ccc" : "#2196F3")};
+  transition: 0.4s;
+  border-radius: 34px;
+
+  &:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
+`;
+
+const ThemeToggleText = styled.span`
+  margin-left: 10px;
+  color: ${(props) => (props.isDarkMode ? "#ffffff" : "#000000")};
+`;
+
+const About = ({ isDarkMode, toggleTheme }) => {
+  const revealContainer = useRef(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
 
   useEffect(() => {
     if (prefersReducedMotion) {
-      return
+      return;
     }
 
-    sr.reveal(revealContainer.current, srConfig())
-  }, [])
+    sr.reveal(revealContainer.current, srConfig());
+  }, []);
 
   return (
-    <>
-      <StyledAboutSection id="about" ref={revealContainer}>
-        <div className="inner">
-          <StyledPic>
-            <div className="wrapper">
-              <StaticImage
-                className="img"
-                src="../../images/me.jpg"
-                width={500}
-                quality={95}
-                formats={["AUTO", "WEBP", "AVIF"]}
-                alt="Headshot"
+    <StyledAboutSection id="about" ref={revealContainer}>
+      <div className="inner">
+        <StyledPic>
+          <div className="wrapper">
+            <StaticImage
+              className="img"
+              src="../../images/me.jpg"
+              width={500}
+              quality={95}
+              formats={["AUTO", "WEBP", "AVIF"]}
+              alt="Headshot"
+            />
+          </div>
+        </StyledPic>
+        <StyledText>
+          <h1>Jacob Dineen</h1>
+          <h2> CS PhD Student / MLE</h2>
+          <SidebarIcons>
+            <a href="https://github.com/jacobdineen" aria-label="GitHub">
+              <IconGitHub />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/jacobdineen/"
+              aria-label="Linkedin"
+            >
+              <IconLinkedin />
+            </a>
+            <a
+              href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiDv7jF5-yEAxXDIEQIHQzsCHEQFnoECBIQAQ&url=https%3A%2F%2Fscholar.google.com%2Fcitations%3Fuser%3DWKurvcoAAAAJ%26hl%3Den&usg=AOvVaw329Uar6xNQ9B1keI_PT4Oc&opi=89978449"
+              aria-label="Google Scholar"
+            >
+              <IconGScholar />
+            </a>
+            <a
+              href="https://www.semanticscholar.org/author/Jacob-Dineen/1576998836"
+              aria-label="Semantic Scholar"
+            >
+              <IconSemanticScholar />
+            </a>
+
+            <a href="mailto:jdineen81294@gmail.com" aria-label="Send email">
+              <IconGmail />
+            </a>
+          </SidebarIcons>
+          <ThemeToggleWrapper>
+            <ThemeToggleLabel>
+              <input
+                type="checkbox"
+                checked={isDarkMode}
+                onChange={toggleTheme}
               />
-            </div>
-          </StyledPic>
-          <StyledText>
-            <h1>Jacob Dineen</h1>
-            <h2> CS PhD Student / MLE</h2>
-            <SidebarIcons>
-              <a href="https://github.com/jacobdineen" aria-label="GitHub">
-                <IconGitHub />
-              </a>
-              <a
-                href="https://www.linkedin.com/in/jacobdineen/"
-                aria-label="Linkedin"
-              >
-                <IconLinkedin />
-              </a>
-              <a
-                href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiDv7jF5-yEAxXDIEQIHQzsCHEQFnoECBIQAQ&url=https%3A%2F%2Fscholar.google.com%2Fcitations%3Fuser%3DWKurvcoAAAAJ%26hl%3Den&usg=AOvVaw329Uar6xNQ9B1keI_PT4Oc&opi=89978449"
-                aria-label="Google Scholar"
-              >
-                <IconGScholar />
-              </a>
-              <a
-                href="https://www.semanticscholar.org/author/Jacob-Dineen/1576998836"
-                aria-label="Semantic Scholar"
-              >
-                <IconSemanticScholar />
-              </a>
+              <ThemeToggleSlider isDarkMode={isDarkMode} />
+            </ThemeToggleLabel>
+            <ThemeToggleText isDarkMode={isDarkMode}>
+              {isDarkMode ? "Dark Mode" : "Light Mode"}
+            </ThemeToggleText>
+          </ThemeToggleWrapper>
+        </StyledText>
+      </div>
+    </StyledAboutSection>
+  );
+};
 
-              <a href="mailto:jdineen81294@gmail.com" aria-label="Send email">
-                <IconGmail />
-              </a>
-            </SidebarIcons>
-          </StyledText>
-        </div>
-      </StyledAboutSection>
-    </>
-  )
-}
-
-export default About
+export default About;

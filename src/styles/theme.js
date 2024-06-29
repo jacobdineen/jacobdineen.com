@@ -1,5 +1,21 @@
 import mixins from './mixins';
 
+const lightTheme = {
+  background: "#ffffff",
+  text: "#000000",
+  link: "#89cfef",
+  hover: "#64ffda",
+  mixins,
+};
+
+const darkTheme = {
+  background: "#000000",
+  text: "#ffffff",
+  link: "#89cfef",
+  hover: "#64ffda",
+  mixins,
+};
+
 const theme = {
   bp: {
     mobileS: `max-width: 330px`,
@@ -12,7 +28,6 @@ const theme = {
     desktopM: `max-width: 1200px`,
     desktopL: `max-width: 1400px`,
   },
-
   mixins,
 };
 

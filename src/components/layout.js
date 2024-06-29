@@ -1,13 +1,42 @@
-import React, { useState } from "react"
-import PropTypes from "prop-types"
-import styled, { ThemeProvider } from "styled-components"
-import { Head, Loader, Footer } from "@components"
-import { GlobalStyle, theme } from "@styles"
-import About from "@components/sections/about"
-// import { Link } from 'gatsby';
-import { Analytics } from "@vercel/analytics/react"
-import { SpeedInsights } from "@vercel/speed-insights/react"
-const sections = ["experience", "contact", "resume"]
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
+import { Head, Loader, Footer } from "@components";
+import About from "@components/sections/about";
+import { GlobalStyle, theme } from "@styles";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
+
+const sections = ["experience", "contact", "resume"];
+
+const lightTheme = {
+  ...theme,
+  background: "#ffffff",
+  text: "#000000",
+};
+
+const darkTheme = {
+  ...theme,
+  background: "#000000",
+  text: "#ffffff",
+};
+
+const GlobalStyles = createGlobalStyle`
+  body {
+    background-color: ${(props) => props.theme.background};
+    color: ${(props) => props.theme.text};
+    transition: all 0.25s linear;
+  }
+
+  a {
+    color: ${(props) => props.theme.link};
+    transition: color 0.25s linear;
+
+    &:hover {
+      color: ${(props) => props.theme.hover};
+    }
+  }
+`;
 
 const StyledContainer = styled.div`
   display: flex;
@@ -16,10 +45,10 @@ const StyledContainer = styled.div`
   @media (min-width: 600px) {
     flex-direction: row; // Switch to horizontal layout for larger screens
   }
-`
+`;
 
 const StyledSidebar = styled.aside`
-  width: 30%; // Start with a percentage width
+  width: 15%; // Start with a percentage width
   height: 100vh;
   position: fixed;
   padding: 0 25px;
@@ -97,11 +126,11 @@ const StyledSidebar = styled.aside`
       }
     }
   }
-`
+`;
 
 const StyledMainContent = styled.main`
   width: 80%;
-  margin-left: 30%; /* Adjust based on sidebar width */
+  margin-left: 40%; /* Adjust based on sidebar width */
   position: relative;
   padding-bottom: 0px;
   display: flex;
@@ -116,7 +145,6 @@ const StyledMainContent = styled.main`
   @media (max-width: 768px) {
     width: 40%;
     padding-top: 0px;
-
     margin-left: 50%; /* Adjust to match sidebar */
   }
 
@@ -124,30 +152,32 @@ const StyledMainContent = styled.main`
     width: 100%;
     margin-left: 0;
   }
-`
+`;
 
 const Layout = ({ children, location }) => {
-  const [isLoading, setIsLoading] = useState(location.pathname === "/")
-  const [activeSection, setActiveSection] = useState("")
+  const [isLoading, setIsLoading] = useState(location.pathname === "/");
+  const [activeSection, setActiveSection] = useState("");
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   const handleSectionClick = (e, section) => {
-    e.preventDefault()
-    // Check if the clicked section is 'resume'
+    e.preventDefault();
     if (section === "resume") {
-      // Redirect to the resume.pdf file, adjust the path as necessary
-      window.location.href = "/Academic_Resume.pdf"
+      window.location.href = "/Academic_Resume.pdf";
     } else {
-      // Scroll to the selected section
-      document.getElementById(section)?.scrollIntoView({ behavior: "smooth" })
-      setActiveSection(section) // Optionally, mark the section as active
+      document.getElementById(section)?.scrollIntoView({ behavior: "smooth" });
+      setActiveSection(section);
     }
-  }
+  };
+
+  const toggleTheme = () => {
+    setIsDarkMode((prevMode) => !prevMode);
+  };
 
   return (
     <>
       <Head />
-      <ThemeProvider theme={theme}>
-        <GlobalStyle />
+      <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+        <GlobalStyles />
         <Analytics />
         <SpeedInsights />
         {isLoading ? (
@@ -155,15 +185,15 @@ const Layout = ({ children, location }) => {
         ) : (
           <StyledContainer>
             <StyledSidebar>
-              <About />
+              <About isDarkMode={isDarkMode} toggleTheme={toggleTheme} />
               <nav>
                 <ul>
-                  {sections.map(section => (
+                  {sections.map((section) => (
                     <li key={section}>
                       <a
                         href={`#${section}`}
                         className={activeSection === section ? "active" : ""}
-                        onClick={e => handleSectionClick(e, section)}
+                        onClick={(e) => handleSectionClick(e, section)}
                       >
                         {section.charAt(0).toUpperCase() + section.slice(1)}
                       </a>
@@ -175,16 +205,15 @@ const Layout = ({ children, location }) => {
             <StyledMainContent id="content">{children}</StyledMainContent>
           </StyledContainer>
         )}
-
         <Footer />
       </ThemeProvider>
     </>
-  )
-}
+  );
+};
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
   location: PropTypes.object.isRequired,
-}
+};
 
-export default Layout
+export default Layout;
