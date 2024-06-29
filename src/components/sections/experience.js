@@ -115,88 +115,64 @@ const IconLink = styled.a`
     fill: currentColor; // This ensures the SVG icon inherits the color from the parent
   }
 `
-
 const StyledJobsSection = styled.section`
   max-width: 700px;
-  font-size: var(--fz-lg); // Set the default font size for the section here
+  font-size: var(--fz-lg);
 
   .inner {
     display: flex;
-
-    @media (max-width: 600px) {
-      display: block;
-    }
-
-    // Prevent container from jumping
-    @media (min-width: 700px) {
-      min-height: 340px;
-    }
+    flex-direction: column; // Stack items vertically
+    align-items: flex-start; // Align items to the start
   }
 
   ul.fancy-list li {
-    font-size: 0.4rem; // Set a different font size for list items
-    // If you want to make the bullets smaller as well, you could add:
+    font-size: 0.4rem;
     &:before {
-      // Content and color same as you have now
-      font-size: 0.64rem; // Set a different font size for list items
+      font-size: 0.64rem;
     }
   }
+
   @media (max-width: 768px) {
-    font-size: var(
-      --fz-xs
-    ); // You can have a slightly larger font size for small tablets if needed
+    font-size: var(--fz-xs);
   }
 
   @media (max-width: 600px) {
-    margin-left: 0; // Remove the margin for mobile screens
-    padding: 0 10px; // Add some padding on the sides for mobile screens
-    font-size: var(--fz-sm); // Adjust font size for readability on mobile
+    margin-left: 0;
+    padding: 0 10px;
+    font-size: var(--fz-sm);
   }
 `
 
 const StyledTabList = styled.div`
-  max-width: 700px;
+  display: flex;
+  justify-content: flex-start;
+  max-width: 100%;
   position: relative;
-
-  font-size: var(--fz-lg); // Set the default font size for the section here
   padding: 50px 0;
+  font-size: var(--fz-lg);
 
   @media (max-width: 600px) {
-    flex-shrink: 0; // Prevent the tabs from shrinking
-    width: var(
-      --tab-width-mobile
-    ); // Assign a width that works for your design on mobile
+    flex-wrap: wrap;
   }
 `
 
 const StyledTabButton = styled.button`
   display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--green);
   font-size: var(--fz-xs);
-  align-items: center;
-  width: var(--tab-width);
+  width: auto;
   height: var(--tab-height);
-  border-left: 2px solid var(--lightest-navy);
-  // border-right: 2px solid var(--lightest-navy);
-  // border-top: 2px solid var(--lightest-navy);
-  // border-bottom: 2px solid var(--lightest-navy);
+  border-bottom: 2px solid var(--lightest-navy);
   background-color: transparent;
-  text-align: left;
-  box-sizing: border-box; // Ensure padding and border are included in the element's width
+  text-align: center;
+  box-sizing: border-box;
+  padding: 0 20px;
 
   @media (max-width: 600px) {
-    flex-shrink: 0; // Prevent the tabs from shrinking
-    width: var(
-      --tab-width-mobile
-    ); // Assign a width that works for your design on mobile
-    height: var(--tab-height);
-    padding: 0 20px 2px;
-  }
-
-  @media (max-width: 480px) {
-    width: auto; // Buttons should only be as wide as their content
-    height: var(--tab-height);
-    padding: 0 20px 2px;
+    width: 100%;
+    padding: 10px 0;
   }
 
   &:hover,
@@ -205,81 +181,25 @@ const StyledTabButton = styled.button`
   }
 `
 
-const StyledHighlight = styled.div`
-  position: absolute;
-  top: 50px;
-  left: 0;
-  z-index: 10;
-  width: 2px;
-  height: var(--tab-height);
-  border-radius: var(--border-radius);
-  background: var(--green);
-  transform: translateY(
-    calc(${({ activeTabId }) => activeTabId} * var(--tab-height))
-  );
-  transition: transform 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
-  transition-delay: 0.1s;
-
-  @media (max-width: 768px) {
-    // Adjustments for tablets if necessary
-  }
-
-  @media (max-width: 600px) {
-    // width: var(--tab-width); // The width should match the tab width
-    // height: 2px; // Assuming you want a horizontal highlight now
-    // transform: translateX(
-    //   calc(${({ activeTabId }) => activeTabId} * var(--tab-width))
-    // ); // Move horizontally now
-    // top: auto; // Set to auto or a specific value if you want the bar at the bottom
-    // bottom: 0; // Align the highlight to the bottom of the tab button
-  }
-}
-`
-
 const StyledTabPanels = styled.div`
-  position: flex;
-  width: 100%; // Ensure it takes up the full width
-  margin-top: 40px;
-  margin-left: 20px; // Space from the sidebar or any adjacent content
-  font-size: var(
-    --fz-xss
-  ); // Small font size, make sure it's defined in your variables
-  font-family: var(--font-mono); // Monospace font, also should be defined
-
-  @media (max-width: 768px) {
-    font-size: var(
-      --fz-xs margin-top: 40px;
-    ); // You can have a slightly larger font size for small tablets if needed
-  }
-
-  @media (max-width: 600px) {
-    width: 75%; // Ensure it takes up the full width
-    margin-left: 0; // Remove the margin for mobile screens
-    padding: 0 0px; // Add some padding on the sides for mobile screens
-    font-size: var(--fz-sm); // Adjust font size for readability on mobile
-    flex-shrink: 0; // Prevent the tabs from shrinking
-    width: var(
-      --tab-width-mobile
-    ); // Assign a width that works for your design on mobile
-  }
+  width: 100%;
+  margin-top: 20px; // Adjust spacing to fit your needs
+  padding: 0 20px; // Optional: add padding if needed
 `
 
 const StyledTabPanel = styled.div`
   width: 100%;
   height: auto;
-  padding: 10px 1px;
+  padding: 10px 0;
+
   @media (max-width: 768px) {
+    padding: 10px 0;
   }
 
   @media (max-width: 600px) {
-    width: 75%;
-    margin-left: 0; // Remove the margin for mobile screens
-    padding: 0 10px; // Add some padding on the sides for mobile screens
+    width: 100%;
+    padding: 10px 0;
   }
-  // ul {
-  //   ${({ theme }) => theme.mixins.fancyList};
-
-  // }
 
   h3 {
     margin-bottom: 2px;
@@ -289,31 +209,31 @@ const StyledTabPanel = styled.div`
 
     .company {
       color: var(--green);
-      font-size: 0.75em; // Adjust the font size as needed
+      font-size: 0.75em;
     }
   }
 
   .authors,
   .venue,
   .range {
-    font-family: "Open Sans", sans-serif; // Example font family
-    font-size: 0.5em; // Adjust the font size as needed
-    color: #666; // Example text color
+    font-family: "Open Sans", sans-serif;
+    font-size: 0.5em;
+    color: #666;
     margin-bottom: 0.5rem;
   }
 
   ${IconContainer} {
     display: flex;
-    justify-content: start; // Align icons to the start
-    gap: 10px; // Space between icons
+    justify-content: start;
+    gap: 10px;
   }
 
   ${IconLink} {
     display: inline-flex;
     align-items: center;
     svg {
-      width: 24px; // Adjust icon size
-      height: 24px; // Adjust icon size
+      width: 24px;
+      height: 24px;
     }
   }
 `
@@ -641,7 +561,6 @@ const Experience = () => {
                 </StyledTabButton>
               )
             })}
-            <StyledHighlight activeTabId={activeTabId} />
           </StyledTabList>
 
           <StyledTabPanels>
