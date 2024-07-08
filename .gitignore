@@ -73,7 +73,7 @@ typings/
 public/*
 
 # Except for the Academic_Resume.pdf file
-!public/Academic_Resume.pdf
+!public/Academic_Resume2.pdf
 
 # Mac files
 .DS_Store

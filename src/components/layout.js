@@ -135,7 +135,7 @@ const Layout = ({ children, location }) => {
     // Check if the clicked section is 'resume'
     if (section === "resume") {
       // Redirect to the resume.pdf file, adjust the path as necessary
-      window.location.href = "/Academic_Resume.pdf"
+      window.location.href = "/Academic_Resume2.pdf"
     } else {
       // Scroll to the selected section
       document.getElementById(section)?.scrollIntoView({ behavior: "smooth" })
