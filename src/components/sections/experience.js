@@ -99,7 +99,7 @@ const IconContainer = styled.div`
   display: flex;
   justify-content: center; // Centers the icons horizontally in the container
   align-items: center; // Aligns the icons vertically in the center
-  gap: 10px; // Adjust the gap between icons as needed
+  gap: 5px; // Adjust the gap between icons as needed
   flex-wrap: wrap; // Allows the icons to wrap to the next line if the container is too narrow
 `
 
@@ -203,21 +203,18 @@ const StyledTabPanel = styled.div`
 
   h3 {
     margin-bottom: 2px;
-    font-size: var(--fz-xs);
+    font-size: var(--fz-md);
     font-weight: 1000;
-    line-height: 1.3;
 
     .company {
-      color: var(--green);
-      font-size: 0.75em;
+      font-size: var(--fz-md);
     }
   }
 
   .authors,
   .venue,
   .range {
-    font-family: "Open Sans", sans-serif;
-    font-size: 0.5em;
+    font-size: 0.9em;
     color: #666;
     margin-bottom: 0.5rem;
   }
@@ -225,7 +222,7 @@ const StyledTabPanel = styled.div`
   ${IconContainer} {
     display: flex;
     justify-content: start;
-    gap: 10px;
+    gap: 5px;
   }
 
   ${IconLink} {

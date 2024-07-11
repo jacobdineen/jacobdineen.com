@@ -19,9 +19,14 @@ const SidebarIcons = styled.aside`
   align-items: center; // Center icons vertically
   width: 100%; // Ensure the container takes full width
   margin-top: 20px; // Space between the picture and icons
+
   a {
     &:not(:last-child) {
       margin-right: 20px; // Spacing between icons
+
+      @media (max-width: 768px) {
+        margin-right: 15px; // Adjust spacing between icons on mobile
+      }
     }
   }
 
@@ -29,6 +34,11 @@ const SidebarIcons = styled.aside`
     fill: currentColor;
     width: 24px;
     height: 24px;
+
+    @media (max-width: 768px) {
+      width: 200px; // Increase icon size on mobile
+      height: 200px; // Increase icon size on mobile
+    }
   }
 `
 
