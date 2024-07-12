@@ -133,7 +133,9 @@ const Contact = () => {
     e.preventDefault()
     const form = e.target
     const data = new FormData(form)
-    const response = await fetch("https://formspree.io/f/xkgwgjqn", {
+    const endpoint = "https://formspree.io/f/xkgwgjqn"
+
+    const response = await fetch(endpoint, {
       method: "POST",
       headers: {
         Accept: "application/json",
