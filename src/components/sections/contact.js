@@ -88,7 +88,6 @@ const StyledContactSection = styled.section`
     }
   }
 `
-
 const Contact = () => {
   const revealContainer = useRef(null)
   const prefersReducedMotion = usePrefersReducedMotion()
@@ -106,7 +105,7 @@ const Contact = () => {
     e.preventDefault()
     const form = e.target
     const formData = new FormData(form)
-    const response = await fetch("https://formspree.io/f/xkgwgjqn", {
+    const response = await fetch(process.env.REACT_APP_FORM_ENDPOINT, {
       method: "POST",
       headers: {
         Accept: "application/json",
