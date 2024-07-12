@@ -135,9 +135,6 @@ const Contact = () => {
     const data = new FormData(form)
     const endpoint = "https://formspree.io/f/xkgwgjqn"
 
-    // Log the endpoint to verify it's being read correctly
-    console.log("Formspree Endpoint:", endpoint)
-
     const response = await fetch(endpoint, {
       method: "POST",
       headers: {
