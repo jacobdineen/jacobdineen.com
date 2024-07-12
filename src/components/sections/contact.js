@@ -20,10 +20,8 @@ const StyledContactSection = styled.section`
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #0a192f;
     padding: 2rem;
     border-radius: 10px;
-    box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
   }
 
   label {
@@ -40,8 +38,8 @@ const StyledContactSection = styled.section`
   textarea {
     padding: 0.75rem;
     margin-top: 0.5rem;
-    border: 1px solid #ccd6f6;
-    border-radius: 5px;
+    border: none;
+    border-bottom: 2px solid #ccd6f6;
     width: 100%;
     background-color: #112240;
     color: #ccd6f6;
@@ -49,8 +47,13 @@ const StyledContactSection = styled.section`
 
     &:focus {
       outline: none;
-      border-color: #64ffda;
+      border-bottom-color: #64ffda;
     }
+  }
+
+  textarea {
+    height: 150px; /* Default height */
+    width: 300px; /* Default width */
   }
 
   button {
@@ -93,6 +96,12 @@ const Contact = () => {
   const revealContainer = useRef(null)
   const prefersReducedMotion = usePrefersReducedMotion()
   const [formStatus, setFormStatus] = useState("")
+  const [currentStep, setCurrentStep] = useState(1)
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  })
 
   useEffect(() => {
     if (prefersReducedMotion) {
@@ -102,16 +111,34 @@ const Contact = () => {
     sr.reveal(revealContainer.current, srConfig())
   }, [prefersReducedMotion])
 
+  const handleChange = e => {
+    const { name, value } = e.target
+    setFormData({
+      ...formData,
+      [name]: value,
+    })
+  }
+
+  const handleNext = e => {
+    e.preventDefault()
+    setCurrentStep(currentStep + 1)
+  }
+
+  const handlePrev = e => {
+    e.preventDefault()
+    setCurrentStep(currentStep - 1)
+  }
+
   const handleSubmit = async e => {
     e.preventDefault()
     const form = e.target
-    const formData = new FormData(form)
+    const data = new FormData(form)
     const response = await fetch("https://formspree.io/f/xkgwgjqn", {
       method: "POST",
       headers: {
         Accept: "application/json",
       },
-      body: formData,
+      body: data,
     })
 
     if (response.ok) {
@@ -126,19 +153,53 @@ const Contact = () => {
     <StyledContactSection id="contact" ref={revealContainer}>
       <h2 className="title">Get In Touch</h2>
       <form onSubmit={handleSubmit}>
-        <label>
-          Name:
-          <input type="text" name="name" required />
-        </label>
-        <label>
-          Email:
-          <input type="email" name="email" required />
-        </label>
-        <label>
-          Message:
-          <textarea name="message" rows="5" required />
-        </label>
-        <button type="submit">Send Message</button>
+        {currentStep === 1 && (
+          <div>
+            <label>
+              Name:
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
+            </label>
+            <button onClick={handleNext}>Next</button>
+          </div>
+        )}
+        {currentStep === 2 && (
+          <div>
+            <label>
+              Email:
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </label>
+            <button onClick={handlePrev}>Back</button>
+            <button onClick={handleNext}>Next</button>
+          </div>
+        )}
+        {currentStep === 3 && (
+          <div>
+            <label>
+              Message:
+              <textarea
+                name="message"
+                rows="5"
+                value={formData.message}
+                onChange={handleChange}
+                required
+              />
+            </label>
+            <button onClick={handlePrev}>Back</button>
+            <button type="submit">Send Message</button>
+          </div>
+        )}
       </form>
       {formStatus && <p className="form-status">{formStatus}</p>}
     </StyledContactSection>
