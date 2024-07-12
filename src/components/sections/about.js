@@ -36,8 +36,8 @@ const SidebarIcons = styled.aside`
     height: 24px;
 
     @media (max-width: 768px) {
-      width: 200px; // Increase icon size on mobile
-      height: 200px; // Increase icon size on mobile
+      width: 50px; // Increase icon size on mobile
+      height: 50px; // Increase icon size on mobile
     }
   }
 `
@@ -50,7 +50,7 @@ const StyledAboutSection = styled.section`
     display: flex;
     flex-direction: column;
     align-items: center;
-    grid-gap: 20px; // Space between elements
+    grid-gap: 10px; // Space between elements
 
     @media (max-width: 768px) {
       display: block;

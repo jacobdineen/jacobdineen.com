@@ -9,6 +9,7 @@ const StyledContactSection = styled.section`
   margin: 0 auto 100px;
   text-align: center;
   padding-top: 0px;
+
   h1 {
     font-size: 0.75rem;
     font-weight: 75;
@@ -17,6 +18,7 @@ const StyledContactSection = styled.section`
     color: #ccd6f6;
     margin: 0 0 20px 0;
   }
+
   h2 {
     font-size: 0.5rem;
     font-weight: 75;
@@ -24,6 +26,7 @@ const StyledContactSection = styled.section`
     color: #ccd6f6;
     margin: 0 0 20px 0;
   }
+
   @media (max-width: 768px) {
     margin: 0 auto 50px;
     padding-top: 0px;
@@ -48,7 +51,7 @@ const StyledContactSection = styled.section`
   }
 
   .title {
-    font-size: clamp(40px, 5vw, 60px);
+    font-size: 24px; /* Set a smaller fixed font size */
   }
 
   .email-link {
@@ -67,7 +70,7 @@ const Contact = () => {
     }
 
     sr.reveal(revealContainer.current, srConfig())
-  }, [])
+  }, [prefersReducedMotion])
 
   return (
     <StyledContactSection id="contact" ref={revealContainer}>

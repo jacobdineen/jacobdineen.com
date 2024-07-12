@@ -12,15 +12,15 @@ const StyledText = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 0;
+  padding: 1rem; /* Added padding for better spacing */
   margin: 0;
 
   h1 {
-    font-size: 0.75rem;
-    font-weight: 75;
-    font-family: var(--font-mono);
+    font-size: 1rem; /* Increased font size for better readability */
+    font-weight: 1000;
     color: #ccd6f6;
     margin: 0 0 20px 0;
+    line-height: 1.2; /* Added line height for better readability */
   }
 
   ul {
@@ -30,15 +30,15 @@ const StyledText = styled.div`
   }
 
   li {
-    font-size: 0.75rem;
-    margin: 0.25rem 0;
+    font-size: 0.875rem; /* Increased font size for better readability */
+    margin: 0.5rem 0; /* Increased margin for better spacing */
     padding: 0.25rem 0;
     overflow-wrap: break-word;
     word-break: break-word;
+    line-height: 1.4; /* Added line height for better readability */
 
     &:before {
-      position: left;
-      left: 0;
+      content: "•"; /* Added bullet points */
       color: var(--green);
       font-size: 1.05rem;
       line-height: 0.75rem;
@@ -47,24 +47,26 @@ const StyledText = styled.div`
   }
 
   @media (max-width: 768px) {
+    padding: 1rem; /* Ensure padding for smaller screens */
+
     h1 {
-      font-size: 0.65rem;
+      font-size: 0.875rem; /* Adjusted font size for medium screens */
     }
 
     li {
-      font-size: 0.65rem;
+      font-size: 0.75rem; /* Adjusted font size for medium screens */
     }
   }
 
   @media (max-width: 480px) {
-    padding: 1rem;
+    padding: 1rem; /* Ensure padding for smaller screens */
 
     h1 {
-      font-size: 0.6rem;
+      font-size: 0.75rem; /* Adjusted font size for small screens */
     }
 
     li {
-      font-size: 0.6rem;
+      font-size: 0.75rem; /* Adjusted font size for small screens */
     }
   }
 `
