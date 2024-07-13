@@ -92,6 +92,27 @@ const StyledContactSection = styled.section`
   }
 `
 
+const useTypewriterEffect = (text, trigger, delay = 100) => {
+  const [displayedText, setDisplayedText] = useState("")
+
+  useEffect(() => {
+    if (!trigger) return
+
+    let index = 0
+    const intervalId = setInterval(() => {
+      setDisplayedText(prev => prev + text[index])
+      index++
+      if (index >= text.length) {
+        clearInterval(intervalId)
+      }
+    }, delay)
+
+    return () => clearInterval(intervalId)
+  }, [trigger, text, delay])
+
+  return displayedText
+}
+
 const Contact = () => {
   const revealContainer = useRef(null)
   const prefersReducedMotion = usePrefersReducedMotion()
@@ -102,6 +123,19 @@ const Contact = () => {
     email: "",
     message: "",
   })
+
+  const namePlaceholder = useTypewriterEffect(
+    "Please enter your name",
+    currentStep === 1
+  )
+  const emailPlaceholder = useTypewriterEffect(
+    "Please enter your email",
+    currentStep === 2
+  )
+  const messagePlaceholder = useTypewriterEffect(
+    "Please enter your message",
+    currentStep === 3
+  )
 
   useEffect(() => {
     if (prefersReducedMotion) {
@@ -164,6 +198,7 @@ const Contact = () => {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
+                placeholder={namePlaceholder}
                 required
               />
             </label>
@@ -179,6 +214,7 @@ const Contact = () => {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
+                placeholder={emailPlaceholder}
                 required
               />
             </label>
@@ -195,6 +231,7 @@ const Contact = () => {
                 rows="5"
                 value={formData.message}
                 onChange={handleChange}
+                placeholder={messagePlaceholder}
                 required
               />
             </label>
