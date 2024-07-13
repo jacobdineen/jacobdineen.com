@@ -163,7 +163,7 @@ const StyledTabButton = styled.button`
   align-items: center;
   justify-content: center;
   color: var(--green);
-  font-size: var(--fz-xs);
+  font-size: var(--fz-xxs);
   width: auto;
   height: var(--tab-height);
   border-bottom: 2px solid var(--lightest-navy);
@@ -171,6 +171,7 @@ const StyledTabButton = styled.button`
   text-align: center;
   box-sizing: border-box;
   padding: 0 20px;
+  transition: all 0.3s ease; /* Smooth transition for all properties */
 
   @media (max-width: 600px) {
     width: 100%;
@@ -181,6 +182,16 @@ const StyledTabButton = styled.button`
   &:focus {
     background-color: var(--light-navy);
   }
+
+  ${({ isActive }) =>
+    isActive &&
+    `
+    background-color: var(--navy);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1);
+    z-index: 1;
+    border-bottom: 3px solid var(--green);
+  `}
 `
 
 const StyledTabPanels = styled.div`
