@@ -12,15 +12,15 @@ const StyledText = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding: 1rem; /* Added padding for better spacing */
+  padding: 1rem;
   margin: 0;
 
   h1 {
-    font-size: 1rem; /* Increased font size for better readability */
+    font-size: 1rem;
     font-weight: 1000;
     color: #ccd6f6;
     margin: 0 0 20px 0;
-    line-height: 1.2; /* Added line height for better readability */
+    line-height: 1.2;
   }
 
   ul {
@@ -30,12 +30,12 @@ const StyledText = styled.div`
   }
 
   li {
-    font-size: 0.875rem; /* Increased font size for better readability */
-    margin: 0.5rem 0; /* Increased margin for better spacing */
+    font-size: 0.875rem;
+    margin: 0.5rem 0;
     padding: 0.25rem 0;
     overflow-wrap: break-word;
     word-break: break-word;
-    line-height: 1.4; /* Added line height for better readability */
+    line-height: 1.4;
 
     &:before {
       color: var(--green);
@@ -46,26 +46,26 @@ const StyledText = styled.div`
   }
 
   @media (max-width: 768px) {
-    padding: 1rem; /* Ensure padding for smaller screens */
+    padding: 1rem;
 
     h1 {
-      font-size: 0.875rem; /* Adjusted font size for medium screens */
+      font-size: 0.875rem;
     }
 
     li {
-      font-size: 0.75rem; /* Adjusted font size for medium screens */
+      font-size: 0.75rem;
     }
   }
 
   @media (max-width: 480px) {
-    padding: 1rem; /* Ensure padding for smaller screens */
+    padding: 1rem;
 
     h1 {
-      font-size: 0.75rem; /* Adjusted font size for small screens */
+      font-size: 0.75rem;
     }
 
     li {
-      font-size: 0.75rem; /* Adjusted font size for small screens */
+      font-size: 0.75rem;
     }
   }
 `
@@ -73,57 +73,58 @@ const StyledText = styled.div`
 const TechTagsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
-  justify-content: center; // This will center the tags
-  gap: 5px; // This creates a gap between the tags
+  justify-content: center;
+  gap: 5px;
 `
 
 const TechTag = styled.a`
-  display: inline-flex; // Use inline-flex so that tags can be in a line and centered
-  align-items: center; // Center the content of the tag
-  margin: 1px; // Provides space between tags, adjust as necessary
-  padding: 1px 10px; // Adjust padding as needed
-  font-size: 0.75em; // Adjust the font size as needed
-  background-color: #112240; // The tag background color
-  color: #64ffda; // The tag text color
-  border-radius: 2px; // Rounded corners
-  text-decoration: none; // Remove underline from the link
-  transition: background-color 0.3s, color 0.3s; // Smooth transition for background and text color
+  display: inline-flex;
+  align-items: center;
+  margin: 1px;
+  padding: 1px 10px;
+  font-size: 0.75em;
+  background-color: #112240;
+  color: #64ffda;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: background-color 0.3s, color 0.3s;
   cursor: crosshair;
   &:hover,
   &:focus {
-    background-color: #0a192f; // Darker background color on hover
-    color: #fff; // White text color on hover
+    background-color: #0a192f;
+    color: #fff;
   }
 `
 
 const IconContainer = styled.div`
   display: flex;
-  justify-content: center; // Centers the icons horizontally in the container
-  align-items: center; // Aligns the icons vertically in the center
-  gap: 5px; // Adjust the gap between icons as needed
-  flex-wrap: wrap; // Allows the icons to wrap to the next line if the container is too narrow
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
 `
 
 const IconLink = styled.a`
   display: flex;
   align-items: center;
   text-decoration: none;
-  color: inherit; // Adjust as needed
+  color: inherit;
 
   svg {
-    width: 30px; // Adjust the icon size as needed
-    height: 30px; // Adjust the icon size as needed
-    fill: currentColor; // This ensures the SVG icon inherits the color from the parent
+    width: 30px;
+    height: 30px;
+    fill: currentColor;
   }
 `
+
 const StyledJobsSection = styled.section`
   max-width: 700px;
   font-size: var(--fz-lg);
 
   .inner {
     display: flex;
-    flex-direction: column; // Stack items vertically
-    align-items: flex-start; // Align items to the start
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   ul.fancy-list li {
@@ -184,8 +185,8 @@ const StyledTabButton = styled.button`
 
 const StyledTabPanels = styled.div`
   width: 100%;
-  margin-top: 20px; // Adjust spacing to fit your needs
-  padding: 0 20px; // Optional: add padding if needed
+  margin-top: 20px;
+  padding: 0 20px;
 `
 
 const StyledTabPanel = styled.div`
@@ -338,7 +339,8 @@ const Experience = () => {
   const revealContainer = useRef(null)
   const prefersReducedMotion = usePrefersReducedMotion()
   const [activeContentType, setActiveContentType] = useState("jobs")
-  const [showAbstract, setShowAbstract] = useState({}) // State to manage abstract visibility
+  const [showAbstract, setShowAbstract] = useState({})
+  const [showCourses, setShowCourses] = useState({}) // State to manage course visibility
 
   useEffect(() => {
     if (prefersReducedMotion) {
@@ -392,6 +394,13 @@ const Experience = () => {
 
   const toggleAbstract = i => {
     setShowAbstract(prevState => ({
+      ...prevState,
+      [i]: !prevState[i],
+    }))
+  }
+
+  const toggleCourses = i => {
+    setShowCourses(prevState => ({
       ...prevState,
       [i]: !prevState[i],
     }))
@@ -564,7 +573,7 @@ const Experience = () => {
           <StyledTabPanels>
             {activeData.map(({ node }, i) => {
               const { frontmatter, html } = node
-              const { title, range, abstract } = frontmatter
+              const { title, range, abstract, technologies } = frontmatter
 
               return (
                 <CSSTransition
@@ -594,6 +603,36 @@ const Experience = () => {
                       <>
                         <h3>{frontmatter.degree}</h3>
                         <h1>{frontmatter.gpa}</h1>
+                        <button
+                          onClick={() => toggleCourses(i)}
+                          style={{
+                            backgroundColor: "#112240",
+                            color: "#64ffda",
+                            borderRadius: "5px",
+                            padding: "5px 10px",
+                            margin: "10px 0",
+                            cursor: "pointer",
+                            fontSize: "0.75rem",
+                            border: "none",
+                          }}
+                        >
+                          {showCourses[i] ? "Hide Courses" : "Show Courses"}
+                        </button>
+                        {showCourses[i] && (
+                          <TechTagsContainer>
+                            {technologies &&
+                              technologies.map((tech, index) => (
+                                <TechTag
+                                  key={index}
+                                  href={tech.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  {tech.name}
+                                </TechTag>
+                              ))}
+                          </TechTagsContainer>
+                        )}
                       </>
                     )}
                     {activeContentType === "publications" && (
@@ -673,19 +712,21 @@ const Experience = () => {
                     <p className="range">{range}</p>
 
                     <div dangerouslySetInnerHTML={{ __html: html }} />
-                    <TechTagsContainer>
-                      {frontmatter.technologies &&
-                        frontmatter.technologies.map((tech, index) => (
-                          <TechTag
-                            key={index}
-                            href={tech.url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {tech.name}
-                          </TechTag>
-                        ))}
-                    </TechTagsContainer>
+                    {activeContentType !== "education" && (
+                      <TechTagsContainer>
+                        {technologies &&
+                          technologies.map((tech, index) => (
+                            <TechTag
+                              key={index}
+                              href={tech.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              {tech.name}
+                            </TechTag>
+                          ))}
+                      </TechTagsContainer>
+                    )}
                   </StyledTabPanel>
                 </CSSTransition>
               )
