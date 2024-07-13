@@ -38,7 +38,6 @@ const StyledText = styled.div`
     line-height: 1.4; /* Added line height for better readability */
 
     &:before {
-      content: "•"; /* Added bullet points */
       color: var(--green);
       font-size: 1.05rem;
       line-height: 0.75rem;
@@ -296,6 +295,7 @@ const Experience = () => {
               semanticscholar
               paperurl
               code
+              abstract
               technologies {
                 name
                 url
@@ -337,7 +337,8 @@ const Experience = () => {
   const tabs = useRef([])
   const revealContainer = useRef(null)
   const prefersReducedMotion = usePrefersReducedMotion()
-  const [activeContentType, setActiveContentType] = useState("jobs") // New state for content type toggle
+  const [activeContentType, setActiveContentType] = useState("jobs")
+  const [showAbstract, setShowAbstract] = useState({}) // State to manage abstract visibility
 
   useEffect(() => {
     if (prefersReducedMotion) {
@@ -345,27 +346,23 @@ const Experience = () => {
     }
 
     sr.reveal(revealContainer.current, srConfig())
-  }, [])
+  }, [prefersReducedMotion])
 
   const focusTab = () => {
     if (tabs.current[tabFocus]) {
       tabs.current[tabFocus].focus()
       return
     }
-    // If we're at the end, go to the start
     if (tabFocus >= tabs.current.length) {
       setTabFocus(0)
     }
-    // If we're at the start, move to the end
     if (tabFocus < 0) {
       setTabFocus(tabs.current.length - 1)
     }
   }
 
-  // Only re-run the effect if tabFocus changes
   useEffect(() => focusTab(), [tabFocus])
 
-  // Focus on tabs when using up & down arrow keys
   const onKeyDown = e => {
     switch (e.key) {
       case KEY_CODES.ARROW_UP: {
@@ -373,13 +370,11 @@ const Experience = () => {
         setTabFocus(tabFocus - 1)
         break
       }
-
       case KEY_CODES.ARROW_DOWN: {
         e.preventDefault()
         setTabFocus(tabFocus + 1)
         break
       }
-
       default: {
         break
       }
@@ -393,7 +388,14 @@ const Experience = () => {
       ? rjobsData
       : activeContentType === "publications"
       ? publicationsData
-      : educationData // This line is where the update for "education" goes
+      : educationData
+
+  const toggleAbstract = i => {
+    setShowAbstract(prevState => ({
+      ...prevState,
+      [i]: !prevState[i],
+    }))
+  }
 
   return (
     <StyledJobsSection id="experience" ref={revealContainer}>
@@ -416,14 +418,13 @@ const Experience = () => {
         </h1>
 
         <h1 className="numbered-heading">A little about me</h1>
-        {/* Toggle buttons for switching between jobs and publications */}
         <div
           style={{
-            display: "flex", // Enable Flexbox layout
-            justifyContent: "center", // Center children horizontally in the container
-            alignItems: "center", // Center children vertically in the container
-            flexDirection: "row", // Stack children vertically
-            width: "100%", // Adjust the width as needed, 100% for full width
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            flexDirection: "row",
+            width: "100%",
             textAlign: "center",
             marginBottom: "10px",
           }}
@@ -437,7 +438,7 @@ const Experience = () => {
                 activeContentType === "jobs" ? "#89CFEF" : "#f8f9fa",
               color: activeContentType === "jobs" ? "#000000" : "#212529",
               border: "3px solid",
-              borderColor: activeContentType === "jobs" ? "#000000" : "#ced4da", // Border color black when active
+              borderColor: activeContentType === "jobs" ? "#000000" : "#ced4da",
               borderRadius: "20px",
               padding: "5px 5px",
               margin: "0 5px",
@@ -462,7 +463,7 @@ const Experience = () => {
               color: activeContentType === "rjobs" ? "#000000" : "#212529",
               border: "3px solid",
               borderColor:
-                activeContentType === "rjobs" ? "#000000" : "#ced4da", // Border color black when active
+                activeContentType === "rjobs" ? "#000000" : "#ced4da",
               borderRadius: "20px",
               padding: "5px 5px",
               margin: "0 5px",
@@ -488,7 +489,7 @@ const Experience = () => {
                 activeContentType === "publications" ? "#000000" : "#212529",
               border: "3px solid",
               borderColor:
-                activeContentType === "publications" ? "#000000" : "#ced4da", // Border color black when active
+                activeContentType === "publications" ? "#000000" : "#ced4da",
               borderRadius: "20px",
               padding: "5px 5px",
               margin: "0 5px",
@@ -512,7 +513,7 @@ const Experience = () => {
               color: activeContentType === "education" ? "#000000" : "#212529",
               border: "3px solid",
               borderColor:
-                activeContentType === "education" ? "#000000" : "#ced4da", // Border color black when active
+                activeContentType === "education" ? "#000000" : "#ced4da",
               borderRadius: "50px",
               padding: "5px 5px",
               margin: "0 5px",
@@ -536,9 +537,8 @@ const Experience = () => {
           >
             {activeData.map(({ node }, i) => {
               const { frontmatter } = node
-              const { company, venue } = frontmatter // Extract both company and venue from frontmatter
+              const { company, venue } = frontmatter
 
-              // Determine the label based on the active content type
               const label =
                 activeContentType === "jobs" || activeContentType === "rjobs"
                   ? company
@@ -555,8 +555,7 @@ const Experience = () => {
                   aria-selected={activeTabId === i ? true : false}
                   aria-controls={`panel-${i}`}
                 >
-                  <span>{label || "N/A"}</span>{" "}
-                  {/* Use label, and fallback to 'N/A' if neither is available */}
+                  <span>{label || "N/A"}</span>
                 </StyledTabButton>
               )
             })}
@@ -565,7 +564,7 @@ const Experience = () => {
           <StyledTabPanels>
             {activeData.map(({ node }, i) => {
               const { frontmatter, html } = node
-              const { title, range } = frontmatter // Adjust for publications
+              const { title, range, abstract } = frontmatter
 
               return (
                 <CSSTransition
@@ -591,12 +590,32 @@ const Experience = () => {
                     {frontmatter.authors && (
                       <p className="authors">Authors: {frontmatter.authors}</p>
                     )}
-                    {/* Conditional rendering based on activeContentType */}
                     {activeContentType === "education" && (
                       <>
                         <h3>{frontmatter.degree}</h3>
                         <h1>{frontmatter.gpa}</h1>
-                        {/* Additional education details */}
+                      </>
+                    )}
+                    {activeContentType === "publications" && (
+                      <>
+                        <button
+                          onClick={() => toggleAbstract(i)}
+                          style={{
+                            backgroundColor: "#112240",
+                            color: "#64ffda",
+                            borderRadius: "5px",
+                            padding: "5px 10px",
+                            margin: "10px 0",
+                            cursor: "pointer",
+                            fontSize: "0.75rem",
+                            border: "none",
+                          }}
+                        >
+                          {showAbstract[i] ? "Hide Abstract" : "Show Abstract"}
+                        </button>
+                        {showAbstract[i] && (
+                          <p className="abstract">{abstract}</p>
+                        )}
                       </>
                     )}
                     <IconContainer>
