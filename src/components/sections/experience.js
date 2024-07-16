@@ -148,6 +148,7 @@ const StyledJobsSection = styled.section`
 const StyledTabList = styled.div`
   display: flex;
   justify-content: flex-start;
+  align-items: center; /* Center align items */
   max-width: 100%;
   position: relative;
   padding: 50px 0;
@@ -155,6 +156,30 @@ const StyledTabList = styled.div`
 
   @media (max-width: 600px) {
     flex-wrap: wrap;
+  }
+`
+
+const ArrowButton = styled.button`
+  background: none;
+  border: none;
+  color: var(--green);
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0 10px;
+  transition: color 0.3s;
+
+  &:hover,
+  &:focus {
+    color: var(--lightest-slate);
+  }
+
+  &:disabled {
+    color: var(--light-slate);
+    cursor: not-allowed;
+  }
+
+  @media (max-width: 600px) {
+    display: none;
   }
 `
 
@@ -247,7 +272,6 @@ const StyledTabPanel = styled.div`
     }
   }
 `
-
 const Experience = () => {
   const data = useStaticQuery(graphql`
     query {
@@ -378,12 +402,12 @@ const Experience = () => {
 
   const onKeyDown = e => {
     switch (e.key) {
-      case KEY_CODES.ARROW_UP: {
+      case KEY_CODES.ARROW_LEFT: {
         e.preventDefault()
         setTabFocus(tabFocus - 1)
         break
       }
-      case KEY_CODES.ARROW_DOWN: {
+      case KEY_CODES.ARROW_RIGHT: {
         e.preventDefault()
         setTabFocus(tabFocus + 1)
         break
@@ -415,6 +439,18 @@ const Experience = () => {
       ...prevState,
       [i]: !prevState[i],
     }))
+  }
+
+  const handlePrevClick = () => {
+    if (activeTabId > 0) {
+      setActiveTabId(activeTabId - 1)
+    }
+  }
+
+  const handleNextClick = () => {
+    if (activeTabId < activeData.length - 1) {
+      setActiveTabId(activeTabId + 1)
+    }
   }
 
   return (
@@ -555,6 +591,14 @@ const Experience = () => {
             aria-label="Job tabs"
             onKeyDown={onKeyDown}
           >
+            <ArrowButton
+              onClick={handlePrevClick}
+              disabled={activeTabId === 0}
+              aria-label="Previous Tab"
+            >
+              &larr;
+            </ArrowButton>
+
             {activeData.map(({ node }, i) => {
               const { frontmatter } = node
               const { company, venue } = frontmatter
@@ -579,6 +623,14 @@ const Experience = () => {
                 </StyledTabButton>
               )
             })}
+
+            <ArrowButton
+              onClick={handleNextClick}
+              disabled={activeTabId === activeData.length - 1}
+              aria-label="Next Tab"
+            >
+              &rarr;
+            </ArrowButton>
           </StyledTabList>
 
           <StyledTabPanels>
