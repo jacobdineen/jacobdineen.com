@@ -88,7 +88,6 @@ const TechTag = styled.a`
   border-radius: 2px;
   text-decoration: none;
   transition: background-color 0.3s, color 0.3s;
-  cursor: crosshair;
   &:hover,
   &:focus {
     background-color: #0a192f;
@@ -164,7 +163,6 @@ const ArrowButton = styled.button`
   border: none;
   color: var(--green);
   font-size: 2rem;
-  cursor: pointer;
   padding: 0 10px;
   transition: color 0.3s;
 
@@ -175,7 +173,6 @@ const ArrowButton = styled.button`
 
   &:disabled {
     color: var(--light-slate);
-    cursor: not-allowed;
   }
 
   @media (max-width: 600px) {
@@ -498,7 +495,6 @@ const Experience = () => {
               borderRadius: "20px",
               padding: "5px 5px",
               margin: "0 5px",
-              cursor: "crosshair",
               fontSize: "0.65rem",
               fontWeight: "800",
               fontFamily: "var(--font-mono)",
@@ -523,7 +519,6 @@ const Experience = () => {
               borderRadius: "20px",
               padding: "5px 5px",
               margin: "0 5px",
-              cursor: "crosshair",
               fontSize: "0.65rem",
               fontWeight: "80px",
               fontFamily: "var(--font-mono)",
@@ -549,7 +544,6 @@ const Experience = () => {
               borderRadius: "20px",
               padding: "5px 5px",
               margin: "0 5px",
-              cursor: "crosshair",
               fontSize: "0.65rem",
               fontWeight: "800",
               fontFamily: "var(--font-mono)",
@@ -573,7 +567,6 @@ const Experience = () => {
               borderRadius: "50px",
               padding: "5px 5px",
               margin: "0 5px",
-              cursor: "crosshair",
               fontSize: "0.65rem",
               fontWeight: "800",
               fontFamily: "var(--font-mono)",
@@ -674,7 +667,6 @@ const Experience = () => {
                             borderRadius: "5px",
                             padding: "5px 10px",
                             margin: "10px 0",
-                            cursor: "pointer",
                             fontSize: "0.75rem",
                             border: "none",
                           }}
@@ -708,7 +700,6 @@ const Experience = () => {
                             borderRadius: "5px",
                             padding: "5px 10px",
                             margin: "10px 0",
-                            cursor: "pointer",
                             fontSize: "0.75rem",
                             border: "none",
                           }}
