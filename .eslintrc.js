@@ -1,7 +1,7 @@
 module.exports = {
   env: {
     node: true,
-    browser: false,
+    browser: true, // Change browser to true since you are using it in a browser environment
     es2021: true,
   },
   extends: ["eslint:recommended", "plugin:react/recommended"],
@@ -22,4 +22,7 @@ module.exports = {
   },
   plugins: ["react"],
   rules: {},
+  globals: {
+    IntersectionObserver: "readonly", // Add this line
+  },
 }

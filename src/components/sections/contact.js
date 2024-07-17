@@ -3,6 +3,7 @@ import styled from "styled-components"
 import { srConfig } from "@config"
 import sr from "@utils/sr"
 import { usePrefersReducedMotion } from "@hooks"
+
 const StyledContactSection = styled.section`
   max-width: 600px;
   margin: 0 auto 100px;
@@ -89,101 +90,110 @@ const StyledContactSection = styled.section`
       padding: 1.5rem;
     }
   }
-`;
+`
 
 const useTypewriterEffect = (text, trigger, delay = 100) => {
-  const [displayedText, setDisplayedText] = useState("");
+  const [displayedText, setDisplayedText] = useState("")
 
   useEffect(() => {
-    if (!trigger) return;
+    if (!trigger) return
 
-    let index = 0;
+    setDisplayedText("") // Reset displayed text when trigger changes
+    let index = 0
     const intervalId = setInterval(() => {
-      setDisplayedText((prev) => prev + text[index]);
-      index++;
+      setDisplayedText(prev => prev + text[index])
+      index++
       if (index >= text.length) {
-        clearInterval(intervalId);
+        clearInterval(intervalId)
       }
-    }, delay);
+    }, delay)
 
-    return () => clearInterval(intervalId);
-  }, [trigger, text, delay]);
+    return () => clearInterval(intervalId)
+  }, [trigger, text, delay])
 
-  return displayedText;
-};
+  return displayedText
+}
 
 const useInView = (ref, options) => {
-  const [isInView, setIsInView] = useState(false);
+  const [isInView, setIsInView] = useState(false)
 
   useEffect(() => {
     const observer = new IntersectionObserver(([entry]) => {
-      setIsInView(entry.isIntersecting);
-    }, options);
+      setIsInView(entry.isIntersecting)
+    }, options)
 
     if (ref.current) {
-      observer.observe(ref.current);
+      observer.observe(ref.current)
     }
 
     return () => {
       if (ref.current) {
-        observer.unobserve(ref.current);
+        observer.unobserve(ref.current)
       }
-    };
-  }, [ref, options]);
+    }
+  }, [ref, options])
 
-  return isInView;
-};
-
+  return isInView
+}
 
 const Contact = () => {
-  const revealContainer = useRef(null);
-  const prefersReducedMotion = usePrefersReducedMotion();
-  const [formStatus, setFormStatus] = useState("");
-  const [currentStep, setCurrentStep] = useState(1);
+  const revealContainer = useRef(null)
+  const prefersReducedMotion = usePrefersReducedMotion()
+  const [formStatus, setFormStatus] = useState("")
+  const [currentStep, setCurrentStep] = useState(1)
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: "",
-  });
+  })
 
-  const formRef = useRef(null);
-  const isInView = useInView(formRef, { threshold: 0.1 });
+  const formRef = useRef(null)
+  const isInView = useInView(formRef, { threshold: 0.1 })
 
-  const namePlaceholder = useTypewriterEffect("Please enter your name", isInView && currentStep === 1);
-  const emailPlaceholder = useTypewriterEffect("Please enter your email", isInView && currentStep === 2);
-  const messagePlaceholder = useTypewriterEffect("Please enter your message", isInView && currentStep === 3);
+  const namePlaceholder = useTypewriterEffect(
+    "Please enter your name",
+    isInView && currentStep === 1
+  )
+  const emailPlaceholder = useTypewriterEffect(
+    "Please enter your email",
+    isInView && currentStep === 2
+  )
+  const messagePlaceholder = useTypewriterEffect(
+    "Please enter your message",
+    isInView && currentStep === 3
+  )
 
   useEffect(() => {
     if (prefersReducedMotion) {
-      return;
+      return
     }
 
-    sr.reveal(revealContainer.current, srConfig());
-  }, [prefersReducedMotion]);
+    sr.reveal(revealContainer.current, srConfig())
+  }, [prefersReducedMotion])
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = e => {
+    const { name, value } = e.target
     setFormData({
       ...formData,
       [name]: value,
-    });
-  };
+    })
+  }
 
-  const handleNext = (e) => {
-    e.preventDefault();
-    setCurrentStep(currentStep + 1);
-  };
+  const handleNext = e => {
+    e.preventDefault()
+    setCurrentStep(currentStep + 1)
+  }
 
-  const handlePrev = (e) => {
-    e.preventDefault();
-    setCurrentStep(currentStep - 1);
-  };
+  const handlePrev = e => {
+    e.preventDefault()
+    setCurrentStep(currentStep - 1)
+  }
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const data = new FormData(form);
-    const endpoint = "https://formspree.io/f/xkgwgjqn";
+  const handleSubmit = async e => {
+    e.preventDefault()
+    const form = e.target
+    const data = new FormData(form)
+    const endpoint = "https://formspree.io/f/xkgwgjqn"
 
     const response = await fetch(endpoint, {
       method: "POST",
@@ -191,15 +201,15 @@ const Contact = () => {
         Accept: "application/json",
       },
       body: data,
-    });
+    })
 
     if (response.ok) {
-      form.reset();
-      setFormStatus("Thank you! Your message has been sent.");
+      form.reset()
+      setFormStatus("Thank you! Your message has been sent.")
     } else {
-      setFormStatus("Oops! There was a problem submitting your form.");
+      setFormStatus("Oops! There was a problem submitting your form.")
     }
-  };
+  }
 
   return (
     <StyledContactSection id="contact" ref={revealContainer}>
@@ -258,7 +268,7 @@ const Contact = () => {
       </form>
       {formStatus && <p className="form-status">{formStatus}</p>}
     </StyledContactSection>
-  );
-};
+  )
+}
 
-export default Contact;
+export default Contact
