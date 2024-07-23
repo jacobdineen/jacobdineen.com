@@ -253,8 +253,8 @@ const Layout = ({ children, location }) => {
             <StyledMainContent id="content">{children}</StyledMainContent>
           </StyledContainer>
         )}
-        <Footer />
       </ThemeProvider>
+      
     </>
   );
 };
