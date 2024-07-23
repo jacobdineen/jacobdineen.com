@@ -21,13 +21,13 @@ const GlobalStyle = createGlobalStyle`
   }
 
   ::selection {
-    background-color: var(--lightest-navy);
-    color: var(--lightest-slate);
+    background-color: ${({ theme }) => theme.colors[theme.mode].lightestNavy};
+    color: ${({ theme }) => theme.colors[theme.mode].lightestSlate};
   }
 
   /* Provide basic, default focus styles.*/
   :focus {
-    outline: 2px dashed var(--green);
+    outline: 2px dashed ${({ theme }) => theme.colors[theme.mode].green};
     outline-offset: 3px;
   }
 
@@ -53,56 +53,54 @@ const GlobalStyle = createGlobalStyle`
   /* Scrollbar Styles */
   html {
     scrollbar-width: thin;
-    scrollbar-color: var(--dark-slate) var(--navy);
-  }
-  ::-webkit-scrollbar {
-    width: 12px;
+    scrollbar-color: ${({ theme }) => theme.colors[theme.mode].darkSlate} ${({ theme }) => theme.colors[theme.mode].navy};
   }
   ::-webkit-scrollbar-track {
-    background: var(--navy);
+    background: ${({ theme }) => theme.colors[theme.mode].navy};
   }
   ::-webkit-scrollbar-thumb {
-    background-color: var(--dark-slate);
-    border: 3px solid var(--navy);
+    background-color: ${({ theme }) => theme.colors[theme.mode].darkSlate};
+    border: 3px solid ${({ theme }) => theme.colors[theme.mode].navy};
     border-radius: 10px;
   }
 
-  body {
-    margin: 0;
-    width: 100%;
-    min-height: 100%;
-    overflow-x: hidden;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-font-smoothing: antialiased;
-    background-color: var(--navy);
-    color: var(--slate);
-    font-family: var(--font-sans);
-    font-size: var(--fz-xl);
-    line-height: 1.3;
+body {
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  background-color: ${({ theme }) => theme.colors[theme.mode].background};
+  color: ${({ theme }) => theme.colors[theme.mode].text};
+  font-family: var(--font-sans);
+  font-size: var(--fz-xl);
+  line-height: 1.3;
 
-    @media (max-width: 480px) {
-      font-size: var(--fz-lg);
+  @media (max-width: 480px) {
+    font-size: var(--fz-lg);
+  }
+
+  &.hidden {
+    overflow: hidden;
+  }
+
+  &.blur {
+    overflow: hidden;
+
+    header {
+      background-color: transparent;
     }
 
-    &.hidden {
-      overflow: hidden;
-    }
-
-    &.blur {
-      overflow: hidden;
-
-      header {
-        background-color: transparent;
-      }
-
-      #content > * {
-        filter: blur(5px) brightness(0.7);
-        transition: var(--transition);
-        pointer-events: none;
-        user-select: none;
-      }
+    #content > * {
+      filter: blur(5px) brightness(0.7);
+      transition: var(--transition);
+      pointer-events: none;
+      user-select: none;
     }
   }
+}
+
 
   #root {
     min-height: 100vh;
@@ -157,16 +155,8 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    margin: 0 0 10px 0;
-    font-weight: 600;
-    color: var(--lightest-slate);
-    line-height: 1.1;
+  h1, h2, h3, h4, h5, h6 {
+    color: ${({ theme }) => theme.colors[theme.mode].lightestSlate};
   }
 
   .big-heading {
