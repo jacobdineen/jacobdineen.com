@@ -13,14 +13,9 @@ const sections = ['experience', 'contact', 'resume'];
 const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
 
   @media (min-width: 600px) {
     flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
   }
 `;
 
@@ -30,8 +25,8 @@ const StyledSidebar = styled.aside`
   position: fixed;
   padding: 0 25px;
   display: flex;
-  margin-left: 90px;
   flex-direction: column;
+  align-items: center;
   justify-content: center;
   z-index: 5;
 
@@ -131,14 +126,14 @@ const ToggleWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  margin-top: 20px;
 `;
 
 const ToggleLabel = styled.label`
   position: relative;
   display: inline-block;
-  width: 60px;
-  height: 34px;
+  width: 40px;
+  height: 24px;
   margin: 0 10px;
 `;
 
@@ -152,7 +147,7 @@ const ToggleInput = styled.input`
   }
 
   &:checked + span:before {
-    transform: translateX(26px);
+    transform: translateX(16px);
   }
 `;
 
@@ -165,15 +160,15 @@ const Slider = styled.span`
   bottom: 0;
   background-color: #ccc;
   transition: 0.4s;
-  border-radius: 34px;
+  border-radius: 24px;
 
   &:before {
     position: absolute;
     content: '';
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
     background-color: white;
     transition: 0.4s;
     border-radius: 50%;
@@ -253,8 +248,8 @@ const Layout = ({ children, location }) => {
             <StyledMainContent id="content">{children}</StyledMainContent>
           </StyledContainer>
         )}
+        <Footer />
       </ThemeProvider>
-      
     </>
   );
 };

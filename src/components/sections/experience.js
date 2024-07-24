@@ -16,9 +16,8 @@ const StyledText = styled.div`
   margin: 0;
 
   h1 {
-    font-size: 1rem;
+    font-size: var(--fz-md);
     font-weight: 1000;
-    color: #ccd6f6;
     margin: 0 0 20px 0;
     line-height: 1.2;
   }
@@ -453,7 +452,7 @@ const Experience = () => {
   return (
     <StyledJobsSection id="experience" ref={revealContainer}>
       <StyledText>
-        <h1>Hey, I&apos;m Jake.</h1>
+        <h3>Hey, I&apos;m Jake.</h3>
         <h1>
           I am passionate about Machine Learning & Deep Learning and have spent
           close to ten years working in various Data Science and Machine
