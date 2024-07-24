@@ -149,7 +149,7 @@ const StyledTabList = styled.div`
   align-items: center; /* Center align items */
   max-width: 100%;
   position: relative;
-  padding: 50px 0;
+  padding: 50px 20px 10px 20px; /* Reduced bottom padding to 10px */
   font-size: var(--fz-lg);
 
   @media (max-width: 600px) {
