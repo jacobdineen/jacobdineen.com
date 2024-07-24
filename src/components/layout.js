@@ -13,9 +13,11 @@ const sections = ['experience', 'contact', 'resume'];
 const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center; // Center items horizontally on small screens
 
   @media (min-width: 600px) {
     flex-direction: row;
+    align-items: flex-start; // Align items to the top on larger screens
   }
 `;
 
@@ -42,7 +44,8 @@ const StyledSidebar = styled.aside`
     position: relative;
     width: 100%;
     height: auto;
-    padding-right: 210px;
+    padding-right: 0;
+    padding-left: 0;
   }
 
   nav {
@@ -61,7 +64,12 @@ const StyledSidebar = styled.aside`
         a {
           color: #89cfef;
           text-decoration: none;
-          font-size: 1em;
+          font-size: 1em; // Default font size
+
+          @media (max-width: 600px) {
+            font-size: 0.875em; // Smaller font size for mobile
+          }
+
           transition: color 0.3s ease;
           display: flex;
           justify-content: center;
@@ -119,6 +127,7 @@ const StyledMainContent = styled.main`
   @media (max-width: 600px) {
     width: 100%;
     margin-left: 0;
+    padding: 0 10px; // Add padding to ensure content is not touching the edges
   }
 `;
 
