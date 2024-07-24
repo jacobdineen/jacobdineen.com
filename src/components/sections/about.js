@@ -36,8 +36,8 @@ const SidebarIcons = styled.aside`
     height: 24px;
 
     @media (max-width: 768px) {
-      width: 50px; // Increase icon size on mobile
-      height: 50px; // Increase icon size on mobile
+      width: 25px; // Increase icon size on mobile
+      height: 25px; // Increase icon size on mobile
     }
   }
 `
@@ -95,7 +95,7 @@ const StyledPic = styled.div`
 
   @media (max-width: 768px) {
     margin: 50px auto 0;
-    width: 70%;
+    width: 150%; /* Increased width for mobile */
   }
 
   .wrapper {
