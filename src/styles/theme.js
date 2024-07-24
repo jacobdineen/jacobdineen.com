@@ -1,3 +1,4 @@
+// src/styles/theme.js
 import mixins from './mixins';
 
 const theme = {
@@ -12,8 +13,21 @@ const theme = {
     desktopM: `max-width: 1200px`,
     desktopL: `max-width: 1400px`,
   },
-
   mixins,
+  colors: {
+    light: {
+      background: '#ffffff',
+      text: '#000000',
+      footerBackground: '#f8f9fa',
+      footerText: '#343a40',
+    },
+    dark: {
+      background: '#000000',
+      text: '#ffffff',
+      footerBackground: '#343a40',
+      footerText: '#f8f9fa',
+    },
+  },
 };
 
 export default theme;
