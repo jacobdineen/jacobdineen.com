@@ -51,12 +51,19 @@ const StyledAboutSection = styled.section`
     flex-direction: column;
     align-items: center;
     grid-gap: 10px; // Space between elements
+    padding: 0; // No padding
 
     @media (max-width: 768px) {
       display: block;
+      margin-bottom: -30px; // Adjust to reduce space at the bottom on mobile
+    }
+
+    @media (min-width: 769px) {
+      margin-bottom: -70px; // Adjust to reduce space at the bottom on desktop
     }
   }
-`
+`;
+
 const StyledText = styled.div`
   display: flex;
   flex-direction: column;

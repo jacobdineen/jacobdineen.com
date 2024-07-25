@@ -60,45 +60,6 @@ const StyledSidebar = styled.aside`
 
       li {
         margin: 8px 0;
-
-        a {
-          color: #89cfef;
-          text-decoration: none;
-          font-size: 1em; // Default font size
-
-          @media (max-width: 600px) {
-            font-size: 0.875em; // Smaller font size for mobile
-          }
-
-          transition: color 0.3s ease;
-          display: flex;
-          justify-content: center;
-          position: relative;
-
-          &::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 30px;
-            height: 2px;
-            background: transparent;
-            transition: all 0.3s ease;
-          }
-
-          &.active::after {
-            background: white;
-            width: 60px;
-          }
-
-          &:hover {
-            color: #64ffda;
-            &::after {
-              background: #64ffda;
-            }
-          }
-        }
       }
     }
   }
@@ -152,7 +113,7 @@ const ToggleInput = styled.input`
   height: 0;
 
   &:checked + span {
-    background-color: #4cd137;
+    background-color: var(--green);
   }
 
   &:checked + span:before {
@@ -167,7 +128,7 @@ const Slider = styled.span`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  background-color: var(--light-navy);
   transition: 0.4s;
   border-radius: 24px;
 
@@ -196,7 +157,7 @@ const ToggleSwitch = ({ label, onChange }) => {
 
   return (
     <ToggleWrapper>
-      <span>{label}</span>
+      <span style={{ color: 'var(--green)', fontSize: 'var(--fz-xxs)' }}>{label}</span>
       <ToggleLabel>
         <ToggleInput type="checkbox" checked={checked} onChange={handleChange} />
         <Slider />
@@ -204,6 +165,46 @@ const ToggleSwitch = ({ label, onChange }) => {
     </ToggleWrapper>
   );
 };
+
+const StyledTabButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--green);
+  font-size: var(--fz-xxs);
+  width: auto;
+  height: var(--tab-height);
+  border: none;
+  border-radius: 20px; /* Rounded corners */
+  background-color: transparent;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 0 20px;
+  transition: all 0.3s ease; /* Smooth transition for all properties */
+  cursor: pointer; /* Change cursor to pointer for better UX */
+  outline: none; /* Remove default button outline */
+
+
+
+  &:hover,
+  &:focus {
+    background-color: var(--light-navy);
+    color: var(--green); /* Ensure text color contrasts with hover background */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow on hover */
+    transform: translateY(-2px); /* Slight lift effect on hover */
+  }
+
+  ${({ isActive }) =>
+    isActive &&
+    `
+    background-color: var(--navy);
+    color: var(--green);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    transform: scale(1.05); /* Slightly smaller scale for better look */
+    z-index: 1;
+    border-bottom: 3px solid var(--green);
+  `}
+`;
 
 const Layout = ({ children, location }) => {
   const [isLoading, setIsLoading] = useState(location.pathname === '/');
@@ -241,13 +242,12 @@ const Layout = ({ children, location }) => {
                 <ul>
                   {sections.map((section) => (
                     <li key={section}>
-                      <a
-                        href={`#${section}`}
-                        className={activeSection === section ? 'active' : ''}
+                      <StyledTabButton
+                        isActive={activeSection === section}
                         onClick={(e) => handleSectionClick(e, section)}
                       >
                         {section.charAt(0).toUpperCase() + section.slice(1)}
-                      </a>
+                      </StyledTabButton>
                     </li>
                   ))}
                 </ul>
