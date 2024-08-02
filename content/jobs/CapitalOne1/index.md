@@ -8,7 +8,7 @@ technologies:
   - name:
 ---
 
-- Researched, implemented, and evaluated neural recommendation solutions for adtech problems.
-- Wrote extensible pipelines in Pyspark, leveraging unexplored data sources.
-- Provided insight and recommendation on the methodology’s utilization in production beyond the scope of my summer project.
-- Worked on research involving agent based modeling and Reinforcement learning as part of C4ML.
+- Researched and implemented state-of-the-art neural recommendation solutions for adtech challenges, significantly improving ad targeting and engagement.
+- Developed scalable and extensible data pipelines in PySpark, leveraging novel data sources to enhance model performance and insights.
+- Provided strategic insights and recommendations for integrating neural solutions into production environments, extending the impact of summer projects.
+- Conducted advanced research in agent-based modeling and reinforcement learning, contributing to the Center for Machine Learning (C4ML).

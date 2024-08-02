@@ -8,6 +8,6 @@ technologies:
   - name:
 ---
 
-- Productionalized key changes to the core codebase (exposed to 30mm+ active users) from feature engineering/data pipelines, unit tests, custom model architectures, and distributed training/scoring jobs over EKS clusters. Algorithmic changes led to all-time records in value generated.
-- Developed sequential recommendation POCs using torch, huggingface, and Nvidia’s Merlin / Transformers4Rec which appeared in Nvidia GTC Fall summit (2022).
-- Co-led/co-created a twice-weekly lecture series on Deep Learning and Neural Recommendation.
+- Engineered and productionalized critical updates to the core codebase, impacting 30MM+ users, through advanced feature engineering, robust data pipelines, unit tests, and custom model architectures. Spearheaded distributed training/scoring jobs on EKS clusters, leading to unprecedented value generation.
+- Developed sequential recommendation POCs utilizing PyTorch, Huggingface, and Nvidia’s Merlin/Transformers4Rec. These innovations were showcased at the Nvidia GTC Fall Summit 2022, highlighting cutting-edge advancements in recommendation systems.
+- Co-led and designed a bi-weekly lecture series on Deep Learning and Neural Recommendation, fostering knowledge sharing and upskilling within the team.

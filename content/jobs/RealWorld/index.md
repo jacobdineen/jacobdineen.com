@@ -8,6 +8,6 @@ technologies:
   - name:
 ---
 
-- Responsible for creating automated dashboards, and ad hoc reporting needs.
-- Extracted, compiled, and integrated data sources. Leveraged analytical tools and statistical techniques to interpret data and improve processes.
-- Multivariate analysis paired with A/B testing geared around site conversion points.
+- Designed and automated interactive dashboards and ad hoc reports, driving data-driven decision-making and improving operational efficiency.
+- Integrated and analyzed diverse data sources, using statistical techniques to uncover actionable insights and optimize marketing strategies.
+- Conducted multivariate analysis and A/B testing, leading to significant improvements in site conversion rates and marketing ROI.

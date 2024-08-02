@@ -8,5 +8,5 @@ technologies:
   - name:
 ---
 
-- Cofounded an LLC specialized in delivering advertising solutions to the US military. Drove upwards of 2+ million in revenue as part of a two-person team.
-- Responsible for all financial data/modeling/forecasting and interpretation. Quantitative analysis on engagement propensity.
+- Cofounded and scaled a successful LLC, delivering innovative advertising solutions to the US military and generating over $2M in revenue.
+- Performed detailed quantitative analysis on user engagement, enhancing advertising effectiveness and client satisfaction.

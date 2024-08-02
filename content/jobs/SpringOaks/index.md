@@ -31,7 +31,7 @@ technologies:
     url: "https://developers.google.com/optimization"
 ---
 
-- Developed and deployed etl and modeling pipelines via airflow + k8s for SOC’s daily automated text/call efforts & offer generation (ranking recommendation + OR-Tools integration).
-- CICD: unit tests, automated builds, automated deployment via AWS ECR & Codebuild + git actions.
-- Contributed to building out cloud infrastructure for core tech stack from containerization to resource provisioning & dev environment.
-- Prepared Sigma dashboards monitoring online performance metrics for key stakeholders.
+- Developed and deployed scalable ETL and modeling pipelines using Airflow and Kubernetes for the SOC's automated text/call efforts and offer generation, incorporating ranking recommendations and constrained optimization solutions to scheduling problems.
+- Implemented robust CI/CD processes including tests, automated builds, and deployments utilizing AWS ECR, CodeBuild, and GitHub Actions, ensuring seamless and efficient workflow.
+- Assisted wrt to cloud infrastructure for the core technology stack, from containerization to resource provisioning and development environments, optimizing performance and scalability.
+- Prepared and maintained comprehensive Sigma dashboards and streamlit apps to monitor online performance metrics, providing key stakeholders with actionable insights and facilitating data-driven decision-making.
