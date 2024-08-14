@@ -1,12 +1,88 @@
-import React, { useState, useEffect, useRef } from "react"
-import { useStaticQuery, graphql } from "gatsby"
-import { CSSTransition } from "react-transition-group"
-import styled from "styled-components"
-import { srConfig } from "@config"
-import { KEY_CODES } from "@utils"
-import sr from "@utils/sr"
-import { usePrefersReducedMotion } from "@hooks"
-import { Icon } from "@components/icons"
+import React, { useState, useEffect, useRef } from "react";
+import { useStaticQuery, graphql } from "gatsby";
+import { CSSTransition } from "react-transition-group";
+import styled from "styled-components";
+import { srConfig } from "@config";
+import { KEY_CODES } from "@utils";
+import sr from "@utils/sr";
+import { usePrefersReducedMotion } from "@hooks";
+import { Icon } from "@components/icons";
+
+const PopupContainer = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #112240;
+  color: #64ffda;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  max-width: 300px;
+  text-align: center;
+
+  pre {
+    white-space: pre-wrap;
+    word-break: break-word;
+    margin-bottom: 10px;
+    font-size: 0.85rem;
+    background-color: #0a192f;
+    padding: 10px;
+    border-radius: 5px;
+  }
+`;
+
+const Overlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+`;
+
+const Button = styled.button`
+  background-color: #64ffda;
+  color: #112240;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  margin: 5px;
+
+  &:hover {
+    background-color: #89CFEF;
+  }
+`;
+
+const BibTeXPopup = ({ bibtex, onClose }) => {
+  const handleCopy = () => {
+    navigator.clipboard.writeText(bibtex);
+    alert('BibTeX copied to clipboard!');
+  };
+
+  const handleDownload = () => {
+    const blob = new Blob([bibtex], { type: 'text/plain' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'citation.bib';
+    link.click();
+  };
+
+  return (
+    <>
+      <Overlay onClick={onClose} />
+      <PopupContainer>
+        <pre>{bibtex}</pre>
+        <Button onClick={handleCopy}>Copy</Button>
+        <Button onClick={handleDownload}>Download</Button>
+        <Button onClick={onClose}>Close</Button>
+      </PopupContainer>
+    </>
+  );
+};
 
 const StyledText = styled.div`
   display: flex;
@@ -67,14 +143,14 @@ const StyledText = styled.div`
       font-size: 0.75rem;
     }
   }
-`
+`;
 
 const TechTagsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 5px;
-`
+`;
 
 const TechTag = styled.a`
   display: inline-flex;
@@ -92,15 +168,16 @@ const TechTag = styled.a`
     background-color: #0a192f;
     color: #fff;
   }
-`
+`;
 
 const IconContainer = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
   gap: 5px;
   flex-wrap: wrap;
-`
+  margin-top: 10px; /* Add space above the icons, if needed */
+`;
 
 const IconLink = styled.a`
   display: flex;
@@ -113,7 +190,7 @@ const IconLink = styled.a`
     height: 30px;
     fill: currentColor;
   }
-`
+`;
 
 const StyledJobsSection = styled.section`
   max-width: 700px;
@@ -141,7 +218,7 @@ const StyledJobsSection = styled.section`
     padding: 0 10px;
     font-size: var(--fz-sm);
   }
-`
+`;
 
 const StyledTabList = styled.div`
   display: flex;
@@ -155,7 +232,7 @@ const StyledTabList = styled.div`
   @media (max-width: 600px) {
     flex-wrap: wrap;
   }
-`
+`;
 
 const ArrowButton = styled.button`
   background: none;
@@ -177,7 +254,7 @@ const ArrowButton = styled.button`
   @media (max-width: 600px) {
     display: none;
   }
-`
+`;
 
 const StyledTabButton = styled.button`
   display: flex;
@@ -220,13 +297,13 @@ const StyledTabButton = styled.button`
     z-index: 1;
     border-bottom: 3px solid var(--green);
   `}
-`
+`;
 
 const StyledTabPanels = styled.div`
   width: 100%;
   margin-top: 20px;
   padding: 0 20px;
-`
+`;
 
 const StyledTabPanel = styled.div`
   width: 100%;
@@ -274,7 +351,8 @@ const StyledTabPanel = styled.div`
       height: 24px;
     }
   }
-`
+`;
+
 const Experience = () => {
   const data = useStaticQuery(graphql`
     query {
@@ -335,6 +413,7 @@ const Experience = () => {
               paperurl
               code
               abstract
+              bibtex
               technologies {
                 name
                 url
@@ -365,61 +444,62 @@ const Experience = () => {
         }
       }
     }
-  `)
+  `);
 
-  const jobsData = data.jobs.edges
-  const rjobsData = data.rjobs.edges
-  const publicationsData = data.publications.edges
-  const educationData = data.education.edges
-  const [activeTabId, setActiveTabId] = useState(0)
-  const [tabFocus, setTabFocus] = useState(null)
-  const tabs = useRef([])
-  const revealContainer = useRef(null)
-  const prefersReducedMotion = usePrefersReducedMotion()
-  const [activeContentType, setActiveContentType] = useState("jobs")
-  const [showAbstract, setShowAbstract] = useState({})
-  const [showCourses, setShowCourses] = useState({}) // State to manage course visibility
+  const jobsData = data.jobs.edges;
+  const rjobsData = data.rjobs.edges;
+  const publicationsData = data.publications.edges;
+  const educationData = data.education.edges;
+  const [activeTabId, setActiveTabId] = useState(0);
+  const [tabFocus, setTabFocus] = useState(null);
+  const tabs = useRef([]);
+  const revealContainer = useRef(null);
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const [activeContentType, setActiveContentType] = useState("jobs");
+  const [showAbstract, setShowAbstract] = useState({});
+  const [showCourses, setShowCourses] = useState({});
+  const [showBibtexPopup, setShowBibtexPopup] = useState(null); // New state for BibTeX popup
 
   useEffect(() => {
     if (prefersReducedMotion) {
-      return
+      return;
     }
 
-    sr.reveal(revealContainer.current, srConfig())
-  }, [prefersReducedMotion])
+    sr.reveal(revealContainer.current, srConfig());
+  }, [prefersReducedMotion]);
 
   const focusTab = () => {
     if (tabs.current[tabFocus]) {
-      tabs.current[tabFocus].focus()
-      return
+      tabs.current[tabFocus].focus();
+      return;
     }
     if (tabFocus >= tabs.current.length) {
-      setTabFocus(0)
+      setTabFocus(0);
     }
     if (tabFocus < 0) {
-      setTabFocus(tabs.current.length - 1)
+      setTabFocus(tabs.current.length - 1);
     }
-  }
+  };
 
-  useEffect(() => focusTab(), [tabFocus])
+  useEffect(() => focusTab(), [tabFocus]);
 
   const onKeyDown = e => {
     switch (e.key) {
       case KEY_CODES.ARROW_LEFT: {
-        e.preventDefault()
-        setTabFocus(tabFocus - 1)
-        break
+        e.preventDefault();
+        setTabFocus(tabFocus - 1);
+        break;
       }
       case KEY_CODES.ARROW_RIGHT: {
-        e.preventDefault()
-        setTabFocus(tabFocus + 1)
-        break
+        e.preventDefault();
+        setTabFocus(tabFocus + 1);
+        break;
       }
       default: {
-        break
+        break;
       }
     }
-  }
+  };
 
   const activeData =
     activeContentType === "jobs"
@@ -428,33 +508,41 @@ const Experience = () => {
       ? rjobsData
       : activeContentType === "publications"
       ? publicationsData
-      : educationData
+      : educationData;
 
   const toggleAbstract = i => {
     setShowAbstract(prevState => ({
       ...prevState,
       [i]: !prevState[i],
-    }))
-  }
+    }));
+  };
 
   const toggleCourses = i => {
     setShowCourses(prevState => ({
       ...prevState,
       [i]: !prevState[i],
-    }))
-  }
+    }));
+  };
+
+  const handleBibTeXPopup = bibtex => {
+    setShowBibtexPopup(bibtex);
+  };
+
+  const handleCloseBibTeXPopup = () => {
+    setShowBibtexPopup(null);
+  };
 
   const handlePrevClick = () => {
     if (activeTabId > 0) {
-      setActiveTabId(activeTabId - 1)
+      setActiveTabId(activeTabId - 1);
     }
-  }
+  };
 
   const handleNextClick = () => {
     if (activeTabId < activeData.length - 1) {
-      setActiveTabId(activeTabId + 1)
+      setActiveTabId(activeTabId + 1);
     }
-  }
+  };
 
   return (
     <StyledJobsSection id="experience" ref={revealContainer}>
@@ -600,13 +688,13 @@ const Experience = () => {
             </ArrowButton>
 
             {activeData.map(({ node }, i) => {
-              const { frontmatter } = node
-              const { company, venue } = frontmatter
+              const { frontmatter } = node;
+              const { company, venue } = frontmatter;
 
               const label =
                 activeContentType === "jobs" || activeContentType === "rjobs"
                   ? company
-                  : venue
+                  : venue;
               return (
                 <StyledTabButton
                   key={i}
@@ -621,7 +709,7 @@ const Experience = () => {
                 >
                   <span>{label || "N/A"}</span>
                 </StyledTabButton>
-              )
+              );
             })}
 
             <ArrowButton
@@ -635,8 +723,8 @@ const Experience = () => {
 
           <StyledTabPanels>
             {activeData.map(({ node }, i) => {
-              const { frontmatter, html } = node
-              const { title, range, abstract, technologies } = frontmatter
+              const { frontmatter, html } = node;
+              const { title, range, abstract, bibtex, technologies } = frontmatter;
 
               return (
                 <CSSTransition
@@ -711,11 +799,28 @@ const Experience = () => {
                             border: "none",
                           }}
                         >
-                          {showAbstract[i] ? "Hide Abstract" : "Show Abstract"}
+                          {showAbstract[i]
+                            ? "Hide Abstract"
+                            : "Show Abstract"}
                         </button>
                         {showAbstract[i] && (
                           <p className="abstract">{abstract}</p>
                         )}
+
+                        <button
+                          onClick={() => handleBibTeXPopup(bibtex)}
+                          style={{
+                            backgroundColor: "#112240",
+                            color: "#64ffda",
+                            borderRadius: "5px",
+                            padding: "5px 10px",
+                            margin: "10px 0",
+                            fontSize: "0.75rem",
+                            border: "none",
+                          }}
+                        >
+                          Show BibTeX
+                        </button>
                       </>
                     )}
                     <IconContainer>
@@ -790,13 +895,16 @@ const Experience = () => {
                     )}
                   </StyledTabPanel>
                 </CSSTransition>
-              )
+              );
             })}
           </StyledTabPanels>
         </div>
       </StyledText>
+      {showBibtexPopup && (
+        <BibTeXPopup bibtex={showBibtexPopup} onClose={handleCloseBibTeXPopup} />
+      )}
     </StyledJobsSection>
-  )
-}
+  );
+};
 
-export default Experience
+export default Experience;
