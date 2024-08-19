@@ -214,7 +214,7 @@ const Layout = ({ children, location }) => {
   const handleSectionClick = (e, section) => {
     e.preventDefault();
     if (section === 'resume') {
-      window.location.href = '/jacobdineen_resume1.pdf';
+      window.location.href = '/jacobdineen_resume2.pdf';
     } else {
       document.getElementById(section)?.scrollIntoView({ behavior: 'smooth' });
       setActiveSection(section);
