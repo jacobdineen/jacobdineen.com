@@ -122,7 +122,7 @@ const Experience = () => {
   const tabs = useRef([])
   const revealContainer = useRef(null)
   const prefersReducedMotion = usePrefersReducedMotion()
-  const [activeContentType, setActiveContentType] = useState("jobs")
+  const [activeContentType, setActiveContentType] = useState("education")
   const [showAbstract, setShowAbstract] = useState({})
   const [showCourses, setShowCourses] = useState({})
   const [showBibtexPopup, setShowBibtexPopup] = useState(null) // New state for BibTeX popup
