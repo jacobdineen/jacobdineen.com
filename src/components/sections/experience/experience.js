@@ -215,6 +215,18 @@ const Experience = () => {
     <StyledJobsSection id="experience" ref={revealContainer}>
       <StyledText>
         <h3>Hey, I&apos;m Jake.</h3>
+        <div
+          style={{
+            fontFamily: "Cursive", // Or use a different font family
+            fontSize: "1.0em",
+            fontWeight: "bold",
+            color: "#ced4da", // Adjust color to fit your design
+            textAlign: "center",
+            marginBottom: "20px",
+          }}
+        >
+          Currently @: <span>AI Reasoning & Cognition (ARC) Lab @ ASU</span>
+        </div>
         <h1>
           I am passionate about Machine Learning & Deep Learning and have spent
           close to ten years working in various Data Science and Machine
@@ -245,15 +257,40 @@ const Experience = () => {
           }}
         >
           <button
-            onClick={() => setActiveContentType("jobs")}
-            disabled={activeContentType === "jobs"}
-            aria-pressed={activeContentType === "jobs"}
+            onClick={() => setActiveContentType("education")}
+            disabled={activeContentType === "education"}
+            aria-pressed={activeContentType === "education"}
             style={{
               backgroundColor:
-                activeContentType === "jobs" ? "#89CFEF" : "#f8f9fa",
-              color: activeContentType === "jobs" ? "#000000" : "#212529",
+                activeContentType === "education" ? "#89CFEF" : "#f8f9fa",
+              color: activeContentType === "education" ? "#000000" : "#212529",
               border: "3px solid",
-              borderColor: activeContentType === "jobs" ? "#000000" : "#ced4da",
+              borderColor:
+                activeContentType === "education" ? "#000000" : "#ced4da",
+              borderRadius: "50px",
+              padding: "5px 5px",
+              margin: "0 5px",
+              fontSize: "0.65rem",
+              fontWeight: "800",
+              fontFamily: "var(--font-mono)",
+              transition: "all .5s ease",
+              outline: "none",
+            }}
+          >
+            Education
+          </button>
+          <button
+            onClick={() => setActiveContentType("publications")}
+            disabled={activeContentType === "publications"}
+            aria-pressed={activeContentType === "publications"}
+            style={{
+              backgroundColor:
+                activeContentType === "publications" ? "#89CFEF" : "#f8f9fa",
+              color:
+                activeContentType === "publications" ? "#000000" : "#212529",
+              border: "3px solid",
+              borderColor:
+                activeContentType === "publications" ? "#000000" : "#ced4da",
               borderRadius: "20px",
               padding: "5px 5px",
               margin: "0 5px",
@@ -264,7 +301,7 @@ const Experience = () => {
               outline: "none",
             }}
           >
-            Jobs
+            Publications
           </button>
 
           <button
@@ -290,19 +327,16 @@ const Experience = () => {
           >
             Research Jobs
           </button>
-
           <button
-            onClick={() => setActiveContentType("publications")}
-            disabled={activeContentType === "publications"}
-            aria-pressed={activeContentType === "publications"}
+            onClick={() => setActiveContentType("jobs")}
+            disabled={activeContentType === "jobs"}
+            aria-pressed={activeContentType === "jobs"}
             style={{
               backgroundColor:
-                activeContentType === "publications" ? "#89CFEF" : "#f8f9fa",
-              color:
-                activeContentType === "publications" ? "#000000" : "#212529",
+                activeContentType === "jobs" ? "#89CFEF" : "#f8f9fa",
+              color: activeContentType === "jobs" ? "#000000" : "#212529",
               border: "3px solid",
-              borderColor:
-                activeContentType === "publications" ? "#000000" : "#ced4da",
+              borderColor: activeContentType === "jobs" ? "#000000" : "#ced4da",
               borderRadius: "20px",
               padding: "5px 5px",
               margin: "0 5px",
@@ -313,30 +347,7 @@ const Experience = () => {
               outline: "none",
             }}
           >
-            Publications
-          </button>
-          <button
-            onClick={() => setActiveContentType("education")}
-            disabled={activeContentType === "education"}
-            aria-pressed={activeContentType === "education"}
-            style={{
-              backgroundColor:
-                activeContentType === "education" ? "#89CFEF" : "#f8f9fa",
-              color: activeContentType === "education" ? "#000000" : "#212529",
-              border: "3px solid",
-              borderColor:
-                activeContentType === "education" ? "#000000" : "#ced4da",
-              borderRadius: "50px",
-              padding: "5px 5px",
-              margin: "0 5px",
-              fontSize: "0.65rem",
-              fontWeight: "800",
-              fontFamily: "var(--font-mono)",
-              transition: "all .5s ease",
-              outline: "none",
-            }}
-          >
-            Education
+            Jobs
           </button>
         </div>
 
