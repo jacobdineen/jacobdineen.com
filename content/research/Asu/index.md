@@ -13,6 +13,6 @@ technologies:
     url: "https://kubernetes.io"
 ---
 
-- (Current) LLM Research. Advised by [Professor Ben Zhou](http://xuanyu.me/).
+- (Current) LLM Research. Advised by [Professor Ben Zhou](http://xuanyu.me/) @ ARC Lab.
 - (Past) Artificial Intelligence Research @ [SEFCOM](https://sefcom.asu.edu/)
 - Learned to hack on [pwn.college](https://pwn.college/) (Green Belt, @jdin)

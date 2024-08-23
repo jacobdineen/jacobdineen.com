@@ -217,15 +217,17 @@ const Experience = () => {
         <h3>Hey, I&apos;m Jake.</h3>
         <div
           style={{
-            fontFamily: "Cursive", // Or use a different font family
-            fontSize: "1.0em",
-            fontWeight: "bold",
-            color: "#ced4da", // Adjust color to fit your design
+            fontFamily: "Arial, sans-serif", // Or use another font
+            fontSize: "0.75em",
+            fontWeight: "600",
+            color: "#4a90e2", // Cool blue color
             textAlign: "center",
             marginBottom: "20px",
+            borderBottom: "2px solid #4a90e2", // Underline with color
+            paddingBottom: "10px",
           }}
         >
-          Currently @: <span>AI Reasoning & Cognition (ARC) Lab @ ASU</span>
+          Currently @: <span>AI Reasoning & Cognition (ARC) Lab</span>
         </div>
         <h1>
           I am passionate about Machine Learning & Deep Learning and have spent
