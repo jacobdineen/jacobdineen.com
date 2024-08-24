@@ -43,8 +43,15 @@ const Footer = () => {
     <StyledFooter>
       <StyledCredit tabIndex="-1">
         <div>
-          Built by Jacob Dineen with heavy design inspiration from Brittany
-          Chiang
+          Built by Jacob Dineen with design inspiration from Brittany Chiang.
+          Source code available on
+          <a
+            href="https://github.com/jacobdineen/jacobdineen.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            GitHub
+          </a>
         </div>
       </StyledCredit>
     </StyledFooter>
