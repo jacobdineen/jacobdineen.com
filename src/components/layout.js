@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import styled, { ThemeProvider } from 'styled-components';
-import { Head, Loader, Footer } from '@components';
-import theme from '@styles/theme';
-import GlobalStyle from '@styles/GlobalStyle';
-import About from '@components/sections/about';
-import { Analytics } from '@vercel/analytics/react';
-import { SpeedInsights } from '@vercel/speed-insights/react';
+import React, { useState } from "react"
+import PropTypes from "prop-types"
+import styled, { ThemeProvider } from "styled-components"
+import { Head, Loader, Footer } from "@components"
+import theme from "@styles/theme"
+import GlobalStyle from "@styles/GlobalStyle"
+import About from "@components/sections/about"
+import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/react"
 
-const sections = ['experience', 'contact', 'resume'];
+const sections = ["experience", "contact", "resume"]
 
 const StyledContainer = styled.div`
   display: flex;
@@ -19,7 +19,7 @@ const StyledContainer = styled.div`
     flex-direction: row;
     align-items: flex-start; // Align items to the top on larger screens
   }
-`;
+`
 
 const StyledSidebar = styled.aside`
   width: 30%;
@@ -63,7 +63,7 @@ const StyledSidebar = styled.aside`
       }
     }
   }
-`;
+`
 
 const StyledMainContent = styled.main`
   width: 80%;
@@ -90,14 +90,14 @@ const StyledMainContent = styled.main`
     margin-left: 0;
     padding: 0 10px; // Add padding to ensure content is not touching the edges
   }
-`;
+`
 
 const ToggleWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   margin-top: 20px;
-`;
+`
 
 const ToggleLabel = styled.label`
   position: relative;
@@ -105,7 +105,7 @@ const ToggleLabel = styled.label`
   width: 40px;
   height: 24px;
   margin: 0 10px;
-`;
+`
 
 const ToggleInput = styled.input`
   opacity: 0;
@@ -119,7 +119,7 @@ const ToggleInput = styled.input`
   &:checked + span:before {
     transform: translateX(16px);
   }
-`;
+`
 
 const Slider = styled.span`
   position: absolute;
@@ -134,7 +134,7 @@ const Slider = styled.span`
 
   &:before {
     position: absolute;
-    content: '';
+    content: "";
     height: 18px;
     width: 18px;
     left: 3px;
@@ -143,28 +143,39 @@ const Slider = styled.span`
     transition: 0.4s;
     border-radius: 50%;
   }
-`;
+`
 
 const ToggleSwitch = ({ label, onChange }) => {
-  const [checked, setChecked] = useState(true); // Default to dark mode
+  const [checked, setChecked] = useState(true) // Default to dark mode
 
   const handleChange = () => {
-    setChecked(!checked);
+    setChecked(!checked)
     if (onChange) {
-      onChange(!checked);
+      onChange(!checked)
     }
-  };
+  }
 
   return (
     <ToggleWrapper>
-      <span style={{ color: 'var(--green)', fontSize: 'var(--fz-xxs)' }}>{label}</span>
+      <span style={{ color: "var(--green)", fontSize: "var(--fz-xxs)" }}>
+        {label}
+      </span>
       <ToggleLabel>
-        <ToggleInput type="checkbox" checked={checked} onChange={handleChange} />
+        <ToggleInput
+          type="checkbox"
+          checked={checked}
+          onChange={handleChange}
+        />
         <Slider />
       </ToggleLabel>
     </ToggleWrapper>
-  );
-};
+  )
+}
+
+ToggleSwitch.propTypes = {
+  label: PropTypes.string.isRequired,
+  onChange: PropTypes.func,
+}
 
 const StyledTabButton = styled.button`
   display: flex;
@@ -184,8 +195,6 @@ const StyledTabButton = styled.button`
   cursor: pointer; /* Change cursor to pointer for better UX */
   outline: none; /* Remove default button outline */
 
-
-
   &:hover,
   &:focus {
     background-color: var(--light-navy);
@@ -204,26 +213,26 @@ const StyledTabButton = styled.button`
     z-index: 1;
     border-bottom: 3px solid var(--green);
   `}
-`;
+`
 
 const Layout = ({ children, location }) => {
-  const [isLoading, setIsLoading] = useState(location.pathname === '/');
-  const [activeSection, setActiveSection] = useState('');
-  const [themeMode, setThemeMode] = useState('dark'); // Default to dark mode
+  const [isLoading, setIsLoading] = useState(location.pathname === "/")
+  const [activeSection, setActiveSection] = useState("")
+  const [themeMode, setThemeMode] = useState("dark") // Default to dark mode
 
   const handleSectionClick = (e, section) => {
-    e.preventDefault();
-    if (section === 'resume') {
-      window.location.href = '/jacobdineen_resume2.pdf';
+    e.preventDefault()
+    if (section === "resume") {
+      window.location.href = "/jacobdineen_resume3.pdf"
     } else {
-      document.getElementById(section)?.scrollIntoView({ behavior: 'smooth' });
-      setActiveSection(section);
+      document.getElementById(section)?.scrollIntoView({ behavior: "smooth" })
+      setActiveSection(section)
     }
-  };
+  }
 
-  const toggleTheme = (checked) => {
-    setThemeMode(checked ? 'dark' : 'light');
-  };
+  const toggleTheme = checked => {
+    setThemeMode(checked ? "dark" : "light")
+  }
 
   return (
     <>
@@ -240,11 +249,11 @@ const Layout = ({ children, location }) => {
               <About />
               <nav>
                 <ul>
-                  {sections.map((section) => (
+                  {sections.map(section => (
                     <li key={section}>
                       <StyledTabButton
                         isActive={activeSection === section}
-                        onClick={(e) => handleSectionClick(e, section)}
+                        onClick={e => handleSectionClick(e, section)}
                       >
                         {section.charAt(0).toUpperCase() + section.slice(1)}
                       </StyledTabButton>
@@ -260,12 +269,12 @@ const Layout = ({ children, location }) => {
         <Footer />
       </ThemeProvider>
     </>
-  );
-};
+  )
+}
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
   location: PropTypes.object.isRequired,
-};
+}
 
-export default Layout;
+export default Layout
