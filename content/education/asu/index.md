@@ -13,4 +13,4 @@ technologies:
   - name: "LLMs"
 ---
 
-Advised by [Professor Ben Zhou](http://xuanyu.me/).
+Advised by [Professor Ben Zhou](http://xuanyu.me/) @ [ARC Lab](https://arc-asu.github.io/).

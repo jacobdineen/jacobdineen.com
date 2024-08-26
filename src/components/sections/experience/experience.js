@@ -227,7 +227,14 @@ const Experience = () => {
             paddingBottom: "10px",
           }}
         >
-          Currently @: <span>AI Reasoning & Cognition (ARC) Lab</span>
+          Currently @:{" "}
+          <a
+            href="https://arc-asu.github.io/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span>AI, Reasoning and Cognition (ARC) Lab</span>
+          </a>
         </div>
         <h1>
           I am passionate about Machine Learning & Deep Learning and have spent
