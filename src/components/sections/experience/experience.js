@@ -245,6 +245,11 @@ const Experience = () => {
           degrees in DS and CS along the way.
         </h1>
         <h1>
+          I am currently working as part of the AI, Reasoning and Cognition
+          (ARC) Lab at Arizona State University (under), with a focus on LLM
+          Reasoning and Alignment.
+        </h1>
+        <h1>
           I&apos;m an avid sports fan, currently basking in the Phx Suns&apos;
           recent success (2021). I love planning trips to explore the world with
           my fiance, spending quality time with the guys or my family,
