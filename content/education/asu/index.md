@@ -10,7 +10,7 @@ technologies:
   - name: "Software Security"
   - name: "Planning and Learning Methods in AI"
   - name: "Algorithms"
-  - name: "LLMs"
+  - name: "Knowledge Representation"
 ---
 
 Advised by [Professor Ben Zhou](http://xuanyu.me/) @ [ARC Lab](https://arc-asu.github.io/).
