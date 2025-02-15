@@ -250,11 +250,9 @@ const Experience = () => {
           Reasoning and Alignment.
         </h1>
         <h1>
-          I&apos;m an avid sports fan, currently basking in the Phx Suns&apos;
-          recent success (2021). I love planning trips to explore the world with
-          my fiance, spending quality time with the guys or my family,
-          memorizing IMDB catalogues, tinkering with my computers or speakers,
-          and finding ways to stay active in the Arizona heat.
+          I love planning trips to explore the world with my wife, spending
+          quality time with the guys or my family, tinkering with my computers
+          or speakers, and finding ways to stay active in the Arizona heat.
         </h1>
 
         <h1 className="numbered-heading">A little about me</h1>
