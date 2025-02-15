@@ -217,13 +217,13 @@ const Experience = () => {
         <h3>Hey, I&apos;m Jake.</h3>
         <div
           style={{
-            fontFamily: "Arial, sans-serif", // Or use another font
+            fontFamily: "Arial, sans-serif",
             fontSize: "0.75em",
             fontWeight: "600",
-            color: "#4a90e2", // Cool blue color
+            color: "#4a90e2",
             textAlign: "center",
             marginBottom: "20px",
-            borderBottom: "2px solid #4a90e2", // Underline with color
+            borderBottom: "2px solid #4a90e2",
             paddingBottom: "10px",
           }}
         >
@@ -236,23 +236,26 @@ const Experience = () => {
             <span>AI, Reasoning and Cognition (ARC) Lab</span>
           </a>
         </div>
-        <h1>
-          I am passionate about Machine Learning & Deep Learning and have spent
-          close to ten years working in various Data Science and Machine
-          Learning Engineering roles, mostly within the fintech sector.
-          Additionally, I&apos;ve engaged in academic research across several
-          institutions in pursuit of my PhD, collecting Master of Science
-          degrees in DS and CS along the way.
+        <h1 style={{
+          fontSize: '0.95rem',
+          color: 'var(--light-slate)',
+          lineHeight: '1.5',
+          fontWeight: 'normal',
+          marginBottom: '15px'
+        }}>
+          I have spent close to ten years in Data Science and Machine Learning Engineering roles, 
+          primarily in fintech. I'm currently pursuing my PhD while conducting research in LLM Reasoning 
+          and Alignment at Arizona State University's ARC Lab.
         </h1>
-        <h1>
-          I am currently working as part of the AI, Reasoning and Cognition
-          (ARC) Lab at Arizona State University (under), with a focus on LLM
-          Reasoning and Alignment.
-        </h1>
-        <h1>
-          I love planning trips to explore the world with my wife, spending
-          quality time with the guys or my family, tinkering with my computers
-          or speakers, and finding ways to stay active in the Arizona heat.
+        <h1 style={{
+          fontSize: '0.95rem',
+          color: 'var(--light-slate)',
+          lineHeight: '1.5',
+          fontWeight: 'normal',
+          marginBottom: '15px'
+        }}>
+          Outside of work, I enjoy traveling with my wife, spending time with family and friends, 
+          tinkering with tech, and staying active despite the Arizona heat.
         </h1>
 
         <h1 className="numbered-heading">A little about me</h1>
@@ -432,14 +435,38 @@ const Experience = () => {
                     aria-labelledby={`tab-${i}`}
                     aria-hidden={activeTabId !== i}
                     hidden={activeTabId !== i}
+                    style={{
+                      borderBottom: "1px solid var(--lightest-navy)",
+                      paddingBottom: "20px",
+                      marginBottom: "20px"
+                    }}
                   >
-                    <h3>
+                    <h3 style={{
+                      fontSize: '1rem',  // Reduced from 1.1rem
+                      fontWeight: '600',
+                      marginBottom: '5px'
+                    }}>
                       <span>{title}</span>
-                      <span className="company"></span>
+                      {frontmatter.venue && (
+                        <span style={{
+                          fontSize: '0.8rem',
+                          color: 'var(--green)',
+                          fontFamily: 'var(--font-mono)',
+                          marginLeft: '10px'
+                        }}>
+                          {frontmatter.venue}
+                        </span>
+                      )}
                     </h3>
 
                     {frontmatter.authors && (
-                      <p className="authors">Authors: {frontmatter.authors}</p>
+                      <p className="authors" style={{
+                        fontSize: '0.95rem',
+                        color: 'var(--light-slate)',
+                        marginTop: '2px'
+                      }}>
+                        {frontmatter.authors}
+                      </p>
                     )}
                     {activeContentType === "education" && (
                       <>
@@ -478,41 +505,75 @@ const Experience = () => {
                     )}
                     {activeContentType === "publications" && (
                       <>
-                        <button
-                          onClick={() => toggleAbstract(i)}
-                          style={{
-                            backgroundColor: "#112240",
-                            color: "#64ffda",
-                            borderRadius: "5px",
-                            padding: "5px 10px",
-                            margin: "10px 0",
-                            fontSize: "0.75rem",
-                            border: "none",
-                          }}
-                        >
-                          {showAbstract[i] ? "Hide Abstract" : "Show Abstract"}
-                        </button>
-                        {showAbstract[i] && (
-                          <p className="abstract">{abstract}</p>
-                        )}
+                        <div style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          gap: '10px',
+                          marginTop: '15px'
+                        }}>
+                          <button
+                            onClick={() => toggleAbstract(i)}
+                            style={{
+                              backgroundColor: "#112240",
+                              color: "#64ffda",
+                              borderRadius: "5px",
+                              padding: "5px 10px",
+                              fontSize: "0.75rem",
+                              border: "none",
+                              transition: "all 0.2s ease-in-out",
+                              cursor: "pointer"
+                            }}
+                            onMouseOver={(e) => {
+                              e.target.style.backgroundColor = "#1d3b6f"
+                            }}
+                            onMouseOut={(e) => {
+                              e.target.style.backgroundColor = "#112240"
+                            }}
+                          >
+                            {showAbstract[i] ? "Hide Abstract" : "Show Abstract"}
+                          </button>
 
-                        <button
-                          onClick={() => handleBibTeXPopup(bibtex)}
-                          style={{
-                            backgroundColor: "#112240",
-                            color: "#64ffda",
-                            borderRadius: "5px",
-                            padding: "5px 10px",
-                            margin: "10px 0",
-                            fontSize: "0.75rem",
-                            border: "none",
-                          }}
-                        >
-                          Show BibTeX
-                        </button>
+                          <button
+                            onClick={() => handleBibTeXPopup(bibtex)}
+                            style={{
+                              backgroundColor: "#112240",
+                              color: "#64ffda",
+                              borderRadius: "5px",
+                              padding: "5px 10px",
+                              fontSize: "0.75rem",
+                              border: "none",
+                              transition: "all 0.2s ease-in-out",
+                              cursor: "pointer"
+                            }}
+                            onMouseOver={(e) => {
+                              e.target.style.backgroundColor = "#1d3b6f"
+                            }}
+                            onMouseOut={(e) => {
+                              e.target.style.backgroundColor = "#112240"
+                            }}
+                          >
+                            Show BibTeX
+                          </button>
+                        </div>
+                        
+                        {showAbstract[i] && (
+                          <p className="abstract" style={{
+                            fontSize: '0.9rem',
+                            lineHeight: '1.5',
+                            color: 'var(--slate)',
+                            marginTop: '10px'
+                          }}>
+                            {abstract}
+                          </p>
+                        )}
                       </>
                     )}
-                    <IconContainer>
+                    <IconContainer style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      gap: '15px',
+                      marginTop: '15px'
+                    }}>
                       {frontmatter.googlescholar && (
                         <IconLink
                           href={frontmatter.googlescholar}
