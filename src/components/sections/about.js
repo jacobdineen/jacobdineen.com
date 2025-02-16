@@ -14,76 +14,65 @@ import {
 
 const SidebarIcons = styled.aside`
   display: flex;
-  flex-direction: row; // Keep icons in a row
-  justify-content: center; // Center icons horizontally
-  align-items: center; // Center icons vertically
-  width: 100%; // Ensure the container takes full width
-  margin-top: 20px; // Space between the picture and icons
+  gap: 15px;
+  margin-top: 0;
 
   a {
-    &:not(:last-child) {
-      margin-right: 20px; // Spacing between icons
+    color: var(--slate);
+    transition: var(--transition);
 
-      @media (max-width: 768px) {
-        margin-right: 15px; // Adjust spacing between icons on mobile
-      }
+    &:hover {
+      color: var(--green);
+      transform: translateY(-2px);
     }
   }
 
   svg {
-    fill: currentColor;
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
 
     @media (max-width: 768px) {
-      width: 25px; // Increase icon size on mobile
-      height: 25px; // Increase icon size on mobile
+      width: 18px;
+      height: 18px;
     }
   }
 `
 
 const StyledAboutSection = styled.section`
-  max-width: 500px;
-  margin: 0 auto; // Center the section
+  max-width: 600px;
+  margin: 0 auto -30px;
 
   .inner {
     display: flex;
     flex-direction: column;
     align-items: center;
-    grid-gap: 10px; // Space between elements
-    padding: 0; // No padding
-
-    @media (max-width: 768px) {
-      display: block;
-      margin-bottom: -30px; // Adjust to reduce space at the bottom on mobile
-    }
-
-    @media (min-width: 769px) {
-      margin-bottom: -70px; // Adjust to reduce space at the bottom on desktop
-    }
+    gap: 15px;
+    padding: 0;
   }
 `
 
 const StyledText = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center; // Center text
-  padding: 0;
-  margin: 0;
+  align-items: center;
+  text-align: center;
+  margin-top: 5px;
+  margin-bottom: -20px;
 
   h1 {
-    font-size: 1.2rem; // Large font size for the main title
-    font-weight: 100; // Large font weight for the main title
-    font-family: var(--font-mono); // Monospace font for the main title
-    color: #ccd6f6; // Light text color
-    margin: 0 0 10px 0; // Spacing after the title
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+    font-weight: 400;
+    font-family: var(--font-mono);
+    color: var(--lightest-slate);
+    margin: 0 0 5px 0;
   }
 
   h2 {
-    font-size: 0.85rem; // Medium font size for the subtitle
-    font-family: var(--font-mono); // Monospace font for the main title
-    color: #8892b0; // Subdued text color
-    margin: 0 0 20px 0; // Spacing after the subtitle
+    font-size: clamp(0.85rem, 2vw, 0.95rem);
+    font-family: var(--font-mono);
+    color: var(--green);
+    margin: 0 0 10px 0;
+    opacity: 0.85;
   }
 
   p {
@@ -95,56 +84,50 @@ const StyledText = styled.div`
     line-height: 1.5; // Line height for paragraph text
   }
 `
+
 const StyledPic = styled.div`
   position: relative;
-  max-width: 200px;
+  max-width: 180px;
   display: flex;
+  justify-content: center;
 
   @media (max-width: 768px) {
-    margin: 50px auto 0;
-    width: 150%;
+    max-width: 160px;
+    margin: 10px auto 0;
   }
 
   .wrapper {
-    ${({ theme }) => theme.mixins.boxShadow};
     display: block;
     position: relative;
     width: 100%;
-    border-radius: var(--border-radius);
-    background-color: var(--black-tint);
+    border-radius: 50%;
+    background-color: transparent;
 
     &:hover,
     &:focus {
-      outline: 0;
-      transform: translate(-4px, -4px);
-
-      &:after {
-        transform: translate(8px, 8px);
-      }
+      transform: translateY(-3px);
+      transition: var(--transition);
     }
 
     .img {
       position: relative;
-      border-radius: var(--border-radius);
+      border-radius: 50%;
       transition: var(--transition);
+      border: 2px solid var(--green-tint);
     }
 
-    &:before,
     &:after {
       content: "";
-      display: flex;
+      display: block;
       position: absolute;
       width: 100%;
       height: 100%;
-      border-radius: var(--border-radius);
-      transition: var(--transition);
-    }
-
-    &:after {
-      border: 2px solid var(--blue);
-      top: 1px;
-      left: 14px;
+      border-radius: 50%;
+      border: 2px solid var(--green);
+      top: 8px;
+      left: 8px;
       z-index: -1;
+      transition: var(--transition);
     }
   }
 `
