@@ -62,7 +62,7 @@ const StyledAboutSection = styled.section`
       margin-bottom: -70px; // Adjust to reduce space at the bottom on desktop
     }
   }
-`;
+`
 
 const StyledText = styled.div`
   display: flex;
@@ -102,7 +102,7 @@ const StyledPic = styled.div`
 
   @media (max-width: 768px) {
     margin: 50px auto 0;
-    width: 150%; /* Increased width for mobile */
+    width: 150%;
   }
 
   .wrapper {
@@ -121,18 +121,11 @@ const StyledPic = styled.div`
       &:after {
         transform: translate(8px, 8px);
       }
-
-      .img {
-        filter: none;
-        mix-blend-mode: normal;
-      }
     }
 
     .img {
       position: relative;
       border-radius: var(--border-radius);
-      mix-blend-mode: multiply;
-      filter: grayscale(100%) contrast(1);
       transition: var(--transition);
     }
 
@@ -145,13 +138,6 @@ const StyledPic = styled.div`
       height: 100%;
       border-radius: var(--border-radius);
       transition: var(--transition);
-    }
-
-    &:before {
-      top: 20;
-      left: 0;
-      background-color: var(--navy);
-      mix-blend-mode: screen;
     }
 
     &:after {
@@ -193,7 +179,7 @@ const About = () => {
           </StyledPic>
           <StyledText>
             <h1>Jacob Dineen</h1>
-            <h2> CS PhD Student / MLE</h2>
+            <h2> ASU CS PhD Student / MLE</h2>
             <SidebarIcons>
               <a href="https://github.com/jacobdineen" aria-label="GitHub">
                 <IconGitHub />
