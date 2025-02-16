@@ -36,7 +36,6 @@ const Experience = () => {
               range
               technologies {
                 name
-                url
               }
             }
             html
@@ -56,7 +55,6 @@ const Experience = () => {
               range
               technologies {
                 name
-                url
               }
             }
             html
@@ -83,7 +81,6 @@ const Experience = () => {
               bibtex
               technologies {
                 name
-                url
               }
             }
             html
@@ -103,7 +100,6 @@ const Experience = () => {
               range
               technologies {
                 name
-                url
               }
             }
             html
@@ -265,105 +261,60 @@ const Experience = () => {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            flexDirection: "row",
+            flexWrap: "wrap",
+            gap: "12px",
             width: "100%",
-            textAlign: "center",
-            marginBottom: "10px",
+            maxWidth: "600px",
+            margin: "0 auto 25px",
+            padding: "0 20px"
           }}
         >
-          <button
-            onClick={() => setActiveContentType("education")}
-            disabled={activeContentType === "education"}
-            aria-pressed={activeContentType === "education"}
-            style={{
-              backgroundColor:
-                activeContentType === "education" ? "#89CFEF" : "#f8f9fa",
-              color: activeContentType === "education" ? "#000000" : "#212529",
-              border: "3px solid",
-              borderColor:
-                activeContentType === "education" ? "#000000" : "#ced4da",
-              borderRadius: "50px",
-              padding: "5px 5px",
-              margin: "0 5px",
-              fontSize: "0.65rem",
-              fontWeight: "800",
-              fontFamily: "var(--font-mono)",
-              transition: "all .5s ease",
-              outline: "none",
-            }}
-          >
-            Education
-          </button>
-          <button
-            onClick={() => setActiveContentType("publications")}
-            disabled={activeContentType === "publications"}
-            aria-pressed={activeContentType === "publications"}
-            style={{
-              backgroundColor:
-                activeContentType === "publications" ? "#89CFEF" : "#f8f9fa",
-              color:
-                activeContentType === "publications" ? "#000000" : "#212529",
-              border: "3px solid",
-              borderColor:
-                activeContentType === "publications" ? "#000000" : "#ced4da",
-              borderRadius: "20px",
-              padding: "5px 5px",
-              margin: "0 5px",
-              fontSize: "0.65rem",
-              fontWeight: "800",
-              fontFamily: "var(--font-mono)",
-              transition: "all .5s ease",
-              outline: "none",
-            }}
-          >
-            Publications
-          </button>
-
-          <button
-            onClick={() => setActiveContentType("rjobs")}
-            disabled={activeContentType === "rjobs"}
-            aria-pressed={activeContentType === "rjobs"}
-            style={{
-              backgroundColor:
-                activeContentType === "rjobs" ? "#89CFEF" : "#f8f9fa",
-              color: activeContentType === "rjobs" ? "#000000" : "#212529",
-              border: "3px solid",
-              borderColor:
-                activeContentType === "rjobs" ? "#000000" : "#ced4da",
-              borderRadius: "20px",
-              padding: "5px 5px",
-              margin: "0 5px",
-              fontSize: "0.65rem",
-              fontWeight: "80px",
-              fontFamily: "var(--font-mono)",
-              transition: "all .5s ease",
-              outline: "none",
-            }}
-          >
-            Research Jobs
-          </button>
-          <button
-            onClick={() => setActiveContentType("jobs")}
-            disabled={activeContentType === "jobs"}
-            aria-pressed={activeContentType === "jobs"}
-            style={{
-              backgroundColor:
-                activeContentType === "jobs" ? "#89CFEF" : "#f8f9fa",
-              color: activeContentType === "jobs" ? "#000000" : "#212529",
-              border: "3px solid",
-              borderColor: activeContentType === "jobs" ? "#000000" : "#ced4da",
-              borderRadius: "20px",
-              padding: "5px 5px",
-              margin: "0 5px",
-              fontSize: "0.65rem",
-              fontWeight: "800",
-              fontFamily: "var(--font-mono)",
-              transition: "all .5s ease",
-              outline: "none",
-            }}
-          >
-            Jobs
-          </button>
+          {[
+            { id: "education", label: "Education" },
+            { id: "publications", label: "Publications" },
+            { id: "rjobs", label: "Research" },
+            { id: "jobs", label: "Industry" }
+          ].map(({ id, label }) => (
+            <button
+              key={id}
+              onClick={() => setActiveContentType(id)}
+              disabled={activeContentType === id}
+              style={{
+                background: activeContentType === id ? "var(--green-tint)" : "transparent",
+                color: activeContentType === id ? "var(--green)" : "var(--slate)",
+                border: `1px solid ${activeContentType === id ? "var(--green)" : "transparent"}`,
+                borderRadius: "4px",
+                padding: "8px 16px",
+                fontSize: "13px",
+                fontFamily: "var(--font-mono)",
+                transition: "all 0.25s cubic-bezier(0.645,0.045,0.355,1)",
+                cursor: "pointer",
+                position: "relative",
+                "&:hover": {
+                  color: "var(--green)",
+                  background: "var(--green-tint)",
+                },
+                "&:after": {
+                  content: '""',
+                  position: "absolute",
+                  width: "100%",
+                  transform: "scaleX(0)",
+                  height: "1px",
+                  bottom: "-2px",
+                  left: "0",
+                  background: "var(--green)",
+                  transformOrigin: "bottom right",
+                  transition: "transform 0.25s ease-out"
+                },
+                "&:hover:after": {
+                  transform: "scaleX(1)",
+                  transformOrigin: "bottom left"
+                }
+              }}
+            >
+              {label}
+            </button>
+          ))}
         </div>
 
         <div className="inner">
@@ -470,36 +421,90 @@ const Experience = () => {
                     )}
                     {activeContentType === "education" && (
                       <>
-                        <h3>{frontmatter.degree}</h3>
-                        <h1>{frontmatter.gpa}</h1>
-                        <button
-                          onClick={() => toggleCourses(i)}
-                          style={{
-                            backgroundColor: "#112240",
-                            color: "#64ffda",
-                            borderRadius: "5px",
-                            padding: "5px 10px",
-                            margin: "10px 0",
-                            fontSize: "0.75rem",
-                            border: "none",
-                          }}
-                        >
-                          {showCourses[i] ? "Hide Courses" : "Show Courses"}
-                        </button>
-                        {showCourses[i] && (
-                          <TechTagsContainer>
-                            {technologies &&
-                              technologies.map((tech, index) => (
-                                <TechTag
+                        <h3 style={{
+                          fontSize: '1rem',
+                          fontWeight: '600',
+                          marginBottom: '5px',
+                          textAlign: 'center'
+                        }}>
+                          {frontmatter.degree}
+                        </h3>
+                        
+                        <p style={{
+                          fontSize: '0.95rem',
+                          color: 'var(--light-slate)',
+                          marginTop: '2px',
+                          textAlign: 'center',
+                          fontFamily: 'var(--font-mono)'
+                        }}>
+                          GPA: {frontmatter.gpa}
+                        </p>
+
+                        <div style={{
+                          display: 'flex',
+                          justifyContent: 'center',
+                          gap: '10px',
+                          marginTop: '15px'
+                        }}>
+                          <button
+                            onClick={() => toggleCourses(i)}
+                            style={{
+                              backgroundColor: "#112240",
+                              color: "#64ffda",
+                              borderRadius: "5px",
+                              padding: "5px 10px",
+                              fontSize: "0.75rem",
+                              border: "none",
+                              transition: "all 0.2s ease-in-out",
+                              cursor: "pointer"
+                            }}
+                            onMouseOver={(e) => {
+                              e.target.style.backgroundColor = "#1d3b6f"
+                            }}
+                            onMouseOut={(e) => {
+                              e.target.style.backgroundColor = "#112240"
+                            }}
+                          >
+                            {showCourses[i] ? "Hide Courses" : "Show Courses"}
+                          </button>
+                        </div>
+
+                        {showCourses[i] && technologies && technologies.length > 0 && (
+                          <div style={{
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            gap: '8px',
+                            justifyContent: 'center',
+                            marginTop: '15px',
+                            padding: '0 20px',
+                            maxWidth: '600px',
+                            margin: '15px auto'
+                          }}>
+                            {technologies.map((tech, index) => (
+                              <>
+                                <span
                                   key={index}
-                                  href={tech.url}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
+                                  style={{
+                                    color: 'var(--slate)',
+                                    fontSize: '0.75rem',
+                                    fontFamily: 'var(--font-mono)'
+                                  }}
                                 >
                                   {tech.name}
-                                </TechTag>
-                              ))}
-                          </TechTagsContainer>
+                                </span>
+                                {index < technologies.length - 1 && (
+                                  <span style={{
+                                    color: 'var(--green)',
+                                    fontSize: '0.75rem',
+                                    opacity: '0.5',
+                                    margin: '0 4px'
+                                  }}>
+                                    /
+                                  </span>
+                                )}
+                              </>
+                            ))}
+                          </div>
                         )}
                       </>
                     )}
@@ -561,7 +566,15 @@ const Experience = () => {
                             fontSize: '0.9rem',
                             lineHeight: '1.5',
                             color: 'var(--slate)',
-                            marginTop: '10px'
+                            marginTop: '10px',
+                            maxWidth: '100%',
+                            padding: '0 15px',
+                            textAlign: 'justify',
+                            overflowWrap: 'break-word',
+                            '@media (max-width: 768px)': {
+                              padding: '0 10px',
+                              fontSize: '0.85rem'
+                            }
                           }}>
                             {abstract}
                           </p>
@@ -654,6 +667,16 @@ const Experience = () => {
         <BibTeXPopup
           bibtex={showBibtexPopup}
           onClose={handleCloseBibTeXPopup}
+          style={{
+            maxWidth: '90vw',
+            margin: '0 auto',
+            padding: '15px',
+            '@media (max-width: 768px)': {
+              maxWidth: '95vw',
+              padding: '10px',
+              fontSize: '0.85rem'
+            }
+          }}
         />
       )}
     </StyledJobsSection>

@@ -4,13 +4,6 @@ title: "Research Assistant"
 company: "Arizona State University"
 location: "Phoenix, AZ"
 range: "2022-2024"
-technologies:
-  - name: "Python"
-    url: "https://python.org"
-  - name: "TensorFlow"
-    url: "https://tensorflow.org"
-  - name: "Kubernetes"
-    url: "https://kubernetes.io"
 ---
 
 - (Current) LLM Research. Advised by [Professor Ben Zhou](http://xuanyu.me/) @ [ARC](https://arc-asu.github.io/) Lab.

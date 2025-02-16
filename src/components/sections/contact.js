@@ -11,84 +11,132 @@ const StyledContactSection = styled.section`
   padding-top: 0;
 
   .title {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-    color: #ccd6f6;
+    font-size: clamp(1.5rem, 3vw, 1.8rem);
+    margin-bottom: 3rem;
+    color: var(--lightest-slate);
+    opacity: 0.8;
+    font-family: var(--font-mono);
+    font-weight: normal;
   }
 
   form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 2rem;
-    border-radius: 10px;
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 0;
   }
 
   label {
     display: flex;
     flex-direction: column;
-    margin-bottom: 1rem;
     width: 100%;
-    color: #8892b0;
-    font-size: 1rem;
-    font-weight: 600;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    color: var(--slate);
+    font-size: 0.85rem;
+    font-family: var(--font-mono);
   }
 
   input,
   textarea {
-    padding: 0.75rem;
-    margin-top: 0.5rem;
-    border: none;
-    border-bottom: 2px solid #ccd6f6;
     width: 100%;
-    background-color: #112240;
-    color: #ccd6f6;
-    font-size: 1rem;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--slate);
+    color: var(--lightest-slate);
+    font-size: 1.2rem;
+    padding: 0.75rem 0;
+    margin-top: 0.5rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    font-family: var(--font-mono);
 
     &:focus {
       outline: none;
-      border-bottom-color: #64ffda;
+      border-color: var(--green);
+    }
+
+    &::placeholder {
+      color: var(--slate);
+      opacity: 0.5;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    &:focus::placeholder {
+      opacity: 0;
+      transform: translateY(-10px);
     }
   }
 
   textarea {
-    height: 150px; /* Default height */
-    width: 300px; /* Default width */
+    min-height: 120px;
+    resize: none;
+    line-height: 1.5;
+  }
+
+  .button-group {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 1rem;
+    width: 100%;
   }
 
   button {
-    ${({ theme }) => theme.mixins.bigButton};
-    margin-top: 20px;
-    background-color: #64ffda;
-    color: #0a192f;
+    background: none;
     border: none;
-    padding: 0.75rem 1.5rem;
-    border-radius: 5px;
-    font-size: 1rem;
+    color: var(--green);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    padding: 0.5rem 0;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    position: relative;
+    transition: all 0.25s cubic-bezier(0.645,0.045,0.355,1);
+    opacity: 0.8;
+
+    &:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 1px;
+      bottom: 0;
+      left: 50%;
+      background-color: var(--green);
+      transition: all 0.25s cubic-bezier(0.645,0.045,0.355,1);
+    }
 
     &:hover {
-      background-color: #52e1c8;
+      opacity: 1;
+    }
+
+    &:hover:after {
+      width: 100%;
+      left: 0;
     }
   }
 
   .form-status {
-    margin-top: 1rem;
-    color: #64ffda;
-    font-size: 1rem;
+    margin-top: 2rem;
+    color: var(--green);
+    font-size: 0.85rem;
+    font-family: var(--font-mono);
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+  }
+
+  @keyframes fadeIn {
+    to {
+      opacity: 1;
+    }
   }
 
   @media (max-width: 768px) {
     margin: 0 auto 50px;
-
-    .title {
-      font-size: 2rem;
-    }
-
-    form {
-      padding: 1.5rem;
-    }
+    padding: 0 20px;
   }
 `
 
@@ -216,53 +264,49 @@ const Contact = () => {
       <h2 className="title">Get In Touch</h2>
       <form ref={formRef} onSubmit={handleSubmit}>
         {currentStep === 1 && (
-          <div>
-            <label>
-              Name:
-              <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder={namePlaceholder}
-                required
-              />
-            </label>
-            <button onClick={handleNext}>Next</button>
+          <div style={{ width: '100%' }}>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder={namePlaceholder}
+              required
+            />
+            <div className="button-group">
+              <button onClick={handleNext}>Next →</button>
+            </div>
           </div>
         )}
         {currentStep === 2 && (
-          <div>
-            <label>
-              Email:
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder={emailPlaceholder}
-                required
-              />
-            </label>
-            <button onClick={handlePrev}>Back</button>
-            <button onClick={handleNext}>Next</button>
+          <div style={{ width: '100%' }}>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder={emailPlaceholder}
+              required
+            />
+            <div className="button-group">
+              <button onClick={handlePrev}>← Back</button>
+              <button onClick={handleNext}>Next →</button>
+            </div>
           </div>
         )}
         {currentStep === 3 && (
-          <div>
-            <label>
-              Message:
-              <textarea
-                name="message"
-                rows="5"
-                value={formData.message}
-                onChange={handleChange}
-                placeholder={messagePlaceholder}
-                required
-              />
-            </label>
-            <button onClick={handlePrev}>Back</button>
-            <button type="submit">Send Message</button>
+          <div style={{ width: '100%' }}>
+            <textarea
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              placeholder={messagePlaceholder}
+              required
+            />
+            <div className="button-group">
+              <button onClick={handlePrev}>← Back</button>
+              <button type="submit">Send Message ↗</button>
+            </div>
           </div>
         )}
       </form>
