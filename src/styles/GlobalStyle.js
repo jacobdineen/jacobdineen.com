@@ -21,8 +21,14 @@ const GlobalStyle = createGlobalStyle`
   }
 
   ::selection {
-    background-color: ${({ theme }) => theme.colors[theme.mode].lightestNavy};
-    color: ${({ theme }) => theme.colors[theme.mode].lightestSlate};
+    background-color: ${({ theme }) => 
+      theme.mode === 'light' 
+        ? 'rgba(100, 255, 218, 0.3)' 
+        : 'rgba(100, 255, 218, 0.2)'};
+    color: ${({ theme }) => 
+      theme.mode === 'light' 
+        ? 'var(--navy)' 
+        : 'var(--lightest-slate)'};
   }
 
   /* Provide basic, default focus styles.*/
@@ -76,6 +82,7 @@ body {
   font-family: var(--font-sans);
   font-size: var(--fz-xl);
   line-height: 1.3;
+  transition: background-color 0.3s ease, color 0.3s ease;
 
   @media (max-width: 480px) {
     font-size: var(--fz-lg);
@@ -157,6 +164,10 @@ body {
 
   h1, h2, h3, h4, h5, h6 {
     color: ${({ theme }) => theme.colors[theme.mode].lightestSlate};
+    text-shadow: ${({ theme }) => 
+      theme.mode === 'light' 
+        ? 'none' 
+        : '0 2px 4px rgba(0, 0, 0, 0.3)'};
   }
 
   .big-heading {
@@ -257,6 +268,21 @@ body {
     &.inline-link {
       ${({ theme }) => theme.mixins.inlineLink};
     }
+
+    &:after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 1px;
+      bottom: -1px;
+      left: 0;
+      background-color: var(--green);
+      transition: width 0.3s ease;
+    }
+
+    &:hover:after {
+      width: 100%;
+    }
   }
 
   button {
@@ -265,18 +291,27 @@ body {
     border-radius: 0;
   }
 
-  input, textarea {
-    border-radius: 0;
-    outline: 0;
-
+  input, textarea, select {
+    background-color: ${({ theme }) =>
+      theme.mode === 'light' 
+        ? 'rgba(255, 255, 255, 0.8)' 
+        : 'rgba(10, 25, 47, 0.8)'};
+    border: 1px solid ${({ theme }) =>
+      theme.mode === 'light' 
+        ? 'var(--light-slate)' 
+        : 'var(--navy)'};
+    border-radius: 4px;
+    padding: 10px;
+    color: ${({ theme }) =>
+      theme.mode === 'light' 
+        ? 'var(--dark-slate)' 
+        : 'var(--lightest-slate)'};
+    transition: all 0.3s ease;
+    
     &:focus {
-      outline: 0;
-    }
-    &:focus,
-    &:active {
-      &::placeholder {
-        opacity: 0.5;
-      }
+      outline: none;
+      border-color: var(--green);
+      box-shadow: 0 0 0 1px var(--green);
     }
   }
 
@@ -436,6 +471,33 @@ body {
   ${TransitionStyles};
 
   ${PrismStyles};
+
+  /* Custom scrollbar for Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: ${({ theme }) => 
+      theme.mode === 'light' 
+        ? 'var(--light-slate)' 
+        : 'var(--dark-navy)'} transparent;
+  }
+
+  /* Custom scrollbar for Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: ${({ theme }) => 
+      theme.mode === 'light' 
+        ? 'var(--light-slate)' 
+        : 'var(--dark-navy)'};
+    border-radius: 6px;
+    border: 3px solid transparent;
+  }
 `
 
 export default GlobalStyle

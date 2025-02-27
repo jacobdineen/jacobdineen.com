@@ -650,6 +650,7 @@ const Experience = () => {
                               href={tech.url}
                               target="_blank"
                               rel="noopener noreferrer"
+                              style={{ "--index": index }}
                             >
                               {tech.name}
                             </TechTag>

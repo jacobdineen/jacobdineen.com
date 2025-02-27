@@ -66,6 +66,26 @@ const Button = styled.button`
     transform: translateY(1px);
   }
 
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px ${({ theme }) => 
+      theme.mode === 'light' 
+        ? 'var(--green-dark)' 
+        : 'var(--green)'};
+  }
+
+  &:focus:not(:focus-visible) {
+    box-shadow: none;
+  }
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px ${({ theme }) => 
+      theme.mode === 'light' 
+        ? 'var(--green-dark)' 
+        : 'var(--green)'};
+  }
+
   /* Optional sizes */
   &.small {
     padding: 6px 12px;

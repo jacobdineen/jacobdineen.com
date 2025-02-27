@@ -48,6 +48,26 @@ const StyledTabPanel = styled.div`
       height: 24px;
     }
   }
+
+  position: relative;
+  transition: all 0.3s ease;
+  
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -15px;
+    width: 3px;
+    height: 0;
+    background-color: var(--green);
+    transition: height 0.3s ease;
+    border-radius: 3px;
+    opacity: 0.6;
+  }
+  
+  &:hover:before {
+    height: 70%;
+  }
 `
 
 export default StyledTabPanel
