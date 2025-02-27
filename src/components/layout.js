@@ -31,15 +31,10 @@ const StyledSidebar = styled.aside`
   background-color: ${({ theme }) =>
     theme.mode === "light" ? "var(--light-slate)" : "var(--navy)"};
   z-index: 5;
-  overflow-y: auto;
-  transition: all 0.3s ease-in-out;
-  box-shadow: ${({ theme }) =>
-    theme.mode === "light"
-      ? "0 5px 15px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1)"
-      : "0 10px 30px -15px rgba(2, 12, 27, 0.7)"};
+  overflow-y: auto; /* Prevent content overflow */
 
   @media (max-width: 767px) {
-    max-height: calc(100vh - 50px);
+    max-height: calc(100vh - 50px); /* Limit height on mobile */
   }
 
   @media (min-width: 768px) {
@@ -73,96 +68,6 @@ const StyledSidebar = styled.aside`
       }
     }
   }
-`
-
-const StyledTabButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: ${({ theme }) =>
-    theme.mode === "light" ? "var(--dark-slate)" : "var(--green)"};
-  font-size: var(--fz-xxs);
-  width: 100%;
-  height: var(--tab-height);
-  border: none;
-  border-radius: 8px;
-  background-color: transparent;
-  text-align: center;
-  box-sizing: border-box;
-  padding: 0 20px;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  outline: none;
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: ${({ theme }) =>
-      theme.mode === "light"
-        ? "linear-gradient(120deg, rgba(100, 255, 218, 0), rgba(100, 255, 218, 0.1), rgba(100, 255, 218, 0))"
-        : "linear-gradient(120deg, rgba(100, 255, 218, 0), rgba(100, 255, 218, 0.1), rgba(100, 255, 218, 0))"};
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: -1;
-  }
-
-  &:hover,
-  &:focus {
-    color: ${({ theme }) =>
-      theme.mode === "light" ? "var(--green-dark)" : "var(--green)"};
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px
-      ${({ theme }) =>
-        theme.mode === "light" ? "rgba(0, 0, 0, 0.1)" : "rgba(0, 0, 0, 0.2)"};
-
-    &::before {
-      opacity: 1;
-    }
-  }
-
-  &:focus-visible {
-    outline: 2px solid
-      ${({ theme }) =>
-        theme.mode === "light" ? "var(--green-dark)" : "var(--green)"};
-    outline-offset: 3px;
-  }
-
-  &:active {
-    transform: translateY(1px);
-  }
-
-  ${({ isActive, theme }) =>
-    isActive &&
-    `
-    background-color: ${
-      theme.mode === "light" ? "var(--white)" : "var(--navy)"
-    };
-    color: ${theme.mode === "light" ? "var(--green-dark)" : "var(--green)"};
-    box-shadow: 0 6px 14px ${
-      theme.mode === "light" ? "rgba(0, 0, 0, 0.08)" : "rgba(0, 0, 0, 0.2)"
-    };
-    transform: scale(1.03);
-    z-index: 1;
-    font-weight: 600;
-    border-left: 3px solid ${
-      theme.mode === "light" ? "var(--green-dark)" : "var(--green)"
-    };
-    
-    &::before {
-      opacity: 1;
-      background: ${
-        theme.mode === "light"
-          ? "linear-gradient(120deg, rgba(100, 255, 218, 0.05), rgba(100, 255, 218, 0.15), rgba(100, 255, 218, 0.05))"
-          : "linear-gradient(120deg, rgba(100, 255, 218, 0.05), rgba(100, 255, 218, 0.15), rgba(100, 255, 218, 0.05))"
-      };
-    }
-  `}
 `
 
 const StyledMainContent = styled.main`
@@ -300,6 +205,62 @@ const Slider = styled.span`
     transition: 0.4s;
     border-radius: 50%;
   }
+`
+
+const StyledTabButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: ${({ theme }) =>
+    theme.mode === "light" ? "var(--dark-slate)" : "var(--green)"};
+  font-size: var(--fz-xxs);
+  width: 100%;
+  height: var(--tab-height);
+  border: none;
+  border-radius: 20px;
+  background-color: transparent;
+  text-align: center;
+  box-sizing: border-box;
+  padding: 0 20px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  outline: none;
+
+  &:hover,
+  &:focus {
+    background-color: ${({ theme }) =>
+      theme.mode === "light" ? "var(--light-slate)" : "var(--light-navy)"};
+    color: ${({ theme }) =>
+      theme.mode === "light" ? "var(--green-dark)" : "var(--green)"};
+    box-shadow: 0 4px 8px
+      ${({ theme }) =>
+        theme.mode === "light" ? "rgba(0, 0, 0, 0.1)" : "rgba(0, 0, 0, 0.2)"};
+    transform: translateY(-2px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid
+      ${({ theme }) =>
+        theme.mode === "light" ? "var(--green-dark)" : "var(--green)"};
+    outline-offset: 3px;
+  }
+
+  ${({ isActive, theme }) =>
+    isActive &&
+    `
+    background-color: ${
+      theme.mode === "light" ? "var(--white)" : "var(--navy)"
+    };
+    color: ${theme.mode === "light" ? "var(--green-dark)" : "var(--green)"};
+    box-shadow: 0 6px 12px ${
+      theme.mode === "light" ? "rgba(0, 0, 0, 0.15)" : "rgba(0, 0, 0, 0.3)"
+    };
+    transform: scale(1.05);
+    z-index: 1;
+    border-bottom: 3px solid ${
+      theme.mode === "light" ? "var(--green-dark)" : "var(--green)"
+    };
+  `}
 `
 
 const ToggleSwitch = ({ label, onChange, initialChecked }) => {
