@@ -4,6 +4,8 @@ const StyledJobsSection = styled.section`
   max-width: 800px;
   font-size: var(--fz-lg);
   position: relative;
+  width: 100%;
+  overflow-x: hidden;
 
   &:after {
     content: "";
@@ -26,18 +28,21 @@ const StyledJobsSection = styled.section`
     flex-direction: column;
     align-items: flex-start;
     position: relative;
+    width: 100%;
   }
 
   ul.fancy-list {
     margin: 0;
     padding: 0;
     list-style: none;
+    width: 100%;
 
     li {
       position: relative;
       padding-left: 20px;
       margin-bottom: 10px;
       font-size: var(--fz-sm);
+      max-width: 100%;
 
       &:before {
         content: "▹";
@@ -53,10 +58,16 @@ const StyledJobsSection = styled.section`
     gap: 10px;
     margin-top: 20px;
     flex-wrap: wrap;
+    width: 100%;
   }
 
   @media (max-width: 768px) {
     font-size: var(--fz-md);
+    max-width: 100%;
+    width: 100vw;
+    overflow-x: hidden;
+    box-sizing: border-box;
+    padding: 0;
 
     .button-group {
       justify-content: center;
@@ -65,8 +76,15 @@ const StyledJobsSection = styled.section`
 
   @media (max-width: 600px) {
     margin-left: 0;
-    padding: 0 10px;
+    padding: 0;
     font-size: var(--fz-sm);
+    width: 100vw;
+    overflow-x: hidden;
+
+    * {
+      max-width: 100vw;
+      box-sizing: border-box;
+    }
   }
 `
 
