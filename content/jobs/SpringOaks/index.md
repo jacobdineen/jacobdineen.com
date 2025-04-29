@@ -3,7 +3,7 @@ date: "2024-12-31"
 title: "Machine Learning Engineer"
 company: "Spring Oaks Capital"
 location: "Phoenix, AZ"
-range: "2022 - 2023"
+range: "2022 - 2025"
 ---
 
 - Developed and deployed scalable ETL and modeling pipelines using Airflow and Kubernetes for text/call efforts and offer generation, incorporating ranking recommendations and constrained optimization solutions to scheduling problems.
