@@ -5,7 +5,6 @@ const StyledJobsSection = styled.section`
   font-size: var(--fz-lg);
   position: relative;
   width: 100%;
-  overflow-x: hidden;
 
   &:after {
     content: "";
@@ -64,8 +63,7 @@ const StyledJobsSection = styled.section`
   @media (max-width: 768px) {
     font-size: var(--fz-md);
     max-width: 100%;
-    width: 100vw;
-    overflow-x: hidden;
+    width: 100%;
     box-sizing: border-box;
     padding: 0;
 
@@ -78,11 +76,10 @@ const StyledJobsSection = styled.section`
     margin-left: 0;
     padding: 0;
     font-size: var(--fz-sm);
-    width: 100vw;
-    overflow-x: hidden;
+    width: 100%;
 
     * {
-      max-width: 100vw;
+      max-width: 100%;
       box-sizing: border-box;
     }
   }

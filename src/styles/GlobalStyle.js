@@ -21,14 +21,12 @@ const GlobalStyle = createGlobalStyle`
   }
 
   ::selection {
-    background-color: ${({ theme }) => 
-      theme.mode === 'light' 
-        ? 'rgba(100, 255, 218, 0.3)' 
-        : 'rgba(100, 255, 218, 0.2)'};
-    color: ${({ theme }) => 
-      theme.mode === 'light' 
-        ? 'var(--navy)' 
-        : 'var(--lightest-slate)'};
+    background-color: ${({ theme }) =>
+      theme.mode === "light"
+        ? "rgba(100, 255, 218, 0.3)"
+        : "rgba(100, 255, 218, 0.2)"};
+    color: ${({ theme }) =>
+      theme.mode === "light" ? "var(--navy)" : "var(--lightest-slate)"};
   }
 
   /* Provide basic, default focus styles.*/
@@ -59,7 +57,9 @@ const GlobalStyle = createGlobalStyle`
   /* Scrollbar Styles */
   html {
     scrollbar-width: thin;
-    scrollbar-color: ${({ theme }) => theme.colors[theme.mode].darkSlate} ${({ theme }) => theme.colors[theme.mode].navy};
+    scrollbar-color: ${({ theme }) => theme.colors[theme.mode].darkSlate} ${({
+  theme,
+}) => theme.colors[theme.mode].navy};
   }
   ::-webkit-scrollbar-track {
     background: ${({ theme }) => theme.colors[theme.mode].navy};
@@ -75,6 +75,7 @@ body {
   width: 100%;
   min-height: 100%;
   overflow-x: hidden;
+  overflow-y: hidden; /* Hide main document scrollbar for fixed sidebar layout */
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   background-color: ${({ theme }) => theme.colors[theme.mode].background};
@@ -164,10 +165,8 @@ body {
 
   h1, h2, h3, h4, h5, h6 {
     color: ${({ theme }) => theme.colors[theme.mode].lightestSlate};
-    text-shadow: ${({ theme }) => 
-      theme.mode === 'light' 
-        ? 'none' 
-        : '0 2px 4px rgba(0, 0, 0, 0.3)'};
+    text-shadow: ${({ theme }) =>
+      theme.mode === "light" ? "none" : "0 2px 4px rgba(0, 0, 0, 0.3)"};
   }
 
   .big-heading {
@@ -293,19 +292,15 @@ body {
 
   input, textarea, select {
     background-color: ${({ theme }) =>
-      theme.mode === 'light' 
-        ? 'rgba(255, 255, 255, 0.8)' 
-        : 'rgba(10, 25, 47, 0.8)'};
+      theme.mode === "light"
+        ? "rgba(255, 255, 255, 0.8)"
+        : "rgba(10, 25, 47, 0.8)"};
     border: 1px solid ${({ theme }) =>
-      theme.mode === 'light' 
-        ? 'var(--light-slate)' 
-        : 'var(--navy)'};
+      theme.mode === "light" ? "var(--light-slate)" : "var(--navy)"};
     border-radius: 4px;
     padding: 10px;
     color: ${({ theme }) =>
-      theme.mode === 'light' 
-        ? 'var(--dark-slate)' 
-        : 'var(--lightest-slate)'};
+      theme.mode === "light" ? "var(--dark-slate)" : "var(--lightest-slate)"};
     transition: all 0.3s ease;
     
     &:focus {
@@ -475,10 +470,10 @@ body {
   /* Custom scrollbar for Firefox */
   * {
     scrollbar-width: thin;
-    scrollbar-color: ${({ theme }) => 
-      theme.mode === 'light' 
-        ? 'var(--light-slate)' 
-        : 'var(--dark-navy)'} transparent;
+    scrollbar-color: ${({ theme }) =>
+      theme.mode === "light"
+        ? "var(--light-slate)"
+        : "var(--dark-navy)"} transparent;
   }
 
   /* Custom scrollbar for Chrome, Edge, and Safari */
@@ -491,10 +486,8 @@ body {
   }
 
   *::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => 
-      theme.mode === 'light' 
-        ? 'var(--light-slate)' 
-        : 'var(--dark-navy)'};
+    background-color: ${({ theme }) =>
+      theme.mode === "light" ? "var(--light-slate)" : "var(--dark-navy)"};
     border-radius: 6px;
     border: 3px solid transparent;
   }

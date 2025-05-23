@@ -31,7 +31,6 @@ const StyledSidebar = styled.aside`
   background-color: ${({ theme }) =>
     theme.mode === "light" ? "var(--light-slate)" : "var(--navy)"};
   z-index: 5;
-  overflow-y: auto; /* Prevent content overflow */
 
   @media (max-width: 767px) {
     max-height: calc(100vh - 50px); /* Limit height on mobile */
@@ -77,15 +76,53 @@ const StyledMainContent = styled.main`
   flex-direction: column;
   z-index: 10;
   min-height: 100vh;
+  height: 100vh; /* Fixed height to enable internal scrolling */
+  overflow-y: auto; /* Enable scrolling within main content */
   background-color: ${({ theme }) =>
     theme.mode === "light" ? "var(--white)" : "var(--navy)"};
   color: ${({ theme }) =>
     theme.mode === "light" ? "var(--dark-navy)" : "var(--slate)"};
 
+  /* Custom scrollbar styling */
+  scrollbar-width: thin;
+  scrollbar-color: ${({ theme }) =>
+      theme.mode === "light"
+        ? "rgba(0, 0, 0, 0.2)"
+        : "rgba(255, 255, 255, 0.2)"}
+    transparent;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: ${({ theme }) =>
+      theme.mode === "light"
+        ? "rgba(0, 0, 0, 0.2)"
+        : "rgba(255, 255, 255, 0.2)"};
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: ${({ theme }) =>
+      theme.mode === "light"
+        ? "rgba(0, 0, 0, 0.3)"
+        : "rgba(255, 255, 255, 0.3)"};
+  }
+
   @media (min-width: 768px) {
     margin-left: 300px;
     padding: 80px 40px;
     width: calc(100% - 300px);
+    border-left: 1px solid
+      ${({ theme }) =>
+        theme.mode === "light"
+          ? "rgba(0, 0, 0, 0.1)"
+          : "rgba(255, 255, 255, 0.1)"};
   }
 
   @media (min-width: 1080px) {

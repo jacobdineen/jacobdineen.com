@@ -16,6 +16,13 @@ const SidebarIcons = styled.aside`
   display: flex;
   gap: 15px;
   margin-top: 0;
+  justify-content: center;
+  flex-wrap: wrap;
+
+  @media (min-width: 768px) {
+    gap: 12px;
+    margin-top: 8px;
+  }
 
   a {
     color: var(--slate);
@@ -35,19 +42,36 @@ const SidebarIcons = styled.aside`
       width: 18px;
       height: 18px;
     }
+
+    @media (min-width: 768px) {
+      width: 18px;
+      height: 18px;
+    }
   }
 `
 
 const StyledAboutSection = styled.section`
   max-width: 600px;
-  margin: 0 auto -30px;
+  margin: 0 auto;
+  width: 100%;
 
   .inner {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 15px;
-    padding: 0;
+    padding: 10px 0;
+    width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    max-width: 100%;
+    margin: 0;
+
+    .inner {
+      gap: 12px;
+      padding: 0;
+    }
   }
 `
 
@@ -57,7 +81,7 @@ const StyledText = styled.div`
   align-items: center;
   text-align: center;
   margin-top: 5px;
-  margin-bottom: -20px;
+  width: 100%;
 
   h1 {
     font-size: clamp(1.2rem, 3vw, 1.5rem);
@@ -65,6 +89,10 @@ const StyledText = styled.div`
     font-family: var(--font-mono);
     color: var(--lightest-slate);
     margin: 0 0 5px 0;
+
+    @media (min-width: 768px) {
+      font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+    }
   }
 
   h2 {
@@ -73,15 +101,25 @@ const StyledText = styled.div`
     color: var(--green);
     margin: 0 0 10px 0;
     opacity: 0.85;
+
+    @media (min-width: 768px) {
+      font-size: clamp(0.75rem, 1.8vw, 0.85rem);
+      margin: 0 0 8px 0;
+    }
   }
 
   p {
-    font-size: 1rem; // Medium font size for the subtitle
-    font-weight: 100; // Medium font weight for the subtitle
-    font-family: var(--font-mono); // Monospace font for the main title
-    color: #89cfef; // Regular text color
-    max-width: 540px; // Max width for paragraph text, adjust as necessary
-    line-height: 1.5; // Line height for paragraph text
+    font-size: 1rem;
+    font-weight: 100;
+    font-family: var(--font-mono);
+    color: #89cfef;
+    max-width: 540px;
+    line-height: 1.5;
+
+    @media (min-width: 768px) {
+      font-size: 0.9rem;
+      max-width: 100%;
+    }
   }
 `
 
@@ -90,10 +128,19 @@ const StyledPic = styled.div`
   max-width: 180px;
   display: flex;
   justify-content: center;
+  flex-shrink: 0;
 
-  @media (max-width: 768px) {
+  @media (max-width: 767px) {
     max-width: 160px;
     margin: 10px auto 0;
+  }
+
+  @media (min-width: 768px) {
+    max-width: 140px;
+  }
+
+  @media (min-width: 1080px) {
+    max-width: 160px;
   }
 
   .wrapper {

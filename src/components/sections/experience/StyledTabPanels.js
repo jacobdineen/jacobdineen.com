@@ -4,22 +4,22 @@ const StyledTabPanels = styled.div`
   width: 100%;
   margin-top: 20px;
   padding: 0 10px;
-  max-width: 100vw;
+  max-width: 100%;
   box-sizing: border-box;
 
   /* Add responsive styling for mobile devices */
   @media (max-width: 768px) {
     padding: 0 8px;
     margin-top: 15px;
-    overflow-x: hidden;
-    width: calc(100% - 16px);
+    /* Remove overflow-x: hidden that could cause issues */
+    width: 100%;
   }
 
   @media (max-width: 480px) {
     padding: 0 5px;
     margin-top: 10px;
-    overflow-x: hidden;
-    width: calc(100% - 10px);
+    /* Remove overflow-x: hidden that could cause issues */
+    width: 100%;
 
     /* Ensure content doesn't overflow */
     * {
