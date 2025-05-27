@@ -10,6 +10,7 @@ import {
   IconGmail,
   IconGScholar,
   IconSemanticScholar,
+  IconTwitter,
 } from "@components/icons"
 
 const SidebarIcons = styled.aside`
@@ -219,6 +220,9 @@ const About = () => {
                 aria-label="Linkedin"
               >
                 <IconLinkedin />
+              </a>
+              <a href="https://x.com/jakedineenasu" aria-label="Twitter">
+                <IconTwitter />
               </a>
               <a
                 href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiDv7jF5-yEAxXDIEQIHQzsCHEQFnoECBIQAQ&url=https%3A%2F%2Fscholar.google.com%2Fcitations%3Fuser%3DWKurvcoAAAAJ%26hl%3Den&usg=AOvVaw329Uar6xNQ9B1keI_PT4Oc&opi=89978449"

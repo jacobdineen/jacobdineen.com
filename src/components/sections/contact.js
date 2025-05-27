@@ -1,22 +1,39 @@
 import React, { useEffect, useRef, useState } from "react"
 import styled from "styled-components"
-import { srConfig } from "@config"
-import sr from "@utils/sr"
-import { usePrefersReducedMotion } from "@hooks"
+// import { usePrefersReducedMotion } from "@hooks"
 
 const StyledContactSection = styled.section`
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto 100px;
   text-align: center;
-  padding-top: 0;
+  padding: 100px 40px;
+  position: relative;
+  z-index: 10;
+  background-color: ${({ theme }) =>
+    theme.mode === "light"
+      ? "rgba(255, 255, 255, 0.9)"
+      : "rgba(17, 34, 64, 0.8)"};
+  border-radius: 10px;
+  border: 2px solid
+    ${({ theme }) =>
+      theme.mode === "light"
+        ? "rgba(137, 207, 239, 0.3)"
+        : "rgba(137, 207, 239, 0.2)"};
+  box-shadow: 0 10px 30px -15px ${({ theme }) => (theme.mode === "light" ? "rgba(0, 0, 0, 0.1)" : "rgba(2, 12, 27, 0.7)")};
+
+  /* Force visibility and override ScrollReveal */
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none !important;
 
   .title {
     font-size: clamp(1.5rem, 3vw, 1.8rem);
     margin-bottom: 3rem;
-    color: var(--lightest-slate);
-    opacity: 0.8;
+    color: ${({ theme }) =>
+      theme.mode === "light" ? "var(--dark-navy)" : "var(--lightest-slate)"};
+    opacity: 1;
     font-family: var(--font-mono);
-    font-weight: normal;
+    font-weight: 600;
   }
 
   form {
@@ -43,31 +60,44 @@ const StyledContactSection = styled.section`
   input,
   textarea {
     width: 100%;
-    background: transparent;
+    background: ${({ theme }) =>
+      theme.mode === "light"
+        ? "rgba(255, 255, 255, 0.8)"
+        : "rgba(10, 25, 47, 0.5)"};
     border: none;
-    border-bottom: 1px solid var(--slate);
-    color: var(--lightest-slate);
+    border-bottom: 2px solid
+      ${({ theme }) =>
+        theme.mode === "light" ? "var(--slate)" : "var(--slate)"};
+    color: ${({ theme }) =>
+      theme.mode === "light" ? "var(--dark-navy)" : "var(--lightest-slate)"};
     font-size: 1.2rem;
-    padding: 0.75rem 0;
+    padding: 0.75rem 1rem;
     margin-top: 0.5rem;
     text-align: center;
     transition: all 0.3s ease;
     font-family: var(--font-mono);
+    border-radius: 4px;
 
     &:focus {
       outline: none;
       border-color: var(--green);
+      background: ${({ theme }) =>
+        theme.mode === "light"
+          ? "rgba(255, 255, 255, 1)"
+          : "rgba(10, 25, 47, 0.8)"};
+      box-shadow: 0 0 0 1px var(--green);
     }
 
     &::placeholder {
-      color: var(--slate);
-      opacity: 0.5;
+      color: ${({ theme }) =>
+        theme.mode === "light" ? "var(--slate)" : "var(--slate)"};
+      opacity: 0.7;
       font-size: 0.9rem;
       transition: all 0.3s ease;
     }
 
     &:focus::placeholder {
-      opacity: 0;
+      opacity: 0.3;
       transform: translateY(-10px);
     }
   }
@@ -87,35 +117,28 @@ const StyledContactSection = styled.section`
   }
 
   button {
-    background: none;
-    border: none;
+    background: ${({ theme }) =>
+      theme.mode === "light" ? "transparent" : "transparent"};
+    border: 1px solid var(--green);
     color: var(--green);
     font-family: var(--font-mono);
     font-size: 0.85rem;
-    padding: 0.5rem 0;
+    padding: 0.75rem 1.5rem;
     cursor: pointer;
     position: relative;
-    transition: all 0.25s cubic-bezier(0.645,0.045,0.355,1);
-    opacity: 0.8;
-
-    &:after {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 1px;
-      bottom: 0;
-      left: 50%;
-      background-color: var(--green);
-      transition: all 0.25s cubic-bezier(0.645,0.045,0.355,1);
-    }
+    transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+    opacity: 1;
+    border-radius: 4px;
+    font-weight: 500;
 
     &:hover {
-      opacity: 1;
+      background: var(--green-tint);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(137, 207, 239, 0.2);
     }
 
-    &:hover:after {
-      width: 100%;
-      left: 0;
+    &:active {
+      transform: translateY(0);
     }
   }
 
@@ -186,7 +209,6 @@ const useInView = (ref, options) => {
 
 const Contact = () => {
   const revealContainer = useRef(null)
-  const prefersReducedMotion = usePrefersReducedMotion()
   const [formStatus, setFormStatus] = useState("")
   const [currentStep, setCurrentStep] = useState(1)
   const [formData, setFormData] = useState({
@@ -211,13 +233,13 @@ const Contact = () => {
     isInView && currentStep === 3
   )
 
-  useEffect(() => {
-    if (prefersReducedMotion) {
-      return
-    }
-
-    sr.reveal(revealContainer.current, srConfig())
-  }, [prefersReducedMotion])
+  // Commented out ScrollReveal to fix visibility issue
+  // useEffect(() => {
+  //   if (prefersReducedMotion) {
+  //     return
+  //   }
+  //   sr.reveal(revealContainer.current, srConfig())
+  // }, [prefersReducedMotion])
 
   const handleChange = e => {
     const { name, value } = e.target
@@ -264,7 +286,7 @@ const Contact = () => {
       <h2 className="title">Get In Touch</h2>
       <form ref={formRef} onSubmit={handleSubmit}>
         {currentStep === 1 && (
-          <div style={{ width: '100%' }}>
+          <div style={{ width: "100%" }}>
             <input
               type="text"
               name="name"
@@ -279,7 +301,7 @@ const Contact = () => {
           </div>
         )}
         {currentStep === 2 && (
-          <div style={{ width: '100%' }}>
+          <div style={{ width: "100%" }}>
             <input
               type="email"
               name="email"
@@ -295,7 +317,7 @@ const Contact = () => {
           </div>
         )}
         {currentStep === 3 && (
-          <div style={{ width: '100%' }}>
+          <div style={{ width: "100%" }}>
             <textarea
               name="message"
               value={formData.message}

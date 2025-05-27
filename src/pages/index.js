@@ -1,11 +1,16 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { Layout, Experience, Contact } from '@components';
+import React from "react"
+import PropTypes from "prop-types"
+import styled from "styled-components"
+import { Layout, Experience, Contact } from "@components"
 
 const StyledMainContainer = styled.main`
   counter-reset: section;
-`;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  padding: 50px 0;
+`
 
 const IndexPage = ({ location }) => (
   <Layout location={location}>
@@ -14,10 +19,10 @@ const IndexPage = ({ location }) => (
       <Contact />
     </StyledMainContainer>
   </Layout>
-);
+)
 
 IndexPage.propTypes = {
   location: PropTypes.object.isRequired,
-};
+}
 
-export default IndexPage;
+export default IndexPage

@@ -13,6 +13,7 @@ import {
   IconResearchGate,
   IconSemanticScholar,
   IconGScholar,
+  IconTwitter,
 } from "@components/icons"
 import IconGmail from "./gmail"
 
@@ -44,6 +45,8 @@ const Icon = ({ name }) => {
       return <IconGmail />
     case "GScholar":
       return <IconGScholar />
+    case "Twitter":
+      return <IconTwitter />
     default:
       return <IconExternal />
   }

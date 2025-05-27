@@ -213,46 +213,48 @@ const Experience = () => {
         <h3>Hey, I&apos;m Jake.</h3>
         <div
           style={{
-            fontFamily: "Arial, sans-serif",
-            fontSize: "0.75em",
-            fontWeight: "600",
-            color: "#4a90e2",
-            textAlign: "center",
+            fontSize: "var(--fz-lg)",
+            color: "var(--light-slate)",
+            lineHeight: "1.6",
+            fontWeight: "normal",
             marginBottom: "20px",
-            borderBottom: "2px solid #4a90e2",
-            paddingBottom: "10px",
+            maxWidth: "600px",
+            margin: "0 auto 20px",
           }}
         >
-          Currently @:{" "}
+          I have spent close to ten years in Data Science and Machine Learning
+          Engineering roles, primarily in fintech. I&apos;m currently pursuing
+          my PhD while conducting research in LLM Reasoning and Alignment at{" "}
           <a
             href="https://arc-asu.github.io/"
             target="_blank"
             rel="noopener noreferrer"
+            style={{
+              color: "var(--green)",
+              textDecoration: "none",
+              fontWeight: "600",
+              transition: "all 0.25s ease",
+            }}
           >
-            <span>AI, Reasoning and Cognition (ARC) Lab</span>
+            Arizona State University&apos;s ARC Lab
           </a>
+          .
         </div>
-        <h1 style={{
-          fontSize: '0.95rem',
-          color: 'var(--light-slate)',
-          lineHeight: '1.5',
-          fontWeight: 'normal',
-          marginBottom: '15px'
-        }}>
-          I have spent close to ten years in Data Science and Machine Learning Engineering roles, 
-          primarily in fintech. I'm currently pursuing my PhD while conducting research in LLM Reasoning 
-          and Alignment at Arizona State University's ARC Lab.
-        </h1>
-        <h1 style={{
-          fontSize: '0.95rem',
-          color: 'var(--light-slate)',
-          lineHeight: '1.5',
-          fontWeight: 'normal',
-          marginBottom: '15px'
-        }}>
-          Outside of work, I enjoy traveling with my wife, spending time with family and friends, 
-          tinkering with tech, and staying active despite the Arizona heat.
-        </h1>
+        <div
+          style={{
+            fontSize: "var(--fz-lg)",
+            color: "var(--light-slate)",
+            lineHeight: "1.6",
+            fontWeight: "normal",
+            marginBottom: "30px",
+            maxWidth: "600px",
+            margin: "0 auto 30px",
+          }}
+        >
+          Outside of work, I enjoy traveling with my wife, spending time with
+          family and friends, tinkering with tech, and staying active despite
+          the Arizona heat.
+        </div>
 
         <h1 className="numbered-heading">A little about me</h1>
 
@@ -262,53 +264,60 @@ const Experience = () => {
             justifyContent: "center",
             alignItems: "center",
             flexWrap: "wrap",
-            gap: "12px",
+            gap: "10px",
             width: "100%",
-            maxWidth: "600px",
-            margin: "0 auto 25px",
-            padding: "0 20px"
+            maxWidth: "500px",
+            margin: "0 auto 30px",
+            padding: "0 20px",
           }}
         >
           {[
             { id: "education", label: "Education" },
             { id: "publications", label: "Publications" },
             { id: "rjobs", label: "Research" },
-            { id: "jobs", label: "Industry" }
+            { id: "jobs", label: "Industry" },
           ].map(({ id, label }) => (
             <button
               key={id}
               onClick={() => setActiveContentType(id)}
               disabled={activeContentType === id}
               style={{
-                background: activeContentType === id ? "var(--green-tint)" : "transparent",
-                color: activeContentType === id ? "var(--green)" : "var(--slate)",
-                border: `1px solid ${activeContentType === id ? "var(--green)" : "transparent"}`,
-                borderRadius: "4px",
-                padding: "8px 16px",
-                fontSize: "13px",
+                background:
+                  activeContentType === id
+                    ? "var(--green-tint)"
+                    : "transparent",
+                color:
+                  activeContentType === id ? "var(--green)" : "var(--slate)",
+                border: `1px solid ${
+                  activeContentType === id
+                    ? "var(--green)"
+                    : "var(--lightest-navy)"
+                }`,
+                borderRadius: "var(--border-radius)",
+                padding: "10px 18px",
+                fontSize: "var(--fz-xs)",
                 fontFamily: "var(--font-mono)",
+                fontWeight: activeContentType === id ? "600" : "500",
                 transition: "all 0.25s cubic-bezier(0.645,0.045,0.355,1)",
-                cursor: "pointer",
+                cursor: activeContentType === id ? "default" : "pointer",
                 position: "relative",
-                "&:hover": {
-                  color: "var(--green)",
-                  background: "var(--green-tint)",
-                },
-                "&:after": {
-                  content: '""',
-                  position: "absolute",
-                  width: "100%",
-                  transform: "scaleX(0)",
-                  height: "1px",
-                  bottom: "-2px",
-                  left: "0",
-                  background: "var(--green)",
-                  transformOrigin: "bottom right",
-                  transition: "transform 0.25s ease-out"
-                },
-                "&:hover:after": {
-                  transform: "scaleX(1)",
-                  transformOrigin: "bottom left"
+                minWidth: "90px",
+                textAlign: "center",
+              }}
+              onMouseEnter={e => {
+                if (activeContentType !== id) {
+                  e.target.style.color = "var(--green)"
+                  e.target.style.background = "var(--green-tint)"
+                  e.target.style.borderColor = "var(--green)"
+                  e.target.style.transform = "translateY(-2px)"
+                }
+              }}
+              onMouseLeave={e => {
+                if (activeContentType !== id) {
+                  e.target.style.color = "var(--slate)"
+                  e.target.style.background = "transparent"
+                  e.target.style.borderColor = "var(--lightest-navy)"
+                  e.target.style.transform = "translateY(0)"
                 }
               }}
             >
@@ -389,63 +398,76 @@ const Experience = () => {
                     style={{
                       borderBottom: "1px solid var(--lightest-navy)",
                       paddingBottom: "20px",
-                      marginBottom: "20px"
+                      marginBottom: "20px",
                     }}
                   >
-                    <h3 style={{
-                      fontSize: '1rem',  // Reduced from 1.1rem
-                      fontWeight: '600',
-                      marginBottom: '5px'
-                    }}>
+                    <h3
+                      style={{
+                        fontSize: "1rem", // Reduced from 1.1rem
+                        fontWeight: "600",
+                        marginBottom: "5px",
+                      }}
+                    >
                       <span>{title}</span>
                       {frontmatter.venue && (
-                        <span style={{
-                          fontSize: '0.8rem',
-                          color: 'var(--green)',
-                          fontFamily: 'var(--font-mono)',
-                          marginLeft: '10px'
-                        }}>
+                        <span
+                          style={{
+                            fontSize: "0.8rem",
+                            color: "var(--green)",
+                            fontFamily: "var(--font-mono)",
+                            marginLeft: "10px",
+                          }}
+                        >
                           {frontmatter.venue}
                         </span>
                       )}
                     </h3>
 
                     {frontmatter.authors && (
-                      <p className="authors" style={{
-                        fontSize: '0.95rem',
-                        color: 'var(--light-slate)',
-                        marginTop: '2px'
-                      }}>
+                      <p
+                        className="authors"
+                        style={{
+                          fontSize: "0.95rem",
+                          color: "var(--light-slate)",
+                          marginTop: "2px",
+                        }}
+                      >
                         {frontmatter.authors}
                       </p>
                     )}
                     {activeContentType === "education" && (
                       <>
-                        <h3 style={{
-                          fontSize: '1rem',
-                          fontWeight: '600',
-                          marginBottom: '5px',
-                          textAlign: 'center'
-                        }}>
+                        <h3
+                          style={{
+                            fontSize: "1rem",
+                            fontWeight: "600",
+                            marginBottom: "5px",
+                            textAlign: "center",
+                          }}
+                        >
                           {frontmatter.degree}
                         </h3>
-                        
-                        <p style={{
-                          fontSize: '0.95rem',
-                          color: 'var(--light-slate)',
-                          marginTop: '2px',
-                          textAlign: 'center',
-                          fontFamily: 'var(--font-mono)'
-                        }}>
+
+                        <p
+                          style={{
+                            fontSize: "0.95rem",
+                            color: "var(--light-slate)",
+                            marginTop: "2px",
+                            textAlign: "center",
+                            fontFamily: "var(--font-mono)",
+                          }}
+                        >
                           GPA: {frontmatter.gpa}
                         </p>
 
-                        <div style={{
-                          display: 'flex',
-                          justifyContent: 'center',
-                          gap: '10px',
-                          marginTop: '15px'
-                        }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            gap: "10px",
+                            marginTop: "15px",
+                          }}
+                        >
                           <button
                             onClick={() => toggleCourses(i)}
                             style={{
@@ -456,12 +478,12 @@ const Experience = () => {
                               fontSize: "0.75rem",
                               border: "none",
                               transition: "all 0.2s ease-in-out",
-                              cursor: "pointer"
+                              cursor: "pointer",
                             }}
-                            onMouseOver={(e) => {
+                            onMouseOver={e => {
                               e.target.style.backgroundColor = "#1d3b6f"
                             }}
-                            onMouseOut={(e) => {
+                            onMouseOut={e => {
                               e.target.style.backgroundColor = "#112240"
                             }}
                           >
@@ -469,53 +491,61 @@ const Experience = () => {
                           </button>
                         </div>
 
-                        {showCourses[i] && technologies && technologies.length > 0 && (
-                          <div style={{
-                            display: 'flex',
-                            flexWrap: 'wrap',
-                            gap: '8px',
-                            justifyContent: 'center',
-                            marginTop: '15px',
-                            padding: '0 20px',
-                            maxWidth: '600px',
-                            margin: '15px auto'
-                          }}>
-                            {technologies.map((tech, index) => (
-                              <>
-                                <span
-                                  key={index}
-                                  style={{
-                                    color: 'var(--slate)',
-                                    fontSize: '0.75rem',
-                                    fontFamily: 'var(--font-mono)'
-                                  }}
-                                >
-                                  {tech.name}
-                                </span>
-                                {index < technologies.length - 1 && (
-                                  <span style={{
-                                    color: 'var(--green)',
-                                    fontSize: '0.75rem',
-                                    opacity: '0.5',
-                                    margin: '0 4px'
-                                  }}>
-                                    /
+                        {showCourses[i] &&
+                          technologies &&
+                          technologies.length > 0 && (
+                            <div
+                              style={{
+                                display: "flex",
+                                flexWrap: "wrap",
+                                gap: "8px",
+                                justifyContent: "center",
+                                marginTop: "15px",
+                                padding: "0 20px",
+                                maxWidth: "600px",
+                                margin: "15px auto",
+                              }}
+                            >
+                              {technologies.map((tech, index) => (
+                                <>
+                                  <span
+                                    key={index}
+                                    style={{
+                                      color: "var(--slate)",
+                                      fontSize: "0.75rem",
+                                      fontFamily: "var(--font-mono)",
+                                    }}
+                                  >
+                                    {tech.name}
                                   </span>
-                                )}
-                              </>
-                            ))}
-                          </div>
-                        )}
+                                  {index < technologies.length - 1 && (
+                                    <span
+                                      style={{
+                                        color: "var(--green)",
+                                        fontSize: "0.75rem",
+                                        opacity: "0.5",
+                                        margin: "0 4px",
+                                      }}
+                                    >
+                                      /
+                                    </span>
+                                  )}
+                                </>
+                              ))}
+                            </div>
+                          )}
                       </>
                     )}
                     {activeContentType === "publications" && (
                       <>
-                        <div style={{
-                          display: 'flex',
-                          justifyContent: 'center',
-                          gap: '10px',
-                          marginTop: '15px'
-                        }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            gap: "10px",
+                            marginTop: "15px",
+                          }}
+                        >
                           <button
                             onClick={() => toggleAbstract(i)}
                             style={{
@@ -526,16 +556,18 @@ const Experience = () => {
                               fontSize: "0.75rem",
                               border: "none",
                               transition: "all 0.2s ease-in-out",
-                              cursor: "pointer"
+                              cursor: "pointer",
                             }}
-                            onMouseOver={(e) => {
+                            onMouseOver={e => {
                               e.target.style.backgroundColor = "#1d3b6f"
                             }}
-                            onMouseOut={(e) => {
+                            onMouseOut={e => {
                               e.target.style.backgroundColor = "#112240"
                             }}
                           >
-                            {showAbstract[i] ? "Hide Abstract" : "Show Abstract"}
+                            {showAbstract[i]
+                              ? "Hide Abstract"
+                              : "Show Abstract"}
                           </button>
 
                           <button
@@ -548,45 +580,50 @@ const Experience = () => {
                               fontSize: "0.75rem",
                               border: "none",
                               transition: "all 0.2s ease-in-out",
-                              cursor: "pointer"
+                              cursor: "pointer",
                             }}
-                            onMouseOver={(e) => {
+                            onMouseOver={e => {
                               e.target.style.backgroundColor = "#1d3b6f"
                             }}
-                            onMouseOut={(e) => {
+                            onMouseOut={e => {
                               e.target.style.backgroundColor = "#112240"
                             }}
                           >
                             Show BibTeX
                           </button>
                         </div>
-                        
+
                         {showAbstract[i] && (
-                          <p className="abstract" style={{
-                            fontSize: '0.9rem',
-                            lineHeight: '1.5',
-                            color: 'var(--slate)',
-                            marginTop: '10px',
-                            maxWidth: '100%',
-                            padding: '0 15px',
-                            textAlign: 'justify',
-                            overflowWrap: 'break-word',
-                            '@media (max-width: 768px)': {
-                              padding: '0 10px',
-                              fontSize: '0.85rem'
-                            }
-                          }}>
+                          <p
+                            className="abstract"
+                            style={{
+                              fontSize: "0.9rem",
+                              lineHeight: "1.5",
+                              color: "var(--slate)",
+                              marginTop: "10px",
+                              maxWidth: "100%",
+                              padding: "0 15px",
+                              textAlign: "justify",
+                              overflowWrap: "break-word",
+                              "@media (max-width: 768px)": {
+                                padding: "0 10px",
+                                fontSize: "0.85rem",
+                              },
+                            }}
+                          >
                             {abstract}
                           </p>
                         )}
                       </>
                     )}
-                    <IconContainer style={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      gap: '15px',
-                      marginTop: '15px'
-                    }}>
+                    <IconContainer
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        gap: "15px",
+                        marginTop: "15px",
+                      }}
+                    >
                       {frontmatter.googlescholar && (
                         <IconLink
                           href={frontmatter.googlescholar}
@@ -669,14 +706,14 @@ const Experience = () => {
           bibtex={showBibtexPopup}
           onClose={handleCloseBibTeXPopup}
           style={{
-            maxWidth: '90vw',
-            margin: '0 auto',
-            padding: '15px',
-            '@media (max-width: 768px)': {
-              maxWidth: '95vw',
-              padding: '10px',
-              fontSize: '0.85rem'
-            }
+            maxWidth: "90vw",
+            margin: "0 auto",
+            padding: "15px",
+            "@media (max-width: 768px)": {
+              maxWidth: "95vw",
+              padding: "10px",
+              fontSize: "0.85rem",
+            },
           }}
         />
       )}
