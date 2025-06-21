@@ -342,11 +342,13 @@ const Experience = () => {
 
             {activeData.map(({ node }, i) => {
               const { frontmatter } = node
-              const { company, venue } = frontmatter
+              const { company, venue, title } = frontmatter
 
               const label =
                 activeContentType === "jobs" || activeContentType === "rjobs"
                   ? company
+                  : activeContentType === "publications"
+                  ? title
                   : venue
               return (
                 <StyledTabButton
