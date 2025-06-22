@@ -15,6 +15,18 @@ const PopupOverlay = styled.div`
   justify-content: center;
   align-items: center;
   animation: fadeIn 0.2s ease-out;
+  padding: 10px;
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    align-items: flex-start;
+    padding: 20px 10px;
+    overflow-y: auto;
+  }
+
+  @media (max-width: 480px) {
+    padding: 10px 5px;
+  }
 
   @keyframes fadeIn {
     from {
@@ -39,6 +51,22 @@ const PopupContent = styled.div`
   padding: 25px;
   position: relative;
   animation: slideUp 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  @media (max-width: 768px) {
+    width: 95%;
+    max-width: none;
+    max-height: 90vh;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 10px;
+  }
+
+  @media (max-width: 480px) {
+    width: 98%;
+    max-height: 95vh;
+    padding: 12px;
+    margin: 5px;
+  }
 
   @keyframes slideUp {
     from {
@@ -70,6 +98,24 @@ const BibtexContent = styled.div`
       theme.mode === "light"
         ? "rgba(0, 0, 0, 0.05)"
         : "rgba(255, 255, 255, 0.05)"};
+  max-height: 60vh;
+  overflow-y: auto;
+
+  @media (max-width: 768px) {
+    padding: 15px;
+    font-size: 12px;
+    margin-bottom: 15px;
+    max-height: 65vh;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 480px) {
+    padding: 12px;
+    font-size: 11px;
+    margin-bottom: 12px;
+    max-height: 70vh;
+    line-height: 1.3;
+  }
 `
 
 const ButtonContainer = styled.div`
@@ -77,6 +123,18 @@ const ButtonContainer = styled.div`
   justify-content: center;
   gap: 15px;
   margin-top: 10px;
+  flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    gap: 10px;
+    margin-top: 8px;
+  }
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 6px;
+  }
 `
 
 const Button = styled.button`
@@ -104,6 +162,21 @@ const Button = styled.button`
   box-shadow: 0 2px 4px
     ${({ theme }) =>
       theme.mode === "light" ? "rgba(0, 0, 0, 0.1)" : "rgba(0, 0, 0, 0.3)"};
+  min-width: fit-content;
+  white-space: nowrap;
+
+  @media (max-width: 768px) {
+    padding: 12px 16px;
+    font-size: 0.8rem;
+    min-height: 44px; /* Ensure touch-friendly size */
+  }
+
+  @media (max-width: 480px) {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 0.85rem;
+    min-height: 48px; /* Better for mobile touch */
+  }
 
   &:hover,
   &:focus {
@@ -148,6 +221,22 @@ const Notification = styled.div`
   z-index: 1100;
   opacity: 0;
   animation: notification 3s ease-in-out forwards;
+  max-width: 90vw;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    bottom: 20px;
+    padding: 10px 20px;
+    font-size: 0.85rem;
+    max-width: 95vw;
+  }
+
+  @media (max-width: 480px) {
+    bottom: 15px;
+    padding: 8px 16px;
+    font-size: 0.8rem;
+    max-width: 90vw;
+  }
 
   @keyframes notification {
     0% {
