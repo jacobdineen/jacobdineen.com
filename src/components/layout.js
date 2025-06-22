@@ -16,32 +16,33 @@ const StyledContainer = styled.div`
   min-height: 100vh;
   position: relative;
 
-  @media (min-width: 768px) {
+  @media (min-width: 480px) {
     flex-direction: row;
   }
 `
 
 const StyledSidebar = styled.aside`
   width: 100%;
-  position: relative;
-  padding: 20px;
+  padding: 15px 10px;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: ${({ theme }) =>
     theme.mode === "light" ? "var(--light-slate)" : "var(--navy)"};
   z-index: 5;
+  position: relative;
 
-  @media (max-width: 767px) {
-    max-height: calc(100vh - 50px); /* Limit height on mobile */
+  @media (min-width: 480px) {
+    width: 280px;
+    height: 100vh;
+    position: fixed;
+    padding: 20px 15px;
+    justify-content: center;
   }
 
   @media (min-width: 768px) {
     width: 300px;
-    height: 100vh;
-    position: fixed;
     padding: 0 25px;
-    justify-content: center;
   }
 
   @media (min-width: 1080px) {
@@ -50,7 +51,12 @@ const StyledSidebar = styled.aside`
 
   nav {
     width: 100%;
-    margin: 20px 0;
+    margin: 15px 0;
+
+    @media (min-width: 480px) {
+      margin: 20px 0;
+    }
+
     ul {
       list-style: none;
       padding: 0;
@@ -61,9 +67,13 @@ const StyledSidebar = styled.aside`
       width: 100%;
 
       li {
-        margin: 8px 0;
+        margin: 6px 0;
         width: 100%;
         text-align: center;
+
+        @media (min-width: 480px) {
+          margin: 8px 0;
+        }
       }
     }
   }
@@ -71,17 +81,40 @@ const StyledSidebar = styled.aside`
 
 const StyledMainContent = styled.main`
   width: 100%;
-  padding: 20px;
+  padding: 15px;
   display: flex;
   flex-direction: column;
   z-index: 10;
   min-height: 100vh;
-  height: 100vh; /* Fixed height to enable internal scrolling */
-  overflow-y: auto; /* Enable scrolling within main content */
   background-color: ${({ theme }) =>
     theme.mode === "light" ? "var(--white)" : "var(--navy)"};
   color: ${({ theme }) =>
     theme.mode === "light" ? "var(--dark-navy)" : "var(--slate)"};
+
+  @media (min-width: 480px) {
+    margin-left: 280px;
+    width: calc(100% - 280px);
+    padding: 30px 20px;
+    height: 100vh;
+    overflow-y: auto;
+    border-left: 1px solid
+      ${({ theme }) =>
+        theme.mode === "light"
+          ? "rgba(0, 0, 0, 0.1)"
+          : "rgba(255, 255, 255, 0.1)"};
+  }
+
+  @media (min-width: 768px) {
+    margin-left: 300px;
+    width: calc(100% - 300px);
+    padding: 40px 30px;
+  }
+
+  @media (min-width: 1080px) {
+    margin-left: 350px;
+    width: calc(100% - 350px);
+    padding: 60px 40px;
+  }
 
   /* Custom scrollbar styling */
   scrollbar-width: thin;
@@ -114,22 +147,6 @@ const StyledMainContent = styled.main`
         : "rgba(255, 255, 255, 0.3)"};
   }
 
-  @media (min-width: 768px) {
-    margin-left: 300px;
-    padding: 80px 40px;
-    width: calc(100% - 300px);
-    border-left: 1px solid
-      ${({ theme }) =>
-        theme.mode === "light"
-          ? "rgba(0, 0, 0, 0.1)"
-          : "rgba(255, 255, 255, 0.1)"};
-  }
-
-  @media (min-width: 1080px) {
-    margin-left: 350px;
-    width: calc(100% - 350px);
-  }
-
   /* Add text color overrides for light mode */
   ${({ theme }) =>
     theme.mode === "light" &&
@@ -154,40 +171,15 @@ const StyledMainContent = styled.main`
   `}
 `
 
-const MobileHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 15px;
-
-  @media (min-width: 768px) {
-    display: none;
-  }
-`
-
-const MenuToggle = styled.button`
-  background: transparent;
-  border: none;
-  color: var(--green);
-  font-size: 24px;
-  cursor: pointer;
-  z-index: 11;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  &:focus {
-    outline: 2px solid var(--green);
-    outline-offset: 3px;
-  }
-`
-
 const ToggleWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 15px;
+
+  @media (min-width: 480px) {
+    margin-top: 20px;
+  }
 `
 
 const ToggleLabel = styled.label`
@@ -355,7 +347,6 @@ ToggleSwitch.defaultProps = {
 const Layout = ({ children, location }) => {
   const [isLoading, setIsLoading] = useState(location.pathname === "/")
   const [activeSection, setActiveSection] = useState("")
-  const [menuOpen, setMenuOpen] = useState(false)
 
   // Get initial theme preference from localStorage if available
   const [themeMode, setThemeMode] = useState(() => {
@@ -420,23 +411,11 @@ const Layout = ({ children, location }) => {
       document.getElementById(section)?.scrollIntoView({ behavior: "smooth" })
       setActiveSection(section)
     }
-    // Close mobile menu after selection
-    setMenuOpen(false)
   }
 
   const toggleTheme = checked => {
     setThemeMode(checked ? "dark" : "light")
   }
-
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen)
-  }
-
-  // Check if it's a mobile view
-  const isMobile = typeof window !== "undefined" && window.innerWidth < 768
-
-  // Determine if sidebar should be shown
-  const showSidebar = !isMobile || (isMobile && menuOpen)
 
   return (
     <>
@@ -449,88 +428,32 @@ const Layout = ({ children, location }) => {
           <Loader finishLoading={() => setIsLoading(false)} />
         ) : (
           <StyledContainer>
-            {isMobile && (
-              <MobileHeader>
-                <MenuToggle
-                  onClick={toggleMenu}
-                  aria-expanded={menuOpen}
-                  aria-label="Toggle navigation menu"
-                >
-                  {menuOpen ? "✕" : "☰"}
-                </MenuToggle>
-                <ToggleSwitch
-                  label="Dark Mode"
-                  onChange={toggleTheme}
-                  initialChecked={themeMode === "dark"}
-                />
-              </MobileHeader>
-            )}
-
-            {showSidebar && (
-              <StyledSidebar
-                role="navigation"
-                aria-label="Main navigation"
-                style={
-                  isMobile
-                    ? {
-                        position: "fixed",
-                        top: 0,
-                        left: 0,
-                        height: "100vh",
-                        zIndex: 99,
-                        transform: menuOpen
-                          ? "translateX(0)"
-                          : "translateX(-100%)",
-                        transition: "transform 0.3s ease-in-out",
-                      }
-                    : {}
-                }
-              >
-                <About />
-                <nav>
-                  <ul>
-                    {sections.map(section => (
-                      <li key={section}>
-                        <StyledTabButton
-                          isActive={activeSection === section}
-                          onClick={e => handleSectionClick(e, section)}
-                          aria-current={
-                            activeSection === section ? "page" : undefined
-                          }
-                        >
-                          {section.charAt(0).toUpperCase() + section.slice(1)}
-                        </StyledTabButton>
-                      </li>
-                    ))}
-                  </ul>
-                </nav>
-                {!isMobile && (
-                  <ToggleSwitch
-                    label="Dark Mode"
-                    onChange={toggleTheme}
-                    initialChecked={themeMode === "dark"}
-                  />
-                )}
-              </StyledSidebar>
-            )}
-            <StyledMainContent id="content">{children}</StyledMainContent>
-
-            {/* Overlay for mobile menu */}
-            {isMobile && menuOpen && (
-              <div
-                style={{
-                  position: "fixed",
-                  top: 0,
-                  left: 0,
-                  width: "100%",
-                  height: "100%",
-                  background: "rgba(0,0,0,0.5)",
-                  zIndex: 98,
-                }}
-                onClick={toggleMenu}
-                aria-hidden="true"
+            <StyledSidebar role="navigation" aria-label="Main navigation">
+              <About />
+              <nav>
+                <ul>
+                  {sections.map(section => (
+                    <li key={section}>
+                      <StyledTabButton
+                        isActive={activeSection === section}
+                        onClick={e => handleSectionClick(e, section)}
+                        aria-current={
+                          activeSection === section ? "page" : undefined
+                        }
+                      >
+                        {section.charAt(0).toUpperCase() + section.slice(1)}
+                      </StyledTabButton>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+              <ToggleSwitch
+                label="Dark Mode"
+                onChange={toggleTheme}
+                initialChecked={themeMode === "dark"}
               />
-            )}
+            </StyledSidebar>
+            <StyledMainContent id="content">{children}</StyledMainContent>
           </StyledContainer>
         )}
       </ThemeProvider>

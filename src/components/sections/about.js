@@ -15,63 +15,57 @@ import {
 
 const SidebarIcons = styled.aside`
   display: flex;
-  gap: 15px;
-  margin-top: 0;
+  gap: 12px;
+  margin-top: 8px;
   justify-content: center;
   flex-wrap: wrap;
 
-  @media (min-width: 768px) {
-    gap: 12px;
-    margin-top: 8px;
+  @media (min-width: 480px) {
+    gap: 15px;
+    margin-top: 10px;
   }
 
   a {
     color: var(--slate);
     transition: var(--transition);
+    padding: 4px;
+    border-radius: 4px;
 
     &:hover {
       color: var(--green);
       transform: translateY(-2px);
+      background-color: rgba(100, 255, 218, 0.1);
     }
   }
 
   svg {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
 
-    @media (max-width: 768px) {
-      width: 18px;
-      height: 18px;
-    }
-
-    @media (min-width: 768px) {
-      width: 18px;
-      height: 18px;
+    @media (min-width: 480px) {
+      width: 20px;
+      height: 20px;
     }
   }
 `
 
 const StyledAboutSection = styled.section`
-  max-width: 600px;
-  margin: 0 auto;
   width: 100%;
+  margin: 0 auto;
 
   .inner {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
-    padding: 10px 0;
+    gap: 12px;
+    padding: 5px 0;
     width: 100%;
   }
 
-  @media (min-width: 768px) {
-    max-width: 100%;
-    margin: 0;
-
+  @media (min-width: 480px) {
     .inner {
-      gap: 12px;
-      padding: 0;
+      gap: 15px;
+      padding: 10px 0;
     }
   }
 `
@@ -85,59 +79,51 @@ const StyledText = styled.div`
   width: 100%;
 
   h1 {
-    font-size: clamp(1.2rem, 3vw, 1.5rem);
+    font-size: clamp(1.1rem, 4vw, 1.3rem);
     font-weight: 400;
     font-family: var(--font-mono);
     color: var(--lightest-slate);
-    margin: 0 0 5px 0;
+    margin: 0 0 4px 0;
+    line-height: 1.2;
 
-    @media (min-width: 768px) {
-      font-size: clamp(1.1rem, 2.5vw, 1.3rem);
+    @media (min-width: 480px) {
+      font-size: clamp(1.2rem, 3vw, 1.4rem);
+      margin: 0 0 6px 0;
     }
   }
 
   h2 {
-    font-size: clamp(0.85rem, 2vw, 0.95rem);
+    font-size: clamp(0.75rem, 3vw, 0.85rem);
     font-family: var(--font-mono);
     color: var(--green);
-    margin: 0 0 10px 0;
+    margin: 0 0 8px 0;
     opacity: 0.85;
+    line-height: 1.3;
 
-    @media (min-width: 768px) {
-      font-size: clamp(0.75rem, 1.8vw, 0.85rem);
-      margin: 0 0 8px 0;
+    @media (min-width: 480px) {
+      font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+      margin: 0 0 10px 0;
     }
   }
 
   p {
-    font-size: 1rem;
-    font-weight: 100;
-    font-family: var(--font-mono);
-    color: #89cfef;
-    max-width: 540px;
-    line-height: 1.5;
-
-    @media (min-width: 768px) {
-      font-size: 0.9rem;
-      max-width: 100%;
-    }
+    display: none; /* Hide paragraph text in sidebar to save space */
   }
 `
 
 const StyledPic = styled.div`
   position: relative;
-  max-width: 180px;
+  max-width: 120px;
   display: flex;
   justify-content: center;
   flex-shrink: 0;
 
-  @media (max-width: 767px) {
-    max-width: 160px;
-    margin: 10px auto 0;
+  @media (min-width: 480px) {
+    max-width: 140px;
   }
 
   @media (min-width: 768px) {
-    max-width: 140px;
+    max-width: 150px;
   }
 
   @media (min-width: 1080px) {
