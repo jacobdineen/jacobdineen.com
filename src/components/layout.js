@@ -10,52 +10,93 @@ import { SpeedInsights } from "@vercel/speed-insights/react"
 
 const sections = ["experience", "contact", "resume"]
 
+const StyledSkipLink = styled.a`
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  z-index: 999999;
+  color: white;
+  background: ${({ theme }) =>
+    theme.mode === "light" ? "#667eea" : "#00c9ff"};
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    sans-serif;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+  &:focus {
+    top: 6px;
+    outline: 2px solid
+      ${({ theme }) => (theme.mode === "light" ? "#764ba2" : "#92fe9d")};
+    outline-offset: 2px;
+  }
+
+  &:hover:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  }
+`
+
 const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   position: relative;
 
-  @media (min-width: 480px) {
+  @media (min-width: 768px) {
     flex-direction: row;
+    height: 100vh;
+    overflow: hidden;
   }
 `
 
 const StyledSidebar = styled.aside`
   width: 100%;
-  padding: 15px 10px;
+  padding: 24px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: ${({ theme }) =>
-    theme.mode === "light" ? "var(--light-slate)" : "var(--navy)"};
+  background: ${({ theme }) =>
+    theme.mode === "light"
+      ? "linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%)"
+      : "linear-gradient(180deg, #0f172a 0%, #1e293b 100%)"};
+  border-right: 1px solid
+    ${({ theme }) =>
+      theme.mode === "light"
+        ? "rgba(226, 232, 240, 0.8)"
+        : "rgba(100, 255, 218, 0.1)"};
   z-index: 5;
   position: relative;
-
-  @media (min-width: 480px) {
-    width: 280px;
-    height: 100vh;
-    position: fixed;
-    padding: 20px 15px;
-    justify-content: center;
-  }
+  flex-shrink: 0;
+  box-shadow: ${({ theme }) =>
+    theme.mode === "light"
+      ? "4px 0 16px rgba(0, 0, 0, 0.04)"
+      : "4px 0 16px rgba(0, 0, 0, 0.2)"};
 
   @media (min-width: 768px) {
     width: 300px;
-    padding: 0 25px;
+    height: 100vh;
+    position: fixed;
+    padding: 32px 24px;
+    justify-content: center;
+    box-shadow: ${({ theme }) =>
+      theme.mode === "light"
+        ? "8px 0 24px rgba(0, 0, 0, 0.06)"
+        : "8px 0 24px rgba(0, 0, 0, 0.3)"};
   }
 
   @media (min-width: 1080px) {
     width: 350px;
+    padding: 40px 32px;
   }
 
   nav {
     width: 100%;
-    margin: 15px 0;
-
-    @media (min-width: 480px) {
-      margin: 20px 0;
-    }
+    margin: 24px 0;
 
     ul {
       list-style: none;
@@ -65,15 +106,11 @@ const StyledSidebar = styled.aside`
       flex-direction: column;
       align-items: center;
       width: 100%;
+      gap: 12px;
 
       li {
-        margin: 6px 0;
         width: 100%;
         text-align: center;
-
-        @media (min-width: 480px) {
-          margin: 8px 0;
-        }
       }
     }
   }
@@ -81,39 +118,46 @@ const StyledSidebar = styled.aside`
 
 const StyledMainContent = styled.main`
   width: 100%;
-  padding: 15px;
+  padding: 24px 20px;
   display: flex;
   flex-direction: column;
   z-index: 10;
-  min-height: 100vh;
-  background-color: ${({ theme }) =>
-    theme.mode === "light" ? "var(--white)" : "var(--navy)"};
-  color: ${({ theme }) =>
-    theme.mode === "light" ? "var(--dark-navy)" : "var(--slate)"};
+  background: ${({ theme }) =>
+    theme.mode === "light"
+      ? "linear-gradient(180deg, #ffffff 0%, #f8fafc 100%)"
+      : "linear-gradient(180deg, #0f172a 0%, #020617 100%)"};
+  color: ${({ theme }) => (theme.mode === "light" ? "#1e293b" : "#e2e8f0")};
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  position: relative;
 
-  @media (min-width: 480px) {
-    margin-left: 280px;
-    width: calc(100% - 280px);
-    padding: 30px 20px;
-    height: 100vh;
-    overflow-y: auto;
-    border-left: 1px solid
-      ${({ theme }) =>
-        theme.mode === "light"
-          ? "rgba(0, 0, 0, 0.1)"
-          : "rgba(255, 255, 255, 0.1)"};
+  &::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: ${({ theme }) =>
+      theme.mode === "light"
+        ? "radial-gradient(600px circle at 50% 300px, rgba(102, 126, 234, 0.05), transparent 50%)"
+        : "radial-gradient(600px circle at 50% 300px, rgba(0, 201, 255, 0.05), transparent 50%)"};
+    pointer-events: none;
+    z-index: -1;
   }
 
   @media (min-width: 768px) {
     margin-left: 300px;
     width: calc(100% - 300px);
-    padding: 40px 30px;
+    padding: 48px 40px;
+    height: 100vh;
   }
 
   @media (min-width: 1080px) {
     margin-left: 350px;
     width: calc(100% - 350px);
-    padding: 60px 40px;
+    padding: 64px 48px;
   }
 
   /* Custom scrollbar styling */
@@ -175,19 +219,25 @@ const ToggleWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 15px;
+  gap: 12px;
+  margin-top: 24px;
+  flex-shrink: 0;
 
-  @media (min-width: 480px) {
-    margin-top: 20px;
+  span {
+    font-size: 0.85rem;
+    font-weight: 500;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+      sans-serif;
+    color: ${({ theme }) => (theme.mode === "light" ? "#64748b" : "#94a3b8")};
   }
 `
 
 const ToggleLabel = styled.label`
   position: relative;
   display: inline-block;
-  width: 40px;
-  height: 24px;
-  margin: 0 10px;
+  width: 52px;
+  height: 28px;
+  cursor: pointer;
 `
 
 const ToggleInput = styled.input`
@@ -196,18 +246,19 @@ const ToggleInput = styled.input`
   height: 0;
 
   &:checked + span {
-    background-color: ${({ theme }) =>
-      theme.mode === "light" ? "var(--green-dark)" : "var(--green)"};
+    background: linear-gradient(135deg, #00c9ff 0%, #92fe9d 100%);
   }
 
   &:checked + span:before {
-    transform: translateX(16px);
+    transform: translateX(24px);
   }
 
   &:focus + span {
-    box-shadow: 0 0 0 2px
+    box-shadow: 0 0 0 3px
       ${({ theme }) =>
-        theme.mode === "light" ? "var(--dark-navy)" : "var(--light-slate)"};
+        theme.mode === "light"
+          ? "rgba(102, 126, 234, 0.3)"
+          : "rgba(0, 201, 255, 0.3)"};
   }
 `
 
@@ -218,21 +269,32 @@ const Slider = styled.span`
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: ${({ theme }) =>
-    theme.mode === "light" ? "var(--slate)" : "var(--light-navy)"};
-  transition: 0.4s;
-  border-radius: 24px;
+  background: ${({ theme }) =>
+    theme.mode === "light"
+      ? "linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%)"
+      : "linear-gradient(135deg, #334155 0%, #475569 100%)"};
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border-radius: 28px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
 
   &:before {
     position: absolute;
     content: "";
-    height: 18px;
-    width: 18px;
+    height: 22px;
+    width: 22px;
     left: 3px;
     bottom: 3px;
-    background-color: white;
-    transition: 0.4s;
+    background: ${({ theme }) =>
+      theme.mode === "light"
+        ? "linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%)"
+        : "linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)"};
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  &:hover {
+    transform: scale(1.05);
   }
 `
 
@@ -240,56 +302,107 @@ const StyledTabButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${({ theme }) =>
-    theme.mode === "light" ? "var(--dark-slate)" : "var(--green)"};
-  font-size: var(--fz-xxs);
+  font-size: 0.9rem;
+  font-weight: 500;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    sans-serif;
   width: 100%;
-  height: var(--tab-height);
+  min-height: 48px;
+  height: auto;
   border: none;
-  border-radius: 20px;
-  background-color: transparent;
+  border-radius: 16px;
   text-align: center;
   box-sizing: border-box;
-  padding: 0 20px;
-  transition: all 0.3s ease;
+  padding: 14px 20px;
   cursor: pointer;
   outline: none;
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.01em;
 
-  &:hover,
-  &:focus {
-    background-color: ${({ theme }) =>
-      theme.mode === "light" ? "var(--light-slate)" : "var(--light-navy)"};
-    color: ${({ theme }) =>
-      theme.mode === "light" ? "var(--green-dark)" : "var(--green)"};
-    box-shadow: 0 4px 8px
-      ${({ theme }) =>
-        theme.mode === "light" ? "rgba(0, 0, 0, 0.1)" : "rgba(0, 0, 0, 0.2)"};
-    transform: translateY(-2px);
+  background: ${({ isActive, theme }) =>
+    isActive
+      ? theme.mode === "light"
+        ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+        : "linear-gradient(135deg, #00c9ff 0%, #92fe9d 100%)"
+      : theme.mode === "light"
+      ? "rgba(255, 255, 255, 0.7)"
+      : "rgba(15, 23, 42, 0.7)"};
+
+  backdrop-filter: blur(10px);
+  border: 1px solid
+    ${({ isActive, theme }) =>
+      isActive
+        ? "transparent"
+        : theme.mode === "light"
+        ? "rgba(226, 232, 240, 0.8)"
+        : "rgba(100, 255, 218, 0.1)"};
+
+  color: ${({ isActive, theme }) =>
+    isActive ? "white" : theme.mode === "light" ? "#475569" : "#94a3b8"};
+
+  box-shadow: ${({ isActive, theme }) =>
+    isActive
+      ? theme.mode === "light"
+        ? "0 8px 24px rgba(102, 126, 234, 0.3)"
+        : "0 8px 24px rgba(0, 201, 255, 0.3)"
+      : theme.mode === "light"
+      ? "0 4px 16px rgba(0, 0, 0, 0.08)"
+      : "0 4px 16px rgba(0, 0, 0, 0.2)"};
+
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+    transition: left 0.5s;
+  }
+
+  &:hover {
+    transform: translateY(-3px) scale(1.02);
+    background: ${({ isActive, theme }) =>
+      isActive
+        ? theme.mode === "light"
+          ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
+          : "linear-gradient(135deg, #00c9ff 0%, #92fe9d 100%)"
+        : theme.mode === "light"
+        ? "linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%)"
+        : "linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(51, 65, 85, 0.8) 100%)"};
+
+    box-shadow: ${({ isActive, theme }) =>
+      isActive
+        ? theme.mode === "light"
+          ? "0 12px 32px rgba(102, 126, 234, 0.4)"
+          : "0 12px 32px rgba(0, 201, 255, 0.4)"
+        : theme.mode === "light"
+        ? "0 8px 24px rgba(0, 0, 0, 0.12)"
+        : "0 8px 24px rgba(0, 0, 0, 0.3)"};
+
+    &::before {
+      left: 100%;
+    }
   }
 
   &:focus-visible {
     outline: 2px solid
-      ${({ theme }) =>
-        theme.mode === "light" ? "var(--green-dark)" : "var(--green)"};
+      ${({ theme }) => (theme.mode === "light" ? "#667eea" : "#00c9ff")};
     outline-offset: 3px;
   }
 
-  ${({ isActive, theme }) =>
-    isActive &&
-    `
-    background-color: ${
-      theme.mode === "light" ? "var(--white)" : "var(--navy)"
-    };
-    color: ${theme.mode === "light" ? "var(--green-dark)" : "var(--green)"};
-    box-shadow: 0 6px 12px ${
-      theme.mode === "light" ? "rgba(0, 0, 0, 0.15)" : "rgba(0, 0, 0, 0.3)"
-    };
-    transform: scale(1.05);
-    z-index: 1;
-    border-bottom: 3px solid ${
-      theme.mode === "light" ? "var(--green-dark)" : "var(--green)"
-    };
-  `}
+  &:active {
+    transform: translateY(-1px) scale(0.98);
+  }
 `
 
 const ToggleSwitch = ({ label, onChange, initialChecked }) => {
@@ -370,7 +483,12 @@ const Layout = ({ children, location }) => {
 
       if (sectionElements.length === 0) return
 
-      const scrollPosition = window.scrollY + window.innerHeight / 3
+      // Get scroll position from the main content area on desktop, window on mobile
+      const mainContent = document.getElementById("content")
+      const isDesktop = window.innerWidth >= 768
+      const scrollTop =
+        isDesktop && mainContent ? mainContent.scrollTop : window.scrollY
+      const scrollPosition = scrollTop + window.innerHeight / 3
 
       for (const { id, element } of sectionElements) {
         const { offsetTop, offsetHeight } = element
@@ -384,8 +502,19 @@ const Layout = ({ children, location }) => {
       }
     }
 
+    // Listen to both window and main content scroll events
+    const mainContent = document.getElementById("content")
     window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
+    if (mainContent) {
+      mainContent.addEventListener("scroll", handleScroll)
+    }
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+      if (mainContent) {
+        mainContent.removeEventListener("scroll", handleScroll)
+      }
+    }
   }, [])
 
   // Save theme preference
@@ -408,8 +537,25 @@ const Layout = ({ children, location }) => {
     if (section === "resume") {
       window.open("/jacobdineen_resume3.pdf", "_blank", "noopener,noreferrer")
     } else {
-      document.getElementById(section)?.scrollIntoView({ behavior: "smooth" })
-      setActiveSection(section)
+      const element = document.getElementById(section)
+      if (element) {
+        // On desktop, scroll within the main content area; on mobile, scroll the window
+        const mainContent = document.getElementById("content")
+        const isDesktop = window.innerWidth >= 768
+
+        if (isDesktop && mainContent) {
+          // For desktop, scroll within the main content container
+          const offsetTop = element.offsetTop - mainContent.offsetTop
+          mainContent.scrollTo({
+            top: offsetTop - 20, // Add some padding
+            behavior: "smooth",
+          })
+        } else {
+          // For mobile, scroll the window normally
+          element.scrollIntoView({ behavior: "smooth", block: "start" })
+        }
+        setActiveSection(section)
+      }
     }
   }
 
@@ -420,6 +566,7 @@ const Layout = ({ children, location }) => {
   return (
     <>
       <Head />
+      <StyledSkipLink href="#content">Skip to main content</StyledSkipLink>
       <ThemeProvider theme={{ ...theme, mode: themeMode }}>
         <GlobalStyle />
         <Analytics />

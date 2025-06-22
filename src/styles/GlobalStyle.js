@@ -75,7 +75,6 @@ body {
   width: 100%;
   min-height: 100%;
   overflow-x: hidden;
-  overflow-y: hidden; /* Hide main document scrollbar for fixed sidebar layout */
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   background-color: ${({ theme }) => theme.colors[theme.mode].background};
@@ -84,6 +83,11 @@ body {
   font-size: var(--fz-xl);
   line-height: 1.3;
   transition: background-color 0.3s ease, color 0.3s ease;
+
+  /* Only hide body overflow on desktop when using fixed sidebar */
+  @media (min-width: 768px) {
+    overflow-y: hidden;
+  }
 
   @media (max-width: 480px) {
     font-size: var(--fz-lg);
@@ -121,30 +125,34 @@ body {
     margin: 0 auto;
     width: 100%;
     max-width: 1600px;
-    min-height: 100vh;
-    padding: 200px 150px;
 
-    @media (max-width: 1080px) {
-      padding: 200px 100px;
-    }
-    @media (max-width: 768px) {
-      padding: 150px 50px;
-    }
-    @media (max-width: 480px) {
-      padding: 125px 25px;
-    }
-
-    &.fillHeight {
-      padding: 0 150px;
+    /* Only apply these styles to main elements that are NOT our custom layout */
+    &:not(#content) {
+      min-height: 100vh;
+      padding: 200px 150px;
 
       @media (max-width: 1080px) {
-        padding: 0 100px;
+        padding: 200px 100px;
       }
       @media (max-width: 768px) {
-        padding: 0 50px;
+        padding: 150px 50px;
       }
       @media (max-width: 480px) {
-        padding: 0 25px;
+        padding: 125px 25px;
+      }
+
+      &.fillHeight {
+        padding: 0 150px;
+
+        @media (max-width: 1080px) {
+          padding: 0 100px;
+        }
+        @media (max-width: 768px) {
+          padding: 0 50px;
+        }
+        @media (max-width: 480px) {
+          padding: 0 25px;
+        }
       }
     }
   }

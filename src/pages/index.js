@@ -8,17 +8,16 @@ const StyledMainContainer = styled.main`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  gap: 30px;
-  padding: 20px 0;
-
-  @media (min-width: 480px) {
-    gap: 40px;
-    padding: 30px 0;
-  }
+  gap: 48px;
+  padding: 0;
+  position: relative;
 
   @media (min-width: 768px) {
-    gap: 50px;
-    padding: 40px 0;
+    gap: 64px;
+  }
+
+  @media (min-width: 1080px) {
+    gap: 80px;
   }
 `
 
