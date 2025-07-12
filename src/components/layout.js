@@ -535,7 +535,7 @@ const Layout = ({ children, location }) => {
   const handleSectionClick = (e, section) => {
     e.preventDefault()
     if (section === "resume") {
-      window.open("/jacobdineen_resume3.pdf", "_blank", "noopener,noreferrer")
+      window.open("/JacobDineen_CV_latest.pdf", "_blank", "noopener,noreferrer")
     } else {
       const element = document.getElementById(section)
       if (element) {

@@ -73,7 +73,7 @@ typings/
 public/*
 
 # Except for the Academic_Resume.pdf file
-!public/jacobdineen_resume3.pdf
+!public/JacobDineen_CV_latest.pdf
 
 # Mac files
 .DS_Store
