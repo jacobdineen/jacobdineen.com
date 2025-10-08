@@ -1,5 +1,6 @@
 ---
 title: "Reinforcement Learning for Data Poisoning on Graph Neural Networks"
+slug: "/publications/rl-data-poisoning-2021"
 authors: Jacob Dineen, ASM Ahsan-Ul Haque, Matthew Bielskas
 date: 2021-7-04
 venue: "SBP-BRiMS 2021"

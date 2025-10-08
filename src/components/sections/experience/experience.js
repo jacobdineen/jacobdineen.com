@@ -1,24 +1,63 @@
 import React, { useState, useEffect, useRef } from "react"
-import { useStaticQuery, graphql } from "gatsby"
+import { useStaticQuery, graphql, Link } from "gatsby"
 import { CSSTransition } from "react-transition-group"
-// import styled from "styled-components";
+import styled from "styled-components"
 import { srConfig } from "@config"
 import { KEY_CODES } from "@utils"
 import sr from "@utils/sr"
 import { usePrefersReducedMotion } from "@hooks"
-import { Icon } from "@components/icons"
 import StyledTabButton from "./StyledTabButton"
-import BibTeXPopup from "./BibTeXPopup"
 import StyledText from "./StyledText"
 import TechTagsContainer from "./TechTagsContainer"
-import IconContainer from "./IconContainer"
 import StyledJobsSection from "./StyledJobsSection"
 import TechTag from "./TechTag"
-import IconLink from "./IconLink"
 import StyledTabList from "./StyledTabList"
 import ArrowButton from "./ArrowButton"
 import StyledTabPanels from "./StyledTabPanels"
 import StyledTabPanel from "./StyledTabPanel"
+
+const ContentTypeButtonsContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto 30px;
+  padding: 0 20px;
+`
+
+const ContentTypeButton = styled.button`
+  background: ${props =>
+    props.isActive ? "var(--green-tint)" : "transparent"};
+  color: ${props => (props.isActive ? "var(--green)" : "var(--slate)")};
+  border: 1px solid
+    ${props => (props.isActive ? "var(--green)" : "var(--lightest-navy)")};
+  border-radius: var(--border-radius);
+  padding: 10px 18px;
+  font-size: var(--fz-xs);
+  font-family: var(--font-mono);
+  font-weight: ${props => (props.isActive ? "600" : "500")};
+  transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+  cursor: ${props => (props.isActive ? "default" : "pointer")};
+  position: relative;
+  min-width: 90px;
+  flex: 1 1 auto;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    flex: 0 1 calc(50% - 5px);
+    min-width: 120px;
+  }
+
+  &:hover:not(:disabled) {
+    color: var(--green);
+    background: var(--green-tint);
+    border-color: var(--green);
+    transform: translateY(-2px);
+  }
+`
 
 const Experience = () => {
   const data = useStaticQuery(graphql`
@@ -69,6 +108,7 @@ const Experience = () => {
           node {
             frontmatter {
               title
+              slug
               authors
               date
               venue
@@ -118,10 +158,8 @@ const Experience = () => {
   const tabs = useRef([])
   const revealContainer = useRef(null)
   const prefersReducedMotion = usePrefersReducedMotion()
-  const [activeContentType, setActiveContentType] = useState("education")
-  const [showAbstract, setShowAbstract] = useState({})
+  const [activeContentType, setActiveContentType] = useState("publications")
   const [showCourses, setShowCourses] = useState({})
-  const [showBibtexPopup, setShowBibtexPopup] = useState(null) // New state for BibTeX popup
 
   useEffect(() => {
     if (prefersReducedMotion) {
@@ -173,26 +211,11 @@ const Experience = () => {
       ? publicationsData
       : educationData
 
-  const toggleAbstract = i => {
-    setShowAbstract(prevState => ({
-      ...prevState,
-      [i]: !prevState[i],
-    }))
-  }
-
   const toggleCourses = i => {
     setShowCourses(prevState => ({
       ...prevState,
       [i]: !prevState[i],
     }))
-  }
-
-  const handleBibTeXPopup = bibtex => {
-    setShowBibtexPopup(bibtex)
-  }
-
-  const handleCloseBibTeXPopup = () => {
-    setShowBibtexPopup(null)
   }
 
   const handlePrevClick = () => {
@@ -258,73 +281,23 @@ const Experience = () => {
 
         <h1 className="numbered-heading">A little about me</h1>
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            flexWrap: "wrap",
-            gap: "10px",
-            width: "100%",
-            maxWidth: "500px",
-            margin: "0 auto 30px",
-            padding: "0 20px",
-          }}
-        >
+        <ContentTypeButtonsContainer>
           {[
-            { id: "education", label: "Education" },
             { id: "publications", label: "Publications" },
             { id: "rjobs", label: "Research" },
+            { id: "education", label: "Education" },
             { id: "jobs", label: "Industry" },
           ].map(({ id, label }) => (
-            <button
+            <ContentTypeButton
               key={id}
               onClick={() => setActiveContentType(id)}
               disabled={activeContentType === id}
-              style={{
-                background:
-                  activeContentType === id
-                    ? "var(--green-tint)"
-                    : "transparent",
-                color:
-                  activeContentType === id ? "var(--green)" : "var(--slate)",
-                border: `1px solid ${
-                  activeContentType === id
-                    ? "var(--green)"
-                    : "var(--lightest-navy)"
-                }`,
-                borderRadius: "var(--border-radius)",
-                padding: "10px 18px",
-                fontSize: "var(--fz-xs)",
-                fontFamily: "var(--font-mono)",
-                fontWeight: activeContentType === id ? "600" : "500",
-                transition: "all 0.25s cubic-bezier(0.645,0.045,0.355,1)",
-                cursor: activeContentType === id ? "default" : "pointer",
-                position: "relative",
-                minWidth: "90px",
-                textAlign: "center",
-              }}
-              onMouseEnter={e => {
-                if (activeContentType !== id) {
-                  e.target.style.color = "var(--green)"
-                  e.target.style.background = "var(--green-tint)"
-                  e.target.style.borderColor = "var(--green)"
-                  e.target.style.transform = "translateY(-2px)"
-                }
-              }}
-              onMouseLeave={e => {
-                if (activeContentType !== id) {
-                  e.target.style.color = "var(--slate)"
-                  e.target.style.background = "transparent"
-                  e.target.style.borderColor = "var(--lightest-navy)"
-                  e.target.style.transform = "translateY(0)"
-                }
-              }}
+              isActive={activeContentType === id}
             >
               {label}
-            </button>
+            </ContentTypeButton>
           ))}
-        </div>
+        </ContentTypeButtonsContainer>
 
         <div className="inner">
           <StyledTabList
@@ -379,8 +352,7 @@ const Experience = () => {
           <StyledTabPanels>
             {activeData.map(({ node }, i) => {
               const { frontmatter, html } = node
-              const { title, range, abstract, bibtex, technologies } =
-                frontmatter
+              const { title, range, technologies } = frontmatter
 
               return (
                 <CSSTransition
@@ -410,7 +382,27 @@ const Experience = () => {
                         marginBottom: "5px",
                       }}
                     >
-                      <span>{title}</span>
+                      {activeContentType === "publications" &&
+                      frontmatter.slug ? (
+                        <Link
+                          to={frontmatter.slug}
+                          style={{
+                            color: "var(--lightest-slate)",
+                            textDecoration: "none",
+                            transition: "color 0.25s",
+                          }}
+                          onMouseEnter={e =>
+                            (e.target.style.color = "var(--green)")
+                          }
+                          onMouseLeave={e =>
+                            (e.target.style.color = "var(--lightest-slate)")
+                          }
+                        >
+                          {title}
+                        </Link>
+                      ) : (
+                        <span>{title}</span>
+                      )}
                       {frontmatter.venue && (
                         <span
                           style={{
@@ -538,145 +530,38 @@ const Experience = () => {
                           )}
                       </>
                     )}
-                    {activeContentType === "publications" && (
-                      <>
+                    {activeContentType === "publications" &&
+                      frontmatter.slug && (
                         <div
                           style={{
                             display: "flex",
                             justifyContent: "center",
-                            gap: "10px",
                             marginTop: "15px",
                           }}
                         >
-                          <button
-                            onClick={() => toggleAbstract(i)}
+                          <Link
+                            to={frontmatter.slug}
                             style={{
-                              backgroundColor: "#112240",
-                              color: "#64ffda",
-                              borderRadius: "5px",
-                              padding: "5px 10px",
-                              fontSize: "0.75rem",
-                              border: "none",
-                              transition: "all 0.2s ease-in-out",
-                              cursor: "pointer",
+                              color: "var(--green)",
+                              textDecoration: "none",
+                              fontFamily: "var(--font-mono)",
+                              fontSize: "var(--fz-sm)",
+                              transition: "all 0.25s",
+                              display: "inline-flex",
+                              alignItems: "center",
+                              gap: "5px",
                             }}
-                            onMouseOver={e => {
-                              e.target.style.backgroundColor = "#1d3b6f"
+                            onMouseEnter={e => {
+                              e.target.style.transform = "translateX(5px)"
                             }}
-                            onMouseOut={e => {
-                              e.target.style.backgroundColor = "#112240"
+                            onMouseLeave={e => {
+                              e.target.style.transform = "translateX(0)"
                             }}
                           >
-                            {showAbstract[i]
-                              ? "Hide Abstract"
-                              : "Show Abstract"}
-                          </button>
-
-                          <button
-                            onClick={() => handleBibTeXPopup(bibtex)}
-                            style={{
-                              backgroundColor: "#112240",
-                              color: "#64ffda",
-                              borderRadius: "5px",
-                              padding: "5px 10px",
-                              fontSize: "0.75rem",
-                              border: "none",
-                              transition: "all 0.2s ease-in-out",
-                              cursor: "pointer",
-                            }}
-                            onMouseOver={e => {
-                              e.target.style.backgroundColor = "#1d3b6f"
-                            }}
-                            onMouseOut={e => {
-                              e.target.style.backgroundColor = "#112240"
-                            }}
-                          >
-                            Show BibTeX
-                          </button>
+                            View Publication Details →
+                          </Link>
                         </div>
-
-                        {showAbstract[i] && (
-                          <p
-                            className="abstract"
-                            style={{
-                              fontSize: "0.9rem",
-                              lineHeight: "1.5",
-                              color: "var(--slate)",
-                              marginTop: "10px",
-                              maxWidth: "100%",
-                              padding: "0 15px",
-                              textAlign: "justify",
-                              overflowWrap: "break-word",
-                              "@media (max-width: 768px)": {
-                                padding: "0 10px",
-                                fontSize: "0.85rem",
-                              },
-                            }}
-                          >
-                            {abstract}
-                          </p>
-                        )}
-                      </>
-                    )}
-                    <IconContainer
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        gap: "15px",
-                        marginTop: "15px",
-                      }}
-                    >
-                      {frontmatter.googlescholar && (
-                        <IconLink
-                          href={frontmatter.googlescholar}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label="gscholar"
-                        >
-                          <Icon name="GScholar" />
-                        </IconLink>
                       )}
-                      {frontmatter.arxiv && (
-                        <IconLink
-                          href={frontmatter.arxiv}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label="arXiv"
-                        >
-                          <Icon name="Arxiv" />
-                        </IconLink>
-                      )}
-                      {frontmatter.semanticscholar && (
-                        <IconLink
-                          href={frontmatter.semanticscholar}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label="Semantic Scholar"
-                        >
-                          <Icon name="SemanticScholar" />
-                        </IconLink>
-                      )}
-                      {frontmatter.paperurl && (
-                        <IconLink
-                          href={frontmatter.paperurl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label="Paper URL"
-                        >
-                          <Icon name="External" />
-                        </IconLink>
-                      )}
-                      {frontmatter.code && (
-                        <IconLink
-                          href={frontmatter.code}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label="Code Repository"
-                        >
-                          <Icon name="GitHub" />
-                        </IconLink>
-                      )}
-                    </IconContainer>
                     <p className="range">{range}</p>
 
                     <div dangerouslySetInnerHTML={{ __html: html }} />
@@ -703,22 +588,6 @@ const Experience = () => {
           </StyledTabPanels>
         </div>
       </StyledText>
-      {showBibtexPopup && (
-        <BibTeXPopup
-          bibtex={showBibtexPopup}
-          onClose={handleCloseBibTeXPopup}
-          style={{
-            maxWidth: "90vw",
-            margin: "0 auto",
-            padding: "15px",
-            "@media (max-width: 768px)": {
-              maxWidth: "95vw",
-              padding: "10px",
-              fontSize: "0.85rem",
-            },
-          }}
-        />
-      )}
     </StyledJobsSection>
   )
 }

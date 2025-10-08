@@ -1,5 +1,6 @@
 ---
 title: "CC-LEARN: Cohort-based Consistency Learning"
+slug: "/publications/cc-learn-2025"
 authors: Xiao Ye, Shaswat Shrivastava, Zhaonan Li, Jacob Dineen, Shijie Lu, Avneet Ahuja, Ming Shen, Zhikun Xu, Ben Zhou
 date: 2025-06-18
 venue: "arXiv preprint"
