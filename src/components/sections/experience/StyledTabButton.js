@@ -10,20 +10,25 @@ const StyledTabButton = styled.button`
   min-height: 38px;
   height: auto;
   width: 100%;
-  max-width: 400px;
+  max-width: 100%;
   border: none;
   border-radius: 19px;
   background-color: transparent;
   text-align: center;
-  padding: 12px 18px;
+  padding: 12px 20px;
   transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
   cursor: pointer;
   outline: none;
   position: relative;
   white-space: normal;
   word-wrap: break-word;
-  line-height: 1.3;
+  line-height: 1.4;
   margin: 2px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 
   &:before {
     content: "";
@@ -72,13 +77,11 @@ const StyledTabButton = styled.button`
   @media (max-width: 768px) {
     font-size: var(--fz-xxs);
     min-height: 36px;
-    max-width: 320px;
     padding: 10px 15px;
   }
 
   @media (max-width: 480px) {
     min-height: 34px;
-    max-width: 280px;
     padding: 8px 12px;
     font-size: 11px;
   }

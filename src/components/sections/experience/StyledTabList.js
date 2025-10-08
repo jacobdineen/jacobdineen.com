@@ -19,7 +19,7 @@ const StyledTabList = styled.div`
     padding: 10px 0;
     margin: 0 auto;
     width: 100%;
-    max-width: 320px;
+    max-width: 600px;
     overflow-x: hidden;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -33,7 +33,7 @@ const StyledTabList = styled.div`
   @media (max-width: 768px) {
     > div {
       -webkit-overflow-scrolling: touch;
-      max-width: 280px;
+      max-width: 400px;
       padding: 8px 0;
     }
   }
@@ -42,7 +42,7 @@ const StyledTabList = styled.div`
     padding: 8px 0 12px 0;
 
     > div {
-      max-width: 240px;
+      max-width: 320px;
       gap: 5px;
     }
   }
