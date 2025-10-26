@@ -15,6 +15,13 @@ import StyledTabList from "./StyledTabList"
 import ArrowButton from "./ArrowButton"
 import StyledTabPanels from "./StyledTabPanels"
 import StyledTabPanel from "./StyledTabPanel"
+import PublicationListItem from "./PublicationListItem"
+import {
+  IconArxiv,
+  IconGitHub,
+  IconExternal,
+  IconChevronRight,
+} from "@components/icons"
 
 const ContentTypeButtonsContainer = styled.div`
   display: flex;
@@ -315,14 +322,76 @@ const Experience = () => {
 
             {activeData.map(({ node }, i) => {
               const { frontmatter } = node
-              const { company, venue, title } = frontmatter
+              const { company, venue, title, date } = frontmatter
+
+              if (activeContentType === "publications") {
+                const formatted = date
+                  ? new Date(date).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "short",
+                    })
+                  : null
+                return (
+                  <PublicationListItem
+                    key={i}
+                    isActive={activeTabId === i}
+                    onClick={() => setActiveTabId(i)}
+                    ref={el => (tabs.current[i] = el)}
+                    id={`tab-${i}`}
+                    role="tab"
+                    tabIndex={activeTabId === i ? "0" : "-1"}
+                    aria-selected={activeTabId === i ? true : false}
+                    aria-controls={`panel-${i}`}
+                  >
+                    <span className="title">{title || "N/A"}</span>
+                    <div className="meta">
+                      {venue && <span className="chip">{venue}</span>}
+                      {formatted && <span className="date">{formatted}</span>}
+                      {frontmatter.arxiv && (
+                        <a
+                          href={frontmatter.arxiv}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="chip-link"
+                        >
+                          <IconArxiv />
+                        </a>
+                      )}
+                      {frontmatter.paperurl && (
+                        <a
+                          href={frontmatter.paperurl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="chip-link"
+                        >
+                          <IconExternal />
+                        </a>
+                      )}
+                      {frontmatter.code && (
+                        <a
+                          href={frontmatter.code}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="chip-link"
+                        >
+                          <IconGitHub />
+                        </a>
+                      )}
+                      {frontmatter.slug && (
+                        <Link to={frontmatter.slug} className="chip-link">
+                          <IconChevronRight />
+                        </Link>
+                      )}
+                    </div>
+                  </PublicationListItem>
+                )
+              }
 
               const label =
                 activeContentType === "jobs" || activeContentType === "rjobs"
                   ? company
-                  : activeContentType === "publications"
-                  ? title
                   : venue
+
               return (
                 <StyledTabButton
                   key={i}
@@ -417,18 +486,7 @@ const Experience = () => {
                       )}
                     </h3>
 
-                    {frontmatter.authors && (
-                      <p
-                        className="authors"
-                        style={{
-                          fontSize: "0.95rem",
-                          color: "var(--light-slate)",
-                          marginTop: "2px",
-                        }}
-                      >
-                        {frontmatter.authors}
-                      </p>
-                    )}
+                    {/* Authors and extra body hidden now to keep the list clean per request */}
                     {activeContentType === "education" && (
                       <>
                         <h3
