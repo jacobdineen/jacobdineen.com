@@ -1,10 +1,12 @@
 import styled from "styled-components"
 
 const StyledJobsSection = styled.section`
-  max-width: 800px;
+  max-width: 1000px;
   font-size: var(--fz-lg);
   position: relative;
   width: 100%;
+  padding: 0; /* override global section padding */
+  margin: 0 auto 40px; /* tighter space to next section */
 
   &:after {
     content: "";
@@ -66,6 +68,7 @@ const StyledJobsSection = styled.section`
     width: 100%;
     box-sizing: border-box;
     padding: 0;
+    margin-bottom: 30px;
 
     .button-group {
       justify-content: center;
