@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"
-import { useStaticQuery, graphql, Link } from "gatsby"
+import { useStaticQuery, graphql, Link, withPrefix } from "gatsby"
 import { CSSTransition } from "react-transition-group"
 import styled from "styled-components"
 import { srConfig } from "@config"
@@ -21,6 +21,7 @@ import {
   IconGitHub,
   IconExternal,
   IconChevronRight,
+  IconSlides,
 } from "@components/icons"
 
 const ContentTypeButtonsContainer = styled.div`
@@ -124,6 +125,7 @@ const Experience = () => {
               semanticscholar
               paperurl
               code
+              slides
               abstract
               bibtex
               technologies {
@@ -223,6 +225,20 @@ const Experience = () => {
       ...prevState,
       [i]: !prevState[i],
     }))
+  }
+
+  const highlightMe = authorsStr => {
+    if (!authorsStr) return null
+    const parts = authorsStr.split(/(Jacob\s+Dineen)/i)
+    return parts.map((part, idx) =>
+      /Jacob\s+Dineen/i.test(part) ? (
+        <span key={idx} className="me">
+          {part}
+        </span>
+      ) : (
+        <span key={idx}>{part}</span>
+      )
+    )
   }
 
   const handlePrevClick = () => {
@@ -331,6 +347,10 @@ const Experience = () => {
                       month: "short",
                     })
                   : null
+                const isArxivPdf =
+                  frontmatter.paperurl &&
+                  /arxiv\.org/.test(frontmatter.paperurl)
+
                 return (
                   <PublicationListItem
                     key={i}
@@ -343,7 +363,23 @@ const Experience = () => {
                     aria-selected={activeTabId === i ? true : false}
                     aria-controls={`panel-${i}`}
                   >
-                    <span className="title">{title || "N/A"}</span>
+                    {frontmatter.slug ? (
+                      <span className="title">
+                        <Link
+                          to={frontmatter.slug}
+                          style={{ textDecoration: "none", color: "inherit" }}
+                        >
+                          {title || "N/A"}
+                        </Link>
+                      </span>
+                    ) : (
+                      <span className="title">{title || "N/A"}</span>
+                    )}
+                    {frontmatter.authors && (
+                      <span className="authors">
+                        {highlightMe(frontmatter.authors)}
+                      </span>
+                    )}
                     <div className="meta">
                       {venue && <span className="chip">{venue}</span>}
                       {formatted && <span className="date">{formatted}</span>}
@@ -353,18 +389,32 @@ const Experience = () => {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="chip-link"
+                          title="arXiv"
                         >
                           <IconArxiv />
                         </a>
                       )}
-                      {frontmatter.paperurl && (
+                      {frontmatter.paperurl &&
+                        (!isArxivPdf || !frontmatter.arxiv) && (
+                          <a
+                            href={frontmatter.paperurl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="chip-link"
+                            title="PDF"
+                          >
+                            <IconExternal />
+                          </a>
+                        )}
+                      {frontmatter.slides && (
                         <a
-                          href={frontmatter.paperurl}
+                          href={withPrefix(frontmatter.slides)}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="chip-link"
+                          title="Slides"
                         >
-                          <IconExternal />
+                          <IconSlides />
                         </a>
                       )}
                       {frontmatter.code && (
@@ -373,6 +423,7 @@ const Experience = () => {
                           target="_blank"
                           rel="noopener noreferrer"
                           className="chip-link"
+                          title="Code"
                         >
                           <IconGitHub />
                         </a>

@@ -1,5 +1,5 @@
 import React from "react"
-import { Link, graphql } from "gatsby"
+import { Link, graphql, withPrefix } from "gatsby"
 import { Helmet } from "react-helmet"
 import PropTypes from "prop-types"
 import styled from "styled-components"
@@ -80,6 +80,11 @@ const StyledPublication = styled.article`
     color: var(--slate);
     font-size: var(--fz-lg);
     margin-bottom: 10px;
+
+    .me {
+      color: var(--green);
+      font-weight: 600;
+    }
   }
 
   .meta {
@@ -168,6 +173,7 @@ const PublicationsPage = ({ location, data }) => {
                 semanticscholar,
                 paperurl,
                 code,
+                slides,
               } = frontmatter
 
               const formattedDate = new Date(date).toLocaleDateString("en-US", {
@@ -175,12 +181,28 @@ const PublicationsPage = ({ location, data }) => {
                 month: "short",
               })
 
+              const isArxivPdf = paperurl && /arxiv\.org/.test(paperurl)
+
+              const highlightMe = authorsStr => {
+                if (!authorsStr) return null
+                const parts = authorsStr.split(/(Jacob\s+Dineen)/i)
+                return parts.map((part, idx) =>
+                  /Jacob\s+Dineen/i.test(part) ? (
+                    <span key={idx} className="me">
+                      {part}
+                    </span>
+                  ) : (
+                    <span key={idx}>{part}</span>
+                  )
+                )
+              }
+
               return (
                 <StyledPublication key={i}>
                   <h3>
                     <Link to={slug}>{title}</Link>
                   </h3>
-                  <p className="authors">{authors}</p>
+                  <p className="authors">{highlightMe(authors)}</p>
                   <div className="meta">
                     {venue && <span className="venue">{venue}</span>}
                     <span className="date">{formattedDate}</span>
@@ -214,7 +236,7 @@ const PublicationsPage = ({ location, data }) => {
                         Semantic
                       </a>
                     )}
-                    {paperurl && (
+                    {paperurl && (!isArxivPdf || !arxiv) && (
                       <a
                         href={paperurl}
                         target="_blank"
@@ -222,6 +244,16 @@ const PublicationsPage = ({ location, data }) => {
                       >
                         <Icon name="External" />
                         PDF
+                      </a>
+                    )}
+                    {slides && (
+                      <a
+                        href={withPrefix(slides)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <Icon name="Slides" />
+                        Slides
                       </a>
                     )}
                     {code && (
@@ -267,6 +299,7 @@ export const pageQuery = graphql`
             semanticscholar
             paperurl
             code
+            slides
           }
         }
       }

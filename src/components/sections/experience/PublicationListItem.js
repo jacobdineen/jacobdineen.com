@@ -34,6 +34,36 @@ const PublicationListItem = styled.div`
     color: var(--lightest-slate);
     margin-bottom: 8px;
     line-height: 1.35;
+
+    a {
+      color: var(--lightest-slate);
+      text-decoration: none;
+      transition: color 0.2s var(--easing);
+    }
+
+    a:hover {
+      color: var(--green);
+    }
+  }
+
+  .authors {
+    font-size: 0.78rem;
+    color: var(--slate);
+    opacity: 0.9;
+    margin-top: -2px;
+    margin-bottom: 6px;
+    line-height: 1.3;
+    max-width: 100%;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    .me {
+      color: var(--green);
+      font-weight: 600;
+    }
   }
 
   .meta {

@@ -1,5 +1,5 @@
 import React from "react"
-import { graphql, Link } from "gatsby"
+import { graphql, Link, withPrefix } from "gatsby"
 import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 import styled from "styled-components"
@@ -29,6 +29,11 @@ const StyledPublicationHeader = styled.header`
     font-size: var(--fz-lg);
     color: var(--slate);
     margin-bottom: 10px;
+
+    .me {
+      color: var(--green);
+      font-weight: 600;
+    }
   }
 
   .meta {
@@ -141,8 +146,33 @@ const StyledBibtex = styled.div`
   }
 `
 
+const StyledSlides = styled.div`
+  margin: 30px 0 50px;
+
+  h2 {
+    font-size: var(--fz-xxl);
+    margin-bottom: 15px;
+    color: var(--lightest-slate);
+  }
+
+  .embed {
+    width: 100%;
+    height: 600px;
+    border: 0;
+    border-radius: var(--border-radius);
+    background-color: var(--lightest-navy);
+  }
+
+  .fallback {
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    font-size: var(--fz-xs);
+  }
+`
+
 const PublicationTemplate = ({ data, location }) => {
   const { frontmatter, html } = data.markdownRemark
+  const { siteUrl } = data.site.siteMetadata
   const {
     title,
     authors,
@@ -156,6 +186,7 @@ const PublicationTemplate = ({ data, location }) => {
     paperurl,
     code,
     slug,
+    slides,
   } = frontmatter
 
   // Parse authors for meta tags
@@ -172,6 +203,66 @@ const PublicationTemplate = ({ data, location }) => {
 
   const copyBibtex = () => {
     navigator.clipboard.writeText(bibtex)
+  }
+
+  const getSlidesEmbed = () => {
+    if (!slides) return null
+    const isAbsolute = /^https?:\/\//i.test(slides)
+    const baseOrigin =
+      typeof window !== "undefined" && window.location
+        ? window.location.origin
+        : siteUrl
+    const slidesPath = isAbsolute ? slides : withPrefix(slides)
+    const absoluteUrl = isAbsolute ? slides : `${baseOrigin}${slidesPath}`
+    const lower = slides.toLowerCase()
+    const isPdf = lower.endsWith(".pdf")
+    const isPpt = [".ppt", ".pptx", ".pwpt"].some(ext => lower.endsWith(ext))
+
+    if (isPdf) {
+      return (
+        <>
+          <object className="embed" data={slidesPath} type="application/pdf">
+            <p className="fallback">
+              PDF preview unavailable. <a href={slidesPath}>Download PDF</a>
+            </p>
+          </object>
+        </>
+      )
+    }
+
+    if (isPpt) {
+      const officeSrc = `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(
+        absoluteUrl
+      )}`
+      return (
+        <>
+          <iframe title="Slides" className="embed" src={officeSrc} />
+          <p className="fallback">
+            Having trouble? <a href={slidesPath}>Download slides</a>
+          </p>
+        </>
+      )
+    }
+
+    return (
+      <p className="fallback">
+        Slide preview unsupported. <a href={slidesPath}>Download file</a>
+      </p>
+    )
+  }
+
+  const highlightMe = authorsStr => {
+    if (!authorsStr) return null
+    const parts = authorsStr.split(/(Jacob\s+Dineen)/i)
+    return parts.map((part, idx) =>
+      /Jacob\s+Dineen/i.test(part) ? (
+        <span key={idx} className="me">
+          {part}
+        </span>
+      ) : (
+        <span key={idx}>{part}</span>
+      )
+    )
   }
 
   return (
@@ -229,7 +320,7 @@ const PublicationTemplate = ({ data, location }) => {
 
         <StyledPublicationHeader>
           <h1>{title}</h1>
-          <p className="authors">{authors}</p>
+          <p className="authors">{highlightMe(authors)}</p>
           {venue && (
             <div className="meta">
               <span className="venue">{venue}</span>
@@ -256,7 +347,7 @@ const PublicationTemplate = ({ data, location }) => {
               Semantic Scholar
             </a>
           )}
-          {paperurl && (
+          {paperurl && (!/arxiv\.org/.test(paperurl) || !arxiv) && (
             <a href={paperurl} target="_blank" rel="noopener noreferrer">
               <Icon name="External" />
               PDF
@@ -268,7 +359,24 @@ const PublicationTemplate = ({ data, location }) => {
               Code
             </a>
           )}
+          {slides && (
+            <a
+              href={withPrefix(slides)}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Icon name="Slides" />
+              Slides
+            </a>
+          )}
         </StyledLinks>
+
+        {slides && (
+          <StyledSlides>
+            <h2>Slides</h2>
+            {getSlidesEmbed()}
+          </StyledSlides>
+        )}
 
         {abstract && (
           <StyledAbstract>
@@ -302,6 +410,11 @@ PublicationTemplate.propTypes = {
 
 export const pageQuery = graphql`
   query ($path: String!) {
+    site {
+      siteMetadata {
+        siteUrl
+      }
+    }
     markdownRemark(frontmatter: { slug: { eq: $path } }) {
       html
       frontmatter {
@@ -317,6 +430,7 @@ export const pageQuery = graphql`
         semanticscholar
         paperurl
         code
+        slides
       }
     }
   }

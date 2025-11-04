@@ -14,6 +14,7 @@ import {
   IconSemanticScholar,
   IconGScholar,
   IconTwitter,
+  IconSlides,
 } from "@components/icons"
 import IconGmail from "./gmail"
 
@@ -47,6 +48,8 @@ const Icon = ({ name }) => {
       return <IconGScholar />
     case "Twitter":
       return <IconTwitter />
+    case "Slides":
+      return <IconSlides />
     default:
       return <IconExternal />
   }
