@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useMemo, useState } from "react"
 import { Link, graphql, withPrefix } from "gatsby"
 import collaboratorLinks from "@utils/collaboratorLinks"
 import { Helmet } from "react-helmet"
@@ -31,6 +31,28 @@ const StyledMainContainer = styled.main`
       font-weight: 400;
       line-height: 1.5;
     }
+  }
+`
+
+const StyledFilters = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 160px 200px;
+  gap: 12px;
+  margin: 0 0 24px 0;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+
+  input[type="search"],
+  select {
+    background: var(--light-navy);
+    color: var(--lightest-slate);
+    border: 1px solid var(--lightest-navy);
+    border-radius: var(--border-radius);
+    padding: 10px 12px;
+    font-size: var(--fz-sm);
+    outline: none;
   }
 `
 
@@ -160,6 +182,43 @@ const StyledPublication = styled.article`
 const PublicationsPage = ({ location, data }) => {
   const publications = data.allMarkdownRemark.edges
 
+  const [query, setQuery] = useState("")
+  const [year, setYear] = useState("All")
+  const [venueFilter, setVenueFilter] = useState("All")
+
+  const years = useMemo(() => {
+    const set = new Set()
+    publications.forEach(({ node }) => {
+      const d = node.frontmatter.date
+      if (d) set.add(new Date(d).getFullYear())
+    })
+    return Array.from(set).sort((a, b) => b - a)
+  }, [publications])
+
+  const venues = useMemo(() => {
+    const set = new Set()
+    publications.forEach(({ node }) => {
+      const v = node.frontmatter.venue
+      if (v) set.add(v)
+    })
+    return Array.from(set).sort()
+  }, [publications])
+
+  const filtered = useMemo(() => {
+    const q = query.trim().toLowerCase()
+    return publications.filter(({ node }) => {
+      const fm = node.frontmatter
+      const y = fm.date ? new Date(fm.date).getFullYear().toString() : ""
+      const matchesYear = year === "All" || y === String(year)
+      const matchesVenue = venueFilter === "All" || fm.venue === venueFilter
+      const hay = `${fm.title || ""} ${fm.authors || ""} ${
+        fm.venue || ""
+      }`.toLowerCase()
+      const matchesQuery = q === "" || hay.includes(q)
+      return matchesYear && matchesVenue && matchesQuery
+    })
+  }, [publications, query, year, venueFilter])
+
   return (
     <Layout location={location}>
       <Helmet title="Publications" />
@@ -170,9 +229,43 @@ const PublicationsPage = ({ location, data }) => {
           <p className="subtitle">Research papers and academic work</p>
         </header>
 
+        <StyledFilters>
+          <input
+            type="search"
+            placeholder="Search title, authors, venue…"
+            value={query}
+            onChange={e => setQuery(e.target.value)}
+            aria-label="Search publications"
+          />
+          <select
+            value={year}
+            onChange={e => setYear(e.target.value)}
+            aria-label="Filter by year"
+          >
+            <option>All</option>
+            {years.map(y => (
+              <option key={y} value={y}>
+                {y}
+              </option>
+            ))}
+          </select>
+          <select
+            value={venueFilter}
+            onChange={e => setVenueFilter(e.target.value)}
+            aria-label="Filter by venue"
+          >
+            <option>All</option>
+            {venues.map(v => (
+              <option key={v} value={v}>
+                {v}
+              </option>
+            ))}
+          </select>
+        </StyledFilters>
+
         <StyledPublicationsList>
-          {publications.length > 0 &&
-            publications.map(({ node }, i) => {
+          {filtered.length > 0 &&
+            filtered.map(({ node }, i) => {
               const { frontmatter } = node
               const {
                 title,

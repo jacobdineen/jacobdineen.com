@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react"
+import { navigate } from "gatsby"
 import PropTypes from "prop-types"
 import styled, { ThemeProvider, ThemeContext } from "styled-components"
 import { Head, Loader } from "@components"
@@ -8,7 +9,7 @@ import About from "@components/sections/about"
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/react"
 
-const sections = ["experience", "contact", "resume"]
+const sections = ["publications", "experience", "news", "contact", "resume"]
 
 const StyledSkipLink = styled.a`
   position: absolute;
@@ -532,10 +533,19 @@ const Layout = ({ children, location }) => {
     }
   }, [themeMode])
 
+  // Highlight Publications tab on publications route
+  useEffect(() => {
+    if (location && location.pathname.startsWith("/publications")) {
+      setActiveSection("publications")
+    }
+  }, [location])
+
   const handleSectionClick = (e, section) => {
     e.preventDefault()
     if (section === "resume") {
       window.open("/JacobDineen_CV_latest.pdf", "_blank", "noopener,noreferrer")
+    } else if (section === "publications") {
+      navigate("/publications")
     } else {
       const element = document.getElementById(section)
       if (element) {

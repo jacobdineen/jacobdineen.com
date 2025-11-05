@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef, useMemo } from "react"
 import { useStaticQuery, graphql, Link, withPrefix } from "gatsby"
 import { CSSTransition } from "react-transition-group"
 import styled from "styled-components"
@@ -65,6 +65,30 @@ const ContentTypeButton = styled.button`
     background: var(--green-tint);
     border-color: var(--green);
     transform: translateY(-2px);
+  }
+`
+
+const StyledFilters = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 140px 180px;
+  gap: 10px;
+  margin: 10px auto 16px auto;
+  max-width: 720px;
+  justify-content: center;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+
+  input[type="search"],
+  select {
+    background: var(--light-navy);
+    color: var(--lightest-slate);
+    border: 1px solid var(--lightest-navy);
+    border-radius: var(--border-radius);
+    padding: 8px 10px;
+    font-size: var(--fz-sm);
+    outline: none;
   }
 `
 
@@ -171,6 +195,51 @@ const Experience = () => {
   const [activeContentType, setActiveContentType] = useState("publications")
   const [showCourses, setShowCourses] = useState({})
 
+  // Publication filters
+  const [pubQuery, setPubQuery] = useState("")
+  const [pubYear, setPubYear] = useState("All")
+  const [pubVenue, setPubVenue] = useState("All")
+
+  const pubYears = useMemo(() => {
+    const set = new Set()
+    publicationsData.forEach(({ node }) => {
+      const d = node.frontmatter.date
+      if (d) set.add(new Date(d).getFullYear())
+    })
+    return Array.from(set).sort((a, b) => b - a)
+  }, [publicationsData])
+
+  const pubVenues = useMemo(() => {
+    const set = new Set()
+    publicationsData.forEach(({ node }) => {
+      const v = node.frontmatter.venue
+      if (v) set.add(v)
+    })
+    return Array.from(set).sort()
+  }, [publicationsData])
+
+  const filteredPublications = useMemo(() => {
+    const q = pubQuery.trim().toLowerCase()
+    return publicationsData.filter(({ node }) => {
+      const fm = node.frontmatter
+      const y = fm.date ? new Date(fm.date).getFullYear().toString() : ""
+      const matchesYear = pubYear === "All" || y === String(pubYear)
+      const matchesVenue = pubVenue === "All" || fm.venue === pubVenue
+      const hay = `${fm.title || ""} ${fm.authors || ""} ${
+        fm.venue || ""
+      }`.toLowerCase()
+      const matchesQuery = q === "" || hay.includes(q)
+      return matchesYear && matchesVenue && matchesQuery
+    })
+  }, [publicationsData, pubQuery, pubYear, pubVenue])
+
+  // Keep active index valid when filters/content type change
+  useEffect(() => {
+    if (activeContentType === "publications") {
+      setActiveTabId(0)
+    }
+  }, [pubQuery, pubYear, pubVenue, activeContentType])
+
   useEffect(() => {
     if (prefersReducedMotion) {
       return
@@ -221,6 +290,9 @@ const Experience = () => {
       ? publicationsData
       : educationData
 
+  const displayData =
+    activeContentType === "publications" ? filteredPublications : activeData
+
   const toggleCourses = i => {
     setShowCourses(prevState => ({
       ...prevState,
@@ -264,7 +336,7 @@ const Experience = () => {
   }
 
   const handleNextClick = () => {
-    if (activeTabId < activeData.length - 1) {
+    if (activeTabId < displayData.length - 1) {
       setActiveTabId(activeTabId + 1)
     }
   }
@@ -339,6 +411,41 @@ const Experience = () => {
         </ContentTypeButtonsContainer>
 
         <div className="inner">
+          {activeContentType === "publications" && (
+            <StyledFilters>
+              <input
+                type="search"
+                placeholder="Search title, authors, venue…"
+                value={pubQuery}
+                onChange={e => setPubQuery(e.target.value)}
+                aria-label="Search publications"
+              />
+              <select
+                value={pubYear}
+                onChange={e => setPubYear(e.target.value)}
+                aria-label="Filter by year"
+              >
+                <option>All</option>
+                {pubYears.map(y => (
+                  <option key={y} value={y}>
+                    {y}
+                  </option>
+                ))}
+              </select>
+              <select
+                value={pubVenue}
+                onChange={e => setPubVenue(e.target.value)}
+                aria-label="Filter by venue"
+              >
+                <option>All</option>
+                {pubVenues.map(v => (
+                  <option key={v} value={v}>
+                    {v}
+                  </option>
+                ))}
+              </select>
+            </StyledFilters>
+          )}
           <StyledTabList
             role="tablist"
             aria-label="Job tabs"
@@ -352,7 +459,7 @@ const Experience = () => {
               &larr;
             </ArrowButton>
 
-            {activeData.map(({ node }, i) => {
+            {displayData.map(({ node }, i) => {
               const { frontmatter } = node
               const { company, venue, title, date } = frontmatter
 
@@ -486,7 +593,7 @@ const Experience = () => {
           </StyledTabList>
 
           <StyledTabPanels>
-            {activeData.map(({ node }, i) => {
+            {displayData.map(({ node }, i) => {
               const { frontmatter, html } = node
               const { title, range, technologies } = frontmatter
 
