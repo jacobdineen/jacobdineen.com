@@ -48,8 +48,8 @@ const PublicationListItem = styled.div`
 
   .authors {
     font-size: 0.78rem;
-    color: var(--slate);
-    opacity: 0.9;
+    color: var(--light-slate);
+    opacity: 1;
     margin-top: -2px;
     margin-bottom: 6px;
     line-height: 1.3;
@@ -75,6 +75,13 @@ const PublicationListItem = styled.div`
     a:hover {
       color: var(--green);
       border-color: var(--green);
+    }
+
+    a:focus-visible {
+      color: var(--green);
+      border-color: var(--green);
+      outline: 2px solid var(--green);
+      outline-offset: 2px;
     }
   }
 
@@ -120,6 +127,12 @@ const PublicationListItem = styled.div`
       &:hover {
         border-color: var(--green);
         transform: translateY(-1px);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--green);
+        outline-offset: 2px;
+        border-color: var(--green);
       }
     }
   }

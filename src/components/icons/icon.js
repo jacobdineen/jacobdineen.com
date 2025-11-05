@@ -15,6 +15,7 @@ import {
   IconGScholar,
   IconTwitter,
   IconSlides,
+  IconShare,
 } from "@components/icons"
 import IconGmail from "./gmail"
 
@@ -50,6 +51,8 @@ const Icon = ({ name }) => {
       return <IconTwitter />
     case "Slides":
       return <IconSlides />
+    case "Share":
+      return <IconShare />
     default:
       return <IconExternal />
   }

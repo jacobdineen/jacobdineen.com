@@ -1,4 +1,5 @@
-import React from "react"
+import React, { useState, useEffect, useRef } from "react"
+import useOnClickOutside from "@hooks/useOnClickOutside"
 import { graphql, Link, withPrefix } from "gatsby"
 import collaboratorLinks from "@utils/collaboratorLinks"
 import PropTypes from "prop-types"
@@ -28,7 +29,7 @@ const StyledPublicationHeader = styled.header`
 
   .authors {
     font-size: var(--fz-lg);
-    color: var(--slate);
+    color: var(--light-slate);
     margin-bottom: 10px;
 
     .me {
@@ -46,6 +47,13 @@ const StyledPublicationHeader = styled.header`
     a:hover {
       color: var(--green);
       border-color: var(--green);
+    }
+
+    a:focus-visible {
+      color: var(--green);
+      border-color: var(--green);
+      outline: 2px solid var(--green);
+      outline-offset: 2px;
     }
   }
 
@@ -92,6 +100,64 @@ const StyledLinks = styled.div`
     &:hover {
       background-color: var(--green-tint);
       transform: translateY(-2px);
+    }
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--green);
+      outline-offset: 2px;
+      background-color: var(--green-tint);
+    }
+  }
+
+  .share-wrapper {
+    position: relative;
+    display: inline-block;
+  }
+
+  .share-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    background: var(--light-navy);
+    border: 1px solid var(--lightest-navy);
+    border-radius: var(--border-radius);
+    padding: 8px;
+    display: grid;
+    gap: 6px;
+    min-width: 200px;
+    z-index: 5;
+    box-shadow: 0 10px 24px -18px var(--navy-shadow);
+  }
+
+  button.share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background-color: transparent;
+    border: 1px solid var(--green);
+    border-radius: var(--border-radius);
+    color: var(--green);
+    font-family: var(--font-mono);
+    font-size: var(--fz-xs);
+    text-decoration: none;
+    transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--green-tint);
+      transform: translateY(-2px);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--green);
+      outline-offset: 2px;
+      background-color: var(--green-tint);
     }
 
     svg {
@@ -217,6 +283,19 @@ const PublicationTemplate = ({ data, location }) => {
   const copyBibtex = () => {
     navigator.clipboard.writeText(bibtex)
   }
+
+  // Share menu open/close
+  const [shareOpen, setShareOpen] = useState(false)
+  const shareRef = useRef(null)
+
+  useOnClickOutside(shareRef, () => setShareOpen(false))
+  useEffect(() => {
+    const onKey = e => {
+      if (e.key === "Escape") setShareOpen(false)
+    }
+    document.addEventListener("keydown", onKey)
+    return () => document.removeEventListener("keydown", onKey)
+  }, [])
 
   const getSlidesEmbed = () => {
     if (!slides) return null
@@ -358,31 +437,56 @@ const PublicationTemplate = ({ data, location }) => {
 
         <StyledLinks>
           {arxiv && (
-            <a href={arxiv} target="_blank" rel="noopener noreferrer">
+            <a
+              href={arxiv}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Open arXiv for ${title}`}
+            >
               <Icon name="Arxiv" />
               arXiv
             </a>
           )}
           {googlescholar && (
-            <a href={googlescholar} target="_blank" rel="noopener noreferrer">
+            <a
+              href={googlescholar}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Open Google Scholar for ${title}`}
+            >
               <Icon name="GScholar" />
               Google Scholar
             </a>
           )}
           {semanticscholar && (
-            <a href={semanticscholar} target="_blank" rel="noopener noreferrer">
+            <a
+              href={semanticscholar}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Open Semantic Scholar for ${title}`}
+            >
               <Icon name="SemanticScholar" />
               Semantic Scholar
             </a>
           )}
           {paperurl && (!/arxiv\.org/.test(paperurl) || !arxiv) && (
-            <a href={paperurl} target="_blank" rel="noopener noreferrer">
+            <a
+              href={paperurl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Open PDF for ${title}`}
+            >
               <Icon name="External" />
               PDF
             </a>
           )}
           {code && (
-            <a href={code} target="_blank" rel="noopener noreferrer">
+            <a
+              href={code}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`Open code repository for ${title}`}
+            >
               <Icon name="GitHub" />
               Code
             </a>
@@ -392,10 +496,68 @@ const PublicationTemplate = ({ data, location }) => {
               href={withPrefix(slides)}
               target="_blank"
               rel="noopener noreferrer"
+              aria-label={`Open slides for ${title}`}
             >
               <Icon name="Slides" />
               Slides
             </a>
+          )}
+          {slug && (
+            <div className="share-wrapper" ref={shareRef}>
+              <button
+                type="button"
+                className="share-btn"
+                aria-haspopup="menu"
+                aria-expanded={shareOpen}
+                onClick={e => {
+                  e.stopPropagation()
+                  setShareOpen(prev => !prev)
+                }}
+              >
+                <Icon name="Share" /> Share
+              </button>
+              <div
+                className="share-menu"
+                role="menu"
+                style={{ display: shareOpen ? "grid" : "none" }}
+              >
+                <a
+                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                    `${title}${venue ? " — " + venue : ""}`
+                  )}&url=${encodeURIComponent(
+                    arxiv || paperurl || `${siteUrl}${slug}`
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  role="menuitem"
+                >
+                  <Icon name="Twitter" /> Share on X
+                </a>
+                <a
+                  href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+                    arxiv || paperurl || `${siteUrl}${slug}`
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  role="menuitem"
+                >
+                  <Icon name="Linkedin" /> Share on LinkedIn
+                </a>
+                <button
+                  type="button"
+                  className="share-btn"
+                  onClick={() =>
+                    navigator.clipboard.writeText(
+                      arxiv || paperurl || `${siteUrl}${slug}`
+                    )
+                  }
+                  role="menuitem"
+                  aria-label="Copy link"
+                >
+                  Copy link
+                </button>
+              </div>
+            </div>
           )}
         </StyledLinks>
 

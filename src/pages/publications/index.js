@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react"
+import React, { useMemo, useState, useEffect } from "react"
 import { Link, graphql, withPrefix } from "gatsby"
 import collaboratorLinks from "@utils/collaboratorLinks"
 import { Helmet } from "react-helmet"
@@ -100,7 +100,7 @@ const StyledPublication = styled.article`
   }
 
   .authors {
-    color: var(--slate);
+    color: var(--light-slate);
     font-size: var(--fz-lg);
     margin-bottom: 10px;
 
@@ -119,6 +119,13 @@ const StyledPublication = styled.article`
     a:hover {
       color: var(--green);
       border-color: var(--green);
+    }
+
+    a:focus-visible {
+      color: var(--green);
+      border-color: var(--green);
+      outline: 2px solid var(--green);
+      outline-offset: 2px;
     }
   }
 
@@ -157,6 +164,26 @@ const StyledPublication = styled.article`
     gap: 15px;
     flex-wrap: wrap;
 
+    .share-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+
+    .share-menu {
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      background: var(--light-navy);
+      border: 1px solid var(--lightest-navy);
+      border-radius: var(--border-radius);
+      padding: 8px;
+      display: grid;
+      gap: 6px;
+      min-width: 180px;
+      z-index: 5;
+      box-shadow: 0 10px 24px -18px var(--navy-shadow);
+    }
+
     a {
       display: inline-flex;
       align-items: center;
@@ -171,6 +198,39 @@ const StyledPublication = styled.article`
         color: var(--green);
       }
 
+      &:focus-visible {
+        outline: 2px solid var(--green);
+        outline-offset: 2px;
+      }
+
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    button.share-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: var(--green);
+      background: transparent;
+      border: 1px solid var(--green);
+      border-radius: var(--border-radius);
+      padding: 8px 12px;
+      font-family: var(--font-mono);
+      font-size: var(--fz-xs);
+      cursor: pointer;
+
+      &:hover {
+        background: var(--green-tint);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--green);
+        outline-offset: 2px;
+      }
+
       svg {
         width: 18px;
         height: 18px;
@@ -181,10 +241,32 @@ const StyledPublication = styled.article`
 
 const PublicationsPage = ({ location, data }) => {
   const publications = data.allMarkdownRemark.edges
+  const siteUrl = data.site.siteMetadata.siteUrl
 
   const [query, setQuery] = useState("")
   const [year, setYear] = useState("All")
   const [venueFilter, setVenueFilter] = useState("All")
+  const [openShare, setOpenShare] = useState(null)
+
+  // Close share menu on outside click or ESC
+  useEffect(() => {
+    const onClick = e => {
+      if (!openShare) return
+      const wrapper = e.target.closest?.(".share-wrapper")
+      if (!wrapper || wrapper.getAttribute("data-share") !== openShare) {
+        setOpenShare(null)
+      }
+    }
+    const onKey = e => {
+      if (e.key === "Escape") setOpenShare(null)
+    }
+    document.addEventListener("click", onClick)
+    document.addEventListener("keydown", onKey)
+    return () => {
+      document.removeEventListener("click", onClick)
+      document.removeEventListener("keydown", onKey)
+    }
+  }, [openShare])
 
   const years = useMemo(() => {
     const set = new Set()
@@ -288,6 +370,14 @@ const PublicationsPage = ({ location, data }) => {
               })
 
               const isArxivPdf = paperurl && /arxiv\.org/.test(paperurl)
+              const shareUrl = arxiv || paperurl || `${siteUrl}${slug}`
+              const shareText = `${title}${venue ? " — " + venue : ""}`
+              const xHref = `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+                shareText
+              )}&url=${encodeURIComponent(shareUrl)}`
+              const liHref = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+                shareUrl
+              )}`
 
               const renderAuthors = authorsStr => {
                 if (!authorsStr) return null
@@ -332,7 +422,12 @@ const PublicationsPage = ({ location, data }) => {
                   <div className="links">
                     <Link to={slug}>View Details →</Link>
                     {arxiv && (
-                      <a href={arxiv} target="_blank" rel="noopener noreferrer">
+                      <a
+                        href={arxiv}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Open arXiv for ${title}`}
+                      >
                         <Icon name="Arxiv" />
                         arXiv
                       </a>
@@ -342,6 +437,7 @@ const PublicationsPage = ({ location, data }) => {
                         href={googlescholar}
                         target="_blank"
                         rel="noopener noreferrer"
+                        aria-label={`Open Google Scholar for ${title}`}
                       >
                         <Icon name="GScholar" />
                         Scholar
@@ -352,6 +448,7 @@ const PublicationsPage = ({ location, data }) => {
                         href={semanticscholar}
                         target="_blank"
                         rel="noopener noreferrer"
+                        aria-label={`Open Semantic Scholar for ${title}`}
                       >
                         <Icon name="SemanticScholar" />
                         Semantic
@@ -362,6 +459,7 @@ const PublicationsPage = ({ location, data }) => {
                         href={paperurl}
                         target="_blank"
                         rel="noopener noreferrer"
+                        aria-label={`Open PDF for ${title}`}
                       >
                         <Icon name="External" />
                         PDF
@@ -372,17 +470,72 @@ const PublicationsPage = ({ location, data }) => {
                         href={withPrefix(slides)}
                         target="_blank"
                         rel="noopener noreferrer"
+                        aria-label={`Open slides for ${title}`}
                       >
                         <Icon name="Slides" />
                         Slides
                       </a>
                     )}
                     {code && (
-                      <a href={code} target="_blank" rel="noopener noreferrer">
+                      <a
+                        href={code}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Open code repository for ${title}`}
+                      >
                         <Icon name="GitHub" />
                         Code
                       </a>
                     )}
+                    <div className="share-wrapper" data-share={slug}>
+                      <button
+                        type="button"
+                        className="share-btn"
+                        aria-haspopup="menu"
+                        aria-expanded={openShare === slug}
+                        onClick={e => {
+                          e.stopPropagation()
+                          setOpenShare(openShare === slug ? null : slug)
+                        }}
+                      >
+                        <Icon name="Share" /> Share
+                      </button>
+                      {openShare === slug && (
+                        <div
+                          className="share-menu"
+                          role="menu"
+                          aria-label={`Share ${title}`}
+                        >
+                          <a
+                            href={xHref}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            role="menuitem"
+                          >
+                            <Icon name="Twitter" /> Share on X
+                          </a>
+                          <a
+                            href={liHref}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            role="menuitem"
+                          >
+                            <Icon name="Linkedin" /> Share on LinkedIn
+                          </a>
+                          <button
+                            type="button"
+                            className="share-btn"
+                            onClick={() =>
+                              navigator.clipboard.writeText(shareUrl)
+                            }
+                            role="menuitem"
+                            aria-label="Copy link"
+                          >
+                            Copy link
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </StyledPublication>
               )
@@ -402,6 +555,11 @@ export default PublicationsPage
 
 export const pageQuery = graphql`
   {
+    site {
+      siteMetadata {
+        siteUrl
+      }
+    }
     allMarkdownRemark(
       filter: { fileAbsolutePath: { regex: "/content/publications/" } }
       sort: { fields: [frontmatter___date], order: DESC }

@@ -513,6 +513,7 @@ const Experience = () => {
                           rel="noopener noreferrer"
                           className="chip-link"
                           title="arXiv"
+                          aria-label={`Open arXiv for ${title}`}
                         >
                           <IconArxiv />
                         </a>
@@ -525,6 +526,7 @@ const Experience = () => {
                             rel="noopener noreferrer"
                             className="chip-link"
                             title="PDF"
+                            aria-label={`Open PDF for ${title}`}
                           >
                             <IconExternal />
                           </a>
@@ -536,6 +538,7 @@ const Experience = () => {
                           rel="noopener noreferrer"
                           className="chip-link"
                           title="Slides"
+                          aria-label={`Open slides for ${title}`}
                         >
                           <IconSlides />
                         </a>
@@ -547,6 +550,7 @@ const Experience = () => {
                           rel="noopener noreferrer"
                           className="chip-link"
                           title="Code"
+                          aria-label={`Open code repository for ${title}`}
                         >
                           <IconGitHub />
                         </a>
