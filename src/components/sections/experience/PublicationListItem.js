@@ -64,6 +64,18 @@ const PublicationListItem = styled.div`
       color: var(--green);
       font-weight: 600;
     }
+
+    a {
+      color: var(--slate);
+      text-decoration: none;
+      border-bottom: 1px dotted transparent;
+      transition: color 0.2s var(--easing), border-color 0.2s var(--easing);
+    }
+
+    a:hover {
+      color: var(--green);
+      border-color: var(--green);
+    }
   }
 
   .meta {

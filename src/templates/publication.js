@@ -1,5 +1,6 @@
 import React from "react"
 import { graphql, Link, withPrefix } from "gatsby"
+import collaboratorLinks from "@utils/collaboratorLinks"
 import PropTypes from "prop-types"
 import { Helmet } from "react-helmet"
 import styled from "styled-components"
@@ -33,6 +34,18 @@ const StyledPublicationHeader = styled.header`
     .me {
       color: var(--green);
       font-weight: 600;
+    }
+
+    a {
+      color: var(--slate);
+      text-decoration: none;
+      border-bottom: 1px dotted transparent;
+      transition: color 0.2s var(--easing), border-color 0.2s var(--easing);
+    }
+
+    a:hover {
+      color: var(--green);
+      border-color: var(--green);
     }
   }
 
@@ -251,18 +264,33 @@ const PublicationTemplate = ({ data, location }) => {
     )
   }
 
-  const highlightMe = authorsStr => {
+  const renderAuthors = authorsStr => {
     if (!authorsStr) return null
-    const parts = authorsStr.split(/(Jacob\s+Dineen)/i)
-    return parts.map((part, idx) =>
-      /Jacob\s+Dineen/i.test(part) ? (
-        <span key={idx} className="me">
-          {part}
-        </span>
+    const names = authorsStr
+      .split(",")
+      .map(n => n.trim())
+      .filter(Boolean)
+
+    return names.map((name, idx) => {
+      const key = name.toLowerCase()
+      const url = collaboratorLinks[key]
+      const isMe = /jacob\s+dineen/i.test(name)
+      const content = isMe ? (
+        <span className="me">{name}</span>
+      ) : url ? (
+        <a href={url} target="_blank" rel="noopener noreferrer">
+          {name}
+        </a>
       ) : (
-        <span key={idx}>{part}</span>
+        <span>{name}</span>
       )
-    )
+      return (
+        <span key={`${key}-${idx}`}>
+          {content}
+          {idx < names.length - 1 ? ", " : null}
+        </span>
+      )
+    })
   }
 
   return (
@@ -320,7 +348,7 @@ const PublicationTemplate = ({ data, location }) => {
 
         <StyledPublicationHeader>
           <h1>{title}</h1>
-          <p className="authors">{highlightMe(authors)}</p>
+          <p className="authors">{renderAuthors(authors)}</p>
           {venue && (
             <div className="meta">
               <span className="venue">{venue}</span>

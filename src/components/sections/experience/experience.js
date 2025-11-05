@@ -23,6 +23,7 @@ import {
   IconChevronRight,
   IconSlides,
 } from "@components/icons"
+import collaboratorLinks from "@utils/collaboratorLinks"
 
 const ContentTypeButtonsContainer = styled.div`
   display: flex;
@@ -227,18 +228,33 @@ const Experience = () => {
     }))
   }
 
-  const highlightMe = authorsStr => {
+  const renderAuthors = authorsStr => {
     if (!authorsStr) return null
-    const parts = authorsStr.split(/(Jacob\s+Dineen)/i)
-    return parts.map((part, idx) =>
-      /Jacob\s+Dineen/i.test(part) ? (
-        <span key={idx} className="me">
-          {part}
-        </span>
+    const names = authorsStr
+      .split(",")
+      .map(n => n.trim())
+      .filter(Boolean)
+
+    return names.map((name, idx) => {
+      const key = name.toLowerCase()
+      const url = collaboratorLinks[key]
+      const isMe = /jacob\s+dineen/i.test(name)
+      const content = isMe ? (
+        <span className="me">{name}</span>
+      ) : url ? (
+        <a href={url} target="_blank" rel="noopener noreferrer">
+          {name}
+        </a>
       ) : (
-        <span key={idx}>{part}</span>
+        <span>{name}</span>
       )
-    )
+      return (
+        <span key={`${key}-${idx}`}>
+          {content}
+          {idx < names.length - 1 ? ", " : null}
+        </span>
+      )
+    })
   }
 
   const handlePrevClick = () => {
@@ -377,7 +393,7 @@ const Experience = () => {
                     )}
                     {frontmatter.authors && (
                       <span className="authors">
-                        {highlightMe(frontmatter.authors)}
+                        {renderAuthors(frontmatter.authors)}
                       </span>
                     )}
                     <div className="meta">

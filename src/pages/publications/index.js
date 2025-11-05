@@ -1,5 +1,6 @@
 import React from "react"
 import { Link, graphql, withPrefix } from "gatsby"
+import collaboratorLinks from "@utils/collaboratorLinks"
 import { Helmet } from "react-helmet"
 import PropTypes from "prop-types"
 import styled from "styled-components"
@@ -84,6 +85,18 @@ const StyledPublication = styled.article`
     .me {
       color: var(--green);
       font-weight: 600;
+    }
+
+    a {
+      color: var(--slate);
+      text-decoration: none;
+      border-bottom: 1px dotted transparent;
+      transition: color 0.2s var(--easing), border-color 0.2s var(--easing);
+    }
+
+    a:hover {
+      color: var(--green);
+      border-color: var(--green);
     }
   }
 
@@ -183,18 +196,33 @@ const PublicationsPage = ({ location, data }) => {
 
               const isArxivPdf = paperurl && /arxiv\.org/.test(paperurl)
 
-              const highlightMe = authorsStr => {
+              const renderAuthors = authorsStr => {
                 if (!authorsStr) return null
-                const parts = authorsStr.split(/(Jacob\s+Dineen)/i)
-                return parts.map((part, idx) =>
-                  /Jacob\s+Dineen/i.test(part) ? (
-                    <span key={idx} className="me">
-                      {part}
-                    </span>
+                const names = authorsStr
+                  .split(",")
+                  .map(n => n.trim())
+                  .filter(Boolean)
+
+                return names.map((name, idx) => {
+                  const key = name.toLowerCase()
+                  const url = collaboratorLinks[key]
+                  const isMe = /jacob\s+dineen/i.test(name)
+                  const content = isMe ? (
+                    <span className="me">{name}</span>
+                  ) : url ? (
+                    <a href={url} target="_blank" rel="noopener noreferrer">
+                      {name}
+                    </a>
                   ) : (
-                    <span key={idx}>{part}</span>
+                    <span>{name}</span>
                   )
-                )
+                  return (
+                    <span key={`${key}-${idx}`}>
+                      {content}
+                      {idx < names.length - 1 ? ", " : null}
+                    </span>
+                  )
+                })
               }
 
               return (
@@ -202,7 +230,7 @@ const PublicationsPage = ({ location, data }) => {
                   <h3>
                     <Link to={slug}>{title}</Link>
                   </h3>
-                  <p className="authors">{highlightMe(authors)}</p>
+                  <p className="authors">{renderAuthors(authors)}</p>
                   <div className="meta">
                     {venue && <span className="venue">{venue}</span>}
                     <span className="date">{formattedDate}</span>
