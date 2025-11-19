@@ -88,11 +88,18 @@ const StyledSidebar = styled.aside`
       theme.mode === "light"
         ? "8px 0 24px rgba(0, 0, 0, 0.06)"
         : "8px 0 24px rgba(0, 0, 0, 0.3)"};
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   @media (min-width: 1080px) {
     width: 350px;
     padding: 40px 32px;
+  }
+
+  /* On shorter viewports, pin content to top so the bottom items (e.g., Resume) don't get cut off */
+  @media (min-width: 768px) and (max-height: 800px) {
+    justify-content: flex-start;
   }
 
   nav {
