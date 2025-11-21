@@ -547,6 +547,34 @@ const Layout = ({ children, location }) => {
     }
   }, [location])
 
+  // Handle hash-based navigation when landing on home page
+  useEffect(() => {
+    if (location && location.pathname === "/" && location.hash) {
+      const sectionId = location.hash.replace("#", "")
+      // Wait for DOM to be ready
+      const timeoutId = setTimeout(() => {
+        const element = document.getElementById(sectionId)
+        if (element) {
+          const mainContent = document.getElementById("content")
+          const isDesktop = window.innerWidth >= 768
+
+          if (isDesktop && mainContent) {
+            const offsetTop = element.offsetTop - mainContent.offsetTop
+            mainContent.scrollTo({
+              top: offsetTop - 20,
+              behavior: "smooth",
+            })
+          } else {
+            element.scrollIntoView({ behavior: "smooth", block: "start" })
+          }
+          setActiveSection(sectionId)
+        }
+      }, 100) // Small delay to ensure DOM is ready
+
+      return () => clearTimeout(timeoutId)
+    }
+  }, [location])
+
   const handleSectionClick = (e, section) => {
     e.preventDefault()
     if (section === "resume") {
@@ -554,6 +582,13 @@ const Layout = ({ children, location }) => {
     } else if (section === "publications") {
       navigate("/publications")
     } else {
+      // If we're not on the home page, navigate there first
+      const isHomePage = location && location.pathname === "/"
+      if (!isHomePage) {
+        navigate(`/#${section}`)
+        return
+      }
+
       const element = document.getElementById(section)
       if (element) {
         // On desktop, scroll within the main content area; on mobile, scroll the window
