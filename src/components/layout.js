@@ -9,7 +9,7 @@ import About from "@components/sections/about"
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/react"
 
-const sections = ["publications", "experience", "news", "contact", "resume"]
+const sections = ["publications", "experience", "news", "contact", "cv"]
 
 const StyledSkipLink = styled.a`
   position: absolute;
@@ -482,7 +482,7 @@ const Layout = ({ children, location }) => {
   useEffect(() => {
     const handleScroll = () => {
       const sectionElements = sections
-        .filter(section => section !== "resume")
+        .filter(section => section !== "cv")
         .map(section => ({
           id: section,
           element: document.getElementById(section),
@@ -577,8 +577,8 @@ const Layout = ({ children, location }) => {
 
   const handleSectionClick = (e, section) => {
     e.preventDefault()
-    if (section === "resume") {
-      window.open("/JacobDineen_CV_latest.pdf", "_blank", "noopener,noreferrer")
+    if (section === "cv") {
+      window.open("/cv/JacobDineen_CV.pdf", "_blank", "noopener,noreferrer")
     } else if (section === "publications") {
       navigate("/publications")
     } else {
