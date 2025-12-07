@@ -50,7 +50,7 @@ module.exports = {
     opacity: 0,
     scale: 1,
     easing: "cubic-bezier(0.645, 0.045, 0.355, 1)",
-    mobile: true,
+    mobile: false, // Disable ScrollReveal on mobile - causes content to not show
     reset: false,
     useDelay: "always",
     viewFactor,

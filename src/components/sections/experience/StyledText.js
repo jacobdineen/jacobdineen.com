@@ -10,12 +10,17 @@ const StyledText = styled.div`
   width: 100%;
 
   h3 {
-    font-size: clamp(1.8rem, 5vw, 2.5rem);
+    font-size: clamp(1.4rem, 4vw, 2rem);
     font-weight: 600;
     color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
-    margin: 0 0 20px 0;
+    margin: 0 0 16px 0;
     line-height: 1.2;
     letter-spacing: -0.02em;
+
+    @media (max-width: 767px) {
+      font-size: 1.3rem;
+      margin: 0 0 12px 0;
+    }
   }
 
   h1 {
@@ -56,6 +61,13 @@ const StyledText = styled.div`
   p,
   div {
     color: ${({ theme }) => (theme.mode === "light" ? "#48484a" : "#a1a1a6")};
+    font-size: 1rem;
+    line-height: 1.6;
+
+    @media (max-width: 767px) {
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
   }
 
   a {

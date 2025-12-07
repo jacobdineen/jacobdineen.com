@@ -209,6 +209,7 @@ const Experience = () => {
   const prefersReducedMotion = usePrefersReducedMotion()
   const [activeContentType, setActiveContentType] = useState("publications")
   const [showCourses, setShowCourses] = useState({})
+  const [showAllPubs, setShowAllPubs] = useState(false)
 
   // Publication filters
   const [pubQuery, setPubQuery] = useState("")
@@ -305,8 +306,16 @@ const Experience = () => {
       ? publicationsData
       : educationData
 
+  // Limit publications unless expanded (works on all devices)
+  const PUB_LIMIT = 5
+  const limitedPublications = !showAllPubs
+    ? filteredPublications.slice(0, PUB_LIMIT)
+    : filteredPublications
+
   const displayData =
-    activeContentType === "publications" ? filteredPublications : activeData
+    activeContentType === "publications" ? limitedPublications : activeData
+
+  const hasMorePubs = filteredPublications.length > PUB_LIMIT
 
   const toggleCourses = i => {
     setShowCourses(prevState => ({
@@ -360,16 +369,7 @@ const Experience = () => {
     <StyledJobsSection id="experience" ref={revealContainer}>
       <StyledText>
         <h3>Hey, I&apos;m Jake.</h3>
-        <div
-          style={{
-            fontSize: "var(--fz-lg)",
-            lineHeight: "1.6",
-            fontWeight: "normal",
-            marginBottom: "20px",
-            maxWidth: "700px",
-            margin: "0 auto 20px",
-          }}
-        >
+        <p style={{ maxWidth: "600px", margin: "0 auto 16px" }}>
           I have spent close to ten years in Data Science and Machine Learning
           Engineering roles, primarily in fintech. I&apos;m currently pursuing
           my PhD while conducting research in LLM Reasoning and Alignment at{" "}
@@ -377,30 +377,16 @@ const Experience = () => {
             href="https://arc-asu.github.io/"
             target="_blank"
             rel="noopener noreferrer"
-            style={{
-              textDecoration: "none",
-              fontWeight: "600",
-              transition: "all 0.25s ease",
-            }}
           >
             Arizona State University&apos;s ARC Lab
           </a>
           .
-        </div>
-        <div
-          style={{
-            fontSize: "var(--fz-lg)",
-            lineHeight: "1.6",
-            fontWeight: "normal",
-            marginBottom: "30px",
-            maxWidth: "700px",
-            margin: "0 auto 30px",
-          }}
-        >
+        </p>
+        <p style={{ maxWidth: "600px", margin: "0 auto 24px" }}>
           Outside of work, I enjoy traveling with my wife, spending time with
           family and friends, tinkering with tech, and staying active despite
           the Arizona heat.
-        </div>
+        </p>
 
         <h1 className="numbered-heading">A little about me</h1>
 
@@ -607,6 +593,38 @@ const Experience = () => {
               &rarr;
             </ArrowButton>
           </StyledTabList>
+
+          {/* Show More/Less button for publications on mobile */}
+          {activeContentType === "publications" && hasMorePubs && (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginTop: "16px",
+                marginBottom: "8px",
+              }}
+            >
+              <button
+                onClick={() => setShowAllPubs(!showAllPubs)}
+                style={{
+                  background: "transparent",
+                  border: "1px solid #0071e3",
+                  color: "#0071e3",
+                  padding: "10px 24px",
+                  borderRadius: "980px",
+                  fontSize: "0.9rem",
+                  fontWeight: "500",
+                  cursor: "pointer",
+                  fontFamily: "-apple-system, BlinkMacSystemFont, sans-serif",
+                  transition: "all 0.2s ease",
+                }}
+              >
+                {showAllPubs
+                  ? `Show Less`
+                  : `Show All ${filteredPublications.length} Publications`}
+              </button>
+            </div>
+          )}
 
           {/* Only show detail panels for non-publication content types */}
           {activeContentType !== "publications" && (

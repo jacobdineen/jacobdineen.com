@@ -84,7 +84,13 @@ body {
   line-height: 1.3;
   transition: background-color 0.3s ease, color 0.3s ease;
 
-  /* Only hide body overflow on desktop when using fixed sidebar */
+  /* Mobile: normal scrolling */
+  @media (max-width: 767px) {
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Desktop: hide body overflow, scroll happens in main content */
   @media (min-width: 768px) {
     overflow-y: hidden;
   }

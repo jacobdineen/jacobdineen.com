@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react"
-import { navigate } from "gatsby"
+import { navigate, Link } from "gatsby"
 import PropTypes from "prop-types"
 import styled, { ThemeProvider, ThemeContext } from "styled-components"
 import { Head, Loader } from "@components"
@@ -10,6 +10,62 @@ import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/react"
 
 const sections = ["publications", "experience", "news", "contact", "cv"]
+
+// Check if current page is a detail page (not home, not listing pages)
+const isDetailPage = pathname => {
+  if (!pathname) return false
+  // Publication detail pages, post pages, etc.
+  const detailPatterns = [
+    /^\/publications\/[^/]+/, // /publications/something
+    /^\/pensieve\/[^/]+/, // /pensieve/something (blog posts)
+  ]
+  return detailPatterns.some(pattern => pattern.test(pathname))
+}
+
+// Minimal header for detail pages on mobile
+const StyledMinimalHeader = styled.header`
+  display: none;
+
+  @media (max-width: 767px) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: ${({ theme }) =>
+      theme.mode === "light" ? "#f5f5f7" : "#000000"};
+    border-bottom: 1px solid
+      ${({ theme }) => (theme.mode === "light" ? "#d2d2d7" : "#2d2d2d")};
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .back-link {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #0071e3;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    &:after {
+      display: none;
+    }
+  }
+
+  .site-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+  }
+`
 
 const StyledSkipLink = styled.a`
   position: absolute;
@@ -44,6 +100,12 @@ const StyledContainer = styled.div`
   min-height: 100vh;
   position: relative;
 
+  /* Mobile: normal document flow */
+  @media (max-width: 767px) {
+    overflow-x: hidden;
+  }
+
+  /* Desktop: fixed sidebar layout */
   @media (min-width: 768px) {
     flex-direction: row;
     height: 100vh;
@@ -53,17 +115,26 @@ const StyledContainer = styled.div`
 
 const StyledSidebar = styled.aside`
   width: 100%;
-  padding: 24px 20px;
+  padding: 20px 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
   background: ${({ theme }) =>
     theme.mode === "light" ? "#f5f5f7" : "#000000"};
-  border-right: 1px solid
+  border-bottom: 1px solid
     ${({ theme }) => (theme.mode === "light" ? "#d2d2d7" : "#2d2d2d")};
   z-index: 5;
   position: relative;
   flex-shrink: 0;
+
+  /* Hide full sidebar on detail pages on mobile */
+  ${({ hideOnMobile }) =>
+    hideOnMobile &&
+    `
+    @media (max-width: 767px) {
+      display: none;
+    }
+  `}
 
   @media (min-width: 768px) {
     width: 300px;
@@ -73,6 +144,9 @@ const StyledSidebar = styled.aside`
     justify-content: center;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    border-bottom: none;
+    border-right: 1px solid
+      ${({ theme }) => (theme.mode === "light" ? "#d2d2d7" : "#2d2d2d")};
   }
 
   @media (min-width: 1080px) {
@@ -80,7 +154,6 @@ const StyledSidebar = styled.aside`
     padding: 40px 32px;
   }
 
-  /* On shorter viewports, pin content to top so the bottom items (e.g., Resume) don't get cut off */
   @media (min-width: 768px) and (max-height: 800px) {
     justify-content: flex-start;
   }
@@ -104,12 +177,28 @@ const StyledSidebar = styled.aside`
         text-align: center;
       }
     }
+
+    /* Mobile: horizontal nav buttons */
+    @media (max-width: 767px) {
+      margin: 8px 0;
+
+      ul {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px;
+
+        li {
+          width: auto;
+        }
+      }
+    }
   }
 `
 
 const StyledMainContent = styled.main`
   width: 100%;
-  padding: 24px 20px;
+  padding: 24px 16px;
   display: flex;
   flex-direction: column;
   z-index: 10;
@@ -117,16 +206,23 @@ const StyledMainContent = styled.main`
     theme.mode === "light" ? "#ffffff" : "#000000"};
   color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
   flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
   position: relative;
 
+  /* Mobile: normal scrolling */
+  @media (max-width: 767px) {
+    overflow: visible;
+    min-height: auto;
+  }
+
+  /* Desktop: scrollable container */
   @media (min-width: 768px) {
     margin-left: 300px;
     width: calc(100% - 300px);
     padding: 48px 40px;
     height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
   }
 
   @media (min-width: 1080px) {
@@ -135,12 +231,14 @@ const StyledMainContent = styled.main`
     padding: 64px 60px;
   }
 
-  /* Hide scrollbar but keep functionality */
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  /* Hide scrollbar but keep functionality - desktop only */
+  @media (min-width: 768px) {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 
-  &::-webkit-scrollbar {
-    display: none;
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 
   /* Text color overrides for light mode */
@@ -169,9 +267,14 @@ const ToggleWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 8px;
   margin-top: 24px;
   flex-shrink: 0;
+
+  @media (max-width: 767px) {
+    margin-top: 0;
+    gap: 6px;
+  }
 
   span {
     font-size: 0.85rem;
@@ -179,6 +282,10 @@ const ToggleWrapper = styled.div`
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
       "Helvetica Neue", sans-serif;
     color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#86868b")};
+
+    @media (max-width: 767px) {
+      font-size: 0.75rem;
+    }
   }
 `
 
@@ -188,6 +295,11 @@ const ToggleLabel = styled.label`
   width: 52px;
   height: 28px;
   cursor: pointer;
+
+  @media (max-width: 767px) {
+    width: 44px;
+    height: 24px;
+  }
 `
 
 const ToggleInput = styled.input`
@@ -201,6 +313,10 @@ const ToggleInput = styled.input`
 
   &:checked + span:before {
     transform: translateX(24px);
+
+    @media (max-width: 767px) {
+      transform: translateX(20px);
+    }
   }
 
   &:focus + span {
@@ -231,6 +347,48 @@ const Slider = styled.span`
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 50%;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+
+    @media (max-width: 767px) {
+      height: 18px;
+      width: 18px;
+    }
+  }
+`
+
+const BackToTopButton = styled.button`
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #0071e3;
+  color: white;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  z-index: 100;
+  opacity: ${({ visible }) => (visible ? 1 : 0)};
+  transform: ${({ visible }) => (visible ? "scale(1)" : "scale(0.8)")};
+  pointer-events: ${({ visible }) => (visible ? "auto" : "none")};
+
+  /* Only show on mobile */
+  @media (min-width: 768px) {
+    display: none;
+  }
+
+  &:hover {
+    background: #0077ed;
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
   }
 `
 
@@ -266,6 +424,14 @@ const StyledTabButton = styled.button`
     isActive ? "#ffffff" : theme.mode === "light" ? "#1d1d1f" : "#f5f5f7"};
 
   transition: all 0.2s ease;
+
+  /* Mobile: smaller buttons */
+  @media (max-width: 767px) {
+    font-size: 0.8rem;
+    padding: 8px 14px;
+    min-height: 36px;
+    border-radius: 18px;
+  }
 
   &:hover {
     background: ${({ isActive, theme }) =>
@@ -341,6 +507,7 @@ ToggleSwitch.defaultProps = {
 const Layout = ({ children, location }) => {
   const [isLoading, setIsLoading] = useState(location.pathname === "/")
   const [activeSection, setActiveSection] = useState("")
+  const [showBackToTop, setShowBackToTop] = useState(false)
 
   // Get initial theme preference from localStorage if available
   const [themeMode, setThemeMode] = useState(() => {
@@ -350,6 +517,21 @@ const Layout = ({ children, location }) => {
     }
     return "dark"
   })
+
+  // Track scroll position for Back to Top button (mobile only)
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.innerWidth < 768) {
+        setShowBackToTop(window.scrollY > 400)
+      }
+    }
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }
 
   // Update active section based on scroll position
   useEffect(() => {
@@ -500,7 +682,21 @@ const Layout = ({ children, location }) => {
           <Loader finishLoading={() => setIsLoading(false)} />
         ) : (
           <StyledContainer>
-            <StyledSidebar role="navigation" aria-label="Main navigation">
+            {/* Minimal header for detail pages on mobile */}
+            {isDetailPage(location?.pathname) && (
+              <StyledMinimalHeader>
+                <Link to="/" className="back-link">
+                  ← Home
+                </Link>
+                <span className="site-name">Jacob Dineen</span>
+              </StyledMinimalHeader>
+            )}
+
+            <StyledSidebar
+              role="navigation"
+              aria-label="Main navigation"
+              hideOnMobile={isDetailPage(location?.pathname)}
+            >
               <About />
               <nav>
                 <ul>
@@ -526,6 +722,13 @@ const Layout = ({ children, location }) => {
               />
             </StyledSidebar>
             <StyledMainContent id="content">{children}</StyledMainContent>
+            <BackToTopButton
+              visible={showBackToTop}
+              onClick={scrollToTop}
+              aria-label="Back to top"
+            >
+              ↑
+            </BackToTopButton>
           </StyledContainer>
         )}
       </ThemeProvider>
