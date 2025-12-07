@@ -4,19 +4,21 @@ const StyledTabButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  color: ${({ theme }) =>
-    theme.mode === "light" ? "var(--slate)" : "var(--slate)"};
-  font-size: var(--fz-xs);
-  min-height: 38px;
+  color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
+  font-size: var(--fz-sm);
+  font-weight: 500;
+  min-height: 36px;
   height: auto;
   width: 100%;
   max-width: 100%;
-  border: none;
-  border-radius: 19px;
-  background-color: transparent;
+  border: 1px solid
+    ${({ theme }) => (theme.mode === "light" ? "#d2d2d7" : "#3d3d3d")};
+  border-radius: 980px;
+  background-color: ${({ theme }) =>
+    theme.mode === "light" ? "#ffffff" : "#1d1d1f"};
   text-align: center;
-  padding: 12px 20px;
-  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+  padding: 10px 20px;
+  transition: all 0.2s ease;
   cursor: pointer;
   outline: none;
   position: relative;
@@ -30,59 +32,37 @@ const StyledTabButton = styled.button`
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 
-  &:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: ${({ theme }) =>
-      theme.mode === "light"
-        ? "rgba(100, 255, 218, 0.08)"
-        : "rgba(17, 34, 64, 0.7)"};
-    border-radius: 19px;
-    opacity: 0;
-    transition: opacity 0.25s ease;
-    z-index: -1;
-  }
-
   &:hover,
   &:focus {
-    color: ${({ theme }) =>
-      theme.mode === "light" ? "var(--green-dark)" : "var(--green)"};
-    transform: translateY(-1px);
-
-    &:before {
-      opacity: 1;
-    }
+    border-color: #0071e3;
+    color: #0071e3;
   }
 
-  ${({ isActive, theme }) =>
+  ${({ isActive }) =>
     isActive &&
     `
-    color: ${theme.mode === "light" ? "var(--green-dark)" : "var(--green)"};
+    background-color: #0071e3;
+    border-color: #0071e3;
+    color: #ffffff;
     font-weight: 600;
     
-    &:before {
-      opacity: 1;
-      background: ${
-        theme.mode === "light"
-          ? "rgba(100, 255, 218, 0.15)"
-          : "rgba(17, 34, 64, 0.9)"
-      };
+    &:hover,
+    &:focus {
+      background-color: #0077ed;
+      border-color: #0077ed;
+      color: #ffffff;
     }
   `}
 
   @media (max-width: 768px) {
-    font-size: var(--fz-xxs);
-    min-height: 36px;
-    padding: 10px 15px;
+    font-size: var(--fz-xs);
+    min-height: 34px;
+    padding: 8px 16px;
   }
 
   @media (max-width: 480px) {
-    min-height: 34px;
-    padding: 8px 12px;
+    min-height: 32px;
+    padding: 6px 12px;
     font-size: 11px;
   }
 `

@@ -23,10 +23,10 @@ const GlobalStyle = createGlobalStyle`
   ::selection {
     background-color: ${({ theme }) =>
       theme.mode === "light"
-        ? "rgba(100, 255, 218, 0.3)"
-        : "rgba(100, 255, 218, 0.2)"};
+        ? "rgba(0, 113, 227, 0.2)"
+        : "rgba(41, 151, 255, 0.3)"};
     color: ${({ theme }) =>
-      theme.mode === "light" ? "var(--navy)" : "var(--lightest-slate)"};
+      theme.mode === "light" ? "var(--light-navy)" : "var(--white)"};
   }
 
   /* Provide basic, default focus styles.*/
@@ -172,9 +172,9 @@ body {
   }
 
   h1, h2, h3, h4, h5, h6 {
-    color: ${({ theme }) => theme.colors[theme.mode].lightestSlate};
-    text-shadow: ${({ theme }) =>
-      theme.mode === "light" ? "none" : "0 2px 4px rgba(0, 0, 0, 0.3)"};
+    color: ${({ theme }) => theme.colors[theme.mode].text};
+    font-weight: 600;
+    letter-spacing: -0.02em;
   }
 
   .big-heading {
@@ -203,9 +203,9 @@ body {
       content: '0' counter(section) '.';
       margin-right: 10px;
       color: var(--green);
-      font-family: var(--font-mono);
+      font-family: var(--font-sans);
       font-size: clamp(var(--fz-md), 3vw, var(--fz-xl));
-      font-weight: 400;
+      font-weight: 500;
 
       @media (max-width: 480px) {
         margin-bottom: -3px;
@@ -221,7 +221,8 @@ body {
       width: 300px;
       height: 1px;
       margin-left: 20px;
-      background-color: var(--lightest-navy);
+      background-color: ${({ theme }) =>
+        theme.mode === "light" ? "#d2d2d7" : "#424245"};
 
       @media (max-width: 1080px) {
         width: 200px;
@@ -320,6 +321,7 @@ body {
 
   p {
     margin: 0 0 15px 0;
+    line-height: 1.6;
 
     &:last-child,
     &:last-of-type {
@@ -331,11 +333,14 @@ body {
     }
 
     & > code {
-      background-color: var(--light-navy);
-      color: var(--white);
+      background-color: ${({ theme }) =>
+        theme.mode === "light"
+          ? "rgba(0, 0, 0, 0.06)"
+          : "rgba(255, 255, 255, 0.1)"};
+      color: inherit;
       font-size: var(--fz-sm);
-      border-radius: var(--border-radius);
-      padding: 0.3em 0.5em;
+      border-radius: var(--border-radius-sm);
+      padding: 0.2em 0.5em;
     }
   }
 
@@ -344,43 +349,50 @@ body {
       padding: 0;
       margin: 0;
       list-style: none;
-      font-size: 12px;
+      font-size: var(--fz-sm);
       li {
         position: relative;
-        padding-left: 30px;
+        padding-left: 24px;
         margin-bottom: 10px;
         &:before {
-          content: '▹';
+          content: '•';
           position: absolute;
           left: 0;
           color: var(--green);
+          font-weight: 600;
         }
       }
     }
   }
 
   blockquote {
-    border-left-color: var(--green);
-    border-left-style: solid;
-    border-left-width: 1px;
+    border-left: 3px solid var(--green);
     margin-left: 0px;
     margin-right: 0px;
     padding-left: 1.5rem;
+    background: ${({ theme }) =>
+      theme.mode === "light"
+        ? "rgba(0, 113, 227, 0.03)"
+        : "rgba(41, 151, 255, 0.05)"};
+    border-radius: 0 var(--border-radius-sm) var(--border-radius-sm) 0;
+    padding: 1rem 1.5rem;
 
     p {
-      font-style: italic;
-      font-size: 24px;
+      font-style: normal;
+      font-size: var(--fz-lg);
+      color: ${({ theme }) => theme.colors[theme.mode].textSecondary};
     }
   }
 
   hr {
-    background-color: var(--lightest-navy);
+    background-color: ${({ theme }) =>
+      theme.mode === "light" ? "#d2d2d7" : "#424245"};
     height: 1px;
     border-width: 0px;
     border-style: initial;
     border-color: initial;
     border-image: initial;
-    margin: 1rem;
+    margin: 2rem 0;
   }
 
   code {

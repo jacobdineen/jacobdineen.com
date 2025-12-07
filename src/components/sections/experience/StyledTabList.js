@@ -15,11 +15,11 @@ const StyledTabList = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
+    gap: 12px;
     padding: 10px 0;
     margin: 0 auto;
     width: 100%;
-    max-width: 600px;
+    max-width: 900px;
     overflow-x: hidden;
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -33,8 +33,9 @@ const StyledTabList = styled.div`
   @media (max-width: 768px) {
     > div {
       -webkit-overflow-scrolling: touch;
-      max-width: 400px;
+      max-width: 100%;
       padding: 8px 0;
+      gap: 10px;
     }
   }
 
@@ -42,8 +43,8 @@ const StyledTabList = styled.div`
     padding: 8px 0 12px 0;
 
     > div {
-      max-width: 320px;
-      gap: 5px;
+      max-width: 100%;
+      gap: 8px;
     }
   }
 `

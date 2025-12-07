@@ -20,61 +20,43 @@ const SidebarIcons = styled.aside`
   flex-wrap: wrap;
 
   @media (min-width: 480px) {
-    gap: 12px;
+    gap: 10px;
   }
 
   a {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 44px;
-    height: 44px;
-    background: ${({ theme }) =>
-      theme.mode === "light"
-        ? "rgba(255, 255, 255, 0.8)"
-        : "rgba(15, 23, 42, 0.8)"};
-    backdrop-filter: blur(10px);
+    width: 40px;
+    height: 40px;
+    background: transparent;
     border: 1px solid
-      ${({ theme }) =>
-        theme.mode === "light"
-          ? "rgba(226, 232, 240, 0.8)"
-          : "rgba(100, 255, 218, 0.1)"};
-    border-radius: 12px;
-    color: ${({ theme }) => (theme.mode === "light" ? "#475569" : "#94a3b8")};
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: ${({ theme }) =>
-      theme.mode === "light"
-        ? "0 4px 16px rgba(0, 0, 0, 0.08)"
-        : "0 4px 16px rgba(0, 0, 0, 0.2)"};
+      ${({ theme }) => (theme.mode === "light" ? "#d2d2d7" : "#3d3d3d")};
+    border-radius: 10px;
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
+    transition: all 0.2s ease;
 
     &:hover {
-      transform: translateY(-4px) scale(1.05);
-      background: ${({ theme }) =>
-        theme.mode === "light"
-          ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
-          : "linear-gradient(135deg, #00c9ff 0%, #92fe9d 100%)"};
+      background: #0071e3;
       color: white;
-      border-color: transparent;
-      box-shadow: ${({ theme }) =>
-        theme.mode === "light"
-          ? "0 12px 32px rgba(102, 126, 234, 0.3)"
-          : "0 12px 32px rgba(0, 201, 255, 0.3)"};
+      border-color: #0071e3;
+      transform: translateY(-2px);
     }
 
     @media (min-width: 480px) {
-      width: 48px;
-      height: 48px;
+      width: 44px;
+      height: 44px;
     }
   }
 
   svg {
-    width: 20px;
-    height: 20px;
-    transition: all 0.3s ease;
+    width: 18px;
+    height: 18px;
+    transition: all 0.2s ease;
 
     @media (min-width: 480px) {
-      width: 22px;
-      height: 22px;
+      width: 20px;
+      height: 20px;
     }
   }
 `
@@ -82,21 +64,8 @@ const SidebarIcons = styled.aside`
 const StyledAboutSection = styled.section`
   width: 100%;
   margin: 0 auto;
-  background: ${({ theme }) =>
-    theme.mode === "light"
-      ? "linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(248,250,252,0.9) 100%)"
-      : "linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.8) 100%)"};
-  backdrop-filter: blur(10px);
-  border: 1px solid
-    ${({ theme }) =>
-      theme.mode === "light"
-        ? "rgba(226, 232, 240, 0.8)"
-        : "rgba(100, 255, 218, 0.1)"};
-  border-radius: 24px;
-  box-shadow: ${({ theme }) =>
-    theme.mode === "light"
-      ? "0 8px 32px rgba(0, 0, 0, 0.08)"
-      : "0 8px 32px rgba(0, 0, 0, 0.3)"};
+  background: transparent;
+  border-radius: 20px;
 
   .inner {
     display: flex;
@@ -130,82 +99,69 @@ const StyledText = styled.div`
 
   h1 {
     font-size: clamp(1.3rem, 4vw, 1.6rem);
-    font-weight: 700;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-      "Oxygen", "Ubuntu", "Cantarell", sans-serif;
-    background: ${({ theme }) =>
-      theme.mode === "light"
-        ? "linear-gradient(135deg, #2d3748 0%, #4a5568 100%)"
-        : "linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%)"};
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin: 0 0 8px 0;
+    font-weight: 600;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+      "Helvetica Neue", sans-serif;
+    color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
+    margin: 0 0 6px 0;
     line-height: 1.2;
     letter-spacing: -0.02em;
 
     @media (min-width: 480px) {
       font-size: clamp(1.4rem, 3vw, 1.8rem);
-      margin: 0 0 10px 0;
+      margin: 0 0 8px 0;
     }
   }
 
   h2 {
     font-size: clamp(0.8rem, 3vw, 0.95rem);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-      sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+      "Helvetica Neue", sans-serif;
     font-weight: 500;
-    background: ${({ theme }) =>
-      theme.mode === "light"
-        ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
-        : "linear-gradient(135deg, #00c9ff 0%, #92fe9d 100%)"};
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin: 0 0 12px 0;
+    color: #0071e3;
+    margin: 0 0 16px 0;
     line-height: 1.3;
-    letter-spacing: 0.02em;
 
     @media (min-width: 480px) {
       font-size: clamp(0.85rem, 2.5vw, 1rem);
-      margin: 0 0 16px 0;
+      margin: 0 0 20px 0;
     }
   }
 
   p {
     font-size: 0.9rem;
     font-weight: 400;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-      sans-serif;
-    color: ${({ theme }) => (theme.mode === "light" ? "#64748b" : "#94a3b8")};
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+      "Helvetica Neue", sans-serif;
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
     max-width: 540px;
     line-height: 1.6;
     text-align: center;
     margin: 0 0 20px 0;
 
     @media (min-width: 768px) {
-      display: none; /* Hide paragraph text in desktop sidebar to save space */
+      display: none;
     }
   }
 `
 
 const StyledPic = styled.div`
   position: relative;
-  max-width: 120px;
+  max-width: 100px;
   display: flex;
   justify-content: center;
   flex-shrink: 0;
 
   @media (min-width: 480px) {
-    max-width: 140px;
+    max-width: 120px;
   }
 
   @media (min-width: 768px) {
-    max-width: 150px;
+    max-width: 130px;
   }
 
   @media (min-width: 1080px) {
-    max-width: 160px;
+    max-width: 140px;
   }
 
   .wrapper {
@@ -213,35 +169,21 @@ const StyledPic = styled.div`
     position: relative;
     width: 100%;
     border-radius: 50%;
-    background: ${({ theme }) =>
-      theme.mode === "light"
-        ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
-        : "linear-gradient(135deg, #00c9ff 0%, #92fe9d 100%)"};
-    padding: 4px;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: all 0.3s ease;
 
     &:hover,
     &:focus {
-      transform: translateY(-8px) scale(1.05);
-      box-shadow: ${({ theme }) =>
-        theme.mode === "light"
-          ? "0 20px 40px rgba(102, 126, 234, 0.3)"
-          : "0 20px 40px rgba(0, 201, 255, 0.3)"};
+      transform: scale(1.02);
     }
 
     .img {
       position: relative;
       border-radius: 50%;
       transition: var(--transition);
-      border: 3px solid
-        ${({ theme }) =>
-          theme.mode === "light"
-            ? "rgba(255,255,255,0.9)"
-            : "rgba(15, 23, 42, 0.9)"};
       box-shadow: ${({ theme }) =>
         theme.mode === "light"
-          ? "0 8px 32px rgba(0, 0, 0, 0.12)"
-          : "0 8px 32px rgba(0, 0, 0, 0.4)"};
+          ? "0 4px 20px rgba(0, 0, 0, 0.1)"
+          : "0 4px 20px rgba(0, 0, 0, 0.4)"};
     }
   }
 `

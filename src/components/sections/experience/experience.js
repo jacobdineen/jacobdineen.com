@@ -32,48 +32,48 @@ const ContentTypeButtonsContainer = styled.div`
   flex-wrap: wrap;
   gap: 10px;
   width: 100%;
-  max-width: 700px;
+  max-width: 600px;
   margin: 0 auto 30px;
   padding: 0 20px;
 `
 
 const ContentTypeButton = styled.button`
-  background: ${props =>
-    props.isActive ? "var(--green-tint)" : "transparent"};
-  color: ${props => (props.isActive ? "var(--green)" : "var(--slate)")};
+  background: ${({ isActive, theme }) =>
+    isActive ? "#0071e3" : theme.mode === "light" ? "#ffffff" : "#1d1d1f"};
+  color: ${({ isActive, theme }) =>
+    isActive ? "#ffffff" : theme.mode === "light" ? "#1d1d1f" : "#f5f5f7"};
   border: 1px solid
-    ${props => (props.isActive ? "var(--green)" : "var(--lightest-navy)")};
-  border-radius: var(--border-radius);
-  padding: 10px 18px;
-  font-size: var(--fz-xs);
-  font-family: var(--font-mono);
-  font-weight: ${props => (props.isActive ? "600" : "500")};
-  transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+    ${({ isActive, theme }) =>
+      isActive ? "#0071e3" : theme.mode === "light" ? "#d2d2d7" : "#3d3d3d"};
+  border-radius: 980px;
+  padding: 10px 20px;
+  font-size: var(--fz-sm);
+  font-family: var(--font-sans);
+  font-weight: 500;
+  transition: all 0.2s ease;
   cursor: ${props => (props.isActive ? "default" : "pointer")};
   position: relative;
-  min-width: 90px;
+  min-width: 100px;
   flex: 1 1 auto;
   text-align: center;
 
   @media (max-width: 768px) {
     flex: 0 1 calc(50% - 5px);
-    min-width: 120px;
+    min-width: 110px;
   }
 
   &:hover:not(:disabled) {
-    color: var(--green);
-    background: var(--green-tint);
-    border-color: var(--green);
-    transform: translateY(-2px);
+    border-color: #0071e3;
+    color: ${({ isActive }) => (isActive ? "#ffffff" : "#0071e3")};
   }
 `
 
 const StyledFilters = styled.div`
   display: grid;
-  grid-template-columns: 1fr 140px 180px;
+  grid-template-columns: 1fr 120px 120px;
   gap: 10px;
-  margin: 10px auto 16px auto;
-  max-width: 720px;
+  margin: 10px auto 20px auto;
+  max-width: 900px;
   justify-content: center;
 
   @media (max-width: 768px) {
@@ -82,13 +82,28 @@ const StyledFilters = styled.div`
 
   input[type="search"],
   select {
-    background: var(--light-navy);
-    color: var(--lightest-slate);
-    border: 1px solid var(--lightest-navy);
-    border-radius: var(--border-radius);
-    padding: 8px 10px;
+    background: ${({ theme }) =>
+      theme.mode === "light" ? "#f5f5f7" : "#161616"};
+    color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
+    border: 1px solid
+      ${({ theme }) => (theme.mode === "light" ? "#d2d2d7" : "#3d3d3d")};
+    border-radius: 8px;
+    padding: 10px 14px;
     font-size: var(--fz-sm);
     outline: none;
+    transition: border-color 0.2s ease;
+
+    &:focus {
+      border-color: #0071e3;
+    }
+
+    &::placeholder {
+      color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#6e6e73")};
+    }
+  }
+
+  select {
+    cursor: pointer;
   }
 `
 
@@ -348,11 +363,10 @@ const Experience = () => {
         <div
           style={{
             fontSize: "var(--fz-lg)",
-            color: "var(--light-slate)",
             lineHeight: "1.6",
             fontWeight: "normal",
             marginBottom: "20px",
-            maxWidth: "600px",
+            maxWidth: "700px",
             margin: "0 auto 20px",
           }}
         >
@@ -364,7 +378,6 @@ const Experience = () => {
             target="_blank"
             rel="noopener noreferrer"
             style={{
-              color: "var(--green)",
               textDecoration: "none",
               fontWeight: "600",
               transition: "all 0.25s ease",
@@ -377,11 +390,10 @@ const Experience = () => {
         <div
           style={{
             fontSize: "var(--fz-lg)",
-            color: "var(--light-slate)",
             lineHeight: "1.6",
             fontWeight: "normal",
             marginBottom: "30px",
-            maxWidth: "600px",
+            maxWidth: "700px",
             margin: "0 auto 30px",
           }}
         >
@@ -596,232 +608,162 @@ const Experience = () => {
             </ArrowButton>
           </StyledTabList>
 
-          <StyledTabPanels>
-            {displayData.map(({ node }, i) => {
-              const { frontmatter, html } = node
-              const { title, range, technologies } = frontmatter
+          {/* Only show detail panels for non-publication content types */}
+          {activeContentType !== "publications" && (
+            <StyledTabPanels>
+              {displayData.map(({ node }, i) => {
+                const { frontmatter, html } = node
+                const { title, range, technologies } = frontmatter
 
-              return (
-                <CSSTransition
-                  key={i}
-                  in={activeTabId === i}
-                  timeout={250}
-                  classNames="fade"
-                  unmountOnExit
-                >
-                  <StyledTabPanel
-                    id={`panel-${i}`}
-                    role="tabpanel"
-                    tabIndex={activeTabId === i ? "0" : "-1"}
-                    aria-labelledby={`tab-${i}`}
-                    aria-hidden={activeTabId !== i}
-                    hidden={activeTabId !== i}
-                    style={{
-                      borderBottom: "1px solid var(--lightest-navy)",
-                      paddingBottom: "20px",
-                      marginBottom: "20px",
-                    }}
+                return (
+                  <CSSTransition
+                    key={i}
+                    in={activeTabId === i}
+                    timeout={250}
+                    classNames="fade"
+                    unmountOnExit
                   >
-                    <h3
-                      style={{
-                        fontSize: "1rem", // Reduced from 1.1rem
-                        fontWeight: "600",
-                        marginBottom: "5px",
-                      }}
+                    <StyledTabPanel
+                      id={`panel-${i}`}
+                      role="tabpanel"
+                      tabIndex={activeTabId === i ? "0" : "-1"}
+                      aria-labelledby={`tab-${i}`}
+                      aria-hidden={activeTabId !== i}
+                      hidden={activeTabId !== i}
                     >
-                      {activeContentType === "publications" &&
-                      frontmatter.slug ? (
-                        <Link
-                          to={frontmatter.slug}
-                          style={{
-                            color: "var(--lightest-slate)",
-                            textDecoration: "none",
-                            transition: "color 0.25s",
-                          }}
-                          onMouseEnter={e =>
-                            (e.target.style.color = "var(--green)")
-                          }
-                          onMouseLeave={e =>
-                            (e.target.style.color = "var(--lightest-slate)")
-                          }
-                        >
-                          {title}
-                        </Link>
-                      ) : (
+                      <h3
+                        style={{
+                          fontSize: "1rem",
+                          fontWeight: "600",
+                          marginBottom: "5px",
+                        }}
+                      >
                         <span>{title}</span>
-                      )}
-                      {frontmatter.venue && (
-                        <span
-                          style={{
-                            fontSize: "0.8rem",
-                            color: "var(--green)",
-                            fontFamily: "var(--font-mono)",
-                            marginLeft: "10px",
-                          }}
-                        >
-                          {frontmatter.venue}
-                        </span>
-                      )}
-                    </h3>
-
-                    {/* Authors and extra body hidden now to keep the list clean per request */}
-                    {activeContentType === "education" && (
-                      <>
-                        <h3
-                          style={{
-                            fontSize: "1rem",
-                            fontWeight: "600",
-                            marginBottom: "5px",
-                            textAlign: "center",
-                          }}
-                        >
-                          {frontmatter.degree}
-                        </h3>
-
-                        <p
-                          style={{
-                            fontSize: "0.95rem",
-                            color: "var(--light-slate)",
-                            marginTop: "2px",
-                            textAlign: "center",
-                            fontFamily: "var(--font-mono)",
-                          }}
-                        >
-                          GPA: {frontmatter.gpa}
-                        </p>
-
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            gap: "10px",
-                            marginTop: "15px",
-                          }}
-                        >
-                          <button
-                            onClick={() => toggleCourses(i)}
+                        {frontmatter.venue && (
+                          <span
                             style={{
-                              backgroundColor: "#112240",
-                              color: "#64ffda",
-                              borderRadius: "5px",
-                              padding: "5px 10px",
-                              fontSize: "0.75rem",
-                              border: "none",
-                              transition: "all 0.2s ease-in-out",
-                              cursor: "pointer",
-                            }}
-                            onMouseOver={e => {
-                              e.target.style.backgroundColor = "#1d3b6f"
-                            }}
-                            onMouseOut={e => {
-                              e.target.style.backgroundColor = "#112240"
+                              fontSize: "0.8rem",
+                              color: "#0071e3",
+                              fontFamily: "var(--font-mono)",
+                              marginLeft: "10px",
                             }}
                           >
-                            {showCourses[i] ? "Hide Courses" : "Show Courses"}
-                          </button>
-                        </div>
+                            {frontmatter.venue}
+                          </span>
+                        )}
+                      </h3>
 
-                        {showCourses[i] &&
-                          technologies &&
-                          technologies.length > 0 && (
-                            <div
+                      {activeContentType === "education" && (
+                        <>
+                          <h3
+                            style={{
+                              fontSize: "1rem",
+                              fontWeight: "600",
+                              marginBottom: "5px",
+                              textAlign: "center",
+                            }}
+                          >
+                            {frontmatter.degree}
+                          </h3>
+
+                          <p
+                            style={{
+                              fontSize: "0.95rem",
+                              marginTop: "2px",
+                              textAlign: "center",
+                              fontFamily: "var(--font-mono)",
+                            }}
+                          >
+                            GPA: {frontmatter.gpa}
+                          </p>
+
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "center",
+                              gap: "10px",
+                              marginTop: "15px",
+                            }}
+                          >
+                            <button
+                              onClick={() => toggleCourses(i)}
                               style={{
-                                display: "flex",
-                                flexWrap: "wrap",
-                                gap: "8px",
-                                justifyContent: "center",
-                                marginTop: "15px",
-                                padding: "0 20px",
-                                maxWidth: "600px",
-                                margin: "15px auto",
+                                backgroundColor: "#0071e3",
+                                color: "#ffffff",
+                                borderRadius: "980px",
+                                padding: "8px 16px",
+                                fontSize: "0.8rem",
+                                border: "none",
+                                transition: "all 0.2s ease",
+                                cursor: "pointer",
+                              }}
+                              onMouseOver={e => {
+                                e.target.style.backgroundColor = "#0077ed"
+                              }}
+                              onMouseOut={e => {
+                                e.target.style.backgroundColor = "#0071e3"
                               }}
                             >
-                              {technologies.map((tech, index) => (
-                                <>
+                              {showCourses[i] ? "Hide Courses" : "Show Courses"}
+                            </button>
+                          </div>
+
+                          {showCourses[i] &&
+                            technologies &&
+                            technologies.length > 0 && (
+                              <div
+                                style={{
+                                  display: "flex",
+                                  flexWrap: "wrap",
+                                  gap: "8px",
+                                  justifyContent: "center",
+                                  marginTop: "15px",
+                                  padding: "0 20px",
+                                  maxWidth: "600px",
+                                  margin: "15px auto",
+                                }}
+                              >
+                                {technologies.map((tech, index) => (
                                   <span
                                     key={index}
                                     style={{
-                                      color: "var(--slate)",
                                       fontSize: "0.75rem",
                                       fontFamily: "var(--font-mono)",
                                     }}
                                   >
                                     {tech.name}
+                                    {index < technologies.length - 1 && " / "}
                                   </span>
-                                  {index < technologies.length - 1 && (
-                                    <span
-                                      style={{
-                                        color: "var(--green)",
-                                        fontSize: "0.75rem",
-                                        opacity: "0.5",
-                                        margin: "0 4px",
-                                      }}
-                                    >
-                                      /
-                                    </span>
-                                  )}
-                                </>
-                              ))}
-                            </div>
-                          )}
-                      </>
-                    )}
-                    {activeContentType === "publications" &&
-                      frontmatter.slug && (
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            marginTop: "15px",
-                          }}
-                        >
-                          <Link
-                            to={frontmatter.slug}
-                            style={{
-                              color: "var(--green)",
-                              textDecoration: "none",
-                              fontFamily: "var(--font-mono)",
-                              fontSize: "var(--fz-sm)",
-                              transition: "all 0.25s",
-                              display: "inline-flex",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                            onMouseEnter={e => {
-                              e.target.style.transform = "translateX(5px)"
-                            }}
-                            onMouseLeave={e => {
-                              e.target.style.transform = "translateX(0)"
-                            }}
-                          >
-                            View Publication Details →
-                          </Link>
-                        </div>
+                                ))}
+                              </div>
+                            )}
+                        </>
                       )}
-                    <p className="range">{range}</p>
+                      <p className="range">{range}</p>
 
-                    <div dangerouslySetInnerHTML={{ __html: html }} />
-                    {activeContentType !== "education" && (
-                      <TechTagsContainer>
-                        {technologies &&
-                          technologies.map((tech, index) => (
-                            <TechTag
-                              key={index}
-                              href={tech.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              style={{ "--index": index }}
-                            >
-                              {tech.name}
-                            </TechTag>
-                          ))}
-                      </TechTagsContainer>
-                    )}
-                  </StyledTabPanel>
-                </CSSTransition>
-              )
-            })}
-          </StyledTabPanels>
+                      <div dangerouslySetInnerHTML={{ __html: html }} />
+                      {activeContentType !== "education" && (
+                        <TechTagsContainer>
+                          {technologies &&
+                            technologies.map((tech, index) => (
+                              <TechTag
+                                key={index}
+                                href={tech.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{ "--index": index }}
+                              >
+                                {tech.name}
+                              </TechTag>
+                            ))}
+                        </TechTagsContainer>
+                      )}
+                    </StyledTabPanel>
+                  </CSSTransition>
+                )
+              })}
+            </StyledTabPanels>
+          )}
         </div>
       </StyledText>
     </StyledJobsSection>

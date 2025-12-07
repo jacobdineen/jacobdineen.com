@@ -3,28 +3,13 @@ import styled from "styled-components"
 // import { usePrefersReducedMotion } from "@hooks"
 
 const StyledContactSection = styled.section`
-  max-width: 600px;
+  max-width: 100%;
+  width: 100%;
   margin: 0 auto;
   text-align: center;
-  padding: 48px 32px;
+  padding: 60px 20px;
   position: relative;
   z-index: 10;
-
-  background: ${({ theme }) =>
-    theme.mode === "light"
-      ? "linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(248,250,252,0.9) 100%)"
-      : "linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.8) 100%)"};
-  backdrop-filter: blur(10px);
-  border: 1px solid
-    ${({ theme }) =>
-      theme.mode === "light"
-        ? "rgba(226, 232, 240, 0.8)"
-        : "rgba(100, 255, 218, 0.1)"};
-  border-radius: 24px;
-  box-shadow: ${({ theme }) =>
-    theme.mode === "light"
-      ? "0 8px 32px rgba(0, 0, 0, 0.08)"
-      : "0 8px 32px rgba(0, 0, 0, 0.3)"};
 
   /* Force visibility and override ScrollReveal */
   opacity: 1 !important;
@@ -32,28 +17,20 @@ const StyledContactSection = styled.section`
   transform: none !important;
 
   @media (min-width: 768px) {
-    padding: 64px 48px;
-    max-width: 700px;
+    padding: 80px 40px;
   }
 
   @media (min-width: 1080px) {
-    padding: 72px 56px;
-    max-width: 800px;
+    padding: 100px 60px;
   }
 
   .title {
-    font-size: clamp(1.8rem, 4vw, 2.2rem);
-    margin-bottom: 2rem;
-    font-weight: 700;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-      "Oxygen", "Ubuntu", "Cantarell", sans-serif;
-    background: ${({ theme }) =>
-      theme.mode === "light"
-        ? "linear-gradient(135deg, #2d3748 0%, #4a5568 100%)"
-        : "linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%)"};
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    margin-bottom: 2.5rem;
+    font-weight: 600;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+      "Helvetica Neue", sans-serif;
+    color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
     letter-spacing: -0.02em;
     line-height: 1.2;
     opacity: 1;
@@ -68,7 +45,7 @@ const StyledContactSection = styled.section`
     flex-direction: column;
     align-items: center;
     width: 100%;
-    max-width: 480px;
+    max-width: 600px;
     margin: 0 auto;
     padding: 0;
   }
@@ -78,71 +55,46 @@ const StyledContactSection = styled.section`
     flex-direction: column;
     width: 100%;
     text-align: left;
-    margin-bottom: 2rem;
-    color: ${({ theme }) => (theme.mode === "light" ? "#64748b" : "#94a3b8")};
+    margin-bottom: 1.5rem;
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
     font-size: 0.9rem;
     font-weight: 500;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-      sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+      "Helvetica Neue", sans-serif;
   }
 
   input,
   textarea {
     width: 100%;
     background: ${({ theme }) =>
-      theme.mode === "light"
-        ? "rgba(255, 255, 255, 0.9)"
-        : "rgba(15, 23, 42, 0.8)"};
-    backdrop-filter: blur(10px);
+      theme.mode === "light" ? "#f5f5f7" : "#1d1d1f"};
     border: 1px solid
-      ${({ theme }) =>
-        theme.mode === "light"
-          ? "rgba(226, 232, 240, 0.8)"
-          : "rgba(100, 255, 218, 0.2)"};
-    color: ${({ theme }) => (theme.mode === "light" ? "#1e293b" : "#e2e8f0")};
+      ${({ theme }) => (theme.mode === "light" ? "#d2d2d7" : "#3d3d3d")};
+    color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
     font-size: 1rem;
     padding: 16px 20px;
     margin-top: 8px;
     text-align: left;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-      sans-serif;
+    transition: all 0.2s ease;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+      "Helvetica Neue", sans-serif;
     border-radius: 12px;
-    box-shadow: ${({ theme }) =>
-      theme.mode === "light"
-        ? "0 4px 16px rgba(0, 0, 0, 0.04)"
-        : "0 4px 16px rgba(0, 0, 0, 0.2)"};
 
     &:focus {
       outline: none;
-      border-color: ${({ theme }) =>
-        theme.mode === "light" ? "#667eea" : "#00c9ff"};
+      border-color: #0071e3;
       background: ${({ theme }) =>
-        theme.mode === "light"
-          ? "rgba(255, 255, 255, 1)"
-          : "rgba(15, 23, 42, 0.95)"};
-      box-shadow: ${({ theme }) =>
-        theme.mode === "light"
-          ? "0 0 0 3px rgba(102, 126, 234, 0.1), 0 8px 24px rgba(0, 0, 0, 0.08)"
-          : "0 0 0 3px rgba(0, 201, 255, 0.1), 0 8px 24px rgba(0, 0, 0, 0.3)"};
-      transform: translateY(-1px);
+        theme.mode === "light" ? "#ffffff" : "#2d2d2d"};
     }
 
     &::placeholder {
-      color: ${({ theme }) => (theme.mode === "light" ? "#94a3b8" : "#64748b")};
-      opacity: 0.8;
+      color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#6e6e73")};
       font-size: 0.95rem;
-      transition: all 0.3s ease;
-    }
-
-    &:focus::placeholder {
-      opacity: 0.4;
-      transform: translateY(-2px);
     }
   }
 
   textarea {
-    min-height: 140px;
+    min-height: 160px;
     resize: vertical;
     line-height: 1.6;
   }
@@ -150,95 +102,54 @@ const StyledContactSection = styled.section`
   .button-group {
     display: flex;
     justify-content: center;
-    gap: 16px;
+    gap: 12px;
     margin-top: 24px;
     width: 100%;
     flex-wrap: wrap;
 
     @media (min-width: 768px) {
-      gap: 20px;
+      gap: 16px;
     }
   }
 
   button {
-    background: ${({ theme }) =>
-      theme.mode === "light"
-        ? "rgba(255, 255, 255, 0.9)"
-        : "rgba(15, 23, 42, 0.8)"};
-    backdrop-filter: blur(10px);
-    border: 1px solid
-      ${({ theme }) =>
-        theme.mode === "light"
-          ? "rgba(102, 126, 234, 0.3)"
-          : "rgba(0, 201, 255, 0.3)"};
-    color: ${({ theme }) => (theme.mode === "light" ? "#667eea" : "#00c9ff")};
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-      sans-serif;
-    font-size: 0.9rem;
+    background: transparent;
+    border: 1px solid #0071e3;
+    color: #0071e3;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+      "Helvetica Neue", sans-serif;
+    font-size: 0.95rem;
     font-weight: 500;
-    padding: 14px 24px;
+    padding: 12px 24px;
     cursor: pointer;
-    position: relative;
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    opacity: 1;
-    border-radius: 12px;
+    transition: all 0.2s ease;
+    border-radius: 980px;
     min-width: 120px;
-    box-shadow: ${({ theme }) =>
-      theme.mode === "light"
-        ? "0 4px 16px rgba(0, 0, 0, 0.08)"
-        : "0 4px 16px rgba(0, 0, 0, 0.2)"};
 
     &[type="submit"] {
-      background: ${({ theme }) =>
-        theme.mode === "light"
-          ? "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
-          : "linear-gradient(135deg, #00c9ff 0%, #92fe9d 100%)"};
-      color: white;
-      border-color: transparent;
-      font-weight: 600;
-    }
-
-    &::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.2),
-        transparent
-      );
-      transition: left 0.5s;
+      background: #0071e3;
+      color: #ffffff;
+      border-color: #0071e3;
     }
 
     &:hover {
-      transform: translateY(-3px) scale(1.02);
-      box-shadow: ${({ theme }) =>
+      background: ${({ theme }) =>
         theme.mode === "light"
-          ? "0 12px 32px rgba(102, 126, 234, 0.2)"
-          : "0 12px 32px rgba(0, 201, 255, 0.2)"};
+          ? "rgba(0, 113, 227, 0.08)"
+          : "rgba(0, 113, 227, 0.15)"};
 
       &[type="submit"] {
-        box-shadow: ${({ theme }) =>
-          theme.mode === "light"
-            ? "0 12px 32px rgba(102, 126, 234, 0.4)"
-            : "0 12px 32px rgba(0, 201, 255, 0.4)"};
-      }
-
-      &::before {
-        left: 100%;
+        background: #0077ed;
+        border-color: #0077ed;
       }
     }
 
     &:active {
-      transform: translateY(-1px) scale(0.98);
+      transform: scale(0.98);
     }
 
     &:disabled {
-      opacity: 0.6;
+      opacity: 0.5;
       cursor: not-allowed;
       transform: none;
     }
@@ -249,29 +160,28 @@ const StyledContactSection = styled.section`
     padding: 16px 20px;
     background: ${({ theme }) =>
       theme.mode === "light"
-        ? "rgba(34, 197, 94, 0.1)"
-        : "rgba(0, 201, 255, 0.1)"};
-    color: ${({ theme }) => (theme.mode === "light" ? "#16a34a" : "#00c9ff")};
+        ? "rgba(52, 199, 89, 0.1)"
+        : "rgba(48, 209, 88, 0.15)"};
+    color: ${({ theme }) => (theme.mode === "light" ? "#248a3d" : "#30d158")};
     font-size: 0.9rem;
     font-weight: 500;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
-      sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+      "Helvetica Neue", sans-serif;
     border-radius: 12px;
     border: 1px solid
       ${({ theme }) =>
         theme.mode === "light"
-          ? "rgba(34, 197, 94, 0.2)"
-          : "rgba(0, 201, 255, 0.2)"};
+          ? "rgba(52, 199, 89, 0.2)"
+          : "rgba(48, 209, 88, 0.3)"};
     text-align: center;
     opacity: 0;
-    animation: slideUpFadeIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)
-      forwards;
+    animation: slideUpFadeIn 0.4s ease forwards;
   }
 
   @keyframes slideUpFadeIn {
     from {
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(10px);
     }
     to {
       opacity: 1;

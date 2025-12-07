@@ -1,28 +1,12 @@
 import styled from "styled-components"
 
 const StyledJobsSection = styled.section`
-  max-width: 1000px;
+  max-width: 100%;
   font-size: var(--fz-lg);
   position: relative;
   width: 100%;
-  padding: 0; /* override global section padding */
-  margin: 0 auto 40px; /* tighter space to next section */
-
-  &:after {
-    content: "";
-    position: absolute;
-    bottom: -50px;
-    right: -50px;
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    background: ${({ theme }) =>
-      theme.mode === "light"
-        ? "radial-gradient(circle, rgba(100, 255, 218, 0.05) 0%, rgba(255,255,255,0) 70%)"
-        : "radial-gradient(circle, rgba(100, 255, 218, 0.03) 0%, rgba(10,25,47,0) 70%)"};
-    z-index: -1;
-    pointer-events: none;
-  }
+  padding: 0;
+  margin: 0 auto 40px;
 
   .inner {
     display: flex;
@@ -44,12 +28,14 @@ const StyledJobsSection = styled.section`
       margin-bottom: 10px;
       font-size: var(--fz-sm);
       max-width: 100%;
+      color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
 
       &:before {
-        content: "▹";
+        content: "•";
         position: absolute;
         left: 0;
-        color: var(--green);
+        color: #0071e3;
+        font-weight: 600;
       }
     }
   }
@@ -75,7 +61,7 @@ const StyledJobsSection = styled.section`
     }
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 480px) {
     margin-left: 0;
     padding: 0;
     font-size: var(--fz-sm);

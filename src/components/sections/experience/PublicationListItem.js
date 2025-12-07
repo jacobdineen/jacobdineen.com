@@ -6,81 +6,75 @@ const PublicationListItem = styled.div`
   align-items: flex-start;
   width: 100%;
   text-align: left;
-  padding: 12px 16px;
+  padding: 20px 24px;
   border-radius: 12px;
   border: 1px solid
-    ${({ isActive }) => (isActive ? "transparent" : "var(--lightest-navy)")};
+    ${({ isActive, theme }) =>
+      isActive ? "#0071e3" : theme.mode === "light" ? "#e5e5ea" : "#2d2d2d"};
   background: ${({ isActive, theme }) =>
     isActive
       ? theme.mode === "light"
-        ? "linear-gradient(135deg, rgba(102,126,234,0.15) 0%, rgba(118,75,162,0.10) 100%)"
-        : "linear-gradient(135deg, rgba(0,201,255,0.12) 0%, rgba(146,254,157,0.10) 100%)"
+        ? "rgba(0, 113, 227, 0.06)"
+        : "rgba(0, 113, 227, 0.12)"
       : theme.mode === "light"
-      ? "rgba(255,255,255,0.04)"
-      : "rgba(17,34,64,0.7)"};
-  color: ${({ theme }) => (theme.mode === "light" ? "#475569" : "#94a3b8")};
-  transition: transform 0.2s var(--easing), box-shadow 0.2s var(--easing),
-    border-color 0.2s var(--easing), background 0.2s var(--easing);
+      ? "#ffffff"
+      : "#161616"};
+  color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
+  transition: all 0.2s ease;
   cursor: pointer;
 
   &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px -16px var(--navy-shadow);
-    border-color: transparent;
+    border-color: ${({ theme }) =>
+      theme.mode === "light" ? "#0071e3" : "#0071e3"};
+    box-shadow: ${({ theme }) =>
+      theme.mode === "light"
+        ? "0 2px 8px rgba(0, 0, 0, 0.06)"
+        : "0 2px 8px rgba(0, 0, 0, 0.2)"};
   }
 
   .title {
-    font-size: 0.95rem;
-    color: var(--lightest-slate);
-    margin-bottom: 8px;
-    line-height: 1.35;
+    font-size: 1rem;
+    font-weight: 600;
+    color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
+    margin-bottom: 10px;
+    line-height: 1.4;
 
     a {
-      color: var(--lightest-slate);
+      color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
       text-decoration: none;
-      transition: color 0.2s var(--easing);
+      transition: color 0.2s ease;
     }
 
     a:hover {
-      color: var(--green);
+      color: #0071e3;
     }
   }
 
   .authors {
-    font-size: 0.78rem;
-    color: var(--light-slate);
-    opacity: 1;
-    margin-top: -2px;
-    margin-bottom: 6px;
-    line-height: 1.3;
+    font-size: 0.85rem;
+    color: ${({ theme }) => (theme.mode === "light" ? "#48484a" : "#a1a1a6")};
+    margin-bottom: 12px;
+    line-height: 1.5;
     max-width: 100%;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
 
     .me {
-      color: var(--green);
+      color: #0071e3;
       font-weight: 600;
     }
 
     a {
-      color: var(--slate);
+      color: ${({ theme }) => (theme.mode === "light" ? "#48484a" : "#a1a1a6")};
       text-decoration: none;
-      border-bottom: 1px dotted transparent;
-      transition: color 0.2s var(--easing), border-color 0.2s var(--easing);
+      transition: color 0.2s ease;
     }
 
     a:hover {
-      color: var(--green);
-      border-color: var(--green);
+      color: #0071e3;
     }
 
     a:focus-visible {
-      color: var(--green);
-      border-color: var(--green);
-      outline: 2px solid var(--green);
+      color: #0071e3;
+      outline: 2px solid #0071e3;
       outline-offset: 2px;
     }
   }
@@ -88,69 +82,71 @@ const PublicationListItem = styled.div`
   .meta {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 0.75rem;
-    color: var(--slate);
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 0.8rem;
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#86868b")};
 
     .chip {
-      border: 1px solid var(--lightest-navy);
-      color: var(--green);
+      border: 1px solid
+        ${({ theme }) => (theme.mode === "light" ? "#d2d2d7" : "#3d3d3d")};
+      color: #0071e3;
       font-family: var(--font-mono);
-      padding: 2px 6px;
-      border-radius: 999px;
-      background: rgba(100, 255, 218, 0.08);
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: ${({ theme }) =>
+        theme.mode === "light"
+          ? "rgba(0, 113, 227, 0.06)"
+          : "rgba(0, 113, 227, 0.12)"};
     }
 
     .date {
-      opacity: 0.8;
+      color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#86868b")};
     }
 
     a.chip-link {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 28px;
-      height: 28px;
-      border-radius: 999px;
-      border: 1px solid rgba(100, 255, 218, 0.45);
-      color: var(--green);
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      border: 1px solid
+        ${({ theme }) => (theme.mode === "light" ? "#d2d2d7" : "#3d3d3d")};
+      color: #0071e3;
       text-decoration: none;
-      transition: all 0.2s var(--easing);
-      background: rgba(100, 255, 218, 0.06);
+      transition: all 0.2s ease;
+      background: transparent;
 
       svg {
-        width: 14px;
-        height: 14px;
+        width: 15px;
+        height: 15px;
         display: block;
       }
 
       &:hover {
-        border-color: var(--green);
-        transform: translateY(-1px);
+        background: rgba(0, 113, 227, 0.08);
+        border-color: #0071e3;
       }
 
       &:focus-visible {
-        outline: 2px solid var(--green);
+        outline: 2px solid #0071e3;
         outline-offset: 2px;
-        border-color: var(--green);
       }
     }
   }
 
-  /* subtle active indicator */
-  ${props =>
-    props.isActive &&
-    `
-      box-shadow: 0 10px 28px -18px var(--navy-shadow), inset 0 0 0 1px rgba(100,255,218,0.15);
-    `}
-
   @media (max-width: 768px) {
-    padding: 10px 14px;
+    padding: 16px 18px;
     .title {
-      font-size: 0.9rem;
+      font-size: 0.95rem;
+    }
+    .authors {
+      font-size: 0.8rem;
     }
     .meta {
-      font-size: 0.72rem;
+      font-size: 0.75rem;
     }
   }
 `
