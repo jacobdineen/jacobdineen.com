@@ -3,12 +3,12 @@ import styled from "styled-components"
 
 const StyledNewsSection = styled.section`
   width: 100%;
-  max-width: 900px;
+  max-width: 700px;
   margin: 0 auto;
   padding: 0;
 
   h2.numbered-heading {
-    margin: 0 0 24px 0;
+    margin: 0 0 20px 0;
   }
 
   ul.news-list {
@@ -17,138 +17,108 @@ const StyledNewsSection = styled.section`
     padding: 0;
     display: flex;
     flex-direction: column;
-    gap: 12px;
-  }
-
-  /* Timeline container */
-  .timeline {
-    position: relative;
-    margin: 0;
-    padding-left: 22px;
-  }
-
-  .timeline:before {
-    content: "";
-    position: absolute;
-    left: 9px;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: ${({ theme }) =>
-      theme.mode === "light"
-        ? "linear-gradient(to bottom, rgba(0, 113, 227, 0.4), rgba(0, 113, 227, 0.1))"
-        : "linear-gradient(to bottom, rgba(0, 113, 227, 0.6), rgba(0, 113, 227, 0.1))"};
+    gap: 0;
   }
 
   li.news-item {
-    position: relative;
     display: grid;
-    grid-template-columns: 100px 1fr;
-    align-items: center;
-    gap: 16px;
-    padding: 16px 20px;
-    background-color: ${({ theme }) =>
-      theme.mode === "light" ? "#ffffff" : "#161616"};
-    border: 1px solid
-      ${({ theme }) => (theme.mode === "light" ? "#e5e5ea" : "#2d2d2d")};
-    border-radius: 12px;
-    transition: all 0.2s ease;
+    grid-template-columns: 80px 1fr;
+    align-items: baseline;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid
+      ${({ theme }) => (theme.mode === "light" ? "#f0f0f0" : "#1d1d1f")};
 
-    &:hover {
-      border-color: ${({ theme }) =>
-        theme.mode === "light" ? "#d2d2d7" : "#3d3d3d"};
+    &:last-child {
+      border-bottom: none;
     }
-  }
-
-  /* Timeline dot */
-  li.news-item:before {
-    content: "";
-    position: absolute;
-    left: -14px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: #0071e3;
-    box-shadow: 0 0 0 3px
-      ${({ theme }) =>
-        theme.mode === "light"
-          ? "rgba(0, 113, 227, 0.15)"
-          : "rgba(0, 113, 227, 0.25)"};
   }
 
   .news-date {
     font-family: var(--font-mono);
-    color: #0071e3;
-    font-size: var(--fz-xs);
-    font-weight: 500;
+    color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#6e6e73")};
+    font-size: 0.72rem;
+    font-weight: 400;
     white-space: nowrap;
   }
 
   .news-text {
     color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
-    font-size: var(--fz-md);
+    font-size: 0.84rem;
     line-height: 1.5;
+
+    a {
+      color: #0071e3;
+      font-weight: 500;
+      text-decoration: none;
+
+      &:hover {
+        color: #0077ed;
+      }
+
+      &:after {
+        display: none;
+      }
+    }
   }
 
   @media (max-width: 600px) {
-    .timeline {
-      padding-left: 18px;
-    }
-
     li.news-item {
-      grid-template-columns: 80px 1fr;
-      gap: 12px;
-      padding: 14px 16px;
-    }
-
-    li.news-item:before {
-      left: -10px;
-      width: 8px;
-      height: 8px;
+      grid-template-columns: 68px 1fr;
+      gap: 10px;
+      padding: 8px 0;
     }
 
     .news-date {
-      font-size: 11px;
+      font-size: 0.68rem;
     }
 
     .news-text {
-      font-size: var(--fz-sm);
+      font-size: 0.8rem;
     }
   }
 
   @media (max-width: 400px) {
     li.news-item {
       grid-template-columns: 1fr;
-      gap: 6px;
+      gap: 4px;
     }
   }
 `
 
-const News = () => {
-  const items = [
-    { date: "Aug 2025", text: "Two papers accepted in EMNLP 2025! 🎉" },
-    { date: "Jan 2025", text: "One paper accepted in NAACL 2025! 🎉" },
-    {
-      date: "Aug 2024",
-      text: "Joined AI Reasoning & Cognition (ARC) Lab and be advised by Prof. Ben Zhou",
-    },
-  ]
-
-  return (
-    <StyledNewsSection id="news">
-      <h2 className="numbered-heading">News</h2>
-      <ul className="news-list timeline">
-        {items.map((item, idx) => (
-          <li key={idx} className="news-item">
-            <span className="news-date">{item.date}</span>
-            <span className="news-text">{item.text}</span>
-          </li>
-        ))}
-      </ul>
-    </StyledNewsSection>
-  )
-}
+const News = () => (
+  <StyledNewsSection id="news">
+    <h2 className="numbered-heading">News</h2>
+    <ul className="news-list">
+      <li className="news-item">
+        <span className="news-date">Apr 2026</span>
+        <span className="news-text">
+          <a href="/publications/recap-2025">RECAP</a> accepted at the 8th
+          Clinical NLP Workshop (Oral) at LREC-COLING 2026.
+        </span>
+      </li>
+      <li className="news-item">
+        <span className="news-date">Aug 2025</span>
+        <span className="news-text">
+          Two papers accepted at EMNLP 2025:{" "}
+          <a href="/publications/qa-lign-2025">QA-LIGN</a> and{" "}
+          <a href="/publications/thinktuning-2025">ThinkTuning</a>.
+        </span>
+      </li>
+      <li className="news-item">
+        <span className="news-date">Jan 2025</span>
+        <span className="news-text">
+          <a href="/publications/tow-2024">ToW</a> accepted at NAACL 2025.
+        </span>
+      </li>
+      <li className="news-item">
+        <span className="news-date">Aug 2024</span>
+        <span className="news-text">
+          Joined AI Reasoning & Cognition (ARC) Lab, advised by Prof. Ben Zhou.
+        </span>
+      </li>
+    </ul>
+  </StyledNewsSection>
+)
 
 export default News

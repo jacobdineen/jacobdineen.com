@@ -1,4 +1,4 @@
-import { css } from 'styled-components';
+import { css } from "styled-components"
 
 // https://reactcommunity.org/react-transition-group/css-transition
 
@@ -35,15 +35,15 @@ const TransitionStyles = css`
   }
   .fade-enter-active {
     opacity: 1;
-    transition: opacity 300ms var(--easing);
+    transition: opacity 120ms ease;
   }
   .fade-exit {
     opacity: 1;
   }
   .fade-exit-active {
     opacity: 0;
-    transition: opacity 300ms var(--easing);
+    transition: opacity 80ms ease;
   }
-`;
+`
 
-export default TransitionStyles;
+export default TransitionStyles

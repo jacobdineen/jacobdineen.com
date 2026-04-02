@@ -15,53 +15,51 @@ import {
 
 const SidebarIcons = styled.aside`
   display: flex;
-  gap: 6px;
+  gap: 4px;
   justify-content: center;
   flex-wrap: wrap;
 
-  /* Mobile: smaller icons */
   @media (max-width: 767px) {
     justify-content: flex-start;
   }
 
   @media (min-width: 768px) {
-    gap: 10px;
+    gap: 6px;
   }
 
   a {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
     background: transparent;
-    border: 1px solid
-      ${({ theme }) => (theme.mode === "light" ? "#d2d2d7" : "#3d3d3d")};
-    border-radius: 8px;
-    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
-    transition: all 0.2s ease;
+    border: none;
+    border-radius: 6px;
+    color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#6e6e73")};
+    transition: color 0.2s ease;
 
     &:hover {
-      background: #0071e3;
-      color: white;
-      border-color: #0071e3;
+      color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
+    }
+
+    &:after {
+      display: none;
     }
 
     @media (min-width: 768px) {
-      width: 44px;
-      height: 44px;
-      border-radius: 10px;
+      width: 36px;
+      height: 36px;
     }
   }
 
   svg {
     width: 16px;
     height: 16px;
-    transition: all 0.2s ease;
 
     @media (min-width: 768px) {
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
     }
   }
 `
@@ -70,30 +68,29 @@ const StyledAboutSection = styled.section`
   width: 100%;
   margin: 0 auto;
   background: transparent;
-  border-radius: 20px;
+  padding: 0 !important;
 
   .inner {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
     padding: 0;
     width: 100%;
   }
 
-  /* Mobile: horizontal layout */
   @media (max-width: 767px) {
     .inner {
       flex-direction: row;
-      gap: 16px;
+      gap: 14px;
       padding: 0;
     }
   }
 
   @media (min-width: 768px) {
     .inner {
-      gap: 20px;
-      padding: 20px;
+      gap: 16px;
+      padding: 0;
     }
   }
 `
@@ -105,40 +102,36 @@ const StyledText = styled.div`
   text-align: center;
   width: 100%;
 
-  /* Mobile: left-aligned text */
   @media (max-width: 767px) {
     align-items: flex-start;
     text-align: left;
   }
 
   h1 {
-    font-size: 1.1rem;
+    font-size: 1rem;
     font-weight: 600;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
-      "Helvetica Neue", sans-serif;
     color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
-    margin: 0 0 4px 0;
-    line-height: 1.2;
+    margin: 0 0 2px 0;
+    line-height: 1.3;
     letter-spacing: -0.02em;
 
     @media (min-width: 768px) {
-      font-size: clamp(1.4rem, 3vw, 1.8rem);
-      margin: 0 0 8px 0;
+      font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+      margin: 0 0 4px 0;
     }
   }
 
   h2 {
-    font-size: 0.75rem;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
-      "Helvetica Neue", sans-serif;
-    font-weight: 500;
-    color: #0071e3;
-    margin: 0 0 8px 0;
+    font-size: 0.72rem;
+    font-weight: 400;
+    color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#6e6e73")};
+    margin: 0 0 10px 0;
     line-height: 1.3;
+    letter-spacing: 0;
 
     @media (min-width: 768px) {
-      font-size: clamp(0.85rem, 2.5vw, 1rem);
-      margin: 0 0 20px 0;
+      font-size: 0.82rem;
+      margin: 0 0 16px 0;
     }
   }
 
@@ -149,20 +142,20 @@ const StyledText = styled.div`
 
 const StyledPic = styled.div`
   position: relative;
-  width: 70px;
-  min-width: 70px;
+  width: 60px;
+  min-width: 60px;
   display: flex;
   justify-content: center;
   flex-shrink: 0;
 
   @media (min-width: 768px) {
-    width: 120px;
-    min-width: 120px;
+    width: 100px;
+    min-width: 100px;
   }
 
   @media (min-width: 1080px) {
-    width: 140px;
-    min-width: 140px;
+    width: 110px;
+    min-width: 110px;
   }
 
   .wrapper {
@@ -170,16 +163,11 @@ const StyledPic = styled.div`
     position: relative;
     width: 100%;
     border-radius: 50%;
-    transition: all 0.3s ease;
 
     .img {
       position: relative;
       border-radius: 50%;
-      transition: var(--transition);
-      box-shadow: ${({ theme }) =>
-        theme.mode === "light"
-          ? "0 2px 10px rgba(0, 0, 0, 0.1)"
-          : "0 2px 10px rgba(0, 0, 0, 0.3)"};
+      box-shadow: none;
     }
   }
 `
@@ -214,7 +202,7 @@ const About = () => {
           </StyledPic>
           <StyledText>
             <h1>Jacob Dineen</h1>
-            <h2> ASU CS PhD Student / MLE</h2>
+            <h2>PhD Student &middot; Arizona State University</h2>
             <SidebarIcons>
               <a href="https://github.com/jacobdineen" aria-label="GitHub">
                 <IconGitHub />
@@ -229,7 +217,7 @@ const About = () => {
                 <IconTwitter />
               </a>
               <a
-                href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiDv7jF5-yEAxXDIEQIHQzsCHEQFnoECBIQAQ&url=https%3A%2F%2Fscholar.google.com%2Fcitations%3Fuser%3DWKurvcoAAAAJ%26hl%3Den&usg=AOvVaw329Uar6xNQ9B1keI_PT4Oc&opi=89978449"
+                href="https://scholar.google.com/citations?user=WKurvcoAAAAJ&hl=en"
                 aria-label="Google Scholar"
               >
                 <IconGScholar />

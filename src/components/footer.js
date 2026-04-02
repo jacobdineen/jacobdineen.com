@@ -1,63 +1,32 @@
 import React from "react"
 import styled from "styled-components"
-import { FaGithub } from "react-icons/fa" // GitHub icon from react-icons
 
 const StyledFooter = styled.footer`
-  ${({ theme }) => theme.mixins.flexCenter};
-  flex-direction: column;
-  background: #1a1a1a; /* Dark background color */
-  color: #e0e0e0; /* Light text color */
-  min-height: 100px;
-  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 20px;
   text-align: center;
-  border-top: 2px solid #333; /* Slightly darker top border */
-  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.3); /* Soft shadow for depth */
+  border-top: 1px solid
+    ${({ theme }) => (theme.mode === "light" ? "#e5e5ea" : "#1d1d1f")};
 `
 
 const StyledCredit = styled.div`
-  font-family: var(--font-mono);
-  font-size: var(--fz-xs);
-  line-height: 1.5;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  font-size: 0.72rem;
+  color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#6e6e73")};
+  line-height: 1.6;
 
   a {
-    color: #4caf50; /* Green color for the link */
+    color: inherit;
     text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s ease, transform 0.3s ease; /* Smooth color and scale transition */
-    display: inline-flex;
-    align-items: center;
+    transition: color 0.15s ease;
 
     &:hover {
-      color: #81c784; /* Lighter green on hover */
-      transform: translateY(-2px); /* Slight lift on hover */
+      color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
     }
 
-    svg {
-      margin-left: 8px; /* Space between text and icon */
-      vertical-align: middle; /* Align icon vertically with text */
-      transition: fill 0.3s ease; /* Smooth color transition */
-    }
-  }
-
-  .github-stats {
-    margin-top: 10px;
-
-    & > span {
-      display: inline-flex;
-      align-items: center;
-      margin: 0 7px;
-      color: #b0b0b0; /* Light color for stats */
-    }
-
-    svg {
-      display: inline-block;
-      margin-right: 5px;
-      width: 16px; /* Larger icons */
-      height: 16px;
-      fill: currentColor; /* Inherit color from parent */
+    &:after {
+      display: none;
     }
   }
 `
@@ -67,16 +36,23 @@ const Footer = () => {
     <StyledFooter>
       <StyledCredit tabIndex="-1">
         <div>
-          Built by Jacob Dineen with design inspiration from Brittany Chiang.
-          Source code available on{" "}
+          Built by Jacob Dineen. Design inspired by{" "}
+          <a
+            href="https://brittanychiang.com"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Brittany Chiang
+          </a>
+          . Source on{" "}
           <a
             href="https://github.com/jacobdineen/jacobdineen.com"
             target="_blank"
             rel="noopener noreferrer"
           >
             GitHub
-            <FaGithub />
           </a>
+          .
         </div>
       </StyledCredit>
     </StyledFooter>

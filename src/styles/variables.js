@@ -2,55 +2,48 @@ import { css } from "styled-components"
 
 const variables = css`
   :root {
-    /* Dark theme base colors */
     --dark-navy: #000000;
     --navy: #000000;
     --light-navy: #161616;
     --lightest-navy: #2d2d2d;
     --navy-shadow: rgba(0, 0, 0, 0.25);
 
-    /* Text colors - work on dark backgrounds */
     --dark-slate: #86868b;
     --slate: #a1a1a6;
     --light-slate: #d1d1d6;
     --lightest-slate: #f5f5f7;
     --white: #ffffff;
 
-    /* Apple blue accent */
     --green: #0071e3;
     --green-tint: rgba(0, 113, 227, 0.1);
 
-    /* Secondary */
     --pink: #ff375f;
     --blue: #0077ed;
 
-    /* Apple's SF Pro system font stack */
-    --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+    --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Display",
       "SF Pro Text", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-    --font-mono: "SF Mono", "Monaco", "Inconsolata", "Fira Code", "Fira Mono",
-      monospace;
+    --font-mono: "SF Mono", "JetBrains Mono", "Fira Code", "Consolas", monospace;
 
-    --fz-xxs: 12px;
-    --fz-xs: 13px;
-    --fz-sm: 14px;
-    --fz-md: 16px;
-    --fz-lg: 18px;
-    --fz-xl: 20px;
-    --fz-xxl: 22px;
-    --fz-heading: 32px;
+    --fz-xxs: 11px;
+    --fz-xs: 12px;
+    --fz-sm: 13px;
+    --fz-md: 15px;
+    --fz-lg: 17px;
+    --fz-xl: 19px;
+    --fz-xxl: 21px;
+    --fz-heading: 28px;
 
-    /* Apple-style rounded corners */
-    --border-radius: 12px;
-    --border-radius-sm: 8px;
+    --border-radius: 10px;
+    --border-radius-sm: 6px;
     --nav-height: 100px;
     --nav-scroll-height: 70px;
 
     --tab-height: 42px;
     --tab-width: 120px;
 
-    /* Smooth Apple-like easing */
     --easing: cubic-bezier(0.4, 0, 0.2, 1);
-    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition: color 0.15s ease, background-color 0.15s ease,
+      border-color 0.15s ease, opacity 0.15s ease, transform 0.15s ease;
 
     --hamburger-width: 30px;
 

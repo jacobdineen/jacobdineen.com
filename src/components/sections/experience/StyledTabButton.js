@@ -1,69 +1,52 @@
 import styled from "styled-components"
 
 const StyledTabButton = styled.button`
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
-  font-size: var(--fz-sm);
-  font-weight: 500;
-  min-height: 36px;
-  height: auto;
-  width: 100%;
-  max-width: 100%;
-  border: 1px solid
-    ${({ theme }) => (theme.mode === "light" ? "#d2d2d7" : "#3d3d3d")};
-  border-radius: 980px;
-  background-color: ${({ theme }) =>
-    theme.mode === "light" ? "#ffffff" : "#1d1d1f"};
-  text-align: center;
-  padding: 10px 20px;
-  transition: all 0.2s ease;
+  font-size: 0.78rem;
+  font-weight: 400;
+  font-family: var(--font-mono);
+  letter-spacing: -0.01em;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  padding: 4px 0;
   cursor: pointer;
   outline: none;
+  white-space: nowrap;
+  transition: color 0.1s ease;
   position: relative;
-  white-space: normal;
-  word-wrap: break-word;
-  line-height: 1.4;
-  margin: 2px 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#6e6e73")};
 
-  &:hover,
-  &:focus {
-    border-color: #0071e3;
-    color: #0071e3;
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 1.5px;
+    background: transparent;
+    transition: color 0.1s ease;
   }
 
-  ${({ isActive }) =>
+  &:hover {
+    color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
+  }
+
+  ${({ isActive, theme }) =>
     isActive &&
     `
-    background-color: #0071e3;
-    border-color: #0071e3;
-    color: #ffffff;
-    font-weight: 600;
-    
-    &:hover,
-    &:focus {
-      background-color: #0077ed;
-      border-color: #0077ed;
-      color: #ffffff;
+    color: ${theme.mode === "light" ? "#1d1d1f" : "#f5f5f7"};
+    font-weight: 500;
+
+    &:after {
+      background: #0071e3;
     }
   `}
 
-  @media (max-width: 768px) {
-    font-size: var(--fz-xs);
-    min-height: 34px;
-    padding: 8px 16px;
-  }
-
   @media (max-width: 480px) {
-    min-height: 32px;
-    padding: 6px 12px;
-    font-size: 11px;
+    font-size: 0.72rem;
   }
 `
 

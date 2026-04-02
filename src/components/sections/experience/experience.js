@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from "react"
 import { useStaticQuery, graphql, Link, withPrefix } from "gatsby"
-import { CSSTransition } from "react-transition-group"
 import styled from "styled-components"
 import { srConfig } from "@config"
 import { KEY_CODES } from "@utils"
@@ -30,41 +29,39 @@ const ContentTypeButtonsContainer = styled.div`
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 8px;
   width: 100%;
-  max-width: 600px;
-  margin: 0 auto 30px;
-  padding: 0 20px;
+  max-width: 500px;
+  margin: 0 auto 24px;
+  padding: 4px;
+  background: ${({ theme }) =>
+    theme.mode === "light" ? "#f5f5f7" : "#1d1d1f"};
+  border-radius: 10px;
 `
 
 const ContentTypeButton = styled.button`
-  background: ${({ isActive, theme }) =>
-    isActive ? "#0071e3" : theme.mode === "light" ? "#ffffff" : "#1d1d1f"};
+  background: ${({ isActive }) => (isActive ? "#0071e3" : "transparent")};
   color: ${({ isActive, theme }) =>
-    isActive ? "#ffffff" : theme.mode === "light" ? "#1d1d1f" : "#f5f5f7"};
-  border: 1px solid
-    ${({ isActive, theme }) =>
-      isActive ? "#0071e3" : theme.mode === "light" ? "#d2d2d7" : "#3d3d3d"};
-  border-radius: 980px;
-  padding: 10px 20px;
-  font-size: var(--fz-sm);
+    isActive ? "#ffffff" : theme.mode === "light" ? "#6e6e73" : "#86868b"};
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-size: 0.82rem;
   font-family: var(--font-sans);
   font-weight: 500;
-  transition: all 0.2s ease;
+  transition: background-color 0.15s ease, color 0.15s ease;
   cursor: ${props => (props.isActive ? "default" : "pointer")};
-  position: relative;
-  min-width: 100px;
   flex: 1 1 auto;
   text-align: center;
 
-  @media (max-width: 768px) {
-    flex: 0 1 calc(50% - 5px);
-    min-width: 110px;
+  &:hover:not(:disabled) {
+    color: ${({ isActive, theme }) =>
+      isActive ? "#ffffff" : theme.mode === "light" ? "#1d1d1f" : "#f5f5f7"};
   }
 
-  &:hover:not(:disabled) {
-    border-color: #0071e3;
-    color: ${({ isActive }) => (isActive ? "#ffffff" : "#0071e3")};
+  @media (max-width: 480px) {
+    padding: 7px 12px;
+    font-size: 0.78rem;
   }
 `
 
@@ -88,8 +85,8 @@ const StyledFilters = styled.div`
     border: 1px solid
       ${({ theme }) => (theme.mode === "light" ? "#d2d2d7" : "#3d3d3d")};
     border-radius: 8px;
-    padding: 10px 14px;
-    font-size: var(--fz-sm);
+    padding: 9px 14px;
+    font-size: 0.84rem;
     outline: none;
     transition: border-color 0.2s ease;
 
@@ -104,6 +101,32 @@ const StyledFilters = styled.div`
 
   select {
     cursor: pointer;
+  }
+`
+
+const IntroText = styled.p`
+  max-width: 560px;
+  margin: 0 auto 12px;
+
+  &:last-of-type {
+    margin-bottom: 24px;
+  }
+`
+
+const ShowAllButton = styled.button`
+  display: block;
+  margin: 12px auto 4px;
+  background: none;
+  border: none;
+  color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#6e6e73")};
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+  cursor: pointer;
+  padding: 6px 0;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
   }
 `
 
@@ -369,7 +392,7 @@ const Experience = () => {
     <StyledJobsSection id="experience" ref={revealContainer}>
       <StyledText>
         <h3>Hey, I&apos;m Jake.</h3>
-        <p style={{ maxWidth: "600px", margin: "0 auto 16px" }}>
+        <IntroText>
           I have spent close to ten years in Data Science and Machine Learning
           Engineering roles, primarily in fintech. I&apos;m currently pursuing
           my PhD while conducting research in LLM Reasoning and Alignment at{" "}
@@ -381,12 +404,12 @@ const Experience = () => {
             Arizona State University&apos;s ARC Lab
           </a>
           .
-        </p>
-        <p style={{ maxWidth: "600px", margin: "0 auto 24px" }}>
+        </IntroText>
+        <IntroText>
           Outside of work, I enjoy traveling with my wife, spending time with
           family and friends, tinkering with tech, and staying active despite
           the Arizona heat.
-        </p>
+        </IntroText>
 
         <h1 className="numbered-heading">A little about me</h1>
 
@@ -423,7 +446,7 @@ const Experience = () => {
                 onChange={e => setPubYear(e.target.value)}
                 aria-label="Filter by year"
               >
-                <option>All</option>
+                <option value="All">All years</option>
                 {pubYears.map(y => (
                   <option key={y} value={y}>
                     {y}
@@ -435,7 +458,7 @@ const Experience = () => {
                 onChange={e => setPubVenue(e.target.value)}
                 aria-label="Filter by venue"
               >
-                <option>All</option>
+                <option value="All">All venues</option>
                 {pubVenues.map(v => (
                   <option key={v} value={v}>
                     {v}
@@ -594,194 +617,83 @@ const Experience = () => {
             </ArrowButton>
           </StyledTabList>
 
-          {/* Show More/Less button for publications on mobile */}
           {activeContentType === "publications" && hasMorePubs && (
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                marginTop: "16px",
-                marginBottom: "8px",
-              }}
-            >
-              <button
-                onClick={() => setShowAllPubs(!showAllPubs)}
-                style={{
-                  background: "transparent",
-                  border: "1px solid #0071e3",
-                  color: "#0071e3",
-                  padding: "10px 24px",
-                  borderRadius: "980px",
-                  fontSize: "0.9rem",
-                  fontWeight: "500",
-                  cursor: "pointer",
-                  fontFamily: "-apple-system, BlinkMacSystemFont, sans-serif",
-                  transition: "all 0.2s ease",
-                }}
-              >
-                {showAllPubs
-                  ? `Show Less`
-                  : `Show All ${filteredPublications.length} Publications`}
-              </button>
-            </div>
+            <ShowAllButton onClick={() => setShowAllPubs(!showAllPubs)}>
+              {showAllPubs
+                ? "Show less"
+                : `Show all ${filteredPublications.length} publications`}
+            </ShowAllButton>
           )}
 
           {/* Only show detail panels for non-publication content types */}
-          {activeContentType !== "publications" && (
-            <StyledTabPanels>
-              {displayData.map(({ node }, i) => {
-                const { frontmatter, html } = node
-                const { title, range, technologies } = frontmatter
+          {activeContentType !== "publications" &&
+            displayData[activeTabId] &&
+            (() => {
+              const { frontmatter, html } = displayData[activeTabId].node
+              const { title, range, technologies } = frontmatter
 
-                return (
-                  <CSSTransition
-                    key={i}
-                    in={activeTabId === i}
-                    timeout={250}
-                    classNames="fade"
-                    unmountOnExit
+              return (
+                <StyledTabPanels>
+                  <StyledTabPanel
+                    id={`panel-${activeTabId}`}
+                    role="tabpanel"
+                    tabIndex="0"
+                    aria-labelledby={`tab-${activeTabId}`}
                   >
-                    <StyledTabPanel
-                      id={`panel-${i}`}
-                      role="tabpanel"
-                      tabIndex={activeTabId === i ? "0" : "-1"}
-                      aria-labelledby={`tab-${i}`}
-                      aria-hidden={activeTabId !== i}
-                      hidden={activeTabId !== i}
-                    >
-                      <h3
-                        style={{
-                          fontSize: "1rem",
-                          fontWeight: "600",
-                          marginBottom: "5px",
-                        }}
-                      >
-                        <span>{title}</span>
-                        {frontmatter.venue && (
-                          <span
-                            style={{
-                              fontSize: "0.8rem",
-                              color: "#0071e3",
-                              fontFamily: "var(--font-mono)",
-                              marginLeft: "10px",
-                            }}
-                          >
-                            {frontmatter.venue}
-                          </span>
+                    <h3>{title}</h3>
+
+                    {activeContentType === "education" && (
+                      <>
+                        <p className="edu-degree">{frontmatter.degree}</p>
+                        {frontmatter.gpa && (
+                          <p className="edu-meta">GPA: {frontmatter.gpa}</p>
                         )}
-                      </h3>
+                      </>
+                    )}
 
-                      {activeContentType === "education" && (
-                        <>
-                          <h3
-                            style={{
-                              fontSize: "1rem",
-                              fontWeight: "600",
-                              marginBottom: "5px",
-                              textAlign: "center",
-                            }}
-                          >
-                            {frontmatter.degree}
-                          </h3>
+                    <p className="range">{range}</p>
 
-                          <p
-                            style={{
-                              fontSize: "0.95rem",
-                              marginTop: "2px",
-                              textAlign: "center",
-                              fontFamily: "var(--font-mono)",
-                            }}
-                          >
-                            GPA: {frontmatter.gpa}
-                          </p>
+                    <div dangerouslySetInnerHTML={{ __html: html }} />
 
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "center",
-                              gap: "10px",
-                              marginTop: "15px",
-                            }}
+                    {activeContentType === "education" &&
+                      technologies &&
+                      technologies.length > 0 && (
+                        <div className="coursework">
+                          <button
+                            className="coursework-toggle"
+                            onClick={() => toggleCourses(activeTabId)}
                           >
-                            <button
-                              onClick={() => toggleCourses(i)}
-                              style={{
-                                backgroundColor: "#0071e3",
-                                color: "#ffffff",
-                                borderRadius: "980px",
-                                padding: "8px 16px",
-                                fontSize: "0.8rem",
-                                border: "none",
-                                transition: "all 0.2s ease",
-                                cursor: "pointer",
-                              }}
-                              onMouseOver={e => {
-                                e.target.style.backgroundColor = "#0077ed"
-                              }}
-                              onMouseOut={e => {
-                                e.target.style.backgroundColor = "#0071e3"
-                              }}
+                            {showCourses[activeTabId]
+                              ? "Hide coursework"
+                              : "Show coursework"}
+                          </button>
+                          {showCourses[activeTabId] && (
+                            <p className="coursework-list">
+                              {technologies.map(tech => tech.name).join(" · ")}
+                            </p>
+                          )}
+                        </div>
+                      )}
+
+                    {activeContentType !== "education" && (
+                      <TechTagsContainer>
+                        {technologies &&
+                          technologies.map((tech, index) => (
+                            <TechTag
+                              key={index}
+                              href={tech.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
                             >
-                              {showCourses[i] ? "Hide Courses" : "Show Courses"}
-                            </button>
-                          </div>
-
-                          {showCourses[i] &&
-                            technologies &&
-                            technologies.length > 0 && (
-                              <div
-                                style={{
-                                  display: "flex",
-                                  flexWrap: "wrap",
-                                  gap: "8px",
-                                  justifyContent: "center",
-                                  marginTop: "15px",
-                                  padding: "0 20px",
-                                  maxWidth: "600px",
-                                  margin: "15px auto",
-                                }}
-                              >
-                                {technologies.map((tech, index) => (
-                                  <span
-                                    key={index}
-                                    style={{
-                                      fontSize: "0.75rem",
-                                      fontFamily: "var(--font-mono)",
-                                    }}
-                                  >
-                                    {tech.name}
-                                    {index < technologies.length - 1 && " / "}
-                                  </span>
-                                ))}
-                              </div>
-                            )}
-                        </>
-                      )}
-                      <p className="range">{range}</p>
-
-                      <div dangerouslySetInnerHTML={{ __html: html }} />
-                      {activeContentType !== "education" && (
-                        <TechTagsContainer>
-                          {technologies &&
-                            technologies.map((tech, index) => (
-                              <TechTag
-                                key={index}
-                                href={tech.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                style={{ "--index": index }}
-                              >
-                                {tech.name}
-                              </TechTag>
-                            ))}
-                        </TechTagsContainer>
-                      )}
-                    </StyledTabPanel>
-                  </CSSTransition>
-                )
-              })}
-            </StyledTabPanels>
-          )}
+                              {tech.name}
+                            </TechTag>
+                          ))}
+                      </TechTagsContainer>
+                    )}
+                  </StyledTabPanel>
+                </StyledTabPanels>
+              )
+            })()}
         </div>
       </StyledText>
     </StyledJobsSection>

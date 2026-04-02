@@ -4,40 +4,32 @@ const TechTag = styled.a`
   display: inline-flex;
   align-items: center;
   margin: 2px;
-  padding: 3px 12px;
-  font-size: 0.75em;
-  background-color: ${({ theme }) =>
-    theme.mode === "light"
-      ? "rgba(100, 255, 218, 0.1)"
-      : "rgba(17, 34, 64, 0.95)"};
-  color: ${({ theme }) =>
-    theme.mode === "light" ? "var(--dark-slate)" : "var(--green)"};
-  border-radius: 15px;
-  text-decoration: none;
-  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
-  border: 1px solid
-    ${({ theme }) =>
-      theme.mode === "light"
-        ? "rgba(100, 255, 218, 0.3)"
-        : "rgba(100, 255, 218, 0.1)"};
+  padding: 4px 12px;
+  font-size: 0.72rem;
   font-family: var(--font-mono);
+  background: ${({ theme }) =>
+    theme.mode === "light"
+      ? "rgba(0, 113, 227, 0.06)"
+      : "rgba(0, 113, 227, 0.1)"};
+  color: ${({ theme }) => (theme.mode === "light" ? "#48484a" : "#a1a1a6")};
+  border-radius: 6px;
+  text-decoration: none;
+  transition: color 0.15s ease, border-color 0.15s ease;
+  border: 1px solid
+    ${({ theme }) => (theme.mode === "light" ? "#e5e5ea" : "#2d2d2d")};
 
   &:hover,
   &:focus {
-    background-color: ${({ theme }) =>
+    color: #0071e3;
+    border-color: #0071e3;
+    background: ${({ theme }) =>
       theme.mode === "light"
-        ? "rgba(100, 255, 218, 0.2)"
-        : "rgba(10, 25, 47, 0.95)"};
-    color: ${({ theme }) =>
-      theme.mode === "light" ? "var(--dark-navy)" : "var(--lightest-slate)"};
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px
-      ${({ theme }) =>
-        theme.mode === "light" ? "rgba(0, 0, 0, 0.1)" : "rgba(0, 0, 0, 0.3)"};
+        ? "rgba(0, 113, 227, 0.08)"
+        : "rgba(0, 113, 227, 0.15)"};
   }
 
-  &:active {
-    transform: translateY(1px);
+  &:after {
+    display: none !important;
   }
 `
 

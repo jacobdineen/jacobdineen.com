@@ -2,8 +2,8 @@
 title: "RECAP: Transparent Inference-Time Emotion Alignment for Medical Dialogue Systems"
 slug: "/publications/recap-2025"
 authors: Adarsh Srinivasan, Jacob Dineen, Muhammad Umar Afzal, Muhammad Uzair Sarfraz, Irbaz B. Riaz, Ben Zhou
-date: 2025-09-12
-venue: "arXiv preprint"
+date: 2026-01-01
+venue: "Clinical NLP Workshop 2026 (Oral)"
 arxiv: https://arxiv.org/abs/2509.10746
 paperurl: "https://arxiv.org/pdf/2509.10746.pdf"
 semanticscholar: https://www.semanticscholar.org/paper/RECAP%3A-Transparent-Inference-Time-Emotion-Alignment-Srinivasan-Dineen/c0486a9634c8540adba69c818b35be74c2249c00

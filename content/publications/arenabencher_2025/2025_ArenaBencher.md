@@ -3,7 +3,7 @@ title: "ArenaBencher: Automatic Benchmark Evolution via Multi-Model Competitive 
 slug: "/publications/arenabencher-2025"
 authors: Qin Liu, Jacob Dineen, Yuxi Huang, Sheng Zhang, Hoifung Poon, Ben Zhou, Muhao Chen
 date: 2025-10-09
-venue: "arXiv preprint"
+venue: "Pending COLM 2026"
 arxiv: https://arxiv.org/abs/2510.08569
 paperurl: "https://arxiv.org/pdf/2510.08569.pdf"
 semanticscholar: https://www.semanticscholar.org/paper/ArenaBencher%3A-Automatic-Benchmark-Evolution-via-Liu-Dineen/588205ed40fa03b87bfb4741e69f22a513265b61

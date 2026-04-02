@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react"
+import React, { useState, useEffect, useContext, useRef } from "react"
 import { navigate, Link } from "gatsby"
 import PropTypes from "prop-types"
 import styled, { ThemeProvider, ThemeContext } from "styled-components"
@@ -81,7 +81,7 @@ const StyledSkipLink = styled.a`
   font-size: 0.9rem;
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
     "Helvetica Neue", sans-serif;
-  transition: all 0.3s ease;
+  transition: top 0.2s ease;
 
   &:focus {
     top: 6px;
@@ -126,6 +126,7 @@ const StyledSidebar = styled.aside`
   z-index: 5;
   position: relative;
   flex-shrink: 0;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
 
   /* Hide full sidebar on detail pages on mobile */
   ${({ hideOnMobile }) =>
@@ -160,7 +161,7 @@ const StyledSidebar = styled.aside`
 
   nav {
     width: 100%;
-    margin: 24px 0;
+    margin: 20px 0;
 
     ul {
       list-style: none;
@@ -170,7 +171,7 @@ const StyledSidebar = styled.aside`
       flex-direction: column;
       align-items: center;
       width: 100%;
-      gap: 8px;
+      gap: 2px;
 
       li {
         width: 100%;
@@ -178,7 +179,6 @@ const StyledSidebar = styled.aside`
       }
     }
 
-    /* Mobile: horizontal nav buttons */
     @media (max-width: 767px) {
       margin: 8px 0;
 
@@ -186,7 +186,7 @@ const StyledSidebar = styled.aside`
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 6px;
+        gap: 4px;
 
         li {
           width: auto;
@@ -207,6 +207,7 @@ const StyledMainContent = styled.main`
   color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
   flex: 1;
   position: relative;
+  transition: background-color 0.15s ease, color 0.15s ease;
 
   /* Mobile: normal scrolling */
   @media (max-width: 767px) {
@@ -333,7 +334,7 @@ const Slider = styled.span`
   bottom: 0;
   background: ${({ theme }) =>
     theme.mode === "light" ? "#e5e5ea" : "#39393d"};
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background-color 0.2s ease;
   border-radius: 28px;
 
   &:before {
@@ -344,7 +345,7 @@ const Slider = styled.span`
     left: 3px;
     bottom: 3px;
     background: #ffffff;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: transform 0.2s ease;
     border-radius: 50%;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 
@@ -371,7 +372,7 @@ const BackToTopButton = styled.button`
   justify-content: center;
   font-size: 20px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s ease;
+  transition: opacity 0.2s ease, transform 0.2s ease;
   z-index: 100;
   opacity: ${({ visible }) => (visible ? 1 : 0)};
   transform: ${({ visible }) => (visible ? "scale(1)" : "scale(0.8)")};
@@ -396,59 +397,57 @@ const StyledTabButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 0.95rem;
-  font-weight: 500;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
-    "Helvetica Neue", sans-serif;
+  font-size: 0.84rem;
+  font-weight: 400;
+  font-family: var(--font-sans);
   width: 100%;
-  min-height: 44px;
-  height: auto;
   border: none;
-  border-radius: 10px;
+  border-radius: 6px;
   text-align: center;
-  box-sizing: border-box;
-  padding: 12px 20px;
+  padding: 8px 12px;
   cursor: pointer;
   outline: none;
   white-space: nowrap;
   letter-spacing: -0.01em;
-
-  background: ${({ isActive, theme }) =>
-    isActive
-      ? "#0071e3"
-      : theme.mode === "light"
-      ? "transparent"
-      : "transparent"};
+  background: transparent;
+  transition: color 0.1s ease, background-color 0.1s ease;
 
   color: ${({ isActive, theme }) =>
-    isActive ? "#ffffff" : theme.mode === "light" ? "#1d1d1f" : "#f5f5f7"};
+    isActive
+      ? theme.mode === "light"
+        ? "#1d1d1f"
+        : "#f5f5f7"
+      : theme.mode === "light"
+      ? "#86868b"
+      : "#6e6e73"};
 
-  transition: all 0.2s ease;
+  ${({ isActive, theme }) =>
+    isActive &&
+    `
+    font-weight: 500;
+    background: ${
+      theme.mode === "light"
+        ? "rgba(0, 0, 0, 0.04)"
+        : "rgba(255, 255, 255, 0.06)"
+    };
+  `}
 
-  /* Mobile: smaller buttons */
   @media (max-width: 767px) {
-    font-size: 0.8rem;
-    padding: 8px 14px;
-    min-height: 36px;
-    border-radius: 18px;
+    font-size: 0.76rem;
+    padding: 6px 10px;
   }
 
   &:hover {
-    background: ${({ isActive, theme }) =>
-      isActive
-        ? "#0077ed"
-        : theme.mode === "light"
+    color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
+    background: ${({ theme }) =>
+      theme.mode === "light"
         ? "rgba(0, 0, 0, 0.04)"
-        : "rgba(255, 255, 255, 0.08)"};
+        : "rgba(255, 255, 255, 0.06)"};
   }
 
   &:focus-visible {
     outline: 2px solid #0071e3;
     outline-offset: 2px;
-  }
-
-  &:active {
-    transform: scale(0.98);
   }
 `
 
@@ -546,6 +545,9 @@ const Layout = ({ children, location }) => {
 
       if (sectionElements.length === 0) return
 
+      // Skip if we're in a programmatic scroll from nav click
+      if (isScrollingRef.current) return
+
       // Get scroll position from the main content area on desktop, window on mobile
       const mainContent = document.getElementById("content")
       const isDesktop = window.innerWidth >= 768
@@ -630,6 +632,8 @@ const Layout = ({ children, location }) => {
     }
   }, [location])
 
+  const isScrollingRef = useRef(false)
+
   const handleSectionClick = (e, section) => {
     e.preventDefault()
     if (section === "cv") {
@@ -637,32 +641,36 @@ const Layout = ({ children, location }) => {
     } else if (section === "publications") {
       navigate("/publications")
     } else {
-      // If we're not on the home page, navigate there first
       const isHomePage = location && location.pathname === "/"
       if (!isHomePage) {
         navigate(`/#${section}`)
         return
       }
 
+      // Immediately set active section and suppress scroll observer
+      setActiveSection(section)
+      isScrollingRef.current = true
+
       const element = document.getElementById(section)
       if (element) {
-        // On desktop, scroll within the main content area; on mobile, scroll the window
         const mainContent = document.getElementById("content")
         const isDesktop = window.innerWidth >= 768
 
         if (isDesktop && mainContent) {
-          // For desktop, scroll within the main content container
           const offsetTop = element.offsetTop - mainContent.offsetTop
           mainContent.scrollTo({
-            top: offsetTop - 20, // Add some padding
+            top: offsetTop - 20,
             behavior: "smooth",
           })
         } else {
-          // For mobile, scroll the window normally
           element.scrollIntoView({ behavior: "smooth", block: "start" })
         }
-        setActiveSection(section)
       }
+
+      // Re-enable scroll observer after scroll finishes
+      setTimeout(() => {
+        isScrollingRef.current = false
+      }, 600)
     }
   }
 

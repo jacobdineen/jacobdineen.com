@@ -46,6 +46,16 @@ const Head = ({ title, description, image }) => {
       titleTemplate={`%s | ${defaultTitle}`}
     >
       <html lang="en" />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossOrigin="anonymous"
+      />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet"
+      />
 
       <meta name="description" content={seo.description} />
       <meta name="image" content={seo.image} />
@@ -77,8 +87,8 @@ const Head = ({ title, description, image }) => {
           url: siteUrl,
           sameAs: [
             "https://github.com/jacobdineen",
-            "https://linkedin.com/in/jacob-dineen",
-            "https://scholar.google.com/citations?user=YOUR_ID",
+            "https://www.linkedin.com/in/jacobdineen/",
+            "https://scholar.google.com/citations?user=WKurvcoAAAAJ",
           ],
           alumniOf: [
             {
@@ -99,7 +109,7 @@ const Head = ({ title, description, image }) => {
       <meta name="author" content="Jacob Dineen" />
       <meta name="robots" content="index, follow" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta name="theme-color" content="#0a192f" />
+      <meta name="theme-color" content="#000000" />
       <link rel="canonical" href={seo.url} />
     </Helmet>
   )

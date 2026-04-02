@@ -29,29 +29,19 @@ const GlobalStyle = createGlobalStyle`
       theme.mode === "light" ? "var(--light-navy)" : "var(--white)"};
   }
 
-  /* Provide basic, default focus styles.*/
   :focus {
-    outline: 2px dashed ${({ theme }) => theme.colors[theme.mode].green};
-    outline-offset: 3px;
+    outline: 2px solid rgba(0, 113, 227, 0.5);
+    outline-offset: 2px;
   }
 
-  /*
-    Remove default focus styles for mouse users ONLY if
-    :focus-visible is supported on this platform.
-  */
   :focus:not(:focus-visible) {
     outline: none;
     outline-offset: 0px;
   }
 
-  /*
-    Optionally: If :focus-visible is supported on this
-    platform, provide enhanced focus styles for keyboard
-    focus.
-  */
   :focus-visible {
-    outline: 2px dashed var(--green);
-    outline-offset: 3px;
+    outline: 2px solid #0071e3;
+    outline-offset: 2px;
   }
 
   /* Scrollbar Styles */
@@ -80,9 +70,10 @@ body {
   background-color: ${({ theme }) => theme.colors[theme.mode].background};
   color: ${({ theme }) => theme.colors[theme.mode].text};
   font-family: var(--font-sans);
-  font-size: var(--fz-xl);
-  line-height: 1.3;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  font-size: var(--fz-md);
+  line-height: 1.6;
+  letter-spacing: -0.011em;
+  transition: background-color 0.15s ease, color 0.15s ease;
 
   /* Mobile: normal scrolling */
   @media (max-width: 767px) {
@@ -93,10 +84,6 @@ body {
   /* Desktop: hide body overflow, scroll happens in main content */
   @media (min-width: 768px) {
     overflow-y: hidden;
-  }
-
-  @media (max-width: 480px) {
-    font-size: var(--fz-lg);
   }
 
   &.hidden {
@@ -165,22 +152,23 @@ body {
 
   section {
     margin: 0 auto;
-    padding: 100px 0;
-    max-width: 1000px;
+    padding: 48px 0;
+    max-width: 900px;
 
     @media (max-width: 768px) {
-      padding: 80px 0;
+      padding: 36px 0;
     }
 
     @media (max-width: 480px) {
-      padding: 60px 0;
+      padding: 28px 0;
     }
   }
 
   h1, h2, h3, h4, h5, h6 {
     color: ${({ theme }) => theme.colors[theme.mode].text};
     font-weight: 600;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
+    line-height: 1.3;
   }
 
   .big-heading {
@@ -197,25 +185,25 @@ body {
     display: flex;
     align-items: center;
     position: relative;
-    margin: 10px 0 40px;
+    margin: 10px 0 32px;
     width: 100%;
-    font-size: clamp(26px, 5vw, var(--fz-heading));
+    font-size: clamp(20px, 4vw, 26px);
+    font-weight: 600;
+    letter-spacing: -0.03em;
     white-space: nowrap;
 
     &:before {
       position: relative;
-      bottom: 4px;
       counter-increment: section;
       content: '0' counter(section) '.';
       margin-right: 10px;
-      color: var(--green);
-      font-family: var(--font-sans);
-      font-size: clamp(var(--fz-md), 3vw, var(--fz-xl));
-      font-weight: 500;
+      color: #0071e3;
+      font-family: var(--font-mono);
+      font-size: clamp(var(--fz-sm), 2.5vw, var(--fz-md));
+      font-weight: 400;
 
       @media (max-width: 480px) {
-        margin-bottom: -3px;
-        margin-right: 5px;
+        margin-right: 6px;
       }
     }
 
@@ -223,21 +211,16 @@ body {
       content: '';
       display: block;
       position: relative;
-      top: -5px;
-      width: 300px;
+      flex: 1;
       height: 1px;
-      margin-left: 20px;
+      margin-left: 16px;
+      max-width: 200px;
       background-color: ${({ theme }) =>
-        theme.mode === "light" ? "#d2d2d7" : "#424245"};
+        theme.mode === "light" ? "#d2d2d7" : "#2d2d2d"};
 
-      @media (max-width: 1080px) {
-        width: 200px;
-      }
-      @media (max-width: 768px) {
-        width: 100%;
-      }
       @media (max-width: 600px) {
         margin-left: 10px;
+        max-width: 100px;
       }
     }
   }
@@ -272,30 +255,15 @@ body {
     text-decoration-skip-ink: auto;
     color: inherit;
     position: relative;
-    transition: var(--transition);
+    transition: color 0.2s ease;
 
     &:hover,
     &:focus {
-      color: var(--green);
+      color: #0071e3;
     }
 
     &.inline-link {
       ${({ theme }) => theme.mixins.inlineLink};
-    }
-
-    &:after {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 1px;
-      bottom: -1px;
-      left: 0;
-      background-color: var(--green);
-      transition: width 0.3s ease;
-    }
-
-    &:hover:after {
-      width: 100%;
     }
   }
 
@@ -316,12 +284,11 @@ body {
     padding: 10px;
     color: ${({ theme }) =>
       theme.mode === "light" ? "var(--dark-slate)" : "var(--lightest-slate)"};
-    transition: all 0.3s ease;
-    
+    transition: border-color 0.15s ease;
+
     &:focus {
       outline: none;
-      border-color: var(--green);
-      box-shadow: 0 0 0 1px var(--green);
+      border-color: #0071e3;
     }
   }
 

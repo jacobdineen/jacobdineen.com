@@ -1,11 +1,11 @@
-import React from 'react';
-import { graphql, Link } from 'gatsby';
-import kebabCase from 'lodash/kebabCase';
-import PropTypes from 'prop-types';
-import { Helmet } from 'react-helmet';
-import styled from 'styled-components';
-import { Layout } from '@components';
-import { IconBookmark } from '@components/icons';
+import React from "react"
+import { graphql, Link } from "gatsby"
+import kebabCase from "lodash/kebabCase"
+import PropTypes from "prop-types"
+import { Helmet } from "react-helmet"
+import styled from "styled-components"
+import { Layout } from "@components"
+import { IconBookmark } from "@components/icons"
 
 const StyledMainContainer = styled.main`
   & > header {
@@ -27,7 +27,7 @@ const StyledMainContainer = styled.main`
     width: 100%;
     margin-top: 20px;
   }
-`;
+`
 const StyledGrid = styled.ul`
   ${({ theme }) => theme.mixins.resetList};
   display: grid;
@@ -39,7 +39,7 @@ const StyledGrid = styled.ul`
   @media (max-width: 1080px) {
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   }
-`;
+`
 const StyledPost = styled.li`
   transition: var(--transition);
   cursor: default;
@@ -68,7 +68,7 @@ const StyledPost = styled.li`
     padding: 2rem 1.75rem;
     border-radius: var(--border-radius);
     transition: var(--transition);
-    background-color: var(--light-navy);
+    background-color: var(--light-navy, #161616);
 
     header,
     a {
@@ -78,7 +78,7 @@ const StyledPost = styled.li`
 
   .post__icon {
     ${({ theme }) => theme.mixins.flexBetween};
-    color: var(--green);
+    color: #0071e3;
     margin-bottom: 30px;
     margin-left: -5px;
 
@@ -90,14 +90,14 @@ const StyledPost = styled.li`
 
   .post__title {
     margin: 0 0 10px;
-    color: var(--lightest-slate);
+    color: var(--lightest-slate, #f5f5f7);
     font-size: var(--fz-xxl);
 
     a {
       position: static;
 
       &:before {
-        content: '';
+        content: "";
         display: block;
         position: absolute;
         z-index: 0;
@@ -110,12 +110,12 @@ const StyledPost = styled.li`
   }
 
   .post__desc {
-    color: var(--light-slate);
+    color: var(--light-slate, #d1d1d6);
     font-size: 17px;
   }
 
   .post__date {
-    color: var(--light-slate);
+    color: var(--light-slate, #d1d1d6);
     font-family: var(--font-mono);
     font-size: var(--fz-xxs);
     text-transform: uppercase;
@@ -130,7 +130,7 @@ const StyledPost = styled.li`
     list-style: none;
 
     li {
-      color: var(--green);
+      color: #0071e3;
       font-family: var(--font-mono);
       font-size: var(--fz-xxs);
       line-height: 1.75;
@@ -140,10 +140,10 @@ const StyledPost = styled.li`
       }
     }
   }
-`;
+`
 
 const PensievePage = ({ location, data }) => {
-  const posts = data.allMarkdownRemark.edges;
+  const posts = data.allMarkdownRemark.edges
 
   return (
     <Layout location={location}>
@@ -162,9 +162,9 @@ const PensievePage = ({ location, data }) => {
         <StyledGrid>
           {posts.length > 0 &&
             posts.map(({ node }, i) => {
-              const { frontmatter } = node;
-              const { title, description, slug, date, tags } = frontmatter;
-              const formattedDate = new Date(date).toLocaleDateString();
+              const { frontmatter } = node
+              const { title, description, slug, date, tags } = frontmatter
+              const formattedDate = new Date(date).toLocaleDateString()
 
               return (
                 <StyledPost key={i}>
@@ -184,7 +184,10 @@ const PensievePage = ({ location, data }) => {
                       <ul className="post__tags">
                         {tags.map((tag, i) => (
                           <li key={i}>
-                            <Link to={`/pensieve/tags/${kebabCase(tag)}/`} className="inline-link">
+                            <Link
+                              to={`/pensieve/tags/${kebabCase(tag)}/`}
+                              className="inline-link"
+                            >
                               #{tag}
                             </Link>
                           </li>
@@ -193,25 +196,28 @@ const PensievePage = ({ location, data }) => {
                     </footer>
                   </div>
                 </StyledPost>
-              );
+              )
             })}
         </StyledGrid>
       </StyledMainContainer>
     </Layout>
-  );
-};
+  )
+}
 
 PensievePage.propTypes = {
   location: PropTypes.object.isRequired,
   data: PropTypes.object.isRequired,
-};
+}
 
-export default PensievePage;
+export default PensievePage
 
 export const pageQuery = graphql`
   {
     allMarkdownRemark(
-      filter: { fileAbsolutePath: { regex: "/content/posts/" }, frontmatter: { draft: { ne: true } } }
+      filter: {
+        fileAbsolutePath: { regex: "/content/posts/" }
+        frontmatter: { draft: { ne: true } }
+      }
       sort: { fields: [frontmatter___date], order: DESC }
     ) {
       edges {
@@ -229,4 +235,4 @@ export const pageQuery = graphql`
       }
     }
   }
-`;
+`

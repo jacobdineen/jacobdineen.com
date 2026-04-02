@@ -8,37 +8,37 @@ import { Layout } from "@components"
 import { Icon } from "@components/icons"
 
 const StyledMainContainer = styled.main`
-  max-width: 1000px;
+  max-width: 760px;
   margin: 0 auto;
-  padding: 100px 50px;
+  padding: 48px 24px;
 
   @media (max-width: 768px) {
-    padding: 80px 25px;
+    padding: 32px 16px;
   }
 
   header {
-    margin-bottom: 60px;
+    margin-bottom: 36px;
 
     h1 {
-      font-size: clamp(40px, 8vw, 80px);
-      margin-bottom: 20px;
+      font-size: clamp(1.6rem, 4vw, 2.2rem);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      margin-bottom: 6px;
     }
 
     .subtitle {
-      color: var(--green);
-      font-family: var(--font-mono);
-      font-size: var(--fz-md);
+      color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#6e6e73")};
+      font-size: 0.88rem;
       font-weight: 400;
-      line-height: 1.5;
     }
   }
 `
 
 const StyledFilters = styled.div`
   display: grid;
-  grid-template-columns: 1fr 160px 200px;
-  gap: 12px;
-  margin: 0 0 24px 0;
+  grid-template-columns: 1fr 120px 160px;
+  gap: 8px;
+  margin: 0 0 32px 0;
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
@@ -46,114 +46,125 @@ const StyledFilters = styled.div`
 
   input[type="search"],
   select {
-    background: var(--light-navy);
-    color: var(--lightest-slate);
-    border: 1px solid var(--lightest-navy);
-    border-radius: var(--border-radius);
-    padding: 10px 12px;
-    font-size: var(--fz-sm);
+    background: ${({ theme }) =>
+      theme.mode === "light" ? "#f5f5f7" : "#161616"};
+    color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
+    border: 1px solid
+      ${({ theme }) => (theme.mode === "light" ? "#e5e5ea" : "#2d2d2d")};
+    border-radius: 8px;
+    padding: 9px 12px;
+    font-size: 0.82rem;
     outline: none;
+    transition: border-color 0.15s ease;
+
+    &:focus {
+      border-color: #0071e3;
+    }
+
+    &::placeholder {
+      color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#6e6e73")};
+    }
+  }
+
+  select {
+    cursor: pointer;
   }
 `
 
 const StyledPublicationsList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 0;
 `
 
 const StyledPublication = styled.article`
-  position: relative;
-  padding: 30px;
-  background-color: var(--light-navy);
-  border-radius: var(--border-radius);
-  transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+  padding: 20px 0;
+  border-bottom: 1px solid
+    ${({ theme }) => (theme.mode === "light" ? "#f0f0f0" : "#1d1d1f")};
 
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 30px -15px var(--navy-shadow);
+  &:first-child {
+    padding-top: 0;
+  }
+
+  &:last-child {
+    border-bottom: none;
   }
 
   h3 {
-    font-size: var(--fz-xxl);
-    margin-bottom: 15px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+    line-height: 1.4;
 
     a {
-      position: relative;
-      color: var(--lightest-slate);
+      color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
       text-decoration: none;
 
       &:hover {
-        color: var(--green);
+        color: #0071e3;
       }
 
-      &::before {
-        content: "";
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        z-index: 0;
+      &:after {
+        display: none;
       }
     }
   }
 
   .authors {
-    color: var(--light-slate);
-    font-size: var(--fz-lg);
-    margin-bottom: 10px;
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#86868b")};
+    font-size: 0.8rem;
+    margin-bottom: 6px;
+    line-height: 1.5;
 
     .me {
-      color: var(--green);
-      font-weight: 600;
+      color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
+      font-weight: 500;
     }
 
     a {
-      color: var(--slate);
+      color: inherit;
       text-decoration: none;
-      border-bottom: 1px dotted transparent;
-      transition: color 0.2s var(--easing), border-color 0.2s var(--easing);
+
+      &:after {
+        display: none;
+      }
     }
 
     a:hover {
-      color: var(--green);
-      border-color: var(--green);
-    }
-
-    a:focus-visible {
-      color: var(--green);
-      border-color: var(--green);
-      outline: 2px solid var(--green);
-      outline-offset: 2px;
+      color: #0071e3;
     }
   }
 
   .meta {
     display: flex;
     align-items: center;
-    gap: 15px;
-    margin-bottom: 15px;
+    gap: 12px;
+    margin-bottom: 8px;
     font-family: var(--font-mono);
-    font-size: var(--fz-sm);
+    font-size: 0.72rem;
     flex-wrap: wrap;
 
     .venue {
-      color: var(--green);
+      color: ${({ theme }) => (theme.mode === "light" ? "#48484a" : "#a1a1a6")};
+      border: 1px solid
+        ${({ theme }) => (theme.mode === "light" ? "#e5e5ea" : "#2d2d2d")};
+      padding: 2px 8px;
+      border-radius: 4px;
     }
 
     .date {
-      color: var(--light-slate);
+      color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#6e6e73")};
     }
   }
 
   .abstract {
-    color: var(--light-slate);
-    font-size: var(--fz-md);
-    line-height: 1.5;
-    margin-bottom: 20px;
+    color: ${({ theme }) => (theme.mode === "light" ? "#48484a" : "#a1a1a6")};
+    font-size: 0.82rem;
+    line-height: 1.6;
+    margin-bottom: 10px;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
@@ -161,7 +172,7 @@ const StyledPublication = styled.article`
   .links {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
     flex-wrap: wrap;
 
     .share-wrapper {
@@ -171,69 +182,65 @@ const StyledPublication = styled.article`
 
     .share-menu {
       position: absolute;
-      top: calc(100% + 6px);
+      top: calc(100% + 4px);
       right: 0;
-      background: var(--light-navy);
-      border: 1px solid var(--lightest-navy);
-      border-radius: var(--border-radius);
-      padding: 8px;
+      background: ${({ theme }) =>
+        theme.mode === "light" ? "#ffffff" : "#1d1d1f"};
+      border: 1px solid
+        ${({ theme }) => (theme.mode === "light" ? "#e5e5ea" : "#2d2d2d")};
+      border-radius: 8px;
+      padding: 6px;
       display: grid;
-      gap: 6px;
-      min-width: 180px;
+      gap: 4px;
+      min-width: 160px;
       z-index: 5;
-      box-shadow: 0 10px 24px -18px var(--navy-shadow);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
     a {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
-      color: var(--slate);
+      gap: 4px;
+      color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#6e6e73")};
       font-family: var(--font-mono);
-      font-size: var(--fz-xs);
+      font-size: 0.7rem;
       text-decoration: none;
-      transition: color 0.25s;
+      transition: color 0.15s ease;
 
       &:hover {
-        color: var(--green);
+        color: #0071e3;
       }
 
-      &:focus-visible {
-        outline: 2px solid var(--green);
-        outline-offset: 2px;
+      &:after {
+        display: none;
       }
 
       svg {
-        width: 18px;
-        height: 18px;
+        width: 14px;
+        height: 14px;
       }
     }
 
     button.share-btn {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
-      color: var(--green);
+      gap: 4px;
+      color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#6e6e73")};
       background: transparent;
-      border: 1px solid var(--green);
-      border-radius: var(--border-radius);
-      padding: 8px 12px;
+      border: none;
+      padding: 0;
       font-family: var(--font-mono);
-      font-size: var(--fz-xs);
+      font-size: 0.7rem;
       cursor: pointer;
+      transition: color 0.15s ease;
 
       &:hover {
-        background: var(--green-tint);
-      }
-
-      &:focus-visible {
-        outline: 2px solid var(--green);
-        outline-offset: 2px;
+        color: #0071e3;
       }
 
       svg {
-        width: 18px;
-        height: 18px;
+        width: 14px;
+        height: 14px;
       }
     }
   }
@@ -248,7 +255,6 @@ const PublicationsPage = ({ location, data }) => {
   const [venueFilter, setVenueFilter] = useState("All")
   const [openShare, setOpenShare] = useState(null)
 
-  // Close share menu on outside click or ESC
   useEffect(() => {
     const onClick = e => {
       if (!openShare) return
@@ -307,14 +313,14 @@ const PublicationsPage = ({ location, data }) => {
 
       <StyledMainContainer>
         <header>
-          <h1 className="big-heading">Publications</h1>
+          <h1>Publications</h1>
           <p className="subtitle">Research papers and academic work</p>
         </header>
 
         <StyledFilters>
           <input
             type="search"
-            placeholder="Search title, authors, venue…"
+            placeholder="Search title, authors, venue..."
             value={query}
             onChange={e => setQuery(e.target.value)}
             aria-label="Search publications"
@@ -324,7 +330,7 @@ const PublicationsPage = ({ location, data }) => {
             onChange={e => setYear(e.target.value)}
             aria-label="Filter by year"
           >
-            <option>All</option>
+            <option value="All">All years</option>
             {years.map(y => (
               <option key={y} value={y}>
                 {y}
@@ -336,7 +342,7 @@ const PublicationsPage = ({ location, data }) => {
             onChange={e => setVenueFilter(e.target.value)}
             aria-label="Filter by venue"
           >
-            <option>All</option>
+            <option value="All">All venues</option>
             {venues.map(v => (
               <option key={v} value={v}>
                 {v}
@@ -420,7 +426,6 @@ const PublicationsPage = ({ location, data }) => {
                   </div>
                   {abstract && <p className="abstract">{abstract}</p>}
                   <div className="links">
-                    <Link to={slug}>View Details →</Link>
                     {arxiv && (
                       <a
                         href={arxiv}
@@ -430,28 +435,6 @@ const PublicationsPage = ({ location, data }) => {
                       >
                         <Icon name="Arxiv" />
                         arXiv
-                      </a>
-                    )}
-                    {googlescholar && (
-                      <a
-                        href={googlescholar}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`Open Google Scholar for ${title}`}
-                      >
-                        <Icon name="GScholar" />
-                        Scholar
-                      </a>
-                    )}
-                    {semanticscholar && (
-                      <a
-                        href={semanticscholar}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label={`Open Semantic Scholar for ${title}`}
-                      >
-                        <Icon name="SemanticScholar" />
-                        Semantic
                       </a>
                     )}
                     {paperurl && (!isArxivPdf || !arxiv) && (
@@ -485,6 +468,28 @@ const PublicationsPage = ({ location, data }) => {
                       >
                         <Icon name="GitHub" />
                         Code
+                      </a>
+                    )}
+                    {googlescholar && (
+                      <a
+                        href={googlescholar}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Open Google Scholar for ${title}`}
+                      >
+                        <Icon name="GScholar" />
+                        Scholar
+                      </a>
+                    )}
+                    {semanticscholar && (
+                      <a
+                        href={semanticscholar}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Open Semantic Scholar for ${title}`}
+                      >
+                        <Icon name="SemanticScholar" />
+                        Semantic
                       </a>
                     )}
                     <div className="share-wrapper" data-share={slug}>

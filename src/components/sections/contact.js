@@ -25,19 +25,14 @@ const StyledContactSection = styled.section`
   }
 
   .title {
-    font-size: clamp(2rem, 5vw, 2.8rem);
-    margin-bottom: 2.5rem;
+    font-size: clamp(1.4rem, 4vw, 1.8rem);
+    margin-bottom: 2rem;
     font-weight: 600;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
-      "Helvetica Neue", sans-serif;
+    font-family: var(--font-sans);
     color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
     line-height: 1.2;
     opacity: 1;
-
-    @media (min-width: 768px) {
-      margin-bottom: 3rem;
-    }
   }
 
   form {
@@ -75,7 +70,7 @@ const StyledContactSection = styled.section`
     padding: 16px 20px;
     margin-top: 8px;
     text-align: left;
-    transition: all 0.2s ease;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
       "Helvetica Neue", sans-serif;
     border-radius: 12px;
@@ -122,7 +117,7 @@ const StyledContactSection = styled.section`
     font-weight: 500;
     padding: 12px 24px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
     border-radius: 980px;
     min-width: 120px;
 

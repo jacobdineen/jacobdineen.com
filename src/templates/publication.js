@@ -516,7 +516,7 @@ const PublicationTemplate = ({ data, location }) => {
             datePublished: publicationDate.toISOString().split("T")[0],
             publisher: venue || "arXiv",
             abstract: abstract,
-            url: `https://jacobdineen.github.io${slug}`,
+            url: `https://jacobdineen.com${slug}`,
             ...(arxiv && { sameAs: arxiv }),
             ...(paperurl && { url: paperurl }),
           })}
