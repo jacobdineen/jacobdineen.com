@@ -1,5 +1,3 @@
-const config = require("./src/config")
-
 module.exports = {
   siteMetadata: {
     title: "Jacob Dineen",
@@ -21,8 +19,8 @@ module.exports = {
         name: "Jacob Dineen",
         short_name: "Jacob Dineen",
         start_url: "/",
-        background_color: config.colors.darkNavy,
-        theme_color: config.colors.navy,
+        background_color: "#000000",
+        theme_color: "#000000",
         display: "minimal-ui",
         icon: "src/images/logo.png",
       },
@@ -62,7 +60,7 @@ module.exports = {
               maxWidth: 700,
               linkImagesToOriginal: true,
               quality: 90,
-              tracedSVG: { color: config.colors.green },
+              tracedSVG: { color: "#0071e3" },
             },
           },
           {
