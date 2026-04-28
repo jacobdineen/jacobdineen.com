@@ -29,6 +29,19 @@ const collaboratorLinks = {
     "https://scholar.google.com/citations?user=J4O5aloAAAAJ&hl=en",
   "umar afzal": "https://scholar.google.com/citations?user=J4O5aloAAAAJ&hl=en",
   "phu tran": "https://tranngocphu.github.io/",
+  "muhammad uzair sarfraz": "https://x.com/UzairSarfraz7",
+  "adarsh srinivasan":
+    "https://scholar.google.com/citations?user=jMjSoWYAAAAJ&hl=en",
+  "muhammad ali khan":
+    "https://scholar.google.com/citations?user=Hb3ZbVYAAAAJ&hl=en",
+  "swaroop mishra": "https://swarooprm.github.io/",
+  "yu feng": "https://annieyufeng.github.io/",
+  "fei wang": "https://feiwang96.github.io/",
+  "kyle r. chickering": "https://www.math.ucdavis.edu/~krc/",
+  "bach nguyen": "https://www.linkedin.com/in/bachnd05/",
+  "jaya adithya pavuluri": "https://search.asu.edu/profile/4283062",
+  "sanika chavan":
+    "https://scholar.google.com/citations?user=oiOf9EsAAAAJ&hl=en",
 }
 
 export default collaboratorLinks
