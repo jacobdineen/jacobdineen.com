@@ -2,18 +2,12 @@ import React, { useState, useEffect, useRef, useMemo } from "react"
 import { useStaticQuery, graphql, Link, withPrefix } from "gatsby"
 import styled from "styled-components"
 import { srConfig } from "@config"
-import { KEY_CODES } from "@utils"
 import sr from "@utils/sr"
 import { usePrefersReducedMotion } from "@hooks"
-import StyledTabButton from "./StyledTabButton"
+import EntryListItem from "./EntryListItem"
 import StyledText from "./StyledText"
-import TechTagsContainer from "./TechTagsContainer"
 import StyledJobsSection from "./StyledJobsSection"
-import TechTag from "./TechTag"
 import StyledTabList from "./StyledTabList"
-import ArrowButton from "./ArrowButton"
-import StyledTabPanels from "./StyledTabPanels"
-import StyledTabPanel from "./StyledTabPanel"
 import PublicationListItem from "./PublicationListItem"
 import {
   IconArxiv,
@@ -29,45 +23,72 @@ const ContentTypeButtonsContainer = styled.div`
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 0;
   width: 100%;
-  max-width: 500px;
-  margin: 0 auto 24px;
-  padding: 4px;
-  background: ${({ theme }) =>
-    theme.mode === "light" ? "#f5f5f7" : "#1d1d1f"};
-  border-radius: 10px;
+  max-width: 600px;
+  margin: 0 auto 28px;
+  padding: 8px 0 0;
+  border-bottom: 1px solid
+    ${({ theme }) => (theme.mode === "light" ? "#e5e5ea" : "#2d2d2d")};
 `
 
 const ContentTypeButton = styled.button`
-  background: ${({ isActive }) => (isActive ? "#0071e3" : "transparent")};
+  position: relative;
+  background: transparent;
   color: ${({ isActive, theme }) =>
-    isActive ? "#ffffff" : theme.mode === "light" ? "#6e6e73" : "#86868b"};
+    isActive
+      ? theme.mode === "light"
+        ? "#1d1d1f"
+        : "#f5f5f7"
+      : theme.mode === "light"
+      ? "#6e6e73"
+      : "#6e6e73"};
   border: none;
-  border-radius: 8px;
-  padding: 8px 18px;
-  font-size: 0.82rem;
-  font-family: var(--font-sans);
-  font-weight: 500;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  border-radius: 0;
+  padding: 6px 0;
+  margin: 0 14px;
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: color 0.15s ease;
   cursor: ${props => (props.isActive ? "default" : "pointer")};
-  flex: 1 1 auto;
-  text-align: center;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 2px;
+    background: ${({ isActive, theme }) =>
+      isActive
+        ? theme.mode === "light"
+          ? "#1d1d1f"
+          : "#f5f5f7"
+        : "transparent"};
+    transition: background-color 0.15s ease;
+  }
 
   &:hover:not(:disabled) {
-    color: ${({ isActive, theme }) =>
-      isActive ? "#ffffff" : theme.mode === "light" ? "#1d1d1f" : "#f5f5f7"};
+    color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
+  }
+
+  &:focus-visible {
+    outline: 2px solid #0071e3;
+    outline-offset: 4px;
   }
 
   @media (max-width: 480px) {
-    padding: 7px 12px;
-    font-size: 0.78rem;
+    margin: 0 8px;
+    font-size: 0.7rem;
   }
 `
 
 const StyledFilters = styled.div`
   display: grid;
-  grid-template-columns: 1fr 120px 120px;
+  grid-template-columns: 1fr 140px 160px;
   gap: 10px;
   margin: 10px auto 20px auto;
   max-width: 900px;
@@ -95,7 +116,7 @@ const StyledFilters = styled.div`
     }
 
     &::placeholder {
-      color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#6e6e73")};
+      color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
     }
   }
 
@@ -118,7 +139,7 @@ const ShowAllButton = styled.button`
   margin: 12px auto 4px;
   background: none;
   border: none;
-  color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#6e6e73")};
+  color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
   font-size: 0.78rem;
   font-family: var(--font-mono);
   cursor: pointer;
@@ -142,26 +163,6 @@ const Experience = () => {
             frontmatter {
               title
               company
-              location
-              range
-              technologies {
-                name
-              }
-            }
-            html
-          }
-        }
-      }
-      rjobs: allMarkdownRemark(
-        filter: { fileAbsolutePath: { regex: "/content/research/" } }
-        sort: { fields: [frontmatter___date], order: DESC }
-      ) {
-        edges {
-          node {
-            frontmatter {
-              title
-              company
-              location
               range
               technologies {
                 name
@@ -222,16 +223,13 @@ const Experience = () => {
   `)
 
   const jobsData = data.jobs.edges
-  const rjobsData = data.rjobs.edges
   const publicationsData = data.publications.edges
   const educationData = data.education.edges
-  const [activeTabId, setActiveTabId] = useState(0)
-  const [tabFocus, setTabFocus] = useState(null)
-  const tabs = useRef([])
   const revealContainer = useRef(null)
   const prefersReducedMotion = usePrefersReducedMotion()
   const [activeContentType, setActiveContentType] = useState("publications")
   const [showCourses, setShowCourses] = useState({})
+  const [expandedCards, setExpandedCards] = useState({})
   const [showAllPubs, setShowAllPubs] = useState(false)
 
   // Publication filters
@@ -272,13 +270,6 @@ const Experience = () => {
     })
   }, [publicationsData, pubQuery, pubYear, pubVenue])
 
-  // Keep active index valid when filters/content type change
-  useEffect(() => {
-    if (activeContentType === "publications") {
-      setActiveTabId(0)
-    }
-  }, [pubQuery, pubYear, pubVenue, activeContentType])
-
   useEffect(() => {
     if (prefersReducedMotion) {
       return
@@ -287,44 +278,9 @@ const Experience = () => {
     sr.reveal(revealContainer.current, srConfig())
   }, [prefersReducedMotion])
 
-  const focusTab = () => {
-    if (tabs.current[tabFocus]) {
-      tabs.current[tabFocus].focus()
-      return
-    }
-    if (tabFocus >= tabs.current.length) {
-      setTabFocus(0)
-    }
-    if (tabFocus < 0) {
-      setTabFocus(tabs.current.length - 1)
-    }
-  }
-
-  useEffect(() => focusTab(), [tabFocus])
-
-  const onKeyDown = e => {
-    switch (e.key) {
-      case KEY_CODES.ARROW_LEFT: {
-        e.preventDefault()
-        setTabFocus(tabFocus - 1)
-        break
-      }
-      case KEY_CODES.ARROW_RIGHT: {
-        e.preventDefault()
-        setTabFocus(tabFocus + 1)
-        break
-      }
-      default: {
-        break
-      }
-    }
-  }
-
   const activeData =
     activeContentType === "jobs"
       ? jobsData
-      : activeContentType === "rjobs"
-      ? rjobsData
       : activeContentType === "publications"
       ? publicationsData
       : educationData
@@ -345,6 +301,19 @@ const Experience = () => {
       ...prevState,
       [i]: !prevState[i],
     }))
+  }
+
+  const toggleCard = key => {
+    setExpandedCards(prevState => ({
+      ...prevState,
+      [key]: !prevState[key],
+    }))
+  }
+
+  const countBullets = html => {
+    if (!html) return 0
+    const matches = html.match(/<li[\s>]/g)
+    return matches ? matches.length : 0
   }
 
   const renderAuthors = authorsStr => {
@@ -376,49 +345,28 @@ const Experience = () => {
     })
   }
 
-  const handlePrevClick = () => {
-    if (activeTabId > 0) {
-      setActiveTabId(activeTabId - 1)
-    }
-  }
-
-  const handleNextClick = () => {
-    if (activeTabId < displayData.length - 1) {
-      setActiveTabId(activeTabId + 1)
-    }
-  }
-
   return (
     <StyledJobsSection id="experience" ref={revealContainer}>
       <StyledText>
         <h3>Hey, I&apos;m Jake.</h3>
         <IntroText>
-          I have spent close to ten years in Data Science and Machine Learning
-          Engineering roles, primarily in fintech. I&apos;m currently pursuing
-          my PhD while conducting research in LLM Reasoning and Alignment at{" "}
+          I&apos;m a PhD student at{" "}
           <a
             href="https://arc-asu.github.io/"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Arizona State University&apos;s ARC Lab
-          </a>
-          .
+            ASU&apos;s ARC Lab
+          </a>{" "}
+          working on LLM reasoning and alignment. Before that, ten years
+          building ML infrastructure in fintech.
         </IntroText>
-        <IntroText>
-          Outside of work, I enjoy traveling with my wife, spending time with
-          family and friends, tinkering with tech, and staying active despite
-          the Arizona heat.
-        </IntroText>
-
-        <h1 className="numbered-heading">A little about me</h1>
 
         <ContentTypeButtonsContainer>
           {[
             { id: "publications", label: "Publications" },
-            { id: "rjobs", label: "Research" },
             { id: "education", label: "Education" },
-            { id: "jobs", label: "Industry" },
+            { id: "jobs", label: "Experience" },
           ].map(({ id, label }) => (
             <ContentTypeButton
               key={id}
@@ -467,19 +415,7 @@ const Experience = () => {
               </select>
             </StyledFilters>
           )}
-          <StyledTabList
-            role="tablist"
-            aria-label="Job tabs"
-            onKeyDown={onKeyDown}
-          >
-            <ArrowButton
-              onClick={handlePrevClick}
-              disabled={activeTabId === 0}
-              aria-label="Previous Tab"
-            >
-              &larr;
-            </ArrowButton>
-
+          <StyledTabList>
             {displayData.map(({ node }, i) => {
               const { frontmatter } = node
               const { company, venue, title, date } = frontmatter
@@ -496,17 +432,7 @@ const Experience = () => {
                   /arxiv\.org/.test(frontmatter.paperurl)
 
                 return (
-                  <PublicationListItem
-                    key={i}
-                    isActive={activeTabId === i}
-                    onClick={() => setActiveTabId(i)}
-                    ref={el => (tabs.current[i] = el)}
-                    id={`tab-${i}`}
-                    role="tab"
-                    tabIndex={activeTabId === i ? "0" : "-1"}
-                    aria-selected={activeTabId === i ? true : false}
-                    aria-controls={`panel-${i}`}
-                  >
+                  <PublicationListItem key={i}>
                     {frontmatter.slug ? (
                       <span className="title">
                         <Link
@@ -537,6 +463,7 @@ const Experience = () => {
                           aria-label={`Open arXiv for ${title}`}
                         >
                           <IconArxiv />
+                          <span>arxiv</span>
                         </a>
                       )}
                       {frontmatter.paperurl &&
@@ -550,6 +477,7 @@ const Experience = () => {
                             aria-label={`Open PDF for ${title}`}
                           >
                             <IconExternal />
+                            <span>pdf</span>
                           </a>
                         )}
                       {frontmatter.slides && (
@@ -562,6 +490,7 @@ const Experience = () => {
                           aria-label={`Open slides for ${title}`}
                         >
                           <IconSlides />
+                          <span>slides</span>
                         </a>
                       )}
                       {frontmatter.code && (
@@ -574,10 +503,16 @@ const Experience = () => {
                           aria-label={`Open code repository for ${title}`}
                         >
                           <IconGitHub />
+                          <span>code</span>
                         </a>
                       )}
                       {frontmatter.slug && (
-                        <Link to={frontmatter.slug} className="chip-link">
+                        <Link
+                          to={frontmatter.slug}
+                          className="chip-link"
+                          aria-label={`More details for ${title}`}
+                        >
+                          <span>details</span>
                           <IconChevronRight />
                         </Link>
                       )}
@@ -586,35 +521,72 @@ const Experience = () => {
                 )
               }
 
-              const label =
-                activeContentType === "jobs" || activeContentType === "rjobs"
-                  ? company
-                  : venue
+              const isJob = activeContentType === "jobs"
+              const cardTitle = isJob ? title : frontmatter.degree
+              const cardSubtitle = isJob ? company : venue
+              const range = frontmatter.range
+              const gpa = frontmatter.gpa
+              const technologies = frontmatter.technologies
+              const html = node.html
+              const cardKey = `${activeContentType}-${i}`
+              const bulletCount = countBullets(html)
+              const isCollapsible = bulletCount > 4
+              const isExpanded = !!expandedCards[cardKey]
 
               return (
-                <StyledTabButton
-                  key={i}
-                  isActive={activeTabId === i}
-                  onClick={() => setActiveTabId(i)}
-                  ref={el => (tabs.current[i] = el)}
-                  id={`tab-${i}`}
-                  role="tab"
-                  tabIndex={activeTabId === i ? "0" : "-1"}
-                  aria-selected={activeTabId === i ? true : false}
-                  aria-controls={`panel-${i}`}
-                >
-                  <span>{label || "N/A"}</span>
-                </StyledTabButton>
+                <EntryListItem key={i}>
+                  <span className="title">{cardTitle || "N/A"}</span>
+                  {cardSubtitle && (
+                    <span className="subtitle">{cardSubtitle}</span>
+                  )}
+                  {(range || gpa) && (
+                    <div className="meta">
+                      {range && <span className="chip">{range}</span>}
+                      {gpa && <span className="chip">GPA {gpa}</span>}
+                    </div>
+                  )}
+                  {html && (
+                    <div
+                      className={`body${
+                        isCollapsible && !isExpanded ? " collapsed" : ""
+                      }`}
+                      dangerouslySetInnerHTML={{ __html: html }}
+                    />
+                  )}
+                  {isCollapsible && (
+                    <button
+                      className={`card-toggle${isExpanded ? " expanded" : ""}`}
+                      onClick={() => toggleCard(cardKey)}
+                    >
+                      <span>{isExpanded ? "Show less" : "Show more"}</span>
+                      <IconChevronRight />
+                    </button>
+                  )}
+                  {!isJob && technologies && technologies.length > 0 && (
+                    <div className="coursework">
+                      <button
+                        className={`coursework-toggle${
+                          showCourses[i] ? " expanded" : ""
+                        }`}
+                        onClick={() => toggleCourses(i)}
+                      >
+                        <span>
+                          {showCourses[i]
+                            ? "Hide coursework"
+                            : "Show coursework"}
+                        </span>
+                        <IconChevronRight />
+                      </button>
+                      {showCourses[i] && (
+                        <p className="coursework-list">
+                          {technologies.map(tech => tech.name).join(" · ")}
+                        </p>
+                      )}
+                    </div>
+                  )}
+                </EntryListItem>
               )
             })}
-
-            <ArrowButton
-              onClick={handleNextClick}
-              disabled={activeTabId === activeData.length - 1}
-              aria-label="Next Tab"
-            >
-              &rarr;
-            </ArrowButton>
           </StyledTabList>
 
           {activeContentType === "publications" && hasMorePubs && (
@@ -624,76 +596,6 @@ const Experience = () => {
                 : `Show all ${filteredPublications.length} publications`}
             </ShowAllButton>
           )}
-
-          {/* Only show detail panels for non-publication content types */}
-          {activeContentType !== "publications" &&
-            displayData[activeTabId] &&
-            (() => {
-              const { frontmatter, html } = displayData[activeTabId].node
-              const { title, range, technologies } = frontmatter
-
-              return (
-                <StyledTabPanels>
-                  <StyledTabPanel
-                    id={`panel-${activeTabId}`}
-                    role="tabpanel"
-                    tabIndex="0"
-                    aria-labelledby={`tab-${activeTabId}`}
-                  >
-                    <h3>{title}</h3>
-
-                    {activeContentType === "education" && (
-                      <>
-                        <p className="edu-degree">{frontmatter.degree}</p>
-                        {frontmatter.gpa && (
-                          <p className="edu-meta">GPA: {frontmatter.gpa}</p>
-                        )}
-                      </>
-                    )}
-
-                    <p className="range">{range}</p>
-
-                    <div dangerouslySetInnerHTML={{ __html: html }} />
-
-                    {activeContentType === "education" &&
-                      technologies &&
-                      technologies.length > 0 && (
-                        <div className="coursework">
-                          <button
-                            className="coursework-toggle"
-                            onClick={() => toggleCourses(activeTabId)}
-                          >
-                            {showCourses[activeTabId]
-                              ? "Hide coursework"
-                              : "Show coursework"}
-                          </button>
-                          {showCourses[activeTabId] && (
-                            <p className="coursework-list">
-                              {technologies.map(tech => tech.name).join(" · ")}
-                            </p>
-                          )}
-                        </div>
-                      )}
-
-                    {activeContentType !== "education" && (
-                      <TechTagsContainer>
-                        {technologies &&
-                          technologies.map((tech, index) => (
-                            <TechTag
-                              key={index}
-                              href={tech.url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              {tech.name}
-                            </TechTag>
-                          ))}
-                      </TechTagsContainer>
-                    )}
-                  </StyledTabPanel>
-                </StyledTabPanels>
-              )
-            })()}
         </div>
       </StyledText>
     </StyledJobsSection>

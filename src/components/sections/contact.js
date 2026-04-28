@@ -3,11 +3,11 @@ import styled from "styled-components"
 // import { usePrefersReducedMotion } from "@hooks"
 
 const StyledContactSection = styled.section`
-  max-width: 100%;
+  max-width: 700px;
   width: 100%;
   margin: 0 auto;
   text-align: center;
-  padding: 60px 20px;
+  padding: 0;
   position: relative;
   z-index: 10;
 
@@ -17,11 +17,11 @@ const StyledContactSection = styled.section`
   transform: none !important;
 
   @media (min-width: 768px) {
-    padding: 80px 40px;
+    padding: 0;
   }
 
   @media (min-width: 1080px) {
-    padding: 100px 60px;
+    padding: 0;
   }
 
   .title {
@@ -83,7 +83,7 @@ const StyledContactSection = styled.section`
     }
 
     &::placeholder {
-      color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#6e6e73")};
+      color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
       font-size: 0.95rem;
     }
   }
@@ -305,7 +305,7 @@ const Contact = () => {
 
   return (
     <StyledContactSection id="contact" ref={revealContainer}>
-      <h2 className="title">Get In Touch</h2>
+      <h2 className="numbered-heading">Get In Touch</h2>
       <form ref={formRef} onSubmit={handleSubmit}>
         {currentStep === 1 && (
           <div style={{ width: "100%" }}>

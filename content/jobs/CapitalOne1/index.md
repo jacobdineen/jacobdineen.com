@@ -2,7 +2,6 @@
 date: "2024-12-29"
 title: "Ph.D. Internships in Data Science & Applied Research"
 company: "Capital One (Internships)"
-location: "Phoenix, AZ"
 range: "2020 - 2021"
 technologies:
   - name:

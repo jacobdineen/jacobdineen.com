@@ -20,14 +20,16 @@ const StyledMainContainer = styled.main`
     margin-bottom: 36px;
 
     h1 {
-      font-size: clamp(1.6rem, 4vw, 2.2rem);
-      font-weight: 600;
-      letter-spacing: -0.03em;
-      margin-bottom: 6px;
+      font-family: var(--font-serif);
+      font-size: clamp(1.85rem, 4vw, 2.5rem);
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+      font-variation-settings: "opsz" 96;
     }
 
     .subtitle {
-      color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#6e6e73")};
+      color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
       font-size: 0.88rem;
       font-weight: 400;
     }
@@ -62,7 +64,7 @@ const StyledFilters = styled.div`
     }
 
     &::placeholder {
-      color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#6e6e73")};
+      color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
     }
   }
 
@@ -80,7 +82,7 @@ const StyledPublicationsList = styled.div`
 const StyledPublication = styled.article`
   padding: 20px 0;
   border-bottom: 1px solid
-    ${({ theme }) => (theme.mode === "light" ? "#f0f0f0" : "#1d1d1f")};
+    ${({ theme }) => (theme.mode === "light" ? "#e5e5ea" : "#2d2d2d")};
 
   &:first-child {
     padding-top: 0;
@@ -91,11 +93,13 @@ const StyledPublication = styled.article`
   }
 
   h3 {
-    font-size: 0.95rem;
-    font-weight: 600;
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    font-weight: 500;
     margin-bottom: 6px;
-    letter-spacing: -0.01em;
-    line-height: 1.4;
+    letter-spacing: -0.015em;
+    line-height: 1.3;
+    font-variation-settings: "opsz" 96;
 
     a {
       color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
@@ -112,7 +116,7 @@ const StyledPublication = styled.article`
   }
 
   .authors {
-    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#86868b")};
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
     font-size: 0.8rem;
     margin-bottom: 6px;
     line-height: 1.5;
@@ -146,7 +150,7 @@ const StyledPublication = styled.article`
     flex-wrap: wrap;
 
     .venue {
-      color: ${({ theme }) => (theme.mode === "light" ? "#48484a" : "#a1a1a6")};
+      color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
       border: 1px solid
         ${({ theme }) => (theme.mode === "light" ? "#e5e5ea" : "#2d2d2d")};
       padding: 2px 8px;
@@ -154,12 +158,12 @@ const StyledPublication = styled.article`
     }
 
     .date {
-      color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#6e6e73")};
+      color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
     }
   }
 
   .abstract {
-    color: ${({ theme }) => (theme.mode === "light" ? "#48484a" : "#a1a1a6")};
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
     font-size: 0.82rem;
     line-height: 1.6;
     margin-bottom: 10px;
@@ -201,7 +205,7 @@ const StyledPublication = styled.article`
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#6e6e73")};
+      color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
       font-family: var(--font-mono);
       font-size: 0.7rem;
       text-decoration: none;
@@ -225,7 +229,7 @@ const StyledPublication = styled.article`
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#6e6e73")};
+      color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
       background: transparent;
       border: none;
       padding: 0;

@@ -2,7 +2,6 @@
 date: "2024-12-28"
 title: "Data Scientist"
 company: "Buffalo Check LLC"
-location: "Phoenix, AZ"
 range: "2015 - 2019"
 technologies:
   - name:

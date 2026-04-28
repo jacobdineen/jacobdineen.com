@@ -36,7 +36,7 @@ const SidebarIcons = styled.aside`
     background: transparent;
     border: none;
     border-radius: 6px;
-    color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#6e6e73")};
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
     transition: color 0.2s ease;
 
     &:hover {
@@ -108,30 +108,32 @@ const StyledText = styled.div`
   }
 
   h1 {
-    font-size: 1rem;
-    font-weight: 600;
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    font-weight: 500;
     color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
-    margin: 0 0 2px 0;
-    line-height: 1.3;
+    margin: 0 0 4px 0;
+    line-height: 1.15;
     letter-spacing: -0.02em;
+    font-variation-settings: "opsz" 96;
 
     @media (min-width: 768px) {
-      font-size: clamp(1.2rem, 2.5vw, 1.5rem);
-      margin: 0 0 4px 0;
+      font-size: clamp(1.85rem, 3.2vw, 2.3rem);
+      margin: 0 0 8px 0;
     }
   }
 
   h2 {
-    font-size: 0.72rem;
+    font-size: 0.82rem;
     font-weight: 400;
-    color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#6e6e73")};
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
     margin: 0 0 10px 0;
-    line-height: 1.3;
+    line-height: 1.4;
     letter-spacing: 0;
 
     @media (min-width: 768px) {
-      font-size: 0.82rem;
-      margin: 0 0 16px 0;
+      font-size: 1rem;
+      margin: 0 0 18px 0;
     }
   }
 
@@ -149,13 +151,13 @@ const StyledPic = styled.div`
   flex-shrink: 0;
 
   @media (min-width: 768px) {
-    width: 100px;
-    min-width: 100px;
+    width: 150px;
+    min-width: 150px;
   }
 
   @media (min-width: 1080px) {
-    width: 110px;
-    min-width: 110px;
+    width: 170px;
+    min-width: 170px;
   }
 
   .wrapper {
@@ -182,7 +184,7 @@ const About = () => {
     }
 
     sr.reveal(revealContainer.current, srConfig())
-  }, [])
+  }, [prefersReducedMotion])
 
   return (
     <>
@@ -193,8 +195,8 @@ const About = () => {
               <StaticImage
                 className="img"
                 src="../../images/me.jpg"
-                width={500}
-                quality={95}
+                width={340}
+                quality={80}
                 formats={["AUTO", "WEBP", "AVIF"]}
                 alt="Headshot"
               />
@@ -202,7 +204,7 @@ const About = () => {
           </StyledPic>
           <StyledText>
             <h1>Jacob Dineen</h1>
-            <h2>PhD Student &middot; Arizona State University</h2>
+            <h2>PhD Student, ASU &middot; AI/ML Engineer &amp; Researcher</h2>
             <SidebarIcons>
               <a href="https://github.com/jacobdineen" aria-label="GitHub">
                 <IconGitHub />

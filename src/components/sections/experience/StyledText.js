@@ -10,12 +10,14 @@ const StyledText = styled.div`
   width: 100%;
 
   h3 {
-    font-size: clamp(1.15rem, 3vw, 1.4rem);
-    font-weight: 600;
+    font-family: var(--font-serif);
+    font-size: clamp(2.2rem, 5vw, 3.2rem);
+    font-weight: 500;
     color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
-    margin: 0 0 12px 0;
-    line-height: 1.3;
-    letter-spacing: -0.025em;
+    margin: 0 0 18px 0;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    font-variation-settings: "opsz" 144;
   }
 
   h1 {
@@ -29,7 +31,7 @@ const StyledText = styled.div`
 
   p,
   div {
-    color: ${({ theme }) => (theme.mode === "light" ? "#48484a" : "#a1a1a6")};
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
     font-size: 0.88rem;
     line-height: 1.7;
   }

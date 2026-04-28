@@ -158,25 +158,6 @@ const mixins = {
     }
   `,
 
-  fancyList: css`
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    font-size: var(--fz-lg);
-    li {
-      position: relative;
-      padding-left: 24px;
-      margin-bottom: 10px;
-      &:before {
-        content: "•";
-        position: absolute;
-        left: 0;
-        color: var(--green);
-        font-weight: 600;
-      }
-    }
-  `,
-
   resetList: css`
     list-style: none;
     padding: 0;

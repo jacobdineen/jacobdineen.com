@@ -27,7 +27,7 @@ const StyledNewsSection = styled.section`
     gap: 12px;
     padding: 10px 0;
     border-bottom: 1px solid
-      ${({ theme }) => (theme.mode === "light" ? "#f0f0f0" : "#1d1d1f")};
+      ${({ theme }) => (theme.mode === "light" ? "#e5e5ea" : "#1d1d1f")};
 
     &:last-child {
       border-bottom: none;
@@ -36,7 +36,7 @@ const StyledNewsSection = styled.section`
 
   .news-date {
     font-family: var(--font-mono);
-    color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#6e6e73")};
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
     font-size: 0.72rem;
     font-weight: 400;
     white-space: nowrap;

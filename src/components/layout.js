@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useContext, useRef } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import { navigate, Link } from "gatsby"
 import PropTypes from "prop-types"
-import styled, { ThemeProvider, ThemeContext } from "styled-components"
-import { Head, Loader } from "@components"
+import styled, { ThemeProvider } from "styled-components"
+import { Head } from "@components"
 import theme from "@styles/theme"
 import GlobalStyle from "@styles/GlobalStyle"
 import About from "@components/sections/about"
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/react"
 
-const sections = ["publications", "experience", "news", "contact", "cv"]
+const sections = ["publications", "experience", "news", "cv", "contact"]
 
 // Check if current page is a detail page (not home, not listing pages)
 const isDetailPage = pathname => {
@@ -60,10 +60,12 @@ const StyledMinimalHeader = styled.header`
   }
 
   .site-name {
-    font-size: 0.95rem;
-    font-weight: 600;
+    font-size: 1.1rem;
+    font-weight: 500;
     color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+    font-family: var(--font-serif);
+    letter-spacing: -0.015em;
+    font-variation-settings: "opsz" 96;
   }
 `
 
@@ -100,9 +102,9 @@ const StyledContainer = styled.div`
   min-height: 100vh;
   position: relative;
 
-  /* Mobile: normal document flow */
+  /* Mobile: normal document flow. Avoid overflow-x:hidden — it breaks sticky. */
   @media (max-width: 767px) {
-    overflow-x: hidden;
+    overflow: visible;
   }
 
   /* Desktop: fixed sidebar layout */
@@ -115,18 +117,34 @@ const StyledContainer = styled.div`
 
 const StyledSidebar = styled.aside`
   width: 100%;
-  padding: 20px 16px;
+  padding: 14px 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
   background: ${({ theme }) =>
-    theme.mode === "light" ? "#f5f5f7" : "#000000"};
+    theme.mode === "light"
+      ? "rgba(245, 245, 247, 0.92)"
+      : "rgba(0, 0, 0, 0.92)"};
+  backdrop-filter: saturate(180%) blur(14px);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
   border-bottom: 1px solid
     ${({ theme }) => (theme.mode === "light" ? "#d2d2d7" : "#2d2d2d")};
-  z-index: 5;
-  position: relative;
+  z-index: 50;
   flex-shrink: 0;
   transition: background-color 0.15s ease, border-color 0.15s ease;
+
+  @media (max-width: 767px) {
+    position: sticky;
+    top: 0;
+    padding: 8px 12px;
+  }
+
+  @media (min-width: 768px) {
+    background: ${({ theme }) =>
+      theme.mode === "light" ? "#f5f5f7" : "#000000"};
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
 
   /* Hide full sidebar on detail pages on mobile */
   ${({ hideOnMobile }) =>
@@ -242,23 +260,15 @@ const StyledMainContent = styled.main`
     }
   }
 
-  /* Text color overrides for light mode */
+  /* Light-mode base colors. Component styles win for muted hierarchy. */
   ${({ theme }) =>
     theme.mode === "light" &&
     `
     h1, h2, h3, h4, h5, h6 {
       color: #1d1d1f;
     }
-    
-    p, li, span, div {
-      color: #1d1d1f;
-    }
-    
+
     .numbered-heading::before {
-      color: #0071e3;
-    }
-    
-    a {
       color: #0071e3;
     }
   `}
@@ -273,8 +283,7 @@ const ToggleWrapper = styled.div`
   flex-shrink: 0;
 
   @media (max-width: 767px) {
-    margin-top: 0;
-    gap: 6px;
+    display: none;
   }
 
   span {
@@ -282,7 +291,7 @@ const ToggleWrapper = styled.div`
     font-weight: 500;
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
       "Helvetica Neue", sans-serif;
-    color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#86868b")};
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
 
     @media (max-width: 767px) {
       font-size: 0.75rem;
@@ -309,7 +318,7 @@ const ToggleInput = styled.input`
   height: 0;
 
   &:checked + span {
-    background: #34c759;
+    background: #0071e3;
   }
 
   &:checked + span:before {
@@ -333,7 +342,7 @@ const Slider = styled.span`
   right: 0;
   bottom: 0;
   background: ${({ theme }) =>
-    theme.mode === "light" ? "#e5e5ea" : "#39393d"};
+    theme.mode === "light" ? "#d2d2d7" : "#39393d"};
   transition: background-color 0.2s ease;
   border-radius: 28px;
 
@@ -418,7 +427,7 @@ const StyledTabButton = styled.button`
         ? "#1d1d1f"
         : "#f5f5f7"
       : theme.mode === "light"
-      ? "#86868b"
+      ? "#6e6e73"
       : "#6e6e73"};
 
   ${({ isActive, theme }) =>
@@ -453,7 +462,6 @@ const StyledTabButton = styled.button`
 
 const ToggleSwitch = ({ label, onChange, initialChecked }) => {
   const [checked, setChecked] = useState(initialChecked)
-  const themeContext = useContext(ThemeContext)
 
   useEffect(() => {
     setChecked(initialChecked)
@@ -471,11 +479,8 @@ const ToggleSwitch = ({ label, onChange, initialChecked }) => {
     <ToggleWrapper>
       <span
         style={{
-          color:
-            themeContext.mode === "light"
-              ? "var(--dark-slate)"
-              : "var(--green)",
-          fontSize: "var(--fz-xxs)",
+          color: "#6e6e73",
+          fontSize: "0.7rem",
         }}
       >
         {label}
@@ -504,7 +509,6 @@ ToggleSwitch.defaultProps = {
 }
 
 const Layout = ({ children, location }) => {
-  const [isLoading, setIsLoading] = useState(location.pathname === "/")
   const [activeSection, setActiveSection] = useState("")
   const [showBackToTop, setShowBackToTop] = useState(false)
 
@@ -512,9 +516,9 @@ const Layout = ({ children, location }) => {
   const [themeMode, setThemeMode] = useState(() => {
     if (typeof window !== "undefined") {
       const savedTheme = localStorage.getItem("theme")
-      return savedTheme || "dark" // Default to dark if no preference saved
+      return savedTheme || "light" // Default to light if no preference saved
     }
-    return "dark"
+    return "light"
   })
 
   // Track scroll position for Back to Top button (mobile only)
@@ -536,7 +540,6 @@ const Layout = ({ children, location }) => {
   useEffect(() => {
     const handleScroll = () => {
       const sectionElements = sections
-        .filter(section => section !== "cv")
         .map(section => ({
           id: section,
           element: document.getElementById(section),
@@ -636,9 +639,7 @@ const Layout = ({ children, location }) => {
 
   const handleSectionClick = (e, section) => {
     e.preventDefault()
-    if (section === "cv") {
-      window.open("/cv/JacobDineen_CV.pdf", "_blank", "noopener,noreferrer")
-    } else if (section === "publications") {
+    if (section === "publications") {
       navigate("/publications")
     } else {
       const isHomePage = location && location.pathname === "/"
@@ -686,59 +687,55 @@ const Layout = ({ children, location }) => {
         <GlobalStyle />
         <Analytics />
         <SpeedInsights />
-        {isLoading ? (
-          <Loader finishLoading={() => setIsLoading(false)} />
-        ) : (
-          <StyledContainer>
-            {/* Minimal header for detail pages on mobile */}
-            {isDetailPage(location?.pathname) && (
-              <StyledMinimalHeader>
-                <Link to="/" className="back-link">
-                  ← Home
-                </Link>
-                <span className="site-name">Jacob Dineen</span>
-              </StyledMinimalHeader>
-            )}
+        <StyledContainer>
+          {/* Minimal header for detail pages on mobile */}
+          {isDetailPage(location?.pathname) && (
+            <StyledMinimalHeader>
+              <Link to="/" className="back-link">
+                ← Home
+              </Link>
+              <span className="site-name">Jacob Dineen</span>
+            </StyledMinimalHeader>
+          )}
 
-            <StyledSidebar
-              role="navigation"
-              aria-label="Main navigation"
-              hideOnMobile={isDetailPage(location?.pathname)}
-            >
-              <About />
-              <nav>
-                <ul>
-                  {sections.map(section => (
-                    <li key={section}>
-                      <StyledTabButton
-                        isActive={activeSection === section}
-                        onClick={e => handleSectionClick(e, section)}
-                        aria-current={
-                          activeSection === section ? "page" : undefined
-                        }
-                      >
-                        {section.charAt(0).toUpperCase() + section.slice(1)}
-                      </StyledTabButton>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-              <ToggleSwitch
-                label="Dark Mode"
-                onChange={toggleTheme}
-                initialChecked={themeMode === "dark"}
-              />
-            </StyledSidebar>
-            <StyledMainContent id="content">{children}</StyledMainContent>
-            <BackToTopButton
-              visible={showBackToTop}
-              onClick={scrollToTop}
-              aria-label="Back to top"
-            >
-              ↑
-            </BackToTopButton>
-          </StyledContainer>
-        )}
+          <StyledSidebar
+            role="navigation"
+            aria-label="Main navigation"
+            hideOnMobile={isDetailPage(location?.pathname)}
+          >
+            <About />
+            <nav>
+              <ul>
+                {sections.map(section => (
+                  <li key={section}>
+                    <StyledTabButton
+                      isActive={activeSection === section}
+                      onClick={e => handleSectionClick(e, section)}
+                      aria-current={
+                        activeSection === section ? "page" : undefined
+                      }
+                    >
+                      {section.charAt(0).toUpperCase() + section.slice(1)}
+                    </StyledTabButton>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            <ToggleSwitch
+              label={themeMode === "dark" ? "Dark" : "Light"}
+              onChange={toggleTheme}
+              initialChecked={themeMode === "dark"}
+            />
+          </StyledSidebar>
+          <StyledMainContent id="content">{children}</StyledMainContent>
+          <BackToTopButton
+            visible={showBackToTop}
+            onClick={scrollToTop}
+            aria-label="Back to top"
+          >
+            ↑
+          </BackToTopButton>
+        </StyledContainer>
       </ThemeProvider>
     </>
   )

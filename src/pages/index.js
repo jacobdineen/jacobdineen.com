@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import styled from "styled-components"
-import { Layout, Experience, News, Contact } from "@components"
+import { Layout, Experience, News, Cv, Contact, Footer } from "@components"
 
 const StyledMainContainer = styled.main`
   counter-reset: section;
@@ -26,7 +26,9 @@ const IndexPage = ({ location }) => (
     <StyledMainContainer className="fillHeight">
       <Experience />
       <News />
+      <Cv />
       <Contact />
+      <Footer />
     </StyledMainContainer>
   </Layout>
 )

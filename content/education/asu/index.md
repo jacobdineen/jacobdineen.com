@@ -13,4 +13,6 @@ technologies:
   - name: "Knowledge Representation"
 ---
 
-Advised by [Professor Ben Zhou](http://xuanyu.me/) @ [ARC Lab](https://arc-asu.github.io/).
+- LLM Research at [ARC Lab](https://arc-asu.github.io/), advised by [Professor Ben Zhou](http://xuanyu.me/).
+- Artificial Intelligence Research at [SEFCOM](https://sefcom.asu.edu/).
+- Learned to hack on [pwn.college](https://pwn.college/) (Green Belt, @jdin).

@@ -2,7 +2,6 @@
 date: "2024-12-27"
 title: "Optimization Analyst"
 company: "Voltari"
-location: "Phoenix, AZ"
 range: "2012 - 2015"
 technologies:
   - name:

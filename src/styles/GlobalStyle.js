@@ -25,18 +25,7 @@ const GlobalStyle = createGlobalStyle`
       theme.mode === "light"
         ? "rgba(0, 113, 227, 0.2)"
         : "rgba(41, 151, 255, 0.3)"};
-    color: ${({ theme }) =>
-      theme.mode === "light" ? "var(--light-navy)" : "var(--white)"};
-  }
-
-  :focus {
-    outline: 2px solid rgba(0, 113, 227, 0.5);
-    outline-offset: 2px;
-  }
-
-  :focus:not(:focus-visible) {
-    outline: none;
-    outline-offset: 0px;
+    color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
   }
 
   :focus-visible {
@@ -44,19 +33,31 @@ const GlobalStyle = createGlobalStyle`
     outline-offset: 2px;
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
   /* Scrollbar Styles */
   html {
     scrollbar-width: thin;
-    scrollbar-color: ${({ theme }) => theme.colors[theme.mode].darkSlate} ${({
-  theme,
-}) => theme.colors[theme.mode].navy};
+    scrollbar-color: ${({ theme }) =>
+      theme.mode === "light" ? "#a1a1a6" : "#48484a"} ${({ theme }) =>
+  theme.colors[theme.mode].background};
   }
   ::-webkit-scrollbar-track {
-    background: ${({ theme }) => theme.colors[theme.mode].navy};
+    background: ${({ theme }) => theme.colors[theme.mode].background};
   }
   ::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) => theme.colors[theme.mode].darkSlate};
-    border: 3px solid ${({ theme }) => theme.colors[theme.mode].navy};
+    background-color: ${({ theme }) =>
+      theme.mode === "light" ? "#a1a1a6" : "#48484a"};
+    border: 3px solid ${({ theme }) => theme.colors[theme.mode].background};
     border-radius: 10px;
   }
 
@@ -164,10 +165,19 @@ body {
     }
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1, h2, h3 {
+    color: ${({ theme }) => theme.colors[theme.mode].text};
+    font-family: var(--font-serif);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    font-variation-settings: "opsz" 96;
+  }
+
+  h4, h5, h6 {
     color: ${({ theme }) => theme.colors[theme.mode].text};
     font-weight: 600;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.02em;
     line-height: 1.3;
   }
 
@@ -460,29 +470,8 @@ body {
 
   ${PrismStyles};
 
-  /* Custom scrollbar for Firefox */
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: ${({ theme }) =>
-      theme.mode === "light"
-        ? "var(--light-slate)"
-        : "var(--dark-navy)"} transparent;
-  }
-
-  /* Custom scrollbar for Chrome, Edge, and Safari */
   *::-webkit-scrollbar {
     width: 8px;
-  }
-
-  *::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  *::-webkit-scrollbar-thumb {
-    background-color: ${({ theme }) =>
-      theme.mode === "light" ? "var(--light-slate)" : "var(--dark-navy)"};
-    border-radius: 6px;
-    border: 3px solid transparent;
   }
 `
 

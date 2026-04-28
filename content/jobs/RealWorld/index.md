@@ -2,7 +2,6 @@
 date: "2024-12-28"
 title: "Analyst and Business Intelligence"
 company: "Real World Marketing"
-location: "Phoenix, AZ"
 range: "2016 - 2019"
 technologies:
   - name:

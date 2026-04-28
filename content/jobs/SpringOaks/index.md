@@ -2,7 +2,6 @@
 date: "2024-12-31"
 title: "Machine Learning Engineer"
 company: "Spring Oaks Capital"
-location: "Phoenix, AZ"
 range: "2022 - 2025"
 ---
 

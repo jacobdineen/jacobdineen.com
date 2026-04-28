@@ -17,4 +17,4 @@ technologies:
   - name: "Research Hours"
 ---
 
-Advised by [Professor Madhav Marathe](https://engineering.virginia.edu/faculty/madhav-marathe).
+- Worked at the [Biocomplexity Institute and Initiative](https://biocomplexity.virginia.edu/) on graph dynamic systems and cooperative game theory / behavior modeling, advised by [Professor Madhav Marathe](https://engineering.virginia.edu/faculty/madhav-marathe).

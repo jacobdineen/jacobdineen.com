@@ -46,12 +46,14 @@ const StyledPublicationHeader = styled.header`
   margin-bottom: 40px;
 
   h1 {
-    font-size: clamp(28px, 5vw, 42px);
-    margin-bottom: 20px;
+    font-family: var(--font-serif);
+    font-size: clamp(1.6rem, 4.5vw, 2.6rem);
+    margin-bottom: 18px;
     color: ${({ theme }) => theme.colors[theme.mode].text};
-    font-weight: 700;
+    font-weight: 500;
     letter-spacing: -0.02em;
-    line-height: 1.2;
+    line-height: 1.15;
+    font-variation-settings: "opsz" 96;
   }
 
   .authors {
@@ -61,7 +63,7 @@ const StyledPublicationHeader = styled.header`
     line-height: 1.6;
 
     .me {
-      color: #0071e3;
+      color: ${({ theme }) => theme.colors[theme.mode].text};
       font-weight: 600;
     }
 
@@ -95,14 +97,15 @@ const StyledPublicationHeader = styled.header`
     flex-wrap: wrap;
 
     .venue {
-      color: #0071e3;
-      font-weight: 500;
-      padding: 4px 12px;
-      background: ${({ theme }) =>
-        theme.mode === "light"
-          ? "rgba(0, 113, 227, 0.1)"
-          : "rgba(0, 113, 227, 0.15)"};
-      border-radius: 980px;
+      color: ${({ theme }) => (theme.mode === "light" ? "#48484a" : "#a1a1a6")};
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 400;
+      padding: 3px 9px;
+      border: 1px solid
+        ${({ theme }) => (theme.mode === "light" ? "#d2d2d7" : "#2d2d2d")};
+      border-radius: 4px;
+      background: transparent;
     }
 
     .date {
