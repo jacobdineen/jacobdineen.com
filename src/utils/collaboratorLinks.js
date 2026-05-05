@@ -42,6 +42,8 @@ const collaboratorLinks = {
   "jaya adithya pavuluri": "https://search.asu.edu/profile/4283062",
   "sanika chavan":
     "https://scholar.google.com/citations?user=oiOf9EsAAAAJ&hl=en",
+  "taiwei shi": "https://taiweis.com/",
+  "jieyu zhao": "https://jyzhao.net/",
 }
 
 export default collaboratorLinks
