@@ -1,9 +1,9 @@
 ---
-title: "Mid-training with Self-Generated Data Improves Reinforcement Learning in Language Models"
+title: "Mid-Training With Diverse Self-Generated Data Improves Reinforcement Learning in Language Models"
 slug: "/publications/midtraining-2026"
 authors: Aswin RRV, Jacob Dineen, Divij Handa, Mihir Parmar, Ben Zhou, Chitta Baral, Swaroop Mishra
 date: 2026-01-01
-venue: "Pending ICML 2026"
+venue: "Pending NeurIPS 2026"
 collection: publications
-abstract: ""
+abstract: "The effectiveness of Reinforcement Learning (RL) in Large Language Models (LLMs) depends on the nature and diversity of the data used before and during RL. In particular, reasoning problems can often be approached in multiple ways that rely on different forms of reasoning, and exposure to only a limited range of such approaches in the training data may limit the effectiveness of RL. Motivated by this, we investigate using diverse self-generated data during mid-training as an intermediate step before RL training. Specifically, we adopt a bootstrapped data-generation framework guided by George Pólya's problem-solving approaches for generating multiple variants of correct answers for each question in the training data, and then perform fine-tuning. We first provide a theoretical perspective on how mid-training on such data improves RL and explain how policy-gradient updates can incentivize combining multiple approaches. We then empirically demonstrate that RL-trained models initialized with our mid-training data achieve consistent improvements in pass@64 across six mathematical reasoning benchmarks, yielding an average gain of 3.4% over the vanilla RL baseline."
 ---
