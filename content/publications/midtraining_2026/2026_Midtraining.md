@@ -1,7 +1,7 @@
 ---
 title: "Mid-Training With Diverse Self-Generated Data Improves Reinforcement Learning in Language Models"
 slug: "/publications/midtraining-2026"
-authors: Aswin RRV, Jacob Dineen, Divij Handa, Mihir Parmar, Ben Zhou, Chitta Baral, Swaroop Mishra
+authors: Aswin RRV, Jacob Dineen, Divij Handa, Mihir Parmar, Ben Zhou, Swaroop Mishra, Chitta Baral
 date: 2026-01-01
 venue: "Pending NeurIPS 2026"
 collection: publications
