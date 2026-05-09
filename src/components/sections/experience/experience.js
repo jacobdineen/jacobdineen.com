@@ -192,6 +192,7 @@ const Experience = () => {
               slides
               abstract
               bibtex
+              tags
               technologies {
                 name
               }
@@ -236,6 +237,7 @@ const Experience = () => {
   const [pubQuery, setPubQuery] = useState("")
   const [pubYear, setPubYear] = useState("All")
   const [pubVenue, setPubVenue] = useState("All")
+  const [pubTag, setPubTag] = useState("All")
 
   const pubYears = useMemo(() => {
     const set = new Set()
@@ -255,6 +257,14 @@ const Experience = () => {
     return Array.from(set).sort()
   }, [publicationsData])
 
+  const pubTags = useMemo(() => {
+    const set = new Set()
+    publicationsData.forEach(({ node }) => {
+      (node.frontmatter.tags || []).forEach(t => t && set.add(t))
+    })
+    return Array.from(set).sort()
+  }, [publicationsData])
+
   const filteredPublications = useMemo(() => {
     const q = pubQuery.trim().toLowerCase()
     return publicationsData.filter(({ node }) => {
@@ -262,13 +272,14 @@ const Experience = () => {
       const y = fm.date ? new Date(fm.date).getFullYear().toString() : ""
       const matchesYear = pubYear === "All" || y === String(pubYear)
       const matchesVenue = pubVenue === "All" || fm.venue === pubVenue
-      const hay = `${fm.title || ""} ${fm.authors || ""} ${
-        fm.venue || ""
-      }`.toLowerCase()
+      const matchesTag = pubTag === "All" || (fm.tags || []).includes(pubTag)
+      const hay = `${fm.title || ""} ${fm.authors || ""} ${fm.venue || ""} ${(
+        fm.tags || []
+      ).join(" ")}`.toLowerCase()
       const matchesQuery = q === "" || hay.includes(q)
-      return matchesYear && matchesVenue && matchesQuery
+      return matchesYear && matchesVenue && matchesTag && matchesQuery
     })
-  }, [publicationsData, pubQuery, pubYear, pubVenue])
+  }, [publicationsData, pubQuery, pubYear, pubVenue, pubTag])
 
   useEffect(() => {
     if (prefersReducedMotion) {
@@ -413,6 +424,20 @@ const Experience = () => {
                   </option>
                 ))}
               </select>
+              {pubTags.length > 0 && (
+                <select
+                  value={pubTag}
+                  onChange={e => setPubTag(e.target.value)}
+                  aria-label="Filter by tag"
+                >
+                  <option value="All">All tags</option>
+                  {pubTags.map(t => (
+                    <option key={t} value={t}>
+                      {t}
+                    </option>
+                  ))}
+                </select>
+              )}
             </StyledFilters>
           )}
           <StyledTabList>
@@ -517,6 +542,21 @@ const Experience = () => {
                         </Link>
                       )}
                     </div>
+                    {frontmatter.tags && frontmatter.tags.length > 0 && (
+                      <div className="tags">
+                        {frontmatter.tags.map(t => (
+                          <button
+                            key={t}
+                            type="button"
+                            className={`tag${pubTag === t ? " active" : ""}`}
+                            onClick={() => setPubTag(pubTag === t ? "All" : t)}
+                            aria-label={`Filter by tag ${t}`}
+                          >
+                            {t}
+                          </button>
+                        ))}
+                      </div>
+                    )}
                   </PublicationListItem>
                 )
               }

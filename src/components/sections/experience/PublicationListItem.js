@@ -126,6 +126,40 @@ const PublicationListItem = styled.div`
     }
   }
 
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+  }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.04em;
+    text-transform: lowercase;
+    padding: 2px 8px;
+    border-radius: 999px;
+    border: 1px solid
+      ${({ theme }) => (theme.mode === "light" ? "#e5e5ea" : "#2d2d2d")};
+    background: transparent;
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
+    cursor: pointer;
+    transition: color 0.1s ease, border-color 0.1s ease,
+      background-color 0.1s ease;
+
+    &:hover {
+      color: #0071e3;
+      border-color: #0071e3;
+    }
+
+    &.active {
+      color: #ffffff;
+      background: #0071e3;
+      border-color: #0071e3;
+    }
+  }
+
   @media (max-width: 768px) {
     padding: 14px 16px;
 
