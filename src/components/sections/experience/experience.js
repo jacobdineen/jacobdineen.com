@@ -88,7 +88,7 @@ const ContentTypeButton = styled.button`
 
 const StyledFilters = styled.div`
   display: grid;
-  grid-template-columns: 1fr 140px 160px;
+  grid-template-columns: 1fr 130px 150px 130px;
   gap: 10px;
   margin: 10px auto 20px auto;
   max-width: 900px;
@@ -260,7 +260,7 @@ const Experience = () => {
   const pubTags = useMemo(() => {
     const set = new Set()
     publicationsData.forEach(({ node }) => {
-      (node.frontmatter.tags || []).forEach(t => t && set.add(t))
+      ;(node.frontmatter.tags || []).forEach(t => t && set.add(t))
     })
     return Array.from(set).sort()
   }, [publicationsData])
