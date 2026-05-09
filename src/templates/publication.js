@@ -373,6 +373,7 @@ const PublicationTemplate = ({ data, location }) => {
     code,
     slug,
     slides,
+    tags,
   } = frontmatter
 
   // Parse authors for meta tags
@@ -499,9 +500,33 @@ const PublicationTemplate = ({ data, location }) => {
         {/* Open Graph */}
         <meta property="og:title" content={title} />
         <meta property="og:type" content="article" />
+        <meta property="og:url" content={`${siteUrl}${slug}`} />
         {abstract && (
           <meta
             property="og:description"
+            content={abstract.substring(0, 200)}
+          />
+        )}
+        <meta
+          property="article:published_time"
+          content={publicationDate.toISOString()}
+        />
+        {authorList.map((author, i) => (
+          <meta
+            key={`og-author-${i}`}
+            property="article:author"
+            content={author}
+          />
+        ))}
+        {(tags || []).map((t, i) => (
+          <meta key={`og-tag-${i}`} property="article:tag" content={t} />
+        ))}
+
+        {/* Twitter card per-pub overrides (site defaults set in head.js) */}
+        <meta name="twitter:title" content={title} />
+        {abstract && (
+          <meta
+            name="twitter:description"
             content={abstract.substring(0, 200)}
           />
         )}
@@ -512,16 +537,32 @@ const PublicationTemplate = ({ data, location }) => {
             "@context": "https://schema.org",
             "@type": "ScholarlyArticle",
             headline: title,
+            name: title,
             author: authorList.map(name => ({
               "@type": "Person",
-              name: name,
+              name,
             })),
             datePublished: publicationDate.toISOString().split("T")[0],
-            publisher: venue || "arXiv",
-            abstract: abstract,
-            url: `https://jacobdineen.com${slug}`,
-            ...(arxiv && { sameAs: arxiv }),
-            ...(paperurl && { url: paperurl }),
+            inLanguage: "en",
+            ...(venue && {
+              publisher: { "@type": "Organization", name: venue },
+            }),
+            ...(abstract && { abstract }),
+            ...(tags && tags.length > 0 && { keywords: tags }),
+            url: `${siteUrl}${slug}`,
+            mainEntityOfPage: `${siteUrl}${slug}`,
+            ...((arxiv || semanticscholar || googlescholar || paperurl) && {
+              sameAs: [arxiv, semanticscholar, googlescholar, paperurl].filter(
+                Boolean
+              ),
+            }),
+            ...(arxivId && {
+              identifier: {
+                "@type": "PropertyValue",
+                propertyID: "arXiv",
+                value: arxivId,
+              },
+            }),
           })}
         </script>
       </Helmet>
@@ -728,6 +769,7 @@ export const pageQuery = graphql`
         paperurl
         code
         slides
+        tags
       }
     }
   }
