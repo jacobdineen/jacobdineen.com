@@ -574,7 +574,15 @@ const PublicationTemplate = ({ data, location }) => {
         </span>
 
         <StyledPublicationHeader>
-          <h1>{title}</h1>
+          <h1
+            style={{
+              viewTransitionName: slug
+                ? `pub-title-${slug.replace(/\W+/g, "-")}`
+                : undefined,
+            }}
+          >
+            {title}
+          </h1>
           <p className="authors">{renderAuthors(authors)}</p>
           {venue && (
             <div className="meta">

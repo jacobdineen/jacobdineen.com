@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useEffect } from "react"
-import { Link, graphql, withPrefix } from "gatsby"
+import { graphql, withPrefix } from "gatsby"
+import TransitionLink from "@utils/TransitionLink"
 import collaboratorLinks from "@utils/collaboratorLinks"
 import { Helmet } from "react-helmet"
 import PropTypes from "prop-types"
@@ -420,8 +421,14 @@ const PublicationsPage = ({ location, data }) => {
 
               return (
                 <StyledPublication key={i}>
-                  <h3>
-                    <Link to={slug}>{title}</Link>
+                  <h3
+                    style={{
+                      viewTransitionName: slug
+                        ? `pub-title-${slug.replace(/\W+/g, "-")}`
+                        : undefined,
+                    }}
+                  >
+                    <TransitionLink to={slug}>{title}</TransitionLink>
                   </h3>
                   <p className="authors">{renderAuthors(authors)}</p>
                   <div className="meta">

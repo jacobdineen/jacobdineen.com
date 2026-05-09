@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from "react"
-import { useStaticQuery, graphql, Link, withPrefix } from "gatsby"
+import { useStaticQuery, graphql, withPrefix } from "gatsby"
+import TransitionLink from "@utils/TransitionLink"
 import styled from "styled-components"
 import { srConfig } from "@config"
 import sr from "@utils/sr"
@@ -260,7 +261,7 @@ const Experience = () => {
   const pubTags = useMemo(() => {
     const set = new Set()
     publicationsData.forEach(({ node }) => {
-      ;(node.frontmatter.tags || []).forEach(t => t && set.add(t))
+      (node.frontmatter.tags || []).forEach(t => t && set.add(t))
     })
     return Array.from(set).sort()
   }, [publicationsData])
@@ -459,13 +460,21 @@ const Experience = () => {
                 return (
                   <PublicationListItem key={i}>
                     {frontmatter.slug ? (
-                      <span className="title">
-                        <Link
+                      <span
+                        className="title"
+                        style={{
+                          viewTransitionName: `pub-title-${frontmatter.slug.replace(
+                            /\W+/g,
+                            "-"
+                          )}`,
+                        }}
+                      >
+                        <TransitionLink
                           to={frontmatter.slug}
                           style={{ textDecoration: "none", color: "inherit" }}
                         >
                           {title || "N/A"}
-                        </Link>
+                        </TransitionLink>
                       </span>
                     ) : (
                       <span className="title">{title || "N/A"}</span>
@@ -532,14 +541,14 @@ const Experience = () => {
                         </a>
                       )}
                       {frontmatter.slug && (
-                        <Link
+                        <TransitionLink
                           to={frontmatter.slug}
                           className="chip-link"
                           aria-label={`More details for ${title}`}
                         >
                           <span>details</span>
                           <IconChevronRight />
-                        </Link>
+                        </TransitionLink>
                       )}
                     </div>
                     {frontmatter.tags && frontmatter.tags.length > 0 && (
