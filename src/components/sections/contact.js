@@ -315,6 +315,7 @@ const Contact = () => {
               value={formData.name}
               onChange={handleChange}
               placeholder={namePlaceholder}
+              aria-label="Your name"
               required
             />
             <div className="button-group">
@@ -330,6 +331,7 @@ const Contact = () => {
               value={formData.email}
               onChange={handleChange}
               placeholder={emailPlaceholder}
+              aria-label="Your email address"
               required
             />
             <div className="button-group">
@@ -345,6 +347,7 @@ const Contact = () => {
               value={formData.message}
               onChange={handleChange}
               placeholder={messagePlaceholder}
+              aria-label="Your message"
               required
             />
             <div className="button-group">

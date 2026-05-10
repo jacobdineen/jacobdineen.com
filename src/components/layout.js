@@ -44,7 +44,7 @@ const StyledMinimalHeader = styled.header`
     display: flex;
     align-items: center;
     gap: 6px;
-    color: #0071e3;
+    color: #005bb5; /* WCAG AA on #f5f5f7 (was #0071e3 — 4.31:1, now 6.05:1) */
     font-size: 0.9rem;
     font-weight: 500;
     text-decoration: none;

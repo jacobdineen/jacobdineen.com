@@ -93,7 +93,7 @@ const StyledPublication = styled.article`
     border-bottom: none;
   }
 
-  h3 {
+  h2 {
     font-family: var(--font-serif);
     font-size: 1.05rem;
     font-weight: 500;
@@ -421,7 +421,7 @@ const PublicationsPage = ({ location, data }) => {
 
               return (
                 <StyledPublication key={i}>
-                  <h3
+                  <h2
                     style={{
                       viewTransitionName: slug
                         ? `pub-title-${slug.replace(/\W+/g, "-")}`
@@ -429,7 +429,7 @@ const PublicationsPage = ({ location, data }) => {
                     }}
                   >
                     <TransitionLink to={slug}>{title}</TransitionLink>
-                  </h3>
+                  </h2>
                   <p className="authors">{renderAuthors(authors)}</p>
                   <div className="meta">
                     {venue && <span className="venue">{venue}</span>}
@@ -442,7 +442,7 @@ const PublicationsPage = ({ location, data }) => {
                         href={arxiv}
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label={`Open arXiv for ${title}`}
+                        aria-label={`arXiv — ${title}`}
                       >
                         <Icon name="Arxiv" />
                         arXiv
@@ -453,7 +453,7 @@ const PublicationsPage = ({ location, data }) => {
                         href={paperurl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label={`Open PDF for ${title}`}
+                        aria-label={`PDF — ${title}`}
                       >
                         <Icon name="External" />
                         PDF
@@ -464,7 +464,7 @@ const PublicationsPage = ({ location, data }) => {
                         href={withPrefix(slides)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label={`Open slides for ${title}`}
+                        aria-label={`Slides — ${title}`}
                       >
                         <Icon name="Slides" />
                         Slides
@@ -475,7 +475,7 @@ const PublicationsPage = ({ location, data }) => {
                         href={code}
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label={`Open code repository for ${title}`}
+                        aria-label={`Code — ${title}`}
                       >
                         <Icon name="GitHub" />
                         Code
@@ -486,7 +486,7 @@ const PublicationsPage = ({ location, data }) => {
                         href={googlescholar}
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label={`Open Google Scholar for ${title}`}
+                        aria-label={`Google Scholar — ${title}`}
                       >
                         <Icon name="GScholar" />
                         Scholar
@@ -497,7 +497,7 @@ const PublicationsPage = ({ location, data }) => {
                         href={semanticscholar}
                         target="_blank"
                         rel="noopener noreferrer"
-                        aria-label={`Open Semantic Scholar for ${title}`}
+                        aria-label={`Semantic Scholar — ${title}`}
                       >
                         <Icon name="SemanticScholar" />
                         Semantic

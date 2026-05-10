@@ -13,10 +13,20 @@ const PublicationListItem = styled.div`
   background: transparent;
   color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
   transition: border-color 0.1s ease;
+  position: relative;
+
+  ${({ featuredAccent }) =>
+    featuredAccent &&
+    `
+      border-left-width: 3px;
+      border-left-color: #0071e3;
+      padding-left: 18px;
+    `}
 
   &:hover {
     border-color: ${({ theme }) =>
       theme.mode === "light" ? "#a1a1a6" : "#424245"};
+    ${({ featuredAccent }) => featuredAccent && `border-left-color: #0071e3;`}
   }
 
   .title {

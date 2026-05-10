@@ -278,7 +278,7 @@ const Experience = () => {
   const pubTags = useMemo(() => {
     const set = new Set()
     publicationsData.forEach(({ node }) => {
-      ;(node.frontmatter.tags || []).forEach(t => t && set.add(t))
+      (node.frontmatter.tags || []).forEach(t => t && set.add(t))
     })
     return Array.from(set).sort()
   }, [publicationsData])
@@ -380,7 +380,7 @@ const Experience = () => {
     })
   }
 
-  const renderPublicationCard = (node, key) => {
+  const renderPublicationCard = (node, key, inFeaturedRow = false) => {
     const { frontmatter } = node
     const { venue, title, date } = frontmatter
     const formatted = date
@@ -392,8 +392,11 @@ const Experience = () => {
     const isArxivPdf =
       frontmatter.paperurl && /arxiv\.org/.test(frontmatter.paperurl)
 
+    const isFeaturedInMainList =
+      typeof frontmatter.featured === "number" && !inFeaturedRow
+
     return (
-      <PublicationListItem key={key}>
+      <PublicationListItem key={key} featuredAccent={isFeaturedInMainList}>
         {frontmatter.slug ? (
           <span
             className="title"
@@ -427,7 +430,7 @@ const Experience = () => {
               rel="noopener noreferrer"
               className="chip-link"
               title="arXiv"
-              aria-label={`Open arXiv for ${title}`}
+              aria-label={`arxiv — ${title}`}
             >
               <IconArxiv />
               <span>arxiv</span>
@@ -440,7 +443,7 @@ const Experience = () => {
               rel="noopener noreferrer"
               className="chip-link"
               title="PDF"
-              aria-label={`Open PDF for ${title}`}
+              aria-label={`pdf — ${title}`}
             >
               <IconExternal />
               <span>pdf</span>
@@ -453,7 +456,7 @@ const Experience = () => {
               rel="noopener noreferrer"
               className="chip-link"
               title="Slides"
-              aria-label={`Open slides for ${title}`}
+              aria-label={`slides — ${title}`}
             >
               <IconSlides />
               <span>slides</span>
@@ -466,7 +469,7 @@ const Experience = () => {
               rel="noopener noreferrer"
               className="chip-link"
               title="Code"
-              aria-label={`Open code repository for ${title}`}
+              aria-label={`code — ${title}`}
             >
               <IconGitHub />
               <span>code</span>
@@ -476,7 +479,7 @@ const Experience = () => {
             <TransitionLink
               to={frontmatter.slug}
               className="chip-link"
-              aria-label={`More details for ${title}`}
+              aria-label={`details — ${title}`}
             >
               <span>details</span>
               <IconChevronRight />
@@ -592,7 +595,7 @@ const Experience = () => {
                 <h4>Selected work</h4>
                 <StyledTabList>
                   {featuredPublications.map(({ node }, i) =>
-                    renderPublicationCard(node, `featured-${i}`)
+                    renderPublicationCard(node, `featured-${i}`, true)
                   )}
                 </StyledTabList>
               </StyledFeaturedSection>

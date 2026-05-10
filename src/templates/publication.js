@@ -421,7 +421,12 @@ const PublicationTemplate = ({ data, location }) => {
     if (isPdf) {
       return (
         <>
-          <object className="embed" data={slidesPath} type="application/pdf">
+          <object
+            className="embed"
+            data={slidesPath}
+            type="application/pdf"
+            aria-label={`Slides for ${title}`}
+          >
             <p className="fallback">
               PDF preview unavailable. <a href={slidesPath}>Download PDF</a>
             </p>
@@ -597,7 +602,7 @@ const PublicationTemplate = ({ data, location }) => {
               href={arxiv}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={`Open arXiv for ${title}`}
+              aria-label={`arXiv — ${title}`}
             >
               <Icon name="Arxiv" />
               arXiv
@@ -608,7 +613,7 @@ const PublicationTemplate = ({ data, location }) => {
               href={googlescholar}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={`Open Google Scholar for ${title}`}
+              aria-label={`Google Scholar — ${title}`}
             >
               <Icon name="GScholar" />
               Google Scholar
@@ -619,7 +624,7 @@ const PublicationTemplate = ({ data, location }) => {
               href={semanticscholar}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={`Open Semantic Scholar for ${title}`}
+              aria-label={`Semantic Scholar — ${title}`}
             >
               <Icon name="SemanticScholar" />
               Semantic Scholar
@@ -630,7 +635,7 @@ const PublicationTemplate = ({ data, location }) => {
               href={paperurl}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={`Open PDF for ${title}`}
+              aria-label={`PDF — ${title}`}
             >
               <Icon name="External" />
               PDF
@@ -641,7 +646,7 @@ const PublicationTemplate = ({ data, location }) => {
               href={code}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={`Open code repository for ${title}`}
+              aria-label={`Code — ${title}`}
             >
               <Icon name="GitHub" />
               Code
@@ -652,7 +657,7 @@ const PublicationTemplate = ({ data, location }) => {
               href={withPrefix(slides)}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label={`Open slides for ${title}`}
+              aria-label={`Slides — ${title}`}
             >
               <Icon name="Slides" />
               Slides
