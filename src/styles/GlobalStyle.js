@@ -60,6 +60,38 @@ const GlobalStyle = createGlobalStyle`
     animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
   }
 
+  /* Heading anchors injected by gatsby-remark-autolink-headers */
+  .anchor-link {
+    margin-left: 6px;
+    opacity: 0;
+    color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#6e6e73")};
+    transition: opacity 0.12s ease, color 0.12s ease;
+    vertical-align: middle;
+    display: inline-block;
+
+    svg {
+      vertical-align: middle;
+    }
+
+    &:after {
+      display: none;
+    }
+  }
+  h2:hover > .anchor-link,
+  h3:hover > .anchor-link,
+  h4:hover > .anchor-link,
+  .anchor-link:focus {
+    opacity: 1;
+  }
+  .anchor-link:hover {
+    color: #0071e3;
+  }
+
+  /* Smooth scroll to anchor (defers to reduced-motion media block above) */
+  html {
+    scroll-padding-top: 24px;
+  }
+
   /* Scrollbar Styles */
   html {
     scrollbar-width: thin;

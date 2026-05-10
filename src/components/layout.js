@@ -9,7 +9,18 @@ import About from "@components/sections/about"
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/react"
 
-const sections = ["publications", "experience", "news", "cv", "contact"]
+const sections = [
+  "publications",
+  "collaborators",
+  "experience",
+  "news",
+  "cv",
+  "contact",
+]
+const STANDALONE_PAGES = {
+  publications: "/publications",
+  collaborators: "/collaborators",
+}
 
 // Check if current page is a detail page (not home, not listing pages)
 const isDetailPage = pathname => {
@@ -600,10 +611,13 @@ const Layout = ({ children, location }) => {
     }
   }, [themeMode])
 
-  // Highlight Publications tab on publications route
+  // Highlight matching standalone-page tab when on its route
   useEffect(() => {
-    if (location && location.pathname.startsWith("/publications")) {
+    if (!location) return
+    if (location.pathname.startsWith("/publications")) {
       setActiveSection("publications")
+    } else if (location.pathname.startsWith("/collaborators")) {
+      setActiveSection("collaborators")
     }
   }, [location])
 
@@ -639,8 +653,8 @@ const Layout = ({ children, location }) => {
 
   const handleSectionClick = (e, section) => {
     e.preventDefault()
-    if (section === "publications") {
-      navigate("/publications")
+    if (STANDALONE_PAGES[section]) {
+      navigate(STANDALONE_PAGES[section])
     } else {
       const isHomePage = location && location.pathname === "/"
       if (!isHomePage) {

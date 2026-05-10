@@ -10,6 +10,12 @@ const SECTION_ITEMS = [
     path: "/publications",
   },
   {
+    id: "section-collaborators",
+    type: "section",
+    title: "Collaborators",
+    path: "/collaborators",
+  },
+  {
     id: "section-experience",
     type: "section",
     title: "Experience",

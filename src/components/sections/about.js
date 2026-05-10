@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react"
+import { Link } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
 import styled from "styled-components"
 import { srConfig } from "@config"
@@ -121,6 +122,20 @@ const StyledText = styled.div`
       font-size: clamp(1.85rem, 3.2vw, 2.3rem);
       margin: 0 0 8px 0;
     }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.15s ease;
+
+      &:after {
+        display: none;
+      }
+
+      &:hover {
+        color: #0071e3;
+      }
+    }
   }
 
   h2 {
@@ -160,17 +175,26 @@ const StyledPic = styled.div`
     min-width: 170px;
   }
 
-  .wrapper {
+  a {
     display: block;
     position: relative;
     width: 100%;
     border-radius: 50%;
+    transition: opacity 0.15s ease;
 
-    .img {
-      position: relative;
-      border-radius: 50%;
-      box-shadow: none;
+    &:after {
+      display: none;
     }
+
+    &:hover {
+      opacity: 0.85;
+    }
+  }
+
+  .img {
+    position: relative;
+    border-radius: 50%;
+    box-shadow: none;
   }
 `
 
@@ -191,7 +215,7 @@ const About = () => {
       <StyledAboutSection id="about" ref={revealContainer}>
         <div className="inner">
           <StyledPic>
-            <div className="wrapper">
+            <Link to="/" aria-label="Home">
               <StaticImage
                 className="img"
                 src="../../images/me.jpg"
@@ -200,10 +224,12 @@ const About = () => {
                 formats={["AUTO", "WEBP", "AVIF"]}
                 alt="Headshot"
               />
-            </div>
+            </Link>
           </StyledPic>
           <StyledText>
-            <h1>Jacob Dineen</h1>
+            <h1>
+              <Link to="/">Jacob Dineen</Link>
+            </h1>
             <h2>PhD Student, ASU &middot; AI/ML Engineer &amp; Researcher</h2>
             <SidebarIcons>
               <a href="https://github.com/jacobdineen" aria-label="GitHub">
