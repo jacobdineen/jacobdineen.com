@@ -5,7 +5,8 @@ authors: Jacob Dineen, Aswin RRV, Zhikun Xu, Ben Zhou
 date: 2026-01-02
 venue: "Pending COLM 2026"
 collection: publications
-tags: [rl, training]
+tags: [rl, post-training, self-play, reasoning]
+featured: 2
 arxiv: "https://arxiv.org/abs/2604.03472"
 semanticscholar: "https://www.semanticscholar.org/paper/6a758138df371e7386112005d64cd31c29cd5039"
 paperurl: "https://arxiv.org/pdf/2604.03472"

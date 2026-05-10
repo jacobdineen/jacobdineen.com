@@ -135,6 +135,22 @@ const IntroText = styled.p`
   }
 `
 
+const StyledFeaturedSection = styled.section`
+  margin: 0 auto 28px;
+  max-width: 900px;
+
+  h4 {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
+    margin: 0 0 12px;
+    padding-left: 2px;
+  }
+`
+
 const ShowAllButton = styled.button`
   display: block;
   margin: 12px auto 4px;
@@ -194,6 +210,7 @@ const Experience = () => {
               abstract
               bibtex
               tags
+              featured
               technologies {
                 name
               }
@@ -261,9 +278,15 @@ const Experience = () => {
   const pubTags = useMemo(() => {
     const set = new Set()
     publicationsData.forEach(({ node }) => {
-      (node.frontmatter.tags || []).forEach(t => t && set.add(t))
+      ;(node.frontmatter.tags || []).forEach(t => t && set.add(t))
     })
     return Array.from(set).sort()
+  }, [publicationsData])
+
+  const featuredPublications = useMemo(() => {
+    return publicationsData
+      .filter(({ node }) => typeof node.frontmatter.featured === "number")
+      .sort((a, b) => a.node.frontmatter.featured - b.node.frontmatter.featured)
   }, [publicationsData])
 
   const filteredPublications = useMemo(() => {
@@ -357,6 +380,128 @@ const Experience = () => {
     })
   }
 
+  const renderPublicationCard = (node, key) => {
+    const { frontmatter } = node
+    const { venue, title, date } = frontmatter
+    const formatted = date
+      ? new Date(date).toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "short",
+        })
+      : null
+    const isArxivPdf =
+      frontmatter.paperurl && /arxiv\.org/.test(frontmatter.paperurl)
+
+    return (
+      <PublicationListItem key={key}>
+        {frontmatter.slug ? (
+          <span
+            className="title"
+            style={{
+              viewTransitionName: `pub-title-${frontmatter.slug.replace(
+                /\W+/g,
+                "-"
+              )}`,
+            }}
+          >
+            <TransitionLink
+              to={frontmatter.slug}
+              style={{ textDecoration: "none", color: "inherit" }}
+            >
+              {title || "N/A"}
+            </TransitionLink>
+          </span>
+        ) : (
+          <span className="title">{title || "N/A"}</span>
+        )}
+        {frontmatter.authors && (
+          <span className="authors">{renderAuthors(frontmatter.authors)}</span>
+        )}
+        <div className="meta">
+          {venue && <span className="chip">{venue}</span>}
+          {formatted && <span className="date">{formatted}</span>}
+          {frontmatter.arxiv && (
+            <a
+              href={frontmatter.arxiv}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="chip-link"
+              title="arXiv"
+              aria-label={`Open arXiv for ${title}`}
+            >
+              <IconArxiv />
+              <span>arxiv</span>
+            </a>
+          )}
+          {frontmatter.paperurl && (!isArxivPdf || !frontmatter.arxiv) && (
+            <a
+              href={frontmatter.paperurl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="chip-link"
+              title="PDF"
+              aria-label={`Open PDF for ${title}`}
+            >
+              <IconExternal />
+              <span>pdf</span>
+            </a>
+          )}
+          {frontmatter.slides && (
+            <a
+              href={withPrefix(frontmatter.slides)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="chip-link"
+              title="Slides"
+              aria-label={`Open slides for ${title}`}
+            >
+              <IconSlides />
+              <span>slides</span>
+            </a>
+          )}
+          {frontmatter.code && (
+            <a
+              href={frontmatter.code}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="chip-link"
+              title="Code"
+              aria-label={`Open code repository for ${title}`}
+            >
+              <IconGitHub />
+              <span>code</span>
+            </a>
+          )}
+          {frontmatter.slug && (
+            <TransitionLink
+              to={frontmatter.slug}
+              className="chip-link"
+              aria-label={`More details for ${title}`}
+            >
+              <span>details</span>
+              <IconChevronRight />
+            </TransitionLink>
+          )}
+        </div>
+        {frontmatter.tags && frontmatter.tags.length > 0 && (
+          <div className="tags">
+            {frontmatter.tags.map(t => (
+              <button
+                key={t}
+                type="button"
+                className={`tag${pubTag === t ? " active" : ""}`}
+                onClick={() => setPubTag(pubTag === t ? "All" : t)}
+                aria-label={`Filter by tag ${t}`}
+              >
+                {t}
+              </button>
+            ))}
+          </div>
+        )}
+      </PublicationListItem>
+    )
+  }
+
   return (
     <StyledJobsSection id="experience" ref={revealContainer}>
       <StyledText>
@@ -441,134 +586,24 @@ const Experience = () => {
               )}
             </StyledFilters>
           )}
+          {activeContentType === "publications" &&
+            featuredPublications.length > 0 && (
+              <StyledFeaturedSection>
+                <h4>Selected work</h4>
+                <StyledTabList>
+                  {featuredPublications.map(({ node }, i) =>
+                    renderPublicationCard(node, `featured-${i}`)
+                  )}
+                </StyledTabList>
+              </StyledFeaturedSection>
+            )}
           <StyledTabList>
             {displayData.map(({ node }, i) => {
-              const { frontmatter } = node
-              const { company, venue, title, date } = frontmatter
-
               if (activeContentType === "publications") {
-                const formatted = date
-                  ? new Date(date).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "short",
-                    })
-                  : null
-                const isArxivPdf =
-                  frontmatter.paperurl &&
-                  /arxiv\.org/.test(frontmatter.paperurl)
-
-                return (
-                  <PublicationListItem key={i}>
-                    {frontmatter.slug ? (
-                      <span
-                        className="title"
-                        style={{
-                          viewTransitionName: `pub-title-${frontmatter.slug.replace(
-                            /\W+/g,
-                            "-"
-                          )}`,
-                        }}
-                      >
-                        <TransitionLink
-                          to={frontmatter.slug}
-                          style={{ textDecoration: "none", color: "inherit" }}
-                        >
-                          {title || "N/A"}
-                        </TransitionLink>
-                      </span>
-                    ) : (
-                      <span className="title">{title || "N/A"}</span>
-                    )}
-                    {frontmatter.authors && (
-                      <span className="authors">
-                        {renderAuthors(frontmatter.authors)}
-                      </span>
-                    )}
-                    <div className="meta">
-                      {venue && <span className="chip">{venue}</span>}
-                      {formatted && <span className="date">{formatted}</span>}
-                      {frontmatter.arxiv && (
-                        <a
-                          href={frontmatter.arxiv}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="chip-link"
-                          title="arXiv"
-                          aria-label={`Open arXiv for ${title}`}
-                        >
-                          <IconArxiv />
-                          <span>arxiv</span>
-                        </a>
-                      )}
-                      {frontmatter.paperurl &&
-                        (!isArxivPdf || !frontmatter.arxiv) && (
-                          <a
-                            href={frontmatter.paperurl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="chip-link"
-                            title="PDF"
-                            aria-label={`Open PDF for ${title}`}
-                          >
-                            <IconExternal />
-                            <span>pdf</span>
-                          </a>
-                        )}
-                      {frontmatter.slides && (
-                        <a
-                          href={withPrefix(frontmatter.slides)}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="chip-link"
-                          title="Slides"
-                          aria-label={`Open slides for ${title}`}
-                        >
-                          <IconSlides />
-                          <span>slides</span>
-                        </a>
-                      )}
-                      {frontmatter.code && (
-                        <a
-                          href={frontmatter.code}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="chip-link"
-                          title="Code"
-                          aria-label={`Open code repository for ${title}`}
-                        >
-                          <IconGitHub />
-                          <span>code</span>
-                        </a>
-                      )}
-                      {frontmatter.slug && (
-                        <TransitionLink
-                          to={frontmatter.slug}
-                          className="chip-link"
-                          aria-label={`More details for ${title}`}
-                        >
-                          <span>details</span>
-                          <IconChevronRight />
-                        </TransitionLink>
-                      )}
-                    </div>
-                    {frontmatter.tags && frontmatter.tags.length > 0 && (
-                      <div className="tags">
-                        {frontmatter.tags.map(t => (
-                          <button
-                            key={t}
-                            type="button"
-                            className={`tag${pubTag === t ? " active" : ""}`}
-                            onClick={() => setPubTag(pubTag === t ? "All" : t)}
-                            aria-label={`Filter by tag ${t}`}
-                          >
-                            {t}
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </PublicationListItem>
-                )
+                return renderPublicationCard(node, i)
               }
+              const { frontmatter } = node
+              const { company, venue, title } = frontmatter
 
               const isJob = activeContentType === "jobs"
               const cardTitle = isJob ? title : frontmatter.degree

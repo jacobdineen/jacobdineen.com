@@ -7,7 +7,7 @@ venue: "Pending COLM 2026"
 arxiv: https://arxiv.org/abs/2506.15662
 paperurl: "https://arxiv.org/pdf/2506.15662.pdf"
 collection: publications
-tags: [reasoning, rl]
+tags: [rl, post-training, reasoning]
 abstract: "Large language models excel at many tasks but still struggle with consistent, robust reasoning. We introduce Cohort-based Consistency Learning (CC-Learn), a reinforcement learning framework that improves the reliability of LLM reasoning by training on cohorts of similar questions derived from shared programmatic abstractions. To enforce cohort-level consistency, we define a composite objective combining cohort accuracy, a retrieval bonus for effective problem decomposition, and a rejection penalty for trivial or invalid lookups that reinforcement learning can directly optimize, unlike supervised fine-tuning. Optimizing this reward guides the model to adopt uniform reasoning patterns across all cohort members. Experiments on challenging reasoning benchmarks (including ARC-Challenge and StrategyQA) show that CC-Learn boosts both accuracy and reasoning stability over pretrained and SFT baselines. These results demonstrate that cohort-level RL effectively enhances reasoning consistency in LLMs."
 bibtex: |
   @misc{ye2025cclearn,

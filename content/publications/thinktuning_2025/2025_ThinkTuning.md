@@ -8,7 +8,8 @@ arxiv: https://arxiv.org/abs/2508.07616
 paperurl: "https://arxiv.org/pdf/2508.07616.pdf"
 code: https://github.com/3rdAT/ThinkTuning
 collection: publications
-tags: [reasoning, training, rl]
+tags: [rl, post-training, reasoning]
+featured: 3
 semanticscholar: https://www.semanticscholar.org/paper/ThinkTuning%3A-Instilling-Cognitive-Reflections-Rrv-Dineen/bd882244d2d84d7a455fdd1af5198f8fbdcdd228
 slides: "/slides/ThinkTuningSlides.pdf"
 abstract: |

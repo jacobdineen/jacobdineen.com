@@ -5,6 +5,6 @@ authors: Zhaonan Li, Kyle R. Chickering, Bangzheng Li, Jacob Dineen, Xiao Ye, Zh
 date: 2025-11-02
 venue: "CVPR Workshop on Visual Concepts (VisCon), 2026"
 collection: publications
-tags: [multimodal, evaluation]
+tags: [multimodal, evaluation, reasoning]
 abstract: ""
 ---
