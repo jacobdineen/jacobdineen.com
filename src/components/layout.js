@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react"
 import { navigate, Link } from "gatsby"
 import PropTypes from "prop-types"
 import styled, { ThemeProvider } from "styled-components"
-import { Head } from "@components"
+import { Head, CommandPalette } from "@components"
 import theme from "@styles/theme"
 import GlobalStyle from "@styles/GlobalStyle"
 import About from "@components/sections/about"
@@ -735,6 +735,7 @@ const Layout = ({ children, location }) => {
           >
             ↑
           </BackToTopButton>
+          <CommandPalette />
         </StyledContainer>
       </ThemeProvider>
     </>
