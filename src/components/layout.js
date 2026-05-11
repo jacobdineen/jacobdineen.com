@@ -213,12 +213,38 @@ const StyledSidebar = styled.aside`
 
       ul {
         flex-direction: row;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 4px;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        gap: 2px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        padding: 0 4px;
+        /* Soft fade at edges so it reads as scrollable */
+        mask-image: linear-gradient(
+          to right,
+          transparent,
+          black 12px,
+          black calc(100% - 12px),
+          transparent
+        );
+        -webkit-mask-image: linear-gradient(
+          to right,
+          transparent,
+          black 12px,
+          black calc(100% - 12px),
+          transparent
+        );
+
+        &::-webkit-scrollbar {
+          display: none;
+        }
 
         li {
           width: auto;
+          flex-shrink: 0;
         }
       }
     }
@@ -453,8 +479,9 @@ const StyledTabButton = styled.button`
   `}
 
   @media (max-width: 767px) {
-    font-size: 0.76rem;
+    font-size: 0.74rem;
     padding: 6px 10px;
+    border-radius: 999px;
   }
 
   &:hover {
