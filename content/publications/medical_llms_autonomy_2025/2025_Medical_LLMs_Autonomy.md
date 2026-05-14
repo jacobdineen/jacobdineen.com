@@ -6,7 +6,7 @@ date: 2025-10-20
 venue: "arXiv preprint"
 arxiv: https://arxiv.org/abs/2510.17764
 paperurl: "https://arxiv.org/pdf/2510.17764.pdf"
-googlescholar: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=WKurvcoAAAAJ&citation_for_view=WKurvcoAAAAJ:UebtZRa9Y70C
+googlescholar: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=2sYaEtQAAAAJ&citation_for_view=2sYaEtQAAAAJ:UeHWp8X0CEIC
 semanticscholar: https://www.semanticscholar.org/paper/Evaluating-Medical-LLMs-by-Levels-of-Autonomy%3A-A-to-Ye-Dineen/80b4730c8b96de7273725688552b8547cd2566ee
 collection: publications
 tags: [medical, agents, evaluation, survey]

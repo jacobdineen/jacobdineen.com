@@ -6,6 +6,7 @@ date: 2025-10-09
 venue: "Pending COLM 2026"
 arxiv: https://arxiv.org/abs/2510.08569
 paperurl: "https://arxiv.org/pdf/2510.08569.pdf"
+googlescholar: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=2sYaEtQAAAAJ&citation_for_view=2sYaEtQAAAAJ:Y0pCki6q_DkC
 semanticscholar: https://www.semanticscholar.org/paper/ArenaBencher%3A-Automatic-Benchmark-Evolution-via-Liu-Dineen/588205ed40fa03b87bfb4741e69f22a513265b61
 collection: publications
 tags: [evaluation, agents, robustness]

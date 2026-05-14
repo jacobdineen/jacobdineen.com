@@ -6,6 +6,7 @@ date: 2025-01-02
 venue: "EMNLP 2025"
 arxiv: https://arxiv.org/abs/2506.08123
 paperurl: "https://arxiv.org/pdf/2506.08123.pdf"
+googlescholar: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=2sYaEtQAAAAJ&citation_for_view=2sYaEtQAAAAJ:9yKSN-GCB0IC
 semanticscholar: https://www.semanticscholar.org/paper/QA-LIGN%3A-Aligning-LLMs-through-Constitutionally-QA-Dineen-Rrv/706b4a2e443aaf81039aa1f531ad75a4e53c7ab6
 collection: publications
 tags: [rl, post-training, alignment, interpretability]

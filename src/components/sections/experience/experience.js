@@ -151,6 +151,18 @@ const StyledFeaturedSection = styled.section`
   }
 `
 
+const StyledSectionLabel = styled.h4`
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
+  margin: 0 auto 12px;
+  padding-left: 2px;
+  max-width: 900px;
+`
+
 const ShowAllButton = styled.button`
   display: block;
   margin: 12px auto 4px;
@@ -278,7 +290,7 @@ const Experience = () => {
   const pubTags = useMemo(() => {
     const set = new Set()
     publicationsData.forEach(({ node }) => {
-      (node.frontmatter.tags || []).forEach(t => t && set.add(t))
+      ;(node.frontmatter.tags || []).forEach(t => t && set.add(t))
     })
     return Array.from(set).sort()
   }, [publicationsData])
@@ -599,6 +611,10 @@ const Experience = () => {
                   )}
                 </StyledTabList>
               </StyledFeaturedSection>
+            )}
+          {activeContentType === "publications" &&
+            featuredPublications.length > 0 && (
+              <StyledSectionLabel>All publications</StyledSectionLabel>
             )}
           <StyledTabList>
             {displayData.map(({ node }, i) => {

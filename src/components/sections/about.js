@@ -245,7 +245,7 @@ const About = () => {
                 <IconTwitter />
               </a>
               <a
-                href="https://scholar.google.com/citations?user=WKurvcoAAAAJ&hl=en"
+                href="https://scholar.google.com/citations?user=2sYaEtQAAAAJ&hl=en"
                 aria-label="Google Scholar"
               >
                 <IconGScholar />

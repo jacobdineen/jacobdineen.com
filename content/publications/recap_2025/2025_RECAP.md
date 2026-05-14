@@ -6,6 +6,7 @@ date: 2026-01-01
 venue: "Clinical NLP Workshop 2026 (Oral)"
 arxiv: https://arxiv.org/abs/2509.10746
 paperurl: "https://arxiv.org/pdf/2509.10746.pdf"
+googlescholar: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=2sYaEtQAAAAJ&citation_for_view=2sYaEtQAAAAJ:d1gkVwhDpl0C
 semanticscholar: https://www.semanticscholar.org/paper/RECAP%3A-Transparent-Inference-Time-Emotion-Alignment-Srinivasan-Dineen/c0486a9634c8540adba69c818b35be74c2249c00
 collection: publications
 tags: [inference-time, medical, alignment]

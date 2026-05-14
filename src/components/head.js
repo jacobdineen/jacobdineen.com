@@ -89,7 +89,7 @@ const Head = ({ title, description, image }) => {
           sameAs: [
             "https://github.com/jacobdineen",
             "https://www.linkedin.com/in/jacobdineen/",
-            "https://scholar.google.com/citations?user=WKurvcoAAAAJ",
+            "https://scholar.google.com/citations?user=2sYaEtQAAAAJ",
           ],
           alumniOf: [
             {
