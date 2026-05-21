@@ -94,7 +94,7 @@ const News = () => (
         <span className="news-date">Apr 2026</span>
         <span className="news-text">
           <a href="/publications/visual-analogies-2025">VisAnalog</a> accepted
-          at the CVPR Workshop on Visual Concepts (VisCon) 2026.
+          at the CVPR Workshop on Visual Concepts (VisCon) 2026 (Oral).
         </span>
       </li>
       <li className="news-item">
