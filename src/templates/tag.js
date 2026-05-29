@@ -1,10 +1,10 @@
-import React from 'react';
-import { Link, graphql } from 'gatsby';
-import kebabCase from 'lodash/kebabCase';
-import PropTypes from 'prop-types';
-import { Helmet } from 'react-helmet';
-import styled from 'styled-components';
-import { Layout } from '@components';
+import React from "react"
+import { Link, graphql } from "gatsby"
+import kebabCase from "lodash/kebabCase"
+import PropTypes from "prop-types"
+import { Helmet } from "react-helmet"
+import styled from "styled-components"
+import { Layout } from "@components"
 
 const StyledTagsContainer = styled.main`
   max-width: 1000px;
@@ -43,11 +43,11 @@ const StyledTagsContainer = styled.main`
       }
     }
   }
-`;
+`
 
 const TagTemplate = ({ pageContext, data, location }) => {
-  const { tag } = pageContext;
-  const { edges } = data.allMarkdownRemark;
+  const { tag } = pageContext
+  const { edges } = data.allMarkdownRemark
 
   return (
     <Layout location={location}>
@@ -68,7 +68,7 @@ const TagTemplate = ({ pageContext, data, location }) => {
 
         <ul className="fancy-list">
           {edges.map(({ node }) => {
-            const { title, slug, date, tags } = node.frontmatter;
+            const { title, slug, date, tags } = node.frontmatter
             return (
               <li key={slug}>
                 <h2>
@@ -76,31 +76,35 @@ const TagTemplate = ({ pageContext, data, location }) => {
                 </h2>
                 <p className="subtitle">
                   <time>
-                    {new Date(date).toLocaleDateString('en-US', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
+                    {new Date(date).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
                     })}
                   </time>
                   <span>&nbsp;&mdash;&nbsp;</span>
                   {tags &&
                     tags.length > 0 &&
                     tags.map((tag, i) => (
-                      <Link key={i} to={`/pensieve/tags/${kebabCase(tag)}/`} className="tag">
+                      <Link
+                        key={i}
+                        to={`/pensieve/tags/${kebabCase(tag)}/`}
+                        className="tag"
+                      >
                         #{tag}
                       </Link>
                     ))}
                 </p>
               </li>
-            );
+            )
           })}
         </ul>
       </StyledTagsContainer>
     </Layout>
-  );
-};
+  )
+}
 
-export default TagTemplate;
+export default TagTemplate
 
 TagTemplate.propTypes = {
   pageContext: PropTypes.shape({
@@ -116,18 +120,18 @@ TagTemplate.propTypes = {
               title: PropTypes.string.isRequired,
             }),
           }),
-        }).isRequired,
+        }).isRequired
       ),
     }),
   }),
   location: PropTypes.object,
-};
+}
 
 export const pageQuery = graphql`
-  query($tag: String!) {
+  query ($tag: String!) {
     allMarkdownRemark(
       limit: 2000
-      sort: { fields: [frontmatter___date], order: DESC }
+      sort: { frontmatter: { date: DESC } }
       filter: { frontmatter: { tags: { in: [$tag] } } }
     ) {
       totalCount
@@ -144,4 +148,4 @@ export const pageQuery = graphql`
       }
     }
   }
-`;
+`
