@@ -185,7 +185,7 @@ const Experience = () => {
     query {
       jobs: allMarkdownRemark(
         filter: { fileAbsolutePath: { regex: "/content/jobs/" } }
-        sort: { fields: [frontmatter___date], order: DESC }
+        sort: { frontmatter: { date: DESC } }
       ) {
         edges {
           node {
@@ -203,7 +203,7 @@ const Experience = () => {
       }
       publications: allMarkdownRemark(
         filter: { fileAbsolutePath: { regex: "/content/publications/" } }
-        sort: { fields: [frontmatter___date], order: DESC }
+        sort: { frontmatter: { date: DESC } }
       ) {
         edges {
           node {
@@ -233,7 +233,7 @@ const Experience = () => {
       }
       education: allMarkdownRemark(
         filter: { fileAbsolutePath: { regex: "/content/education/" } }
-        sort: { fields: [frontmatter___date], order: DESC }
+        sort: { frontmatter: { date: DESC } }
       ) {
         edges {
           node {
@@ -290,7 +290,7 @@ const Experience = () => {
   const pubTags = useMemo(() => {
     const set = new Set()
     publicationsData.forEach(({ node }) => {
-      ;(node.frontmatter.tags || []).forEach(t => t && set.add(t))
+      (node.frontmatter.tags || []).forEach(t => t && set.add(t))
     })
     return Array.from(set).sort()
   }, [publicationsData])
