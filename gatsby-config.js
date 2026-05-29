@@ -25,7 +25,7 @@ module.exports = {
         icon: "src/images/logo.png",
       },
     },
-    `gatsby-plugin-offline`,
+    `gatsby-plugin-remove-serviceworker`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -143,12 +143,6 @@ module.exports = {
             },
           },
         ],
-      },
-    },
-    {
-      resolve: `gatsby-plugin-google-analytics`,
-      options: {
-        trackingId: "UA-45666519-2",
       },
     },
   ],
