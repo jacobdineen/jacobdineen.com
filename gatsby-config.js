@@ -1,4 +1,6 @@
 module.exports = {
+  // Gatsby 5 changed the default to "always", which broke the per-paper
+  // template query (slugs in markdown have no trailing slash).
   trailingSlash: "never",
   siteMetadata: {
     title: "Jacob Dineen",
