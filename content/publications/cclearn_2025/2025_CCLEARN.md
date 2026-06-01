@@ -8,12 +8,13 @@ arxiv: https://arxiv.org/abs/2506.15662
 paperurl: "https://arxiv.org/pdf/2506.15662.pdf"
 googlescholar: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=2sYaEtQAAAAJ&citation_for_view=2sYaEtQAAAAJ:IjCSPb-OGe4C
 collection: publications
-tags: [rl, post-training, reasoning]
-abstract: "Large language models excel at many tasks but still struggle with consistent, robust reasoning. We introduce Cohort-based Consistency Learning (CC-Learn), a reinforcement learning framework that improves the reliability of LLM reasoning by training on cohorts of similar questions derived from shared programmatic abstractions. To enforce cohort-level consistency, we define a composite objective combining cohort accuracy, a retrieval bonus for effective problem decomposition, and a rejection penalty for trivial or invalid lookups that reinforcement learning can directly optimize, unlike supervised fine-tuning. Optimizing this reward guides the model to adopt uniform reasoning patterns across all cohort members. Experiments on challenging reasoning benchmarks (including ARC-Challenge and StrategyQA) show that CC-Learn boosts both accuracy and reasoning stability over pretrained and SFT baselines. These results demonstrate that cohort-level RL effectively enhances reasoning consistency in LLMs."
+tags: [rl, reasoning, program-synthesis, interpretability]
+abstract: |
+  In high-stakes settings, a correct answer from a large language model (LLM) is not enough: the decision procedure must also be auditable. Free-form chain-of-thought is poorly suited to this: it is a natural-language rationale rather than an explicit rule, and may not faithfully reflect the computation that produced the answer. We instead have the model emit a short executable program whose execution defines the answer, making the decision logic explicit and checkable. The central challenge is not writing runnable code but producing logic that is complete and reusable rather than an instance-specific shortcut. Our hypothesis is that a genuine reasoning rule survives factual substitution while a shortcut does not; hence consistency across a cohort of factually varied questions is a verifiable signal of reuse. We therefore train a single program to run unchanged across each cohort, using consistency as the main reinforcement-learning signal. Across five in-domain and three out-of-domain benchmarks at two model scales, our method delivers 10–20 absolute-point gains over strong vanilla, SFT, and per-instance RL baselines. Together, these results show that cohort consistency is an effective, checkable signal for learning complete and reusable reasoning.
 bibtex: |
   @misc{ye2025cclearn,
-    title={CC-LEARN: Cohort-based Consistency Learning}, 
-    author={Xiao Ye and Shaswat Shrivastava and Zhaonan Li and Jacob Dineen and Shijie Lu and Avneet Ahuja and Ming Shen and Zhikun Xu and Ben Zhou},
+    title={Learning Verifiable Reasoning Programs through Cohort Consistency},
+    author={Xiao Ye and Zhaonan Li and Jacob Dineen and Zhikun Xu and Shijie Lu and Ming Shen and Shaswat Shrivastava and Avneet Ahuja and Ben Zhou},
     year={2025},
     eprint={2506.15662},
     archivePrefix={arXiv},
