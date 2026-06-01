@@ -5,7 +5,7 @@ module.exports = {
   siteMetadata: {
     title: "Jacob Dineen",
     description: "Jacob Dineen: CS PhD Student / ML Engineer",
-    siteUrl: "https://jacobdineen.com", // No trailing slash allowed!
+    siteUrl: "https://www.jacobdineen.com", // No trailing slash allowed!
     image: "/og.png", // Path to your image you placed in the 'static' folder
   },
   plugins: [
