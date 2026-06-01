@@ -3,7 +3,7 @@ title: "Skill Reuse as Compression in Agentic RL"
 slug: "/publications/skill-reuse-2026"
 authors: Zhikun Xu, Yu Feng, Jacob Dineen, Taiwei Shi, Jieyu Zhao, Ben Zhou
 date: 2026-05-29
-venue: "Pending NeurIPS 2026"
+venue: "Pending EMNLP 2026"
 arxiv: https://arxiv.org/abs/2605.31509
 paperurl: "https://arxiv.org/pdf/2605.31509.pdf"
 semanticscholar: https://www.semanticscholar.org/paper/Skill-Reuse-as-Compression-in-Agentic-RL-Xu-Feng/3a5f9c55e401a7809c5fa822df2d56dabd3ec9d1
