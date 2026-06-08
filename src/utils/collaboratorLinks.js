@@ -51,6 +51,8 @@ const collaboratorLinks = {
   "shaswat shrivastava":
     "https://www.linkedin.com/in/shaswat-shrivastava-b0944b191/",
   "chaowei xiao": "https://xiaocw11.github.io/",
+  "bangzheng li":
+    "https://scholar.google.com/citations?user=UcegV-cAAAAJ&hl=en",
 }
 
 export default collaboratorLinks
