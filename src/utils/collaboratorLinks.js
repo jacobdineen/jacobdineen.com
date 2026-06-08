@@ -53,6 +53,8 @@ const collaboratorLinks = {
   "chaowei xiao": "https://xiaocw11.github.io/",
   "bangzheng li":
     "https://scholar.google.com/citations?user=UcegV-cAAAAJ&hl=en",
+  "siyi liu": "https://liusiyi641.github.io/",
+  "ngoc minh thu le": "https://openreview.net/profile?id=~Ngoc_Minh_Thu_Le1",
 }
 
 export default collaboratorLinks
