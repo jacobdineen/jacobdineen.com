@@ -448,6 +448,20 @@ const PublicationsPage = ({ location, data }) => {
                         arXiv
                       </a>
                     )}
+                    {arxiv && (
+                      <a
+                        href={arxiv.replace(
+                          /^https?:\/\/(www\.)?arxiv\.org\b/,
+                          "https://www.alphaxiv.org"
+                        )}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`alphaXiv — ${title}`}
+                      >
+                        <Icon name="Alphaxiv" />
+                        alphaXiv
+                      </a>
+                    )}
                     {paperurl && (!isArxivPdf || !arxiv) && (
                       <a
                         href={paperurl}

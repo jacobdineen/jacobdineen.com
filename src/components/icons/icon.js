@@ -6,6 +6,7 @@ import {
   IconGitHub,
   IconLinkedin,
   IconArxiv,
+  IconAlphaxiv,
   IconSemanticScholar,
   IconGScholar,
   IconTwitter,
@@ -26,6 +27,8 @@ const Icon = ({ name }) => {
       return <IconLinkedin />
     case "Arxiv":
       return <IconArxiv />
+    case "Alphaxiv":
+      return <IconAlphaxiv />
     case "SemanticScholar":
       return <IconSemanticScholar />
     case "Gmail":

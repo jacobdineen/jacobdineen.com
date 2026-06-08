@@ -609,6 +609,20 @@ const PublicationTemplate = ({ data, location }) => {
               arXiv
             </a>
           )}
+          {arxiv && (
+            <a
+              href={arxiv.replace(
+                /^https?:\/\/(www\.)?arxiv\.org\b/,
+                "https://www.alphaxiv.org"
+              )}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`alphaXiv — ${title}`}
+            >
+              <Icon name="Alphaxiv" />
+              alphaXiv
+            </a>
+          )}
           {googlescholar && (
             <a
               href={googlescholar}

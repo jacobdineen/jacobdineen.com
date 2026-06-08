@@ -12,6 +12,7 @@ import StyledTabList from "./StyledTabList"
 import PublicationListItem from "./PublicationListItem"
 import {
   IconArxiv,
+  IconAlphaxiv,
   IconGitHub,
   IconExternal,
   IconChevronRight,
@@ -446,6 +447,22 @@ const Experience = () => {
             >
               <IconArxiv />
               <span>arxiv</span>
+            </a>
+          )}
+          {frontmatter.arxiv && (
+            <a
+              href={frontmatter.arxiv.replace(
+                /^https?:\/\/(www\.)?arxiv\.org\b/,
+                "https://www.alphaxiv.org"
+              )}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="chip-link"
+              title="alphaXiv"
+              aria-label={`alphaxiv — ${title}`}
+            >
+              <IconAlphaxiv />
+              <span>alphaxiv</span>
             </a>
           )}
           {frontmatter.paperurl && (!isArxivPdf || !frontmatter.arxiv) && (
