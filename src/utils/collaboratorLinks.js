@@ -55,6 +55,10 @@ const collaboratorLinks = {
     "https://scholar.google.com/citations?user=UcegV-cAAAAJ&hl=en",
   "siyi liu": "https://liusiyi641.github.io/",
   "ngoc minh thu le": "https://openreview.net/profile?id=~Ngoc_Minh_Thu_Le1",
+  "mau son nguyen": "https://www.linkedin.com/in/17s-sonnynguyen/",
+  "evan zhu": "https://www.linkedin.com/in/ezhucs1/",
+  "kevin song": "https://www.linkedin.com/in/kevin-song-b1a80a302/",
+  "young min cho": "https://jeffreych0.github.io/",
 }
 
 export default collaboratorLinks
