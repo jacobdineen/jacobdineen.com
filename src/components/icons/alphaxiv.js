@@ -3,25 +3,24 @@ import React from "react"
 const IconAlphaxiv = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 24 24"
+    viewBox="0 0 718.41 504.47"
     aria-hidden="true"
     fill="currentColor"
     className="icon-alphaxiv"
   >
     <title>alphaXiv</title>
-    <text
-      x="50%"
-      y="58%"
-      dominantBaseline="middle"
-      textAnchor="middle"
-      fontFamily="serif"
-      fontSize="20"
-      fontStyle="italic"
-      fontWeight="600"
+    <polygon
       fill="currentColor"
-    >
-      α
-    </text>
+      points="591.15 258.54 718.41 385.73 663.72 440.28 536.57 313.62 591.15 258.54"
+    />
+    <path
+      fill="currentColor"
+      d="M273.86.3c34.56-2.41,67.66,9.73,92.51,33.54l94.64,94.63-55.11,54.55-96.76-96.55c-16.02-12.7-37.67-12.1-53.19,1.11L54.62,288.82,0,234.23,204.76,29.57C223.12,13.31,249.27,2.02,273.86.3Z"
+    />
+    <path
+      fill="currentColor"
+      d="M663.79,1.29l54.62,54.58-418.11,417.9c-114.43,95.94-263.57-53.49-167.05-167.52l160.46-160.33,54.62,54.58-157.88,157.77c-33.17,40.32,18.93,91.41,58.66,57.48L663.79,1.29Z"
+    />
   </svg>
 )
 
