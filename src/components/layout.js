@@ -11,8 +11,9 @@ import { SpeedInsights } from "@vercel/speed-insights/react"
 
 const sections = [
   "publications",
-  "collaborators",
+  "education",
   "experience",
+  "collaborators",
   "news",
   "cv",
   "contact",
@@ -20,6 +21,14 @@ const sections = [
 const STANDALONE_PAGES = {
   publications: "/publications",
   collaborators: "/collaborators",
+}
+// Sidebar items that deep-link to the in-page experience section with a
+// specific content-type tab pre-selected. Maps sidebar id -> element id
+// to scroll to, and the activeContentType to broadcast to the experience
+// component (via the experience-tab custom event).
+const EXPERIENCE_TABS = {
+  education: { scrollTo: "experience", tab: "education" },
+  experience: { scrollTo: "experience", tab: "jobs" },
 }
 
 // Check if current page is a detail page (not home, not listing pages)
@@ -602,7 +611,13 @@ const Layout = ({ children, location }) => {
           scrollPosition >= offsetTop &&
           scrollPosition < offsetTop + offsetHeight
         ) {
-          setActiveSection(id)
+          // Preserve education / experience-jobs sidebar highlight while
+          // scrolled over the shared #experience element.
+          setActiveSection(prev => {
+            const alias = EXPERIENCE_TABS[prev]
+            if (alias && alias.scrollTo === id) return prev
+            return id
+          })
           return
         }
       }
@@ -683,9 +698,20 @@ const Layout = ({ children, location }) => {
     if (STANDALONE_PAGES[section]) {
       navigate(STANDALONE_PAGES[section])
     } else {
+      const tabConfig = EXPERIENCE_TABS[section]
+      const targetSection = tabConfig ? tabConfig.scrollTo : section
       const isHomePage = location && location.pathname === "/"
       if (!isHomePage) {
-        navigate(`/#${section}`)
+        // Off-home navigation needs the tab signal to ride along; the
+        // landing effect on the home page picks it up from sessionStorage.
+        if (tabConfig) {
+          try {
+            window.sessionStorage.setItem("experienceTabOnLand", tabConfig.tab)
+          } catch (err) {
+            // sessionStorage may be unavailable; experience falls back to default tab
+          }
+        }
+        navigate(`/#${targetSection}`)
         return
       }
 
@@ -693,7 +719,13 @@ const Layout = ({ children, location }) => {
       setActiveSection(section)
       isScrollingRef.current = true
 
-      const element = document.getElementById(section)
+      if (tabConfig) {
+        window.dispatchEvent(
+          new CustomEvent("experience-tab", { detail: tabConfig.tab })
+        )
+      }
+
+      const element = document.getElementById(targetSection)
       if (element) {
         const mainContent = document.getElementById("content")
         const isDesktop = window.innerWidth >= 768

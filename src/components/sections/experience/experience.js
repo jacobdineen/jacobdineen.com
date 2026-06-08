@@ -260,6 +260,27 @@ const Experience = () => {
   const revealContainer = useRef(null)
   const prefersReducedMotion = usePrefersReducedMotion()
   const [activeContentType, setActiveContentType] = useState("publications")
+
+  // Honor a tab signal from the sidebar (set on the same page via custom
+  // event, or persisted in sessionStorage when navigating from another route).
+  useEffect(() => {
+    if (typeof window === "undefined") return
+    try {
+      const pending = window.sessionStorage.getItem("experienceTabOnLand")
+      if (pending) {
+        setActiveContentType(pending)
+        window.sessionStorage.removeItem("experienceTabOnLand")
+      }
+    } catch (err) {
+      // sessionStorage unavailable, ignore
+    }
+    const handler = e => {
+      if (e.detail) setActiveContentType(e.detail)
+    }
+    window.addEventListener("experience-tab", handler)
+    return () => window.removeEventListener("experience-tab", handler)
+  }, [])
+
   const [showCourses, setShowCourses] = useState({})
   const [expandedCards, setExpandedCards] = useState({})
   const [showAllPubs, setShowAllPubs] = useState(false)
@@ -291,7 +312,7 @@ const Experience = () => {
   const pubTags = useMemo(() => {
     const set = new Set()
     publicationsData.forEach(({ node }) => {
-      (node.frontmatter.tags || []).forEach(t => t && set.add(t))
+      ;(node.frontmatter.tags || []).forEach(t => t && set.add(t))
     })
     return Array.from(set).sort()
   }, [publicationsData])
