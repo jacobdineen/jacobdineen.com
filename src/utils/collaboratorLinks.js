@@ -59,6 +59,7 @@ const collaboratorLinks = {
   "evan zhu": "https://www.linkedin.com/in/ezhucs1/",
   "kevin song": "https://www.linkedin.com/in/kevin-song-b1a80a302/",
   "young min cho": "https://jeffreych0.github.io/",
+  "daniel chang": "https://openreview.net/profile?id=~Daniel_Chang1",
 }
 
 export default collaboratorLinks
