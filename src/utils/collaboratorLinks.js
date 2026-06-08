@@ -50,6 +50,7 @@ const collaboratorLinks = {
   "kenny nguyen": "https://kennynguyen.me/",
   "shaswat shrivastava":
     "https://www.linkedin.com/in/shaswat-shrivastava-b0944b191/",
+  "chaowei xiao": "https://xiaocw11.github.io/",
 }
 
 export default collaboratorLinks
