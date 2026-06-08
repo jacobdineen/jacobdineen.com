@@ -48,6 +48,8 @@ const collaboratorLinks = {
     "https://www.researchgate.net/scientific-contributions/Ji-Eun-Irene-Yum-2305945698",
   "qizheng yang": "https://www.linkedin.com/in/qizheng-yang-669870295/",
   "kenny nguyen": "https://kennynguyen.me/",
+  "shaswat shrivastava":
+    "https://www.linkedin.com/in/shaswat-shrivastava-b0944b191/",
 }
 
 export default collaboratorLinks
