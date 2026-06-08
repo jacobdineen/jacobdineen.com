@@ -44,6 +44,10 @@ const collaboratorLinks = {
     "https://scholar.google.com/citations?user=oiOf9EsAAAAJ&hl=en",
   "taiwei shi": "https://taiweis.com/",
   "jieyu zhao": "https://jyzhao.net/",
+  "ji-eun irene yum":
+    "https://www.researchgate.net/scientific-contributions/Ji-Eun-Irene-Yum-2305945698",
+  "qizheng yang": "https://www.linkedin.com/in/qizheng-yang-669870295/",
+  "kenny nguyen": "https://kennynguyen.me/",
 }
 
 export default collaboratorLinks
