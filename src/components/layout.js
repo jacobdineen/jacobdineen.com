@@ -18,6 +18,14 @@ const sections = [
   "cv",
   "contact",
 ]
+// Visually distinct groups in the sidebar. Each inner array is rendered
+// as a block with a hairline separator between groups. Order across groups
+// is preserved relative to the flat `sections` array above.
+const sectionGroups = [
+  ["publications", "education", "experience"],
+  ["collaborators"],
+  ["news", "cv", "contact"],
+]
 const STANDALONE_PAGES = {
   publications: "/publications",
   collaborators: "/collaborators",
@@ -449,6 +457,7 @@ const BackToTopButton = styled.button`
 `
 
 const StyledTabButton = styled.button`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -465,16 +474,10 @@ const StyledTabButton = styled.button`
   white-space: nowrap;
   letter-spacing: -0.01em;
   background: transparent;
-  transition: color 0.1s ease, background-color 0.1s ease;
+  transition: color 0.12s ease, background-color 0.12s ease;
 
   color: ${({ isActive, theme }) =>
-    isActive
-      ? theme.mode === "light"
-        ? "#1d1d1f"
-        : "#f5f5f7"
-      : theme.mode === "light"
-      ? "#6e6e73"
-      : "#6e6e73"};
+    isActive ? "#0071e3" : theme.mode === "light" ? "#6e6e73" : "#6e6e73"};
 
   ${({ isActive, theme }) =>
     isActive &&
@@ -482,21 +485,45 @@ const StyledTabButton = styled.button`
     font-weight: 500;
     background: ${
       theme.mode === "light"
-        ? "rgba(0, 0, 0, 0.04)"
-        : "rgba(255, 255, 255, 0.06)"
+        ? "rgba(0, 113, 227, 0.08)"
+        : "rgba(0, 113, 227, 0.14)"
     };
   `}
+
+  /* Left accent pip for the active item — desktop only so it doesn't
+     clash with the horizontal row on mobile. */
+  &::before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 3px;
+    height: ${({ isActive }) => (isActive ? "16px" : "0")};
+    background: #0071e3;
+    border-radius: 2px;
+    transition: height 0.15s ease;
+  }
 
   @media (max-width: 767px) {
     font-size: 0.74rem;
     padding: 6px 10px;
     border-radius: 999px;
+
+    &::before {
+      display: none;
+    }
   }
 
   &:hover {
-    color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
-    background: ${({ theme }) =>
-      theme.mode === "light"
+    color: ${({ isActive, theme }) =>
+      isActive ? "#0071e3" : theme.mode === "light" ? "#1d1d1f" : "#f5f5f7"};
+    background: ${({ isActive, theme }) =>
+      isActive
+        ? theme.mode === "light"
+          ? "rgba(0, 113, 227, 0.12)"
+          : "rgba(0, 113, 227, 0.18)"
+        : theme.mode === "light"
         ? "rgba(0, 0, 0, 0.04)"
         : "rgba(255, 255, 255, 0.06)"};
   }
@@ -504,6 +531,25 @@ const StyledTabButton = styled.button`
   &:focus-visible {
     outline: 2px solid #0071e3;
     outline-offset: 2px;
+  }
+`
+
+const StyledNavSeparator = styled.li`
+  list-style: none;
+  width: 100%;
+  margin: 8px 0;
+  height: 1px;
+  background: ${({ theme }) =>
+    theme.mode === "light"
+      ? "rgba(0, 0, 0, 0.08)"
+      : "rgba(255, 255, 255, 0.08)"};
+
+  @media (max-width: 767px) {
+    width: 1px;
+    height: 18px;
+    margin: 0 6px;
+    align-self: center;
+    flex-shrink: 0;
   }
 `
 
@@ -785,18 +831,28 @@ const Layout = ({ children, location }) => {
             <About />
             <nav>
               <ul>
-                {sections.map(section => (
-                  <li key={section}>
-                    <StyledTabButton
-                      isActive={activeSection === section}
-                      onClick={e => handleSectionClick(e, section)}
-                      aria-current={
-                        activeSection === section ? "page" : undefined
-                      }
-                    >
-                      {section.charAt(0).toUpperCase() + section.slice(1)}
-                    </StyledTabButton>
-                  </li>
+                {sectionGroups.map((group, gi) => (
+                  <React.Fragment key={gi}>
+                    {gi > 0 && (
+                      <StyledNavSeparator
+                        aria-hidden="true"
+                        role="presentation"
+                      />
+                    )}
+                    {group.map(section => (
+                      <li key={section}>
+                        <StyledTabButton
+                          isActive={activeSection === section}
+                          onClick={e => handleSectionClick(e, section)}
+                          aria-current={
+                            activeSection === section ? "page" : undefined
+                          }
+                        >
+                          {section.charAt(0).toUpperCase() + section.slice(1)}
+                        </StyledTabButton>
+                      </li>
+                    ))}
+                  </React.Fragment>
                 ))}
               </ul>
             </nav>
