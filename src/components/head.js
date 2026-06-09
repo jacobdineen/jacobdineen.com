@@ -58,6 +58,14 @@ const Head = ({ title, description, image }) => {
         rel="stylesheet"
       />
 
+      {/* Warm DNS for the external hosts every paper page links out to.
+          Cuts ~50-150ms off the first click for many visitors. */}
+      <link rel="dns-prefetch" href="https://arxiv.org" />
+      <link rel="dns-prefetch" href="https://www.alphaxiv.org" />
+      <link rel="dns-prefetch" href="https://scholar.google.com" />
+      <link rel="dns-prefetch" href="https://www.semanticscholar.org" />
+      <link rel="dns-prefetch" href="https://github.com" />
+
       <meta name="description" content={seo.description} />
       <meta name="image" content={seo.image} />
 
