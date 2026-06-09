@@ -261,24 +261,26 @@ const Experience = () => {
   const prefersReducedMotion = usePrefersReducedMotion()
   const [activeContentType, setActiveContentType] = useState("publications")
 
-  // Honor a tab signal from the sidebar (set on the same page via custom
-  // event, or persisted in sessionStorage when navigating from another route).
+  // Honor a tab signal from the URL hash on mount, the sidebar at
+  // runtime via the experience-tab custom event, and any later
+  // hashchange events (back/forward navigation).
   useEffect(() => {
     if (typeof window === "undefined") return
-    try {
-      const pending = window.sessionStorage.getItem("experienceTabOnLand")
-      if (pending) {
-        setActiveContentType(pending)
-        window.sessionStorage.removeItem("experienceTabOnLand")
-      }
-    } catch (err) {
-      // sessionStorage unavailable, ignore
+    const HASH_TO_TAB = { education: "education", experience: "jobs" }
+    const applyHash = () => {
+      const id = window.location.hash.replace("#", "")
+      if (HASH_TO_TAB[id]) setActiveContentType(HASH_TO_TAB[id])
     }
-    const handler = e => {
+    applyHash()
+    const tabHandler = e => {
       if (e.detail) setActiveContentType(e.detail)
     }
-    window.addEventListener("experience-tab", handler)
-    return () => window.removeEventListener("experience-tab", handler)
+    window.addEventListener("experience-tab", tabHandler)
+    window.addEventListener("hashchange", applyHash)
+    return () => {
+      window.removeEventListener("experience-tab", tabHandler)
+      window.removeEventListener("hashchange", applyHash)
+    }
   }, [])
 
   const [showCourses, setShowCourses] = useState({})
@@ -312,7 +314,7 @@ const Experience = () => {
   const pubTags = useMemo(() => {
     const set = new Set()
     publicationsData.forEach(({ node }) => {
-      ;(node.frontmatter.tags || []).forEach(t => t && set.add(t))
+      (node.frontmatter.tags || []).forEach(t => t && set.add(t))
     })
     return Array.from(set).sort()
   }, [publicationsData])
@@ -574,13 +576,23 @@ const Experience = () => {
 
         <ContentTypeButtonsContainer>
           {[
-            { id: "publications", label: "Publications" },
-            { id: "education", label: "Education" },
-            { id: "jobs", label: "Experience" },
-          ].map(({ id, label }) => (
+            { id: "publications", label: "Publications", hash: "" },
+            { id: "education", label: "Education", hash: "education" },
+            { id: "jobs", label: "Experience", hash: "experience" },
+          ].map(({ id, label, hash }) => (
             <ContentTypeButton
               key={id}
-              onClick={() => setActiveContentType(id)}
+              onClick={() => {
+                setActiveContentType(id)
+                if (
+                  typeof window !== "undefined" &&
+                  window.history &&
+                  window.history.replaceState
+                ) {
+                  const next = hash ? `#${hash}` : window.location.pathname
+                  window.history.replaceState(null, "", next)
+                }
+              }}
               disabled={activeContentType === id}
               isActive={activeContentType === id}
             >

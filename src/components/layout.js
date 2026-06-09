@@ -667,9 +667,11 @@ const Layout = ({ children, location }) => {
   useEffect(() => {
     if (location && location.pathname === "/" && location.hash) {
       const sectionId = location.hash.replace("#", "")
+      const tabConfig = EXPERIENCE_TABS[sectionId]
+      const targetId = tabConfig ? tabConfig.scrollTo : sectionId
       // Wait for DOM to be ready
       const timeoutId = setTimeout(() => {
-        const element = document.getElementById(sectionId)
+        const element = document.getElementById(targetId)
         if (element) {
           const mainContent = document.getElementById("content")
           const isDesktop = window.innerWidth >= 768
@@ -684,6 +686,11 @@ const Layout = ({ children, location }) => {
             element.scrollIntoView({ behavior: "smooth", block: "start" })
           }
           setActiveSection(sectionId)
+          if (tabConfig) {
+            window.dispatchEvent(
+              new CustomEvent("experience-tab", { detail: tabConfig.tab })
+            )
+          }
         }
       }, 100) // Small delay to ensure DOM is ready
 
@@ -702,16 +709,9 @@ const Layout = ({ children, location }) => {
       const targetSection = tabConfig ? tabConfig.scrollTo : section
       const isHomePage = location && location.pathname === "/"
       if (!isHomePage) {
-        // Off-home navigation needs the tab signal to ride along; the
-        // landing effect on the home page picks it up from sessionStorage.
-        if (tabConfig) {
-          try {
-            window.sessionStorage.setItem("experienceTabOnLand", tabConfig.tab)
-          } catch (err) {
-            // sessionStorage may be unavailable; experience falls back to default tab
-          }
-        }
-        navigate(`/#${targetSection}`)
+        // The hash itself encodes which tab to open. The landing effect
+        // on the home page reads location.hash and broadcasts the tab.
+        navigate(`/#${section}`)
         return
       }
 
@@ -723,6 +723,12 @@ const Layout = ({ children, location }) => {
         window.dispatchEvent(
           new CustomEvent("experience-tab", { detail: tabConfig.tab })
         )
+      }
+      // Encode the tab choice in the URL hash so it can be shared or
+      // restored on reload. Use replaceState so the back button isn't
+      // polluted by every tab toggle.
+      if (window.history && window.history.replaceState) {
+        window.history.replaceState(null, "", `#${section}`)
       }
 
       const element = document.getElementById(targetSection)
