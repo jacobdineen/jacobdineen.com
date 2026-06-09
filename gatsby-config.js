@@ -18,6 +18,10 @@ module.exports = {
       resolve: `gatsby-plugin-sitemap`,
       options: {
         output: `/sitemap`,
+        // The /pensieve section is currently empty (no posts), so its index,
+        // tag-listing, and per-tag pages have no real content for Google to
+        // index. Excluding them keeps the sitemap focused on real pages.
+        excludes: [`/pensieve`, `/pensieve/**`, `/404`, `/404.html`],
       },
     },
     `gatsby-plugin-robots-txt`,
@@ -81,7 +85,6 @@ module.exports = {
               maxWidth: 700,
               linkImagesToOriginal: true,
               quality: 90,
-              tracedSVG: { color: "#0071e3" },
             },
           },
           {
