@@ -215,13 +215,16 @@ const StyledSidebar = styled.aside`
       margin: 0;
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: stretch;
       width: 100%;
-      gap: 2px;
+      gap: 0;
+      max-width: 200px;
+      margin-left: auto;
+      margin-right: auto;
 
       li {
         width: 100%;
-        text-align: center;
+        text-align: left;
       }
     }
 
@@ -458,97 +461,96 @@ const BackToTopButton = styled.button`
 
 const StyledTabButton = styled.button`
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.84rem;
+  display: inline-flex;
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
   font-weight: 400;
-  font-family: var(--font-sans);
-  width: 100%;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
   border: none;
-  border-radius: 6px;
-  text-align: center;
-  padding: 8px 12px;
+  background: transparent;
+  padding: 7px 0 7px 22px;
   cursor: pointer;
   outline: none;
   white-space: nowrap;
-  letter-spacing: -0.01em;
-  background: transparent;
-  transition: color 0.12s ease, background-color 0.12s ease;
+  transition: color 0.18s ease, letter-spacing 0.2s ease;
+  width: 100%;
 
   color: ${({ isActive, theme }) =>
-    isActive ? "#0071e3" : theme.mode === "light" ? "#6e6e73" : "#6e6e73"};
+    isActive
+      ? theme.mode === "light"
+        ? "#1d1d1f"
+        : "#f5f5f7"
+      : theme.mode === "light"
+      ? "#86868b"
+      : "#6e6e73"};
 
-  ${({ isActive, theme }) =>
-    isActive &&
-    `
-    font-weight: 500;
-    background: ${
-      theme.mode === "light"
-        ? "rgba(0, 113, 227, 0.08)"
-        : "rgba(0, 113, 227, 0.14)"
-    };
-  `}
-
-  /* Left accent pip for the active item — desktop only so it doesn't
-     clash with the horizontal row on mobile. */
+  /* Thin animated accent rule that slides in on the active row. Slim
+     enough to read as a typographic mark rather than a UI chrome bar. */
   &::before {
     content: "";
     position: absolute;
-    left: 4px;
+    left: 0;
     top: 50%;
     transform: translateY(-50%);
-    width: 3px;
-    height: ${({ isActive }) => (isActive ? "16px" : "0")};
-    background: #0071e3;
-    border-radius: 2px;
-    transition: height 0.15s ease;
-  }
-
-  @media (max-width: 767px) {
-    font-size: 0.74rem;
-    padding: 6px 10px;
-    border-radius: 999px;
-
-    &::before {
-      display: none;
-    }
-  }
-
-  &:hover {
-    color: ${({ isActive, theme }) =>
-      isActive ? "#0071e3" : theme.mode === "light" ? "#1d1d1f" : "#f5f5f7"};
+    width: ${({ isActive }) => (isActive ? "14px" : "6px")};
+    height: 1px;
     background: ${({ isActive, theme }) =>
       isActive
         ? theme.mode === "light"
-          ? "rgba(0, 113, 227, 0.12)"
-          : "rgba(0, 113, 227, 0.18)"
+          ? "#1d1d1f"
+          : "#f5f5f7"
         : theme.mode === "light"
-        ? "rgba(0, 0, 0, 0.04)"
-        : "rgba(255, 255, 255, 0.06)"};
+        ? "rgba(0, 0, 0, 0.18)"
+        : "rgba(255, 255, 255, 0.18)"};
+    transition: width 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+      background-color 0.18s ease;
+  }
+
+  &:hover {
+    color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
+    letter-spacing: 0.18em;
+  }
+
+  &:hover::before {
+    width: 14px;
+    background: ${({ theme }) =>
+      theme.mode === "light" ? "#1d1d1f" : "#f5f5f7"};
   }
 
   &:focus-visible {
     outline: 2px solid #0071e3;
-    outline-offset: 2px;
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  @media (max-width: 767px) {
+    font-size: 0.62rem;
+    letter-spacing: 0.14em;
+    padding: 6px 10px;
+    justify-content: center;
+    width: auto;
+
+    &::before {
+      display: none;
+    }
+
+    &:hover {
+      letter-spacing: 0.14em;
+    }
   }
 `
 
-const StyledNavSeparator = styled.li`
+const StyledGroupGap = styled.li`
   list-style: none;
   width: 100%;
-  margin: 8px 0;
-  height: 1px;
-  background: ${({ theme }) =>
-    theme.mode === "light"
-      ? "rgba(0, 0, 0, 0.08)"
-      : "rgba(255, 255, 255, 0.08)"};
+  height: 14px;
+  pointer-events: none;
 
   @media (max-width: 767px) {
-    width: 1px;
-    height: 18px;
-    margin: 0 6px;
-    align-self: center;
+    width: 14px;
+    height: 1px;
     flex-shrink: 0;
   }
 `
@@ -834,10 +836,7 @@ const Layout = ({ children, location }) => {
                 {sectionGroups.map((group, gi) => (
                   <React.Fragment key={gi}>
                     {gi > 0 && (
-                      <StyledNavSeparator
-                        aria-hidden="true"
-                        role="presentation"
-                      />
+                      <StyledGroupGap aria-hidden="true" role="presentation" />
                     )}
                     {group.map(section => (
                       <li key={section}>
