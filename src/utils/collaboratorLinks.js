@@ -12,6 +12,8 @@ const collaboratorLinks = {
     "https://www.mayoclinic.org/biographies/riaz-irbaz-b-m-b-b-s-ph-d/bio-20557446",
   "irbaz bin riaz":
     "https://www.mayoclinic.org/biographies/riaz-irbaz-b-m-b-b-s-ph-d/bio-20557446",
+  "irbaz riaz":
+    "https://www.mayoclinic.org/biographies/riaz-irbaz-b-m-b-b-s-ph-d/bio-20557446",
   "md nayem uddin": "https://www.linkedin.com/in/muddin11",
   "mihir parmar": "https://sites.google.com/view/mihir3009",
   "ming shen": "https://www.linkedin.com/in/ming-shen-50ba4b226",

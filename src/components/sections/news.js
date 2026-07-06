@@ -100,8 +100,8 @@ const News = () => (
       <li className="news-item">
         <span className="news-date">Apr 2026</span>
         <span className="news-text">
-          <a href="/publications/recap-2025">RECAP</a> accepted at the 8th
-          Clinical NLP Workshop (Oral) at LREC-COLING 2026.
+          <a href="/publications/recap-2025">RECAP</a> published at the 8th
+          Clinical NLP Workshop (Oral) at LREC 2026.
         </span>
       </li>
       <li className="news-item">
