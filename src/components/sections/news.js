@@ -91,6 +91,13 @@ const News = () => (
     <h2 className="numbered-heading">News</h2>
     <ul className="news-list">
       <li className="news-item">
+        <span className="news-date">Jul 2026</span>
+        <span className="news-text">
+          <a href="/publications/vocab-dropout-2026">Vocabulary Dropout</a>{" "}
+          accepted at COLM 2026.
+        </span>
+      </li>
+      <li className="news-item">
         <span className="news-date">Apr 2026</span>
         <span className="news-text">
           <a href="/publications/visual-analogies-2025">VisAnalog</a> accepted
