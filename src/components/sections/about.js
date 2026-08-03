@@ -19,22 +19,18 @@ const SidebarIcons = styled.aside`
   display: flex;
   gap: 4px;
   justify-content: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 
   @media (max-width: 767px) {
     justify-content: flex-start;
-  }
-
-  @media (min-width: 768px) {
-    gap: 6px;
   }
 
   a {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 30px;
-    height: 30px;
+    width: 28px;
+    height: 28px;
     background: transparent;
     border: none;
     border-radius: 6px;
@@ -50,8 +46,8 @@ const SidebarIcons = styled.aside`
     }
 
     @media (min-width: 768px) {
-      width: 36px;
-      height: 36px;
+      width: 32px;
+      height: 32px;
     }
   }
 
