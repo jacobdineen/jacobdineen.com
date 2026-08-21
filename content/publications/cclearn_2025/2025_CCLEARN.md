@@ -3,7 +3,7 @@ title: "Learning Verifiable Reasoning Programs through Cohort Consistency"
 slug: "/publications/cc-learn-2025"
 authors: Xiao Ye, Zhaonan Li, Jacob Dineen, Zhikun Xu, Shijie Lu, Ming Shen, Shaswat Shrivastava, Avneet Ahuja, Ben Zhou
 date: 2025-06-18
-venue: "Pending EMNLP 2026"
+venue: "arXiv Preprint"
 arxiv: https://arxiv.org/abs/2506.15662
 paperurl: "https://arxiv.org/pdf/2506.15662.pdf"
 googlescholar: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=2sYaEtQAAAAJ&citation_for_view=2sYaEtQAAAAJ:IjCSPb-OGe4C
