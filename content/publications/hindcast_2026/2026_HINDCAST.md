@@ -3,7 +3,9 @@ title: "HINDCAST: Replaying Prediction Markets to Evaluate LLM Forecasters"
 slug: "/publications/hindcast-2026"
 authors: Xiao Ye, Jacob Dineen, Evan Zhu, Shijie Lu, Kevin Song, Ben Zhou
 date: 2026-05-15
-venue: "Working Paper"
+venue: "arXiv Preprint"
+arxiv: https://arxiv.org/abs/2607.14051
+paperurl: "https://arxiv.org/pdf/2607.14051.pdf"
 collection: publications
 tags: [evaluation, retrieval, agents]
 abstract: |
