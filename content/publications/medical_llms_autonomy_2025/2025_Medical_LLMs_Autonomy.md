@@ -1,9 +1,9 @@
 ---
-title: "Evaluating Medical LLMs by Levels of Autonomy: A Survey"
+title: "Evaluating Medical LLMs by Levels of Autonomy: A Survey Moving from Benchmarks to Applications"
 slug: "/publications/medical-llms-autonomy-2025"
 authors: Xiao Ye, Jacob Dineen, Zhaonan Li, Zhikun Xu, Weiyu Chen, Shijie Lu, Yuxi Huang, Ming Shen, Phu Tran, Ji-Eun Irene Yum, Muhammad Ali Khan, Muhammad Umar Afzal, Irbaz Bin Riaz, Ben Zhou
 date: 2025-10-20
-venue: "arXiv preprint"
+venue: "arXiv Preprint"
 arxiv: https://arxiv.org/abs/2510.17764
 paperurl: "https://arxiv.org/pdf/2510.17764.pdf"
 googlescholar: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=2sYaEtQAAAAJ&citation_for_view=2sYaEtQAAAAJ:UeHWp8X0CEIC
