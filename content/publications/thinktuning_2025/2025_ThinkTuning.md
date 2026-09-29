@@ -10,7 +10,7 @@ googlescholar: https://scholar.google.com/citations?view_op=view_citation&hl=en&
 code: https://github.com/3rdAT/ThinkTuning
 collection: publications
 tags: [rl, post-training, reasoning]
-featured: 3
+featured: 4
 semanticscholar: https://www.semanticscholar.org/paper/ThinkTuning%3A-Instilling-Cognitive-Reflections-Rrv-Dineen/bd882244d2d84d7a455fdd1af5198f8fbdcdd228
 slides: "/slides/ThinkTuningSlides.pdf"
 abstract: |

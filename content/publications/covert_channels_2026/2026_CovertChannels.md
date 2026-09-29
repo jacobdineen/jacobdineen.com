@@ -6,6 +6,7 @@ date: 2026-09-26
 venue: "arXiv Preprint"
 arxiv: https://arxiv.org/abs/2609.32701
 paperurl: "https://arxiv.org/pdf/2609.32701.pdf"
+featured: 1
 collection: publications
 tags: [safety, agents, alignment, evaluation]
 abstract: |
