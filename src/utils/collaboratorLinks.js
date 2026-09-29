@@ -38,6 +38,8 @@ const collaboratorLinks = {
     "https://scholar.google.com/citations?user=Hb3ZbVYAAAAJ&hl=en",
   "swaroop mishra": "https://swarooprm.github.io/",
   "yu feng": "https://annieyufeng.github.io/",
+  "silei ren": "https://www.sileiren.com/",
+  "dan roth": "https://www.cis.upenn.edu/~danroth/",
   "fei wang": "https://feiwang96.github.io/",
   "kyle r. chickering": "https://www.math.ucdavis.edu/~krc/",
   "bach nguyen": "https://www.linkedin.com/in/bachnd05/",
