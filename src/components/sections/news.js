@@ -93,6 +93,17 @@ const News = () => (
       <li className="news-item">
         <span className="news-date">Sep 2026</span>
         <span className="news-text">
+          New preprint:{" "}
+          <a href="/publications/covert-channels-2026">
+            Despite Instructions: Frontier Agents Improvise Covert Channels at
+            Test Time
+          </a>
+          .
+        </span>
+      </li>
+      <li className="news-item">
+        <span className="news-date">Sep 2026</span>
+        <span className="news-text">
           <a href="/publications/cc-learn-2025">CC-Learn</a> accepted at
           AACL-IJCNLP 2026 (Main).
         </span>
