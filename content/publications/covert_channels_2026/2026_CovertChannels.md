@@ -3,7 +3,7 @@ title: "Despite Instructions: Frontier Agents Improvise Covert Channels at Test 
 slug: "/publications/covert-channels-2026"
 authors: Jacob Dineen, Silei Ren, Muhao Chen, Dan Roth, Ben Zhou
 date: 2026-09-26
-venue: "arXiv Preprint"
+venue: "Under Review, ICLR 2027"
 arxiv: https://arxiv.org/abs/2609.32701
 paperurl: "https://arxiv.org/pdf/2609.32701.pdf"
 featured: 1
