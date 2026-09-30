@@ -63,13 +63,6 @@ const RESEARCH_THREADS = [
   },
 ]
 
-const TIER_LABELS = {
-  "tier-top": "Top venue",
-  "tier-conf": "Conference",
-  "tier-ws": "Workshop",
-  "tier-pre": "Preprint / under review",
-}
-
 const abstractSnippet = text => {
   if (!text) return ""
   const clean = text.replace(/\s+/g, " ").trim()
@@ -77,11 +70,6 @@ const abstractSnippet = text => {
   let out = sentences.slice(0, 2).join("").trim()
   if (out.length > 300) out = `${out.slice(0, 297).replace(/\s+\S*$/, "")}…`
   return out
-}
-
-const pubYearOf = node => {
-  const d = node.frontmatter.date
-  return d ? new Date(d).getFullYear() : null
 }
 
 const ContentTypeButtonsContainer = styled.div`
@@ -382,147 +370,6 @@ const FeaturedGrid = styled.div`
   }
 `
 
-const StyledTimeline = styled.section`
-  width: 100%;
-  max-width: 670px;
-  margin: 0 auto 30px;
-
-  .tl-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 8px 16px;
-    margin-bottom: 12px;
-  }
-
-  h4 {
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
-    margin: 0;
-    padding-left: 2px;
-  }
-
-  .legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px 14px;
-    font-family: var(--font-mono);
-    font-size: 0.64rem;
-    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#9a9894")};
-
-    span {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-  }
-
-  .years {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(0, 1fr);
-    align-items: end;
-    gap: 6px;
-    padding: 14px 12px 10px;
-    border-radius: 10px;
-    border: 1px solid
-      ${({ theme }) => (theme.mode === "light" ? "#e5e5ea" : "#2c2b29")};
-    background: ${({ theme }) =>
-      theme.mode === "light" ? "#fbfbfd" : "#171615"};
-  }
-
-  .year {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    background: none;
-    border: none;
-    padding: 6px 0 2px;
-    border-radius: 6px;
-    cursor: pointer;
-    color: inherit;
-    transition: background-color 0.15s ease;
-
-    &:hover {
-      background: ${({ theme }) =>
-        theme.mode === "light" ? "#f0f0f3" : "#1f1e1c"};
-    }
-
-    &:focus-visible {
-      outline: 2px solid #0071e3;
-      outline-offset: 1px;
-    }
-
-    &.empty {
-      cursor: default;
-
-      &:hover {
-        background: none;
-      }
-    }
-
-    &.active .ylabel {
-      color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#2997ff")};
-      font-weight: 600;
-    }
-  }
-
-  .stack {
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-    gap: 4px;
-    min-height: 12px;
-  }
-
-  .ylabel {
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    font-variant-numeric: tabular-nums;
-    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#9a9894")};
-  }
-
-  .dot {
-    width: 14px;
-    height: 14px;
-    border-radius: 4px;
-    flex-shrink: 0;
-
-    @media (max-width: 480px) {
-      width: 11px;
-      height: 11px;
-      border-radius: 3px;
-    }
-  }
-
-  .dot.tier-top {
-    background: ${({ theme }) =>
-      theme.mode === "light" ? "#0071e3" : "#2997ff"};
-  }
-
-  .dot.tier-conf {
-    background: ${({ theme }) =>
-      theme.mode === "light" ? "#3f8f4f" : "#6fc782"};
-  }
-
-  .dot.tier-ws {
-    background: ${({ theme }) =>
-      theme.mode === "light" ? "#d08a12" : "#f0b85c"};
-  }
-
-  .dot.tier-pre {
-    background: transparent;
-    border: 1.5px dashed
-      ${({ theme }) => (theme.mode === "light" ? "#8e8e93" : "#8a8884")};
-  }
-`
-
 const ActiveFilterNote = styled.span`
   display: inline-flex;
   align-items: center;
@@ -691,7 +538,7 @@ const Experience = () => {
   const pubTags = useMemo(() => {
     const set = new Set()
     publicationsData.forEach(({ node }) => {
-      ;(node.frontmatter.tags || []).forEach(t => t && set.add(t))
+      (node.frontmatter.tags || []).forEach(t => t && set.add(t))
     })
     return Array.from(set).sort()
   }, [publicationsData])
@@ -737,31 +584,6 @@ const Experience = () => {
     return counts
   }, [publicationsData])
 
-  const timelineYears = useMemo(() => {
-    const years = publicationsData.map(({ node }) => pubYearOf(node))
-    const valid = years.filter(Boolean)
-    if (valid.length === 0) return []
-    const min = Math.min(...valid)
-    const max = Math.max(...valid)
-    const out = []
-    for (let y = min; y <= max; y++) {
-      const papers = publicationsData
-        .filter(({ node }) => pubYearOf(node) === y)
-        .map(({ node }) => ({
-          title: node.frontmatter.title,
-          venue: node.frontmatter.venue,
-          tier: venueTier(node.frontmatter.venue),
-        }))
-        .sort(
-          (a, b) =>
-            Object.keys(TIER_LABELS).indexOf(a.tier) -
-            Object.keys(TIER_LABELS).indexOf(b.tier)
-        )
-      out.push({ year: y, papers })
-    }
-    return out
-  }, [publicationsData])
-
   const scrollToAllPubs = () => {
     if (!allPubsRef.current) return
     allPubsRef.current.scrollIntoView({
@@ -774,12 +596,6 @@ const Experience = () => {
     setActiveContentType("publications")
     setShowAllPubs(true)
     setPubThread(prev => (prev === id ? null : id))
-    setTimeout(scrollToAllPubs, 50)
-  }
-
-  const selectYear = y => {
-    setShowAllPubs(true)
-    setPubYear(prev => (String(prev) === String(y) ? "All" : String(y)))
     setTimeout(scrollToAllPubs, 50)
   }
 
@@ -1173,48 +989,6 @@ const Experience = () => {
                 </FeaturedGrid>
               </StyledFeaturedSection>
             )}
-          {activeContentType === "publications" && timelineYears.length > 0 && (
-            <StyledTimeline id="pub-record" aria-label="Publications by year">
-              <div className="tl-head">
-                <h4>Publication record</h4>
-                <div className="legend">
-                  {Object.entries(TIER_LABELS).map(([tier, label]) => (
-                    <span key={tier}>
-                      <i className={`dot ${tier}`} aria-hidden="true" />
-                      {label}
-                    </span>
-                  ))}
-                </div>
-              </div>
-              <div className="years">
-                {timelineYears.map(({ year, papers }) => (
-                  <button
-                    key={year}
-                    type="button"
-                    className={`year${papers.length === 0 ? " empty" : ""}${
-                      String(pubYear) === String(year) ? " active" : ""
-                    }`}
-                    onClick={() => papers.length > 0 && selectYear(year)}
-                    disabled={papers.length === 0}
-                    aria-label={`${year}: ${papers.length} publication${
-                      papers.length === 1 ? "" : "s"
-                    }`}
-                  >
-                    <span className="stack">
-                      {papers.map(p => (
-                        <i
-                          key={p.title}
-                          className={`dot ${p.tier}`}
-                          title={`${p.title} (${p.venue})`}
-                        />
-                      ))}
-                    </span>
-                    <span className="ylabel">{year}</span>
-                  </button>
-                ))}
-              </div>
-            </StyledTimeline>
-          )}
           {activeContentType === "publications" && (
             <StyledSectionLabel id="all-publications" ref={allPubsRef}>
               All publications
