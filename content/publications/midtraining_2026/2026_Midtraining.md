@@ -3,7 +3,7 @@ title: "Mid-Training With Self-Generated Data Improves Reinforcement Learning in
 slug: "/publications/midtraining-2026"
 authors: Aswin RRV, Jacob Dineen, Divij Handa, Mihir Parmar, Ben Zhou, Swaroop Mishra, Chitta Baral
 date: 2026-01-01
-venue: "Pending NeurIPS 2026"
+venue: "arXiv Preprint"
 arxiv: https://arxiv.org/abs/2605.08472
 paperurl: "https://arxiv.org/pdf/2605.08472.pdf"
 googlescholar: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=2sYaEtQAAAAJ&citation_for_view=2sYaEtQAAAAJ:u-x6o8ySG0sC
