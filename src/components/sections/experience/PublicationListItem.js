@@ -71,8 +71,13 @@ const PublicationListItem = styled.div`
     align-items: center;
     justify-content: center;
     width: 100%;
-    aspect-ratio: 16 / 9;
-    padding: 14px;
+    height: 150px;
+    padding: 12px 14px;
+    overflow: hidden;
+
+    @media (max-width: 480px) {
+      height: 130px;
+    }
     background: #ffffff;
     border-bottom: 1px solid
       ${({ theme }) => (theme.mode === "light" ? "#ececf0" : "#2c2b29")};
@@ -137,7 +142,7 @@ const PublicationListItem = styled.div`
 
       img {
         width: 100%;
-        max-height: 170px;
+        height: 130px;
         object-fit: contain;
         background: #ffffff;
         border-radius: 6px;
