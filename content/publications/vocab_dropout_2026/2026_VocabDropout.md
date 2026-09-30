@@ -4,6 +4,7 @@ slug: "/publications/vocab-dropout-2026"
 authors: Jacob Dineen, Aswin RRV, Zhikun Xu, Ben Zhou
 date: 2026-01-02
 venue: "COLM 2026"
+teaser: "/teasers/vocab-dropout-2026.webp"
 collection: publications
 tags: [rl, post-training, self-play, reasoning]
 featured: 3

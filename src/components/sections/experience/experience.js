@@ -35,6 +35,55 @@ const venueTier = venue => {
   return "tier-conf"
 }
 
+const RESEARCH_THREADS = [
+  {
+    id: "post-training",
+    label: "Post\u2011training & RL",
+    blurb: "Reward design, RL fine-tuning, and training-time interventions.",
+    tags: ["post-training", "rl"],
+  },
+  {
+    id: "reasoning",
+    label: "Reasoning",
+    blurb: "Eliciting and supervising multi-step reasoning in LLMs and VLMs.",
+    tags: ["reasoning"],
+  },
+  {
+    id: "safety",
+    label: "Alignment & safety",
+    blurb:
+      "Constitutional alignment, covert agent behavior, inference-time control.",
+    tags: ["alignment", "safety", "inference-time"],
+  },
+  {
+    id: "evaluation",
+    label: "Agents & evaluation",
+    blurb: "Benchmarks and protocols for agents, forecasters, and judges.",
+    tags: ["agents", "evaluation"],
+  },
+]
+
+const TIER_LABELS = {
+  "tier-top": "Top venue",
+  "tier-conf": "Conference",
+  "tier-ws": "Workshop",
+  "tier-pre": "Preprint / under review",
+}
+
+const abstractSnippet = text => {
+  if (!text) return ""
+  const clean = text.replace(/\s+/g, " ").trim()
+  const sentences = clean.match(/[^.!?]+[.!?]+(\s|$)/g) || [clean]
+  let out = sentences.slice(0, 2).join("").trim()
+  if (out.length > 300) out = `${out.slice(0, 297).replace(/\s+\S*$/, "")}…`
+  return out
+}
+
+const pubYearOf = node => {
+  const d = node.frontmatter.date
+  return d ? new Date(d).getFullYear() : null
+}
+
 const ContentTypeButtonsContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -108,8 +157,15 @@ const StyledFilters = styled.div`
   grid-template-columns: 1fr 130px 150px 130px;
   gap: 10px;
   margin: 10px auto 20px auto;
+  width: 100%;
   max-width: 900px;
   justify-content: center;
+
+  > * {
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
@@ -168,6 +224,7 @@ const StyledFeaturedSection = styled.section`
 `
 
 const StyledSectionLabel = styled.h4`
+  scroll-margin-top: 90px;
   font-family: var(--font-mono);
   font-size: 0.7rem;
   font-weight: 500;
@@ -193,6 +250,300 @@ const ShowAllButton = styled.button`
 
   &:hover {
     color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
+  }
+`
+
+const ResearchMap = styled.nav`
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  width: 100%;
+  max-width: 670px;
+  margin: 4px auto 28px;
+
+  @media (max-width: 480px) {
+    gap: 8px;
+
+    button {
+      padding: 10px 12px 11px;
+    }
+
+    .thread-label {
+      font-size: 0.88rem;
+    }
+
+    .thread-blurb {
+      display: none;
+    }
+  }
+
+  button {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    text-align: left;
+    padding: 12px 14px 13px;
+    border-radius: 10px;
+    border: 1px solid
+      ${({ theme }) => (theme.mode === "light" ? "#e5e5ea" : "#2c2b29")};
+    background: ${({ theme }) =>
+      theme.mode === "light" ? "#fbfbfd" : "#171615"};
+    color: inherit;
+    cursor: pointer;
+    transition: border-color 0.15s ease, background-color 0.15s ease,
+      transform 0.15s ease;
+
+    &:hover {
+      border-color: ${({ theme }) =>
+        theme.mode === "light" ? "#a1a1a6" : "#4a4845"};
+    }
+
+    &:focus-visible {
+      outline: 2px solid #0071e3;
+      outline-offset: 2px;
+    }
+
+    &.active {
+      border-color: ${({ theme }) =>
+        theme.mode === "light" ? "#0071e3" : "#2997ff"};
+      background: ${({ theme }) =>
+        theme.mode === "light" ? "#eef5fd" : "rgba(41, 151, 255, 0.10)"};
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      &:hover {
+        transform: translateY(-1px);
+      }
+    }
+  }
+
+  .thread-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    width: 100%;
+    gap: 8px;
+  }
+
+  .thread-label {
+    font-family: var(--font-serif);
+    font-size: 0.95rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+    color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
+    text-wrap: balance;
+  }
+
+  .thread-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: auto;
+    padding-top: 6px;
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.02em;
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#9a9894")};
+    font-variant-numeric: tabular-nums;
+
+    svg {
+      width: 10px;
+      height: 10px;
+      transition: transform 0.15s ease;
+    }
+  }
+
+  button:hover .thread-count svg {
+    transform: translateX(2px);
+  }
+
+  button.active .thread-count {
+    color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#2997ff")};
+  }
+
+  .thread-blurb {
+    font-size: 0.74rem;
+    line-height: 1.45;
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#9a9894")};
+  }
+`
+
+const FeaturedGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  max-width: 900px;
+  margin: 0 auto;
+
+  @media (max-width: 720px) {
+    grid-template-columns: 1fr;
+  }
+`
+
+const StyledTimeline = styled.section`
+  width: 100%;
+  max-width: 670px;
+  margin: 0 auto 30px;
+
+  .tl-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    margin-bottom: 12px;
+  }
+
+  h4 {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
+    margin: 0;
+    padding-left: 2px;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#9a9894")};
+
+    span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+  }
+
+  .years {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    align-items: end;
+    gap: 6px;
+    padding: 14px 12px 10px;
+    border-radius: 10px;
+    border: 1px solid
+      ${({ theme }) => (theme.mode === "light" ? "#e5e5ea" : "#2c2b29")};
+    background: ${({ theme }) =>
+      theme.mode === "light" ? "#fbfbfd" : "#171615"};
+  }
+
+  .year {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    padding: 6px 0 2px;
+    border-radius: 6px;
+    cursor: pointer;
+    color: inherit;
+    transition: background-color 0.15s ease;
+
+    &:hover {
+      background: ${({ theme }) =>
+        theme.mode === "light" ? "#f0f0f3" : "#1f1e1c"};
+    }
+
+    &:focus-visible {
+      outline: 2px solid #0071e3;
+      outline-offset: 1px;
+    }
+
+    &.empty {
+      cursor: default;
+
+      &:hover {
+        background: none;
+      }
+    }
+
+    &.active .ylabel {
+      color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#2997ff")};
+      font-weight: 600;
+    }
+  }
+
+  .stack {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 4px;
+    min-height: 12px;
+  }
+
+  .ylabel {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    font-variant-numeric: tabular-nums;
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#9a9894")};
+  }
+
+  .dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+    flex-shrink: 0;
+
+    @media (max-width: 480px) {
+      width: 11px;
+      height: 11px;
+      border-radius: 3px;
+    }
+  }
+
+  .dot.tier-top {
+    background: ${({ theme }) =>
+      theme.mode === "light" ? "#0071e3" : "#2997ff"};
+  }
+
+  .dot.tier-conf {
+    background: ${({ theme }) =>
+      theme.mode === "light" ? "#3f8f4f" : "#6fc782"};
+  }
+
+  .dot.tier-ws {
+    background: ${({ theme }) =>
+      theme.mode === "light" ? "#d08a12" : "#f0b85c"};
+  }
+
+  .dot.tier-pre {
+    background: transparent;
+    border: 1.5px dashed
+      ${({ theme }) => (theme.mode === "light" ? "#8e8e93" : "#8a8884")};
+  }
+`
+
+const ActiveFilterNote = styled.span`
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 10px;
+  text-transform: none;
+  letter-spacing: 0;
+
+  button {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px 8px;
+    border-radius: 999px;
+    border: 1px solid
+      ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#2997ff")};
+    background: transparent;
+    color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#2997ff")};
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    cursor: pointer;
   }
 `
 
@@ -238,6 +589,7 @@ const Experience = () => {
               abstract
               bibtex
               tags
+              teaser
               featured
               technologies {
                 name
@@ -315,6 +667,8 @@ const Experience = () => {
   const [pubYear, setPubYear] = useState("All")
   const [pubVenue, setPubVenue] = useState("All")
   const [pubTag, setPubTag] = useState("All")
+  const [pubThread, setPubThread] = useState(null)
+  const allPubsRef = useRef(null)
 
   const pubYears = useMemo(() => {
     const set = new Set()
@@ -337,7 +691,7 @@ const Experience = () => {
   const pubTags = useMemo(() => {
     const set = new Set()
     publicationsData.forEach(({ node }) => {
-      (node.frontmatter.tags || []).forEach(t => t && set.add(t))
+      ;(node.frontmatter.tags || []).forEach(t => t && set.add(t))
     })
     return Array.from(set).sort()
   }, [publicationsData])
@@ -360,9 +714,74 @@ const Experience = () => {
         fm.tags || []
       ).join(" ")}`.toLowerCase()
       const matchesQuery = q === "" || hay.includes(q)
-      return matchesYear && matchesVenue && matchesTag && matchesQuery
+      const thread = RESEARCH_THREADS.find(t => t.id === pubThread)
+      const matchesThread =
+        !thread || (fm.tags || []).some(t => thread.tags.includes(t))
+      return (
+        matchesYear &&
+        matchesVenue &&
+        matchesTag &&
+        matchesQuery &&
+        matchesThread
+      )
     })
-  }, [publicationsData, pubQuery, pubYear, pubVenue, pubTag])
+  }, [publicationsData, pubQuery, pubYear, pubVenue, pubTag, pubThread])
+
+  const threadCounts = useMemo(() => {
+    const counts = {}
+    RESEARCH_THREADS.forEach(t => {
+      counts[t.id] = publicationsData.filter(({ node }) =>
+        (node.frontmatter.tags || []).some(tag => t.tags.includes(tag))
+      ).length
+    })
+    return counts
+  }, [publicationsData])
+
+  const timelineYears = useMemo(() => {
+    const years = publicationsData.map(({ node }) => pubYearOf(node))
+    const valid = years.filter(Boolean)
+    if (valid.length === 0) return []
+    const min = Math.min(...valid)
+    const max = Math.max(...valid)
+    const out = []
+    for (let y = min; y <= max; y++) {
+      const papers = publicationsData
+        .filter(({ node }) => pubYearOf(node) === y)
+        .map(({ node }) => ({
+          title: node.frontmatter.title,
+          venue: node.frontmatter.venue,
+          tier: venueTier(node.frontmatter.venue),
+        }))
+        .sort(
+          (a, b) =>
+            Object.keys(TIER_LABELS).indexOf(a.tier) -
+            Object.keys(TIER_LABELS).indexOf(b.tier)
+        )
+      out.push({ year: y, papers })
+    }
+    return out
+  }, [publicationsData])
+
+  const scrollToAllPubs = () => {
+    if (!allPubsRef.current) return
+    allPubsRef.current.scrollIntoView({
+      behavior: prefersReducedMotion ? "auto" : "smooth",
+      block: "start",
+    })
+  }
+
+  const selectThread = id => {
+    setActiveContentType("publications")
+    setShowAllPubs(true)
+    setPubThread(prev => (prev === id ? null : id))
+    setTimeout(scrollToAllPubs, 50)
+  }
+
+  const selectYear = y => {
+    setShowAllPubs(true)
+    setPubYear(prev => (String(prev) === String(y) ? "All" : String(y)))
+    setTimeout(scrollToAllPubs, 50)
+  }
 
   useEffect(() => {
     if (prefersReducedMotion) {
@@ -455,7 +874,26 @@ const Experience = () => {
       typeof frontmatter.featured === "number" && !inFeaturedRow
 
     return (
-      <PublicationListItem key={key} featuredAccent={isFeaturedInMainList}>
+      <PublicationListItem
+        key={key}
+        featuredAccent={isFeaturedInMainList}
+        $featuredCard={inFeaturedRow}
+      >
+        {inFeaturedRow && frontmatter.teaser && (
+          <TransitionLink
+            to={frontmatter.slug || "/"}
+            className="thumb"
+            aria-label={`Read more about ${title}`}
+            tabIndex={-1}
+          >
+            <img
+              src={withPrefix(frontmatter.teaser)}
+              alt={`Key figure from ${title}`}
+              loading="lazy"
+              decoding="async"
+            />
+          </TransitionLink>
+        )}
         {frontmatter.slug ? (
           <span
             className="title"
@@ -472,6 +910,26 @@ const Experience = () => {
             >
               {title || "N/A"}
             </TransitionLink>
+            {!inFeaturedRow && (frontmatter.teaser || frontmatter.abstract) && (
+              <span className="preview" aria-hidden="true">
+                {frontmatter.teaser && (
+                  <img
+                    src={withPrefix(frontmatter.teaser)}
+                    alt={`Key figure from ${title}`}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
+                {frontmatter.abstract && (
+                  <span className="preview-text">
+                    {abstractSnippet(frontmatter.abstract)}
+                  </span>
+                )}
+                <span className="preview-meta">
+                  {[venue, formatted].filter(Boolean).join(" · ")}
+                </span>
+              </span>
+            )}
           </span>
         ) : (
           <span className="title">{title || "N/A"}</span>
@@ -572,7 +1030,7 @@ const Experience = () => {
             </TransitionLink>
           )}
         </div>
-        {frontmatter.tags && frontmatter.tags.length > 0 && (
+        {!inFeaturedRow && frontmatter.tags && frontmatter.tags.length > 0 && (
           <div className="tags">
             {frontmatter.tags.map(t => (
               <button
@@ -607,6 +1065,25 @@ const Experience = () => {
           working on LLM reasoning and alignment. Before that, ten years
           building ML infrastructure in fintech.
         </IntroText>
+
+        <ResearchMap aria-label="Research threads">
+          {RESEARCH_THREADS.map(t => (
+            <button
+              key={t.id}
+              type="button"
+              className={pubThread === t.id ? "active" : ""}
+              aria-pressed={pubThread === t.id}
+              onClick={() => selectThread(t.id)}
+            >
+              <span className="thread-label">{t.label}</span>
+              <span className="thread-blurb">{t.blurb}</span>
+              <span className="thread-count">
+                {threadCounts[t.id]} papers
+                <IconChevronRight />
+              </span>
+            </button>
+          ))}
+        </ResearchMap>
 
         <ContentTypeButtonsContainer>
           {[
@@ -689,17 +1166,74 @@ const Experience = () => {
             featuredPublications.length > 0 && (
               <StyledFeaturedSection>
                 <h4>Selected work</h4>
-                <StyledTabList>
+                <FeaturedGrid>
                   {featuredPublications.map(({ node }, i) =>
                     renderPublicationCard(node, `featured-${i}`, true)
                   )}
-                </StyledTabList>
+                </FeaturedGrid>
               </StyledFeaturedSection>
             )}
-          {activeContentType === "publications" &&
-            featuredPublications.length > 0 && (
-              <StyledSectionLabel>All publications</StyledSectionLabel>
-            )}
+          {activeContentType === "publications" && timelineYears.length > 0 && (
+            <StyledTimeline id="pub-record" aria-label="Publications by year">
+              <div className="tl-head">
+                <h4>Publication record</h4>
+                <div className="legend">
+                  {Object.entries(TIER_LABELS).map(([tier, label]) => (
+                    <span key={tier}>
+                      <i className={`dot ${tier}`} aria-hidden="true" />
+                      {label}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="years">
+                {timelineYears.map(({ year, papers }) => (
+                  <button
+                    key={year}
+                    type="button"
+                    className={`year${papers.length === 0 ? " empty" : ""}${
+                      String(pubYear) === String(year) ? " active" : ""
+                    }`}
+                    onClick={() => papers.length > 0 && selectYear(year)}
+                    disabled={papers.length === 0}
+                    aria-label={`${year}: ${papers.length} publication${
+                      papers.length === 1 ? "" : "s"
+                    }`}
+                  >
+                    <span className="stack">
+                      {papers.map(p => (
+                        <i
+                          key={p.title}
+                          className={`dot ${p.tier}`}
+                          title={`${p.title} (${p.venue})`}
+                        />
+                      ))}
+                    </span>
+                    <span className="ylabel">{year}</span>
+                  </button>
+                ))}
+              </div>
+            </StyledTimeline>
+          )}
+          {activeContentType === "publications" && (
+            <StyledSectionLabel id="all-publications" ref={allPubsRef}>
+              All publications
+              {pubThread && (
+                <ActiveFilterNote>
+                  <button type="button" onClick={() => setPubThread(null)}>
+                    {RESEARCH_THREADS.find(t => t.id === pubThread).label} ✕
+                  </button>
+                </ActiveFilterNote>
+              )}
+              {pubYear !== "All" && (
+                <ActiveFilterNote>
+                  <button type="button" onClick={() => setPubYear("All")}>
+                    {pubYear} ✕
+                  </button>
+                </ActiveFilterNote>
+              )}
+            </StyledSectionLabel>
+          )}
           <StyledTabList>
             {displayData.map(({ node }, i) => {
               if (activeContentType === "publications") {

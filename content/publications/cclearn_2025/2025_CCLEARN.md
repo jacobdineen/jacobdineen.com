@@ -7,6 +7,7 @@ venue: "AACL-IJCNLP 2026"
 arxiv: https://arxiv.org/abs/2506.15662
 paperurl: "https://arxiv.org/pdf/2506.15662.pdf"
 googlescholar: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=2sYaEtQAAAAJ&citation_for_view=2sYaEtQAAAAJ:IjCSPb-OGe4C
+teaser: "/teasers/cc-learn-2025.webp"
 collection: publications
 tags: [rl, reasoning, program-synthesis, interpretability]
 abstract: |

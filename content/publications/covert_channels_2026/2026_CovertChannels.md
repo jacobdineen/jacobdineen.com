@@ -7,6 +7,7 @@ venue: "Under Review, ICLR 2027"
 arxiv: https://arxiv.org/abs/2609.32701
 paperurl: "https://arxiv.org/pdf/2609.32701.pdf"
 featured: 1
+teaser: "/teasers/covert-channels-2026.webp"
 collection: publications
 tags: [safety, agents, alignment, evaluation]
 abstract: |

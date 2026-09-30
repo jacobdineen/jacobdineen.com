@@ -9,7 +9,7 @@ const PublicationListItem = styled.div`
   padding: 16px 20px;
   border-radius: 8px;
   border: 1px solid
-    ${({ theme }) => (theme.mode === "light" ? "#e5e5ea" : "#2d2d2d")};
+    ${({ theme }) => (theme.mode === "light" ? "#e5e5ea" : "#2c2b29")};
   background: transparent;
   color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
   transition: border-color 0.1s ease;
@@ -23,10 +23,156 @@ const PublicationListItem = styled.div`
       padding-left: 18px;
     `}
 
+  &:hover,
+  &:focus-within {
+    z-index: 20;
+  }
+
   &:hover {
     border-color: ${({ theme }) =>
-      theme.mode === "light" ? "#a1a1a6" : "#424245"};
+      theme.mode === "light" ? "#a1a1a6" : "#4a4845"};
     ${({ featuredAccent }) => featuredAccent && `border-left-color: #0071e3;`}
+  }
+
+  ${({ $featuredCard, theme }) =>
+    $featuredCard &&
+    `
+      padding: 0 0 16px;
+      overflow: hidden;
+      background: ${theme.mode === "light" ? "#ffffff" : "#171615"};
+      transition: border-color 0.15s ease, transform 0.2s ease,
+        box-shadow 0.2s ease;
+
+      > *:not(.thumb) {
+        margin-left: 18px;
+        margin-right: 18px;
+      }
+
+      .title {
+        margin-top: 14px;
+        font-size: 1.02rem;
+        text-wrap: balance;
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        &:hover {
+          transform: translateY(-2px);
+          box-shadow: ${
+            theme.mode === "light"
+              ? "0 10px 24px -14px rgba(0, 0, 0, 0.25)"
+              : "0 10px 24px -14px rgba(0, 0, 0, 0.8)"
+          };
+        }
+      }
+    `}
+
+  .thumb {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    padding: 14px;
+    background: #ffffff;
+    border-bottom: 1px solid
+      ${({ theme }) => (theme.mode === "light" ? "#ececf0" : "#2c2b29")};
+
+    &:after {
+      display: none;
+    }
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      display: block;
+      transition: transform 0.35s ease;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    &:hover .thumb img {
+      transform: scale(1.025);
+    }
+  }
+
+  .title .preview {
+    display: none;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .title {
+      position: relative;
+      z-index: 3;
+    }
+
+    .title .preview {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      z-index: 30;
+      width: min(380px, 80vw);
+      padding: 10px 10px 12px;
+      border-radius: 10px;
+      border: 1px solid
+        ${({ theme }) => (theme.mode === "light" ? "#e5e5ea" : "#34322f")};
+      background: ${({ theme }) =>
+        theme.mode === "light" ? "#ffffff" : "#1b1a19"};
+      box-shadow: ${({ theme }) =>
+        theme.mode === "light"
+          ? "0 18px 40px -18px rgba(0, 0, 0, 0.3)"
+          : "0 18px 40px -18px rgba(0, 0, 0, 0.9)"};
+      font-family: var(--font-sans);
+      font-variation-settings: normal;
+      letter-spacing: 0;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+      transform: translateY(4px);
+      transition: opacity 0.16s ease, transform 0.16s ease,
+        visibility 0s linear 0.16s;
+
+      img {
+        width: 100%;
+        max-height: 170px;
+        object-fit: contain;
+        background: #ffffff;
+        border-radius: 6px;
+        padding: 6px;
+        display: block;
+      }
+    }
+
+    .title:hover .preview {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      transition: opacity 0.18s ease 0.3s, transform 0.18s ease 0.3s,
+        visibility 0s linear 0.3s;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .title .preview,
+      .title:hover .preview {
+        transform: none;
+      }
+    }
+  }
+
+  .preview-text {
+    font-size: 0.76rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: ${({ theme }) => (theme.mode === "light" ? "#3a3a3c" : "#c7c5c0")};
+  }
+
+  .preview-meta {
+    font-family: var(--font-mono);
+    font-size: 0.64rem;
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#9a9894")};
   }
 
   .title {
@@ -55,7 +201,7 @@ const PublicationListItem = styled.div`
 
   .authors {
     font-size: 0.8rem;
-    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#9a9894")};
     margin-bottom: 10px;
     line-height: 1.5;
 
@@ -126,7 +272,7 @@ const PublicationListItem = styled.div`
     }
 
     .date {
-      color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
+      color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#9a9894")};
       font-family: var(--font-mono);
     }
 

@@ -8,6 +8,7 @@ arxiv: https://arxiv.org/abs/2508.07616
 paperurl: "https://arxiv.org/pdf/2508.07616.pdf"
 googlescholar: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=2sYaEtQAAAAJ&citation_for_view=2sYaEtQAAAAJ:2osOgNQ5qMEC
 code: https://github.com/3rdAT/ThinkTuning
+teaser: "/teasers/thinktuning-2025.webp"
 collection: publications
 tags: [rl, post-training, reasoning]
 featured: 4

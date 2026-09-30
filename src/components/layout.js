@@ -60,7 +60,7 @@ const StyledMinimalHeader = styled.header`
     justify-content: space-between;
     padding: 12px 16px;
     background: ${({ theme }) =>
-      theme.mode === "light" ? "#f5f5f7" : "#000000"};
+      theme.mode === "light" ? "#f5f5f7" : "#11100f"};
     border-bottom: 1px solid
       ${({ theme }) => (theme.mode === "light" ? "#d2d2d7" : "#2d2d2d")};
     position: sticky;
@@ -152,7 +152,7 @@ const StyledSidebar = styled.aside`
   background: ${({ theme }) =>
     theme.mode === "light"
       ? "rgba(245, 245, 247, 0.92)"
-      : "rgba(0, 0, 0, 0.92)"};
+      : "rgba(17, 16, 15, 0.92)"};
   backdrop-filter: saturate(180%) blur(14px);
   -webkit-backdrop-filter: saturate(180%) blur(14px);
   border-bottom: 1px solid
@@ -169,7 +169,7 @@ const StyledSidebar = styled.aside`
 
   @media (min-width: 768px) {
     background: ${({ theme }) =>
-      theme.mode === "light" ? "#f5f5f7" : "#000000"};
+      theme.mode === "light" ? "#f5f5f7" : "#11100f"};
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }
@@ -278,7 +278,7 @@ const StyledMainContent = styled.main`
   flex-direction: column;
   z-index: 10;
   background: ${({ theme }) =>
-    theme.mode === "light" ? "#ffffff" : "#000000"};
+    theme.mode === "light" ? "#ffffff" : "#11100f"};
   color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
   flex: 1;
   position: relative;
