@@ -24,6 +24,7 @@ const venueTier = venue => {
   const v = (venue || "").toLowerCase()
   if (/preprint|pending|under review|arxiv/.test(v)) return "tier-pre"
   if (/workshop|@|viscon/.test(v)) return "tier-ws"
+  if (/findings/.test(v)) return "tier-conf"
   if (
     /\b(emnlp|acl|naacl|colm|neurips|icml|iclr|cvpr|iccv|eccv|aaai|kdd)\b/.test(
       v
@@ -336,7 +337,7 @@ const Experience = () => {
   const pubTags = useMemo(() => {
     const set = new Set()
     publicationsData.forEach(({ node }) => {
-      ;(node.frontmatter.tags || []).forEach(t => t && set.add(t))
+      (node.frontmatter.tags || []).forEach(t => t && set.add(t))
     })
     return Array.from(set).sort()
   }, [publicationsData])

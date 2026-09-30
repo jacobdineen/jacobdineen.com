@@ -3,7 +3,7 @@ title: "QA-LIGN: Aligning LLMs through Constitutionally Decomposed QA"
 slug: "/publications/qa-lign-2025"
 authors: Jacob Dineen, Aswin RRV, Qin Liu, Zhikun Xu, Xiao Ye, Ming Shen, Zhaonan Li, Shijie Lu, Chitta Baral, Muhao Chen, Ben Zhou
 date: 2025-01-02
-venue: "EMNLP 2025"
+venue: "EMNLP 2025 Findings"
 arxiv: https://arxiv.org/abs/2506.08123
 paperurl: "https://arxiv.org/pdf/2506.08123.pdf"
 googlescholar: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=2sYaEtQAAAAJ&citation_for_view=2sYaEtQAAAAJ:9yKSN-GCB0IC
