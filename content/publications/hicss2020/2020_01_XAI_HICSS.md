@@ -1,6 +1,7 @@
 ---
 title: "Model Interpretation and Explainability towards Creating Transparency in Prediction Models"
 slug: "/publications/model-xai-2020"
+tldr: "Finds that feature importance from standard explainability tools disagrees between static analysis and what-if prediction scenarios on credit data."
 authors: Daniel Dolk, Donald Kridel, Jacob Dineen, David Castillo
 date: 2020-1-07
 venue: "HICSS 2020"

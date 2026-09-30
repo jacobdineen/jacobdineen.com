@@ -1,6 +1,7 @@
 ---
 title: "Formal Methods for an Iterated Volunteer's Dilemma"
 slug: "/publications/volunteer-dilemma-2021"
+tldr: "Models the iterated Volunteer's Dilemma as a stochastic n-player game and uses formal verification and strategy synthesis to study optimal play."
 authors: Jacob Dineen, ASM Ahsan-Ul Haque, Matthew Bielskas
 date: 2021-7-04
 venue: "SBP-BRiMS 2021"

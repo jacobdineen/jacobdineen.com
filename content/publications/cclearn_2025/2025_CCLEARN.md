@@ -1,6 +1,7 @@
 ---
 title: "Learning Verifiable Reasoning Programs through Cohort Consistency"
 slug: "/publications/cc-learn-2025"
+tldr: "Has the model write one executable program for a whole cohort of factually varied questions and rewards consistency across the cohort, giving 10 to 20 point gains."
 authors: Xiao Ye, Zhaonan Li, Jacob Dineen, Zhikun Xu, Shijie Lu, Ming Shen, Shaswat Shrivastava, Avneet Ahuja, Ben Zhou
 date: 2025-06-18
 venue: "AACL-IJCNLP 2026"

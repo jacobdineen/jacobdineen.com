@@ -1,6 +1,7 @@
 ---
 title: "QA-LIGN: Aligning LLMs through Constitutionally Decomposed QA"
 slug: "/publications/qa-lign-2025"
+tldr: "Replaces scalar rewards with principle-specific QA rubrics during GRPO, cutting attack success by up to 68.7% with a 0.67% false refusal rate."
 authors: Jacob Dineen, Aswin RRV, Qin Liu, Zhikun Xu, Xiao Ye, Ming Shen, Zhaonan Li, Shijie Lu, Chitta Baral, Muhao Chen, Ben Zhou
 date: 2025-01-02
 venue: "EMNLP 2025 Findings"

@@ -1,6 +1,7 @@
 ---
 title: "HINDCAST: Replaying Prediction Markets to Evaluate LLM Forecasters"
 slug: "/publications/hindcast-2026"
+tldr: "Replays resolved Polymarket markets against a frozen Reddit snapshot so LLM forecasters are graded without retrieval or training-data leakage."
 authors: Xiao Ye, Jacob Dineen, Evan Zhu, Shijie Lu, Kevin Song, Ben Zhou
 date: 2026-05-15
 venue: "arXiv Preprint"

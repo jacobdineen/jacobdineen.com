@@ -1,6 +1,7 @@
 ---
 title: "ThinkTuning: Instilling Cognitive Reflections without Distillation"
 slug: "/publications/thinktuning-2025"
+tldr: "Teaches base models to reflect by having a same-size teacher inject corrective feedback into GRPO rollouts."
 authors: Aswin RRV, Jacob Dineen, Divij Handa, Md Nayem Uddin, Mihir Parmar, Chitta Baral, Ben Zhou
 date: 2025-08-11
 venue: "EMNLP 2025"

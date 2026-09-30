@@ -1,6 +1,7 @@
 ---
 title: "Unified Explanations in Machine Learning Models: A Perturbation Approach"
 slug: "/publications/unified-xai-2023"
+tldr: "A perturbation-based analysis of SHAP that measures how well static explanations hold under dynamic inference across ML and deep models."
 authors: Jacob Dineen, Don Kridel, Daniel Dolk, David Castillo
 date: 2023-1-07
 code: https://github.com/jacobdineen/hiccs2021

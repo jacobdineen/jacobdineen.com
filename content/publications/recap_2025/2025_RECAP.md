@@ -1,6 +1,7 @@
 ---
 title: "RECAP: Transparent Inference-Time Emotion Alignment for Medical Dialogue Systems"
 slug: "/publications/recap-2025"
+tldr: "An inference-time appraisal pipeline that makes medical dialogue more emotionally attuned and auditable, preferred by oncology fellows 76 to 88% of the time."
 authors: Adarsh Srinivasan, Jacob Dineen, Muhammad Uzair Sarfraz, Muhammad Umar Afzal, Irbaz Riaz, Ben Zhou
 date: 2026-05-11
 venue: "Clinical NLP @ LREC 2026 (Oral)"

@@ -1,6 +1,7 @@
 ---
 title: "Mid-Training With Self-Generated Data Improves Reinforcement Learning in Language Models"
 slug: "/publications/midtraining-2026"
+tldr: "Mid-training on diverse self-generated solutions, guided by Pólya's problem-solving strategies, makes later RL more effective for reasoning."
 authors: Aswin RRV, Jacob Dineen, Divij Handa, Mihir Parmar, Ben Zhou, Swaroop Mishra, Chitta Baral
 date: 2026-01-01
 venue: "arXiv Preprint"

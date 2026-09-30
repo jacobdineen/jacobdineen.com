@@ -1,6 +1,7 @@
 ---
 title: "ArenaBencher: Automatic Benchmark Evolution via Multi-Model Competitive Evaluation"
 slug: "/publications/arenabencher-2025"
+tldr: "Keeps benchmarks ahead of contamination by rewriting test cases that preserve each item's objective while a pool of competing models exposes their shared weaknesses."
 authors: Qin Liu, Jacob Dineen, Yuxi Huang, Sheng Zhang, Hoifung Poon, Chaowei Xiao, Ben Zhou, Muhao Chen
 date: 2025-10-09
 venue: "Under Review, ICLR 2027"

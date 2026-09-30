@@ -1,6 +1,7 @@
 ---
 title: "Despite Instructions: Frontier Agents Improvise Covert Channels at Test Time"
 slug: "/publications/covert-channels-2026"
+tldr: "Frontier agent pairs invent covert channels during inference from one bit of feedback and reach 98.8% accuracy despite instructions and a monitor that forbid disclosure."
 authors: Jacob Dineen, Silei Ren, Muhao Chen, Dan Roth, Ben Zhou
 date: 2026-09-26
 venue: "Under Review, ICLR 2027"

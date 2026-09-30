@@ -1,6 +1,7 @@
 ---
 title: "Skill Reuse as Compression in Agentic RL"
 slug: "/publications/skill-reuse-2026"
+tldr: "Grounds agentic RL in minimum description length by rewarding trajectories that compress into a small dictionary of reusable skills."
 authors: Zhikun Xu, Yu Feng, Jacob Dineen, Taiwei Shi, Jieyu Zhao, Ben Zhou
 date: 2026-05-29
 venue: "EMNLP 2026"

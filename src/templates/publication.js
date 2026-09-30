@@ -7,6 +7,7 @@ import { Helmet } from "react-helmet"
 import styled from "styled-components"
 import { Layout, ReadingProgress } from "@components"
 import { Icon } from "@components/icons"
+import venueTier from "@utils/venueTier"
 
 const StyledPublicationContainer = styled.main`
   max-width: 900px;
@@ -108,8 +109,77 @@ const StyledPublicationHeader = styled.header`
       background: transparent;
     }
 
+    .venue.tier-top {
+      color: ${({ theme }) => (theme.mode === "light" ? "#0058b0" : "#6cb4ff")};
+      border-color: ${({ theme }) =>
+        theme.mode === "light" ? "#b3d4f5" : "#1f4a75"};
+      background: ${({ theme }) =>
+        theme.mode === "light" ? "#eef5fd" : "rgba(10, 132, 255, 0.12)"};
+    }
+
+    .venue.tier-conf {
+      color: ${({ theme }) => (theme.mode === "light" ? "#2f6b3a" : "#7fd08e")};
+      border-color: ${({ theme }) =>
+        theme.mode === "light" ? "#bfdcc4" : "#2b5234"};
+      background: ${({ theme }) =>
+        theme.mode === "light" ? "#f1f8f2" : "rgba(52, 199, 89, 0.10)"};
+    }
+
+    .venue.tier-ws {
+      color: ${({ theme }) => (theme.mode === "light" ? "#8a5a00" : "#f0b85c")};
+      border-color: ${({ theme }) =>
+        theme.mode === "light" ? "#ecd3a4" : "#5c4520"};
+      background: ${({ theme }) =>
+        theme.mode === "light" ? "#fdf7ec" : "rgba(255, 159, 10, 0.10)"};
+    }
+
+    .venue.tier-pre {
+      border-style: dashed;
+    }
+
     .date {
-      opacity: 0.7;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#9a9894")};
+    }
+  }
+
+  .tldr {
+    margin: 0 0 20px;
+    max-width: 62ch;
+    font-family: var(--font-serif);
+    font-size: clamp(1.02rem, 2.2vw, 1.2rem);
+    line-height: 1.5;
+    font-weight: 400;
+    color: ${({ theme }) => (theme.mode === "light" ? "#3a3a3c" : "#c9c7c3")};
+    text-wrap: pretty;
+  }
+`
+
+const StyledFigure = styled.figure`
+  margin: 8px 0 40px;
+  padding: 20px;
+  background: #ffffff;
+  border: 1px solid
+    ${({ theme }) => (theme.mode === "light" ? "#e5e5ea" : "#2a2826")};
+  border-radius: var(--border-radius);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    display: block;
+    width: 100%;
+    max-height: 420px;
+    object-fit: contain;
+  }
+
+  @media (max-width: 768px) {
+    padding: 12px;
+    margin: 0 0 28px;
+
+    img {
+      max-height: 260px;
     }
   }
 `
@@ -189,7 +259,13 @@ const StyledLinks = styled.div`
     }
   }
 
-  button.share-btn {
+  button.bib-btn.copied {
+    background-color: #0071e3;
+    color: white;
+  }
+
+  button.share-btn,
+  button.bib-btn {
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -374,7 +450,13 @@ const PublicationTemplate = ({ data, location }) => {
     slug,
     slides,
     tags,
+    teaser,
+    tldr,
   } = frontmatter
+  const pageSlug = (slug || "").split("/").filter(Boolean).pop()
+  const ogImage = pageSlug ? `${siteUrl}/og/${pageSlug}.png` : null
+  const tier = venueTier(venue)
+  const summary = tldr || (abstract ? abstract.substring(0, 200) : null)
 
   // Parse authors for meta tags
   const authorList = authors ? authors.split(",").map(a => a.trim()) : []
@@ -383,13 +465,35 @@ const PublicationTemplate = ({ data, location }) => {
   const arxivId = arxiv ? arxiv.match(/(\d{4}\.\d{4,5})/)?.[1] : null
 
   // Format date for citation
-  const publicationDate = new Date(date)
-  const citationDate = `${publicationDate.getFullYear()}/${String(
-    publicationDate.getMonth() + 1
-  ).padStart(2, "0")}/${String(publicationDate.getDate()).padStart(2, "0")}`
+  const [yy, mm = 1, dd = 1] = String(date || "")
+    .slice(0, 10)
+    .split("-")
+    .map(Number)
+  const publicationDate = new Date(Date.UTC(yy, mm - 1, dd))
+  const pad = n => String(n).padStart(2, "0")
+  const citationDate = `${yy}/${pad(mm)}/${pad(dd)}`
+  const displayDate = publicationDate.toLocaleDateString("en-US", {
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  })
 
+  // Scholar: only real venues get a conference title. Preprints and
+  // under-review papers are indexed through their arXiv id instead.
+  const isPublishedVenue = venue && tier !== "tier-pre"
+  const pdfUrl = arxivId
+    ? `https://arxiv.org/pdf/${arxivId}`
+    : paperurl && /\.pdf($|\?)/i.test(paperurl)
+    ? paperurl
+    : null
+
+  const [bibCopied, setBibCopied] = useState(false)
   const copyBibtex = () => {
-    navigator.clipboard.writeText(bibtex)
+    if (!bibtex || typeof navigator === "undefined") return
+    navigator.clipboard.writeText(bibtex).then(() => {
+      setBibCopied(true)
+      setTimeout(() => setBibCopied(false), 1600)
+    })
   }
 
   // Share menu open/close
@@ -495,24 +599,28 @@ const PublicationTemplate = ({ data, location }) => {
           <meta key={i} name="citation_author" content={author} />
         ))}
         <meta name="citation_publication_date" content={citationDate} />
-        {venue && <meta name="citation_conference_title" content={venue} />}
-        {venue && <meta name="citation_journal_title" content={venue} />}
-        {arxivId && <meta name="citation_arxiv_id" content={arxivId} />}
-        {paperurl && <meta name="citation_pdf_url" content={paperurl} />}
-        {abstract && (
-          <meta name="description" content={abstract.substring(0, 160)} />
+        {isPublishedVenue && (
+          <meta name="citation_conference_title" content={venue} />
         )}
+        {arxivId && <meta name="citation_arxiv_id" content={arxivId} />}
+        {pdfUrl && <meta name="citation_pdf_url" content={pdfUrl} />}
+        {slug && (
+          <meta
+            name="citation_abstract_html_url"
+            content={`${siteUrl}${slug}`}
+          />
+        )}
+        {summary && <meta name="description" content={summary} />}
 
         {/* Open Graph */}
         <meta property="og:title" content={title} />
         <meta property="og:type" content="article" />
+        {ogImage && <meta property="og:image" content={ogImage} />}
+        {ogImage && <meta property="og:image:width" content="1200" />}
+        {ogImage && <meta property="og:image:height" content="630" />}
+        {ogImage && <meta property="og:image:alt" content={title} />}
         <meta property="og:url" content={`${siteUrl}${slug}`} />
-        {abstract && (
-          <meta
-            property="og:description"
-            content={abstract.substring(0, 200)}
-          />
-        )}
+        {summary && <meta property="og:description" content={summary} />}
         <meta
           property="article:published_time"
           content={publicationDate.toISOString()}
@@ -530,12 +638,8 @@ const PublicationTemplate = ({ data, location }) => {
 
         {/* Twitter card per-pub overrides (site defaults set in head.js) */}
         <meta name="twitter:title" content={title} />
-        {abstract && (
-          <meta
-            name="twitter:description"
-            content={abstract.substring(0, 200)}
-          />
-        )}
+        {ogImage && <meta name="twitter:image" content={ogImage} />}
+        {summary && <meta name="twitter:description" content={summary} />}
 
         {/* Schema.org Structured Data */}
         <script type="application/ld+json">
@@ -589,10 +693,12 @@ const PublicationTemplate = ({ data, location }) => {
           >
             {title}
           </h1>
+          {tldr && <p className="tldr">{tldr}</p>}
           <p className="authors">{renderAuthors(authors)}</p>
-          {venue && (
+          {(venue || date) && (
             <div className="meta">
-              <span className="venue">{venue}</span>
+              {venue && <span className={`venue ${tier}`}>{venue}</span>}
+              {date && <span className="date">{displayDate}</span>}
             </div>
           )}
         </StyledPublicationHeader>
@@ -678,6 +784,17 @@ const PublicationTemplate = ({ data, location }) => {
               Slides
             </a>
           )}
+          {bibtex && (
+            <button
+              type="button"
+              className={`bib-btn${bibCopied ? " copied" : ""}`}
+              onClick={copyBibtex}
+              aria-live="polite"
+            >
+              <Icon name="Bookmark" />
+              {bibCopied ? "Copied" : "BibTeX"}
+            </button>
+          )}
           {slug && (
             <div className="share-wrapper" ref={shareRef}>
               <button
@@ -737,6 +854,17 @@ const PublicationTemplate = ({ data, location }) => {
           )}
         </StyledLinks>
 
+        {teaser && (
+          <StyledFigure>
+            <img
+              src={withPrefix(teaser)}
+              alt={`Overview figure for ${title}`}
+              loading="eager"
+              decoding="async"
+            />
+          </StyledFigure>
+        )}
+
         {slides && (
           <StyledSlides>
             <h2>Slides</h2>
@@ -759,7 +887,9 @@ const PublicationTemplate = ({ data, location }) => {
             <pre>
               <code>{bibtex}</code>
             </pre>
-            <button onClick={copyBibtex}>Copy BibTeX</button>
+            <button onClick={copyBibtex}>
+              {bibCopied ? "Copied" : "Copy BibTeX"}
+            </button>
           </StyledBibtex>
         )}
       </StyledPublicationContainer>
@@ -798,6 +928,8 @@ export const pageQuery = graphql`
         code
         slides
         tags
+        teaser
+        tldr
       }
     }
   }

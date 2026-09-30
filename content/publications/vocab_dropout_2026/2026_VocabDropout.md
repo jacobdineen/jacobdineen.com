@@ -1,6 +1,7 @@
 ---
 title: "Vocabulary Dropout for Curriculum Diversity in LLM Co-Evolution"
 slug: "/publications/vocab-dropout-2026"
+tldr: "Randomly masking the proposer's vocabulary keeps self-play curricula diverse and improves the solver by 4.4 points at 8B."
 authors: Jacob Dineen, Aswin RRV, Zhikun Xu, Ben Zhou
 date: 2026-01-02
 venue: "COLM 2026"

@@ -1,6 +1,7 @@
 ---
 title: "VisAnalog: A Diagnostic Suite for Visual Concept Transfer on Natural Images"
 slug: "/publications/visual-analogies-2025"
+tldr: "A benchmark of A:B::C:? visual analogies on natural images showing that VLMs mostly fail at inferring the transformation from A to B."
 authors: Zhaonan Li, Kyle R. Chickering, Bangzheng Li, Jacob Dineen, Xiao Ye, Zhikun Xu, Shijie Lu, Yuxi Huang, Ming Shen, Bach Nguyen, Jaya Adithya Pavuluri, Mau Son Nguyen, Sanika Chavan, Ngoc Minh Thu Le, Muhao Chen, Ben Zhou
 date: 2025-11-02
 venue: "CVPR Workshop on Visual Concepts (VisCon), 2026 (Oral)"
