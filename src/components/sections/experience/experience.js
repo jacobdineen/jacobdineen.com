@@ -20,6 +20,20 @@ import {
 } from "@components/icons"
 import collaboratorLinks from "@utils/collaboratorLinks"
 
+const venueTier = venue => {
+  const v = (venue || "").toLowerCase()
+  if (/preprint|pending|under review|arxiv/.test(v)) return "tier-pre"
+  if (/workshop|@|viscon/.test(v)) return "tier-ws"
+  if (
+    /\b(emnlp|acl|naacl|colm|neurips|icml|iclr|cvpr|iccv|eccv|aaai|kdd)\b/.test(
+      v
+    ) &&
+    !/aacl/.test(v)
+  )
+    return "tier-top"
+  return "tier-conf"
+}
+
 const ContentTypeButtonsContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -286,6 +300,14 @@ const Experience = () => {
   const [showCourses, setShowCourses] = useState({})
   const [expandedCards, setExpandedCards] = useState({})
   const [showAllPubs, setShowAllPubs] = useState(false)
+  const [copiedBib, setCopiedBib] = useState(null)
+  const copyBibtex = (key, bib) => {
+    if (typeof navigator === "undefined" || !navigator.clipboard) return
+    navigator.clipboard.writeText(bib.trim()).then(() => {
+      setCopiedBib(key)
+      setTimeout(() => setCopiedBib(c => (c === key ? null : c)), 1600)
+    })
+  }
 
   // Publication filters
   const [pubQuery, setPubQuery] = useState("")
@@ -314,7 +336,7 @@ const Experience = () => {
   const pubTags = useMemo(() => {
     const set = new Set()
     publicationsData.forEach(({ node }) => {
-      (node.frontmatter.tags || []).forEach(t => t && set.add(t))
+      ;(node.frontmatter.tags || []).forEach(t => t && set.add(t))
     })
     return Array.from(set).sort()
   }, [publicationsData])
@@ -457,7 +479,7 @@ const Experience = () => {
           <span className="authors">{renderAuthors(frontmatter.authors)}</span>
         )}
         <div className="meta">
-          {venue && <span className="chip">{venue}</span>}
+          {venue && <span className={`chip ${venueTier(venue)}`}>{venue}</span>}
           {formatted && <span className="date">{formatted}</span>}
           {frontmatter.arxiv && (
             <a
@@ -526,6 +548,17 @@ const Experience = () => {
               <IconGitHub />
               <span>code</span>
             </a>
+          )}
+          {frontmatter.bibtex && (
+            <button
+              type="button"
+              className={`chip-link${copiedBib === key ? " copied" : ""}`}
+              onClick={() => copyBibtex(key, frontmatter.bibtex)}
+              title="Copy BibTeX"
+              aria-label={`copy bibtex — ${title}`}
+            >
+              <span>{copiedBib === key ? "copied ✓" : "bibtex"}</span>
+            </button>
           )}
           {frontmatter.slug && (
             <TransitionLink
