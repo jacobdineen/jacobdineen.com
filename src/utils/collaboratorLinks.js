@@ -17,7 +17,7 @@ const collaboratorLinks = {
   "md nayem uddin": "https://www.linkedin.com/in/muddin11",
   "mihir parmar": "https://sites.google.com/view/mihir3009",
   "ming shen": "https://www.linkedin.com/in/ming-shen-50ba4b226",
-  "muhao chen": "https://luka-group.github.io/",
+  "muhao chen": "https://muhaochen.github.io/",
   "qin liu": "https://qinliu9.github.io/",
   "sheng zhang": "https://sheng-z.github.io/",
   "xiao ye": "https://itok2000u.github.io/",
