@@ -173,8 +173,9 @@ const StyledFilters = styled.div`
 `
 
 const IntroText = styled.p`
-  max-width: 560px;
+  max-width: 900px;
   margin: 0 auto 12px;
+  text-wrap: balance;
 
   &:last-of-type {
     margin-bottom: 24px;
@@ -855,7 +856,7 @@ const Experience = () => {
     <StyledJobsSection id="experience" ref={revealContainer}>
       <StyledText>
         <IntroText>
-          PhD student at{" "}
+          Reasoning, alignment, and controllability in LLMs at{" "}
           <a
             href="https://arc-asu.github.io/"
             target="_blank"
@@ -863,8 +864,7 @@ const Experience = () => {
           >
             ASU&apos;s ARC Lab
           </a>
-          , working on reasoning, alignment, and controllability in language
-          models.
+          .
         </IntroText>
 
         <ResearchMap aria-label="Research threads">
