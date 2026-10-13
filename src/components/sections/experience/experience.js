@@ -864,9 +864,7 @@ const Experience = () => {
             ASU&apos;s ARC Lab
           </a>
           , working on reasoning, alignment, and controllability in language
-          models. I came to research from industry, where I built and shipped
-          production ML systems in fintech, and I still keep a hand in applied
-          work.
+          models.
         </IntroText>
 
         <ResearchMap aria-label="Research threads">
