@@ -854,18 +854,19 @@ const Experience = () => {
   return (
     <StyledJobsSection id="experience" ref={revealContainer}>
       <StyledText>
-        <h3>Hey, I&apos;m Jake.</h3>
         <IntroText>
-          I&apos;m a PhD student at{" "}
+          PhD student at{" "}
           <a
             href="https://arc-asu.github.io/"
             target="_blank"
             rel="noopener noreferrer"
           >
             ASU&apos;s ARC Lab
-          </a>{" "}
-          working on LLM reasoning and alignment. Before that, ten years
-          building ML infrastructure in fintech.
+          </a>
+          , working on reasoning, alignment, and controllability in language
+          models. I came to research from industry, where I built and shipped
+          production ML systems in fintech, and I still keep a hand in applied
+          work.
         </IntroText>
 
         <ResearchMap aria-label="Research threads">
