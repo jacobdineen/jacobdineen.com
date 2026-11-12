@@ -833,13 +833,9 @@ const Layout = ({ children, location }) => {
             </StyledMinimalHeader>
           )}
 
-          <StyledSidebar
-            role="navigation"
-            aria-label="Main navigation"
-            hideOnMobile={isDetailPage(location?.pathname)}
-          >
+          <StyledSidebar hideOnMobile={isDetailPage(location?.pathname)}>
             <About isHome={location?.pathname === "/"} />
-            <nav>
+            <nav aria-label="Main navigation">
               <ul>
                 {sectionGroups.map((group, gi) => (
                   <React.Fragment key={gi}>

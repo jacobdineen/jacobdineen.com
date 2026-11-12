@@ -203,7 +203,7 @@ const StyledFeaturedSection = styled.section`
   margin: 0 auto 28px;
   max-width: 900px;
 
-  h4 {
+  h2 {
     font-family: var(--font-mono);
     font-size: 0.7rem;
     font-weight: 500;
@@ -215,7 +215,7 @@ const StyledFeaturedSection = styled.section`
   }
 `
 
-const StyledSectionLabel = styled.h4`
+const StyledSectionLabel = styled.h2`
   scroll-margin-top: 90px;
   font-family: var(--font-mono);
   font-size: 0.7rem;
@@ -447,6 +447,13 @@ const Experience = () => {
               }
             }
             html
+            fields {
+              teaser {
+                width
+                height
+                small
+              }
+            }
           }
         }
       }
@@ -681,6 +688,8 @@ const Experience = () => {
 
   const renderPublicationCard = (node, key, inFeaturedRow = false) => {
     const { frontmatter } = node
+    const teaserInfo = (node.fields && node.fields.teaser) || {}
+    const teaserSmall = teaserInfo.small ? withPrefix(teaserInfo.small) : null
     const { venue, title, date } = frontmatter
     const formatted = date
       ? new Date(date).toLocaleDateString("en-US", {
@@ -708,7 +717,17 @@ const Experience = () => {
             tabIndex={-1}
           >
             <img
-              src={withPrefix(frontmatter.teaser)}
+              src={teaserSmall || withPrefix(frontmatter.teaser)}
+              srcSet={
+                teaserSmall
+                  ? `${teaserSmall} 560w, ${withPrefix(frontmatter.teaser)} ${
+                      teaserInfo.width
+                    }w`
+                  : undefined
+              }
+              sizes="280px"
+              width={teaserInfo.width}
+              height={teaserInfo.height}
               alt={`Key figure from ${title}`}
               loading="lazy"
               decoding="async"
@@ -735,7 +754,9 @@ const Experience = () => {
               <span className="preview" aria-hidden="true">
                 {frontmatter.teaser && (
                   <img
-                    src={withPrefix(frontmatter.teaser)}
+                    src={teaserSmall || withPrefix(frontmatter.teaser)}
+                    width={teaserInfo.width}
+                    height={teaserInfo.height}
                     alt={`Key figure from ${title}`}
                     loading="lazy"
                     decoding="async"
@@ -984,7 +1005,7 @@ const Experience = () => {
           {activeContentType === "publications" &&
             featuredPublications.length > 0 && (
               <StyledFeaturedSection>
-                <h4>Selected work</h4>
+                <h2>Selected work</h2>
                 <FeaturedGrid>
                   {featuredPublications.map(({ node }, i) =>
                     renderPublicationCard(node, `featured-${i}`, true)

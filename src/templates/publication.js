@@ -180,6 +180,7 @@ const StyledFigure = styled.figure`
   img {
     display: block;
     width: 100%;
+    height: auto;
     max-height: 420px;
     object-fit: contain;
   }
@@ -450,7 +451,8 @@ const StyledSlides = styled.div`
 `
 
 const PublicationTemplate = ({ data, location }) => {
-  const { frontmatter, html } = data.markdownRemark
+  const { frontmatter, html, fields } = data.markdownRemark
+  const teaserInfo = (fields && fields.teaser) || {}
   const { siteUrl } = data.site.siteMetadata
   const {
     title,
@@ -906,6 +908,16 @@ const PublicationTemplate = ({ data, location }) => {
           <StyledFigure>
             <img
               src={withPrefix(teaser)}
+              srcSet={
+                teaserInfo.small
+                  ? `${withPrefix(teaserInfo.small)} 560w, ${withPrefix(
+                      teaser
+                    )} ${teaserInfo.width}w`
+                  : undefined
+              }
+              sizes="(max-width: 767px) 92vw, 800px"
+              width={teaserInfo.width}
+              height={teaserInfo.height}
               alt={`Overview figure for ${title}`}
               loading="eager"
               decoding="async"
@@ -961,6 +973,13 @@ export const pageQuery = graphql`
     }
     markdownRemark(frontmatter: { slug: { eq: $path } }) {
       html
+      fields {
+        teaser {
+          width
+          height
+          small
+        }
+      }
       frontmatter {
         title
         slug

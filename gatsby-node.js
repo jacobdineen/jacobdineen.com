@@ -4,7 +4,29 @@
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
 
+const fs = require("fs")
 const path = require("path")
+const sharp = require("sharp")
+
+// Record each teaser's pixel size (so pages can reserve its box and avoid a
+// layout shift) and the 560px card variant from scripts/teaser-variants.js.
+exports.onCreateNode = async ({ node, actions }) => {
+  if (node.internal.type !== "MarkdownRemark") return
+  const teaser = node.frontmatter && node.frontmatter.teaser
+  if (!teaser) return
+  const file = path.join(__dirname, "static", teaser)
+  if (!fs.existsSync(file)) return
+  const { width, height } = await sharp(file).metadata()
+  const smallPath = teaser.replace(/\.webp$/, "-560.webp")
+  const small = fs.existsSync(path.join(__dirname, "static", smallPath))
+    ? smallPath
+    : null
+  actions.createNodeField({
+    node,
+    name: "teaser",
+    value: { width, height, small },
+  })
+}
 
 exports.createSchemaCustomization = ({ actions }) => {
   actions.createTypes(`
