@@ -92,3 +92,6 @@ polymarket_*.zip
 
 # Claude Code local state (worktrees, settings)
 .claude/
+
+# Gatsby build output
+public/
