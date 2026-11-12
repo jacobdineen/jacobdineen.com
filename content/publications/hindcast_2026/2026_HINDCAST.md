@@ -7,7 +7,7 @@ date: 2026-07-15
 venue: "arXiv Preprint"
 arxiv: https://arxiv.org/abs/2607.14051
 paperurl: "https://arxiv.org/pdf/2607.14051.pdf"
-pdf: "/papers/hindcast-2026.pdf"
+pdf: "/publications/hindcast-2026.pdf"
 teaser: "/teasers/hindcast-2026.webp"
 collection: publications
 tags: [evaluation, retrieval, agents]

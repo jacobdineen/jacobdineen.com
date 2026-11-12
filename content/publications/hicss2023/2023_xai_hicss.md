@@ -8,7 +8,7 @@ code: https://github.com/jacobdineen/hiccs2021
 googlescholar: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=2sYaEtQAAAAJ&citation_for_view=2sYaEtQAAAAJ:LkGwnXOMwfcC
 semanticscholar: https://www.semanticscholar.org/paper/Unified-Explanations-in-Machine-Learning-Models%3A-A-Dineen-Kridel/24c79f9a4985d4503d7300eca987f874a7e8491e
 arxiv: https://arxiv.org/pdf/2405.20200
-pdf: "/papers/unified-xai-2023.pdf"
+pdf: "/publications/unified-xai-2023.pdf"
 venue: "HICSS 2023"
 collection: publications
 tags: [interpretability, evaluation, robustness]

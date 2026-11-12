@@ -9,7 +9,7 @@ arxiv: https://arxiv.org/abs/2102.06800
 googlescholar: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=2sYaEtQAAAAJ&citation_for_view=2sYaEtQAAAAJ:eQOLeE2rZwMC
 semanticscholar: https://www.semanticscholar.org/reader/d9926dc56bd67f2f1b3f9caf18e53183cb3499ac
 paperurl: "https://link.springer.com/chapter/10.1007%2F978-3-030-80387-2_14"
-pdf: "/papers/rl-data-poisoning-2021.pdf"
+pdf: "/publications/rl-data-poisoning-2021.pdf"
 code: https://github.com/jacobdineen/RL4DataPoisoning
 collection: publications
 tags: [rl, security, robustness]
