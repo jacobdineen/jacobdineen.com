@@ -3,7 +3,7 @@ title: "VisAnalog: A Diagnostic Suite for Visual Concept Transfer on Natural Ima
 slug: "/publications/visual-analogies-2025"
 tldr: "A benchmark of A:B::C:? visual analogies on natural images showing that VLMs mostly fail at inferring the transformation from A to B."
 authors: Zhaonan Li, Kyle R. Chickering, Bangzheng Li, Jacob Dineen, Xiao Ye, Zhikun Xu, Shijie Lu, Yuxi Huang, Ming Shen, Bach Nguyen, Jaya Adithya Pavuluri, Mau Son Nguyen, Sanika Chavan, Ngoc Minh Thu Le, Muhao Chen, Ben Zhou
-date: 2025-11-02
+date: 2026-05-22
 venue: "CVPR Workshop on Visual Concepts (VisCon), 2026 (Oral)"
 arxiv: https://arxiv.org/abs/2605.23141
 paperurl: "https://arxiv.org/pdf/2605.23141.pdf"
@@ -14,11 +14,14 @@ teaser: "/teasers/visanalog-2025.webp"
 collection: publications
 tags: [multimodal, evaluation, reasoning]
 bibtex: |
-  @article{li2026visanalog,
-    title={VisAnalog: A Diagnostic Suite for Visual Concept Transfer on Natural Images},
-    author={Li, Zhaonan and Chickering, Kyle R and Li, Bangzheng and Dineen, Jacob and Ye, Xiao and Xu, Zhikun and Lu, Shijie and Huang, Yuxi and Shen, Ming and Nguyen, Bach and others},
-    journal={arXiv preprint arXiv:2605.23141},
-    year={2026}
+  @misc{li2026visanalog,
+      title={VisAnalog: A Diagnostic Suite for Visual Concept Transfer on Natural Images},
+      author={Zhaonan Li and Kyle R. Chickering and Bangzheng Li and Jacob Dineen and Xiao Ye and Zhikun Xu and Shijie Lu and Yuxi Huang and Ming Shen and Bach Nguyen and Jaya Adithya Pavuluri and Mau Son Nguyen and Sanika Chavan and Ngoc Minh Thu Le and Muhao Chen and Ben Zhou},
+      year={2026},
+      eprint={2605.23141},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2605.23141}
   }
 abstract: |
   A useful test of visual concept learning is not just whether a model can recognize a concept in a single image, but whether it can preserve and manipulate concept-level properties under transformation and transfer them to new scenes. We introduce VisAnalog, a controlled suite for this setting on natural images. Each example instantiates A:B::C:?, where images B and a hidden target image D are produced by applying the same deterministic transformation sequence to source images A and C. Given A, B, and C, a model must answer a multiple-choice question about D. The benchmark contains 617 human-validated questions spanning one- to four-step transformations such as zoom, quadrant swap, rotation, flip, and hue rotation. Across strong proprietary and open-source VLMs, end-to-end accuracy is substantially lower than oracle accuracy when D is directly shown, and degrades sharply as transformation depth increases, while human performance remains near the ceiling. A program-conditioned evaluation further separates failures of relation inference from failures of transformation application, showing that inferring the visual relation from A to B is the dominant bottleneck, with additional application errors emerging on harder multi-step cases.
