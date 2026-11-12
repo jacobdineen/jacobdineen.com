@@ -98,6 +98,7 @@ const Head = ({ title, description, image }) => {
             "https://github.com/jacobdineen",
             "https://www.linkedin.com/in/jacobdineen/",
             "https://scholar.google.com/citations?user=2sYaEtQAAAAJ",
+            "https://orcid.org/0000-0002-0013-0740",
           ],
           alumniOf: [
             {

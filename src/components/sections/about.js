@@ -11,6 +11,7 @@ import {
   IconGmail,
   IconGScholar,
   IconSemanticScholar,
+  IconOrcid,
   IconAlphaxiv,
   IconTwitter,
 } from "@components/icons"
@@ -252,6 +253,12 @@ const About = () => {
                 aria-label="Semantic Scholar"
               >
                 <IconSemanticScholar />
+              </a>
+              <a
+                href="https://orcid.org/0000-0002-0013-0740"
+                aria-label="ORCID"
+              >
+                <IconOrcid />
               </a>
               <a
                 href="https://www.alphaxiv.org/@jacob-dineen"
