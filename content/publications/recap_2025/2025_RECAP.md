@@ -7,6 +7,7 @@ date: 2026-05-11
 venue: "Clinical NLP @ LREC 2026 (Oral)"
 arxiv: https://arxiv.org/abs/2509.10746
 paperurl: "https://lrec.elra.info/lrec2026-ws-clinicalnlp-38"
+pdf: "/papers/recap-2025.pdf"
 googlescholar: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=2sYaEtQAAAAJ&citation_for_view=2sYaEtQAAAAJ:d1gkVwhDpl0C
 semanticscholar: https://www.semanticscholar.org/paper/RECAP%3A-Transparent-Inference-Time-Emotion-Alignment-Srinivasan-Dineen/c0486a9634c8540adba69c818b35be74c2249c00
 teaser: "/teasers/recap-2025.webp"

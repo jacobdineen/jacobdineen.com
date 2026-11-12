@@ -446,6 +446,7 @@ const PublicationTemplate = ({ data, location }) => {
     googlescholar,
     semanticscholar,
     paperurl,
+    pdf,
     code,
     slug,
     slides,
@@ -481,15 +482,18 @@ const PublicationTemplate = ({ data, location }) => {
   // Scholar: only real venues get a conference title. Preprints and
   // under-review papers are indexed through their arXiv id instead.
   const isPublishedVenue = venue && tier !== "tier-pre"
-  // A PDF hosted on this site (paperurl like "/papers/x.pdf") takes priority
-  // over arXiv for citation_pdf_url: Google Scholar only treats this page as
-  // its own version of the paper when the full text lives on the same site.
+  // A PDF hosted on this site (front matter `pdf: /papers/x.pdf`, or a
+  // site-relative paperurl) takes priority over arXiv for citation_pdf_url:
+  // Google Scholar only treats this page as its own version of the paper
+  // when the full text lives on the same site.
   const paperUrlAbs =
     paperurl && paperurl.startsWith("/") ? `${siteUrl}${paperurl}` : paperurl
-  const localPdf =
-    paperurl && paperurl.startsWith("/") && /\.pdf($|\?)/i.test(paperurl)
-      ? paperUrlAbs
-      : null
+  const sitePdfPath =
+    pdf ||
+    (paperurl && paperurl.startsWith("/") && /\.pdf($|\?)/i.test(paperurl)
+      ? paperurl
+      : null)
+  const localPdf = sitePdfPath ? `${siteUrl}${sitePdfPath}` : null
   const pdfUrl = localPdf
     ? localPdf
     : arxivId
@@ -765,9 +769,9 @@ const PublicationTemplate = ({ data, location }) => {
               Semantic Scholar
             </a>
           )}
-          {paperurl && (!/arxiv\.org/.test(paperurl) || !arxiv) && (
+          {sitePdfPath && (
             <a
-              href={paperurl}
+              href={sitePdfPath}
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`PDF — ${title}`}
@@ -776,6 +780,19 @@ const PublicationTemplate = ({ data, location }) => {
               PDF
             </a>
           )}
+          {paperurl &&
+            paperurl !== sitePdfPath &&
+            (!/arxiv\.org/.test(paperurl) || !arxiv) && (
+              <a
+                href={paperurl}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${sitePdfPath ? "Publisher" : "PDF"} — ${title}`}
+              >
+                <Icon name="External" />
+                {sitePdfPath ? "Publisher" : "PDF"}
+              </a>
+            )}
           {code && (
             <a
               href={code}
@@ -939,6 +956,7 @@ export const pageQuery = graphql`
         googlescholar
         semanticscholar
         paperurl
+        pdf
         code
         slides
         tags
