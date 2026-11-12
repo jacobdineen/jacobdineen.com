@@ -16,7 +16,6 @@ const button = css`
 
   &:hover,
   &:focus-visible {
-    outline: none;
     background-color: #0077ed;
     transform: scale(1.02);
   }
@@ -52,7 +51,6 @@ const mixins = {
     &:hover,
     &:focus-visible {
       color: var(--green);
-      outline: 0;
     }
   `,
 
@@ -65,7 +63,6 @@ const mixins = {
     &:hover,
     &:focus-visible {
       color: var(--green);
-      outline: 0;
       &:after {
         width: 100%;
       }
@@ -107,7 +104,6 @@ const mixins = {
 
     &:hover,
     &:focus-visible {
-      outline: none;
       background-color: var(--green);
       color: #ffffff;
     }
@@ -134,7 +130,6 @@ const mixins = {
 
     &:hover,
     &:focus-visible {
-      outline: none;
       background-color: #0077ed;
       transform: scale(1.02);
     }
