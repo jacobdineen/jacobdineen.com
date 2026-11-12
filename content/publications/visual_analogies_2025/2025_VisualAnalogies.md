@@ -7,6 +7,7 @@ date: 2025-11-02
 venue: "CVPR Workshop on Visual Concepts (VisCon), 2026 (Oral)"
 arxiv: https://arxiv.org/abs/2605.23141
 paperurl: "https://arxiv.org/pdf/2605.23141.pdf"
+pdf: "/papers/visual-analogies-2025.pdf"
 googlescholar: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=2sYaEtQAAAAJ&citation_for_view=2sYaEtQAAAAJ:hqOjcs7Dif8C
 semanticscholar: https://www.semanticscholar.org/paper/VisAnalog%3A-A-Diagnostic-Suite-for-Visual-Concept-on-Li-Chickering/c3711c1658825f4d4ccf603577be1ae7752420b6
 teaser: "/teasers/visanalog-2025.webp"

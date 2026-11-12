@@ -6,7 +6,8 @@ authors: Aswin RRV, Jacob Dineen, Divij Handa, Mihir Parmar, Ben Zhou, Swaroop M
 date: 2026-05-08
 venue: "arXiv Preprint"
 arxiv: https://arxiv.org/abs/2605.08472
-paperurl: "/papers/midtraining-2026.pdf"
+paperurl: "https://arxiv.org/pdf/2605.08472.pdf"
+pdf: "/papers/midtraining-2026.pdf"
 googlescholar: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=2sYaEtQAAAAJ&citation_for_view=2sYaEtQAAAAJ:u-x6o8ySG0sC
 teaser: "/teasers/midtraining-2026.webp"
 collection: publications
