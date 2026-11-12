@@ -24,7 +24,7 @@ const Header = styled.header`
     font-size: 0.7rem;
     letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#6e6e73")};
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
     margin-bottom: 8px;
   }
 
@@ -75,7 +75,7 @@ const Search = styled.input`
   }
 
   &::placeholder {
-    color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#6e6e73")};
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
   }
 `
 
@@ -111,7 +111,8 @@ const ResultList = styled.ul`
       &:hover {
         background: ${({ theme }) =>
           theme.mode === "light" ? "#f5f5f7" : "#1d1d1f"};
-        color: #0071e3;
+        color: ${({ theme }) =>
+          theme.mode === "light" ? "#0071e3" : "#3a9bff"};
       }
 
       &:after {
@@ -122,8 +123,19 @@ const ResultList = styled.ul`
     .meta {
       font-family: var(--font-mono);
       font-size: 0.7rem;
-      color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#6e6e73")};
+      color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
       flex-shrink: 0;
+    }
+
+    @media (max-width: 768px) {
+      a {
+        flex-direction: column;
+        gap: 2px;
+      }
+
+      .meta {
+        flex-shrink: 1;
+      }
     }
   }
 `
@@ -148,7 +160,7 @@ const QuickLinks = styled.nav`
     transition: color 0.15s ease, border-color 0.15s ease;
 
     &:hover {
-      color: #0071e3;
+      color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#3a9bff")};
       border-color: #0071e3;
     }
 
@@ -282,7 +294,6 @@ const NotFoundPage = ({ location, data }) => {
           <Link to="/">Home</Link>
           <Link to="/publications">All publications</Link>
           <Link to="/collaborators">Collaborators</Link>
-          <Link to="/pensieve">Pensieve</Link>
         </QuickLinks>
       </StyledMain>
     </Layout>

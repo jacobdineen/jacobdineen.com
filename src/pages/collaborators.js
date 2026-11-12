@@ -13,10 +13,17 @@ const ME_KEY = "jacob dineen"
 const StyledMain = styled.main`
   max-width: 1100px;
   margin: 0 auto;
-  padding: 48px 24px;
+  padding: 24px 24px 48px;
 
   @media (max-width: 768px) {
     padding: 28px 16px;
+  }
+
+  /* Opt out of the global section spacing meant for homepage sections */
+  section {
+    margin: 0;
+    padding: 0;
+    max-width: none;
   }
 
   header {
@@ -54,7 +61,7 @@ const TierLabel = styled.h2`
   }
 
   .count {
-    color: ${({ theme }) => (theme.mode === "light" ? "#a1a1a6" : "#6e6e73")};
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
     margin-left: 6px;
     text-transform: none;
     letter-spacing: 0;
@@ -104,7 +111,8 @@ const Card = styled.li`
       color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
       text-decoration: none;
       &:hover {
-        color: #0071e3;
+        color: ${({ theme }) =>
+          theme.mode === "light" ? "#0071e3" : "#3a9bff"};
       }
       &:after {
         display: none;
@@ -135,7 +143,8 @@ const Card = styled.li`
       color: inherit;
       text-decoration: none;
       &:hover {
-        color: #0071e3;
+        color: ${({ theme }) =>
+          theme.mode === "light" ? "#0071e3" : "#3a9bff"};
       }
       &:after {
         display: none;
@@ -145,7 +154,7 @@ const Card = styled.li`
     .year {
       font-family: var(--font-mono);
       font-size: 0.7rem;
-      color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#6e6e73")};
+      color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
       margin-right: 6px;
     }
   }
@@ -156,9 +165,10 @@ const Card = styled.li`
     background: transparent;
     border: none;
     padding: 2px 0;
+    min-height: 28px;
     font-family: var(--font-mono);
     font-size: 0.7rem;
-    color: #0071e3;
+    color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#3a9bff")};
     cursor: pointer;
     transition: color 0.12s ease;
 
@@ -196,8 +206,8 @@ const FilterButton = styled.button`
         ? "#1d1d1f"
         : "#f5f5f7"
       : theme.mode === "light"
-      ? "#86868b"
-      : "#6e6e73"};
+      ? "#6e6e73"
+      : "#a1a1a6"};
   cursor: pointer;
   border-bottom: 2px solid
     ${({ $active, theme }) =>

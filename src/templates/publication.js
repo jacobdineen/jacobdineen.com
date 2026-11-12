@@ -23,13 +23,20 @@ const StyledPublicationContainer = styled.main`
     align-items: center;
     gap: 8px;
     margin-bottom: 32px;
-    color: #0071e3;
+    color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#3a9bff")};
     font-size: var(--fz-sm);
     font-weight: 500;
+    line-height: 1;
+
+    .arrow {
+      display: inline-flex;
+      line-height: 1;
+    }
 
     a {
-      color: #0071e3;
+      color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#3a9bff")};
       text-decoration: none;
+      line-height: 1;
 
       &:hover {
         text-decoration: underline;
@@ -58,6 +65,9 @@ const StyledPublicationHeader = styled.header`
   }
 
   .authors {
+    a {
+      display: inline;
+    }
     font-size: var(--fz-md);
     color: ${({ theme }) => theme.colors[theme.mode].textSecondary};
     margin-bottom: 16px;
@@ -76,12 +86,12 @@ const StyledPublicationHeader = styled.header`
     }
 
     a:hover {
-      color: #0071e3;
+      color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#3a9bff")};
       border-color: #0071e3;
     }
 
     a:focus-visible {
-      color: #0071e3;
+      color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#3a9bff")};
       border-color: #0071e3;
       outline: 2px solid #0071e3;
       outline-offset: 2px;
@@ -199,7 +209,7 @@ const StyledLinks = styled.div`
     background-color: transparent;
     border: 1px solid #0071e3;
     border-radius: 980px;
-    color: #0071e3;
+    color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#3a9bff")};
     font-family: var(--font-sans);
     font-size: var(--fz-sm);
     font-weight: 500;
@@ -273,7 +283,7 @@ const StyledLinks = styled.div`
     background-color: transparent;
     border: 1px solid #0071e3;
     border-radius: 980px;
-    color: #0071e3;
+    color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#3a9bff")};
     font-family: var(--font-sans);
     font-size: var(--fz-sm);
     font-weight: 500;
@@ -366,7 +376,7 @@ const StyledBibtex = styled.div`
     background-color: transparent;
     border: 1px solid #0071e3;
     border-radius: 980px;
-    color: #0071e3;
+    color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#3a9bff")};
     font-family: var(--font-sans);
     font-size: var(--fz-sm);
     font-weight: 500;
@@ -419,7 +429,7 @@ const StyledSlides = styled.div`
     color: ${({ theme }) => theme.colors[theme.mode].textSecondary};
 
     a {
-      color: #0071e3;
+      color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#3a9bff")};
     }
   }
 

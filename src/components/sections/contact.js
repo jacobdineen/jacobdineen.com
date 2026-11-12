@@ -83,7 +83,7 @@ const StyledContactSection = styled.section`
     }
 
     &::placeholder {
-      color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
+      color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
       font-size: 0.95rem;
     }
   }
@@ -110,7 +110,7 @@ const StyledContactSection = styled.section`
   button {
     background: transparent;
     border: 1px solid #0071e3;
-    color: #0071e3;
+    color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#3a9bff")};
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
       "Helvetica Neue", sans-serif;
     font-size: 0.95rem;

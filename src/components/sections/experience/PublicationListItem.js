@@ -200,11 +200,14 @@ const PublicationListItem = styled.div`
     }
 
     a:hover {
-      color: #0071e3;
+      color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#3a9bff")};
     }
   }
 
   .authors {
+    a {
+      display: inline;
+    }
     font-size: 0.8rem;
     color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#9a9894")};
     margin-bottom: 10px;
@@ -225,7 +228,7 @@ const PublicationListItem = styled.div`
     }
 
     a:hover {
-      color: #0071e3;
+      color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#3a9bff")};
     }
   }
 
@@ -235,7 +238,7 @@ const PublicationListItem = styled.div`
     flex-wrap: wrap;
     gap: 8px;
     font-size: 0.75rem;
-    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
 
     .chip {
       border: 1px solid
@@ -306,7 +309,8 @@ const PublicationListItem = styled.div`
       }
 
       &:hover {
-        color: #0071e3;
+        color: ${({ theme }) =>
+          theme.mode === "light" ? "#0071e3" : "#3a9bff"};
         border-color: #0071e3;
       }
 
@@ -349,7 +353,7 @@ const PublicationListItem = styled.div`
       background-color 0.1s ease;
 
     &:hover {
-      color: #0071e3;
+      color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#3a9bff")};
       border-color: #0071e3;
     }
 
@@ -368,6 +372,9 @@ const PublicationListItem = styled.div`
     }
 
     .authors {
+      a {
+        display: inline;
+      }
       font-size: 0.76rem;
     }
   }

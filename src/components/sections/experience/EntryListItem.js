@@ -33,7 +33,7 @@ const EntryListItem = styled.div`
 
   .subtitle {
     font-size: 0.8rem;
-    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
     margin-bottom: 6px;
   }
 
@@ -98,7 +98,7 @@ const EntryListItem = styled.div`
     }
 
     a {
-      color: #0071e3;
+      color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#3a9bff")};
       text-decoration: none;
       font-weight: 500;
 
@@ -128,7 +128,7 @@ const EntryListItem = styled.div`
     gap: 4px;
     background: none;
     border: none;
-    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
     font-size: 0.74rem;
     font-family: var(--font-mono);
     cursor: pointer;
@@ -154,7 +154,7 @@ const EntryListItem = styled.div`
 
   .coursework-list {
     font-size: 0.74rem;
-    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
     line-height: 1.7;
     margin-top: 8px;
   }

@@ -64,7 +64,7 @@ const GlobalStyle = createGlobalStyle`
   .anchor-link {
     margin-left: 6px;
     opacity: 0;
-    color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#6e6e73")};
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
     transition: opacity 0.12s ease, color 0.12s ease;
     vertical-align: middle;
     display: inline-block;
@@ -84,7 +84,7 @@ const GlobalStyle = createGlobalStyle`
     opacity: 1;
   }
   .anchor-link:hover {
-    color: #0071e3;
+    color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#3a9bff")};
   }
 
   /* Smooth scroll to anchor (defers to reduced-motion media block above) */
@@ -169,7 +169,7 @@ body {
     max-width: 1600px;
 
     /* Only apply these styles to main elements that are NOT our custom layout */
-    &:not(#content) {
+    &:where(:not(#content)) {
       min-height: 100vh;
       padding: 200px 150px;
 
@@ -186,10 +186,14 @@ body {
       &.fillHeight {
         padding: 0 150px;
 
-        @media (max-width: 1080px) {
-          padding: 0 100px;
+        /* From 768px up the 300px sidebar takes width, so ease off sooner */
+        @media (max-width: 1279px) {
+          padding: 0 60px;
         }
-        @media (max-width: 768px) {
+        @media (max-width: 1023px) {
+          padding: 0 24px;
+        }
+        @media (max-width: 767px) {
           padding: 0 50px;
         }
         @media (max-width: 480px) {
@@ -255,7 +259,7 @@ body {
       counter-increment: section;
       content: '0' counter(section) '.';
       margin-right: 10px;
-      color: #0071e3;
+      color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#3a9bff")};
       font-family: var(--font-mono);
       font-size: clamp(var(--fz-sm), 2.5vw, var(--fz-md));
       font-weight: 400;
@@ -317,7 +321,7 @@ body {
 
     &:hover,
     &:focus {
-      color: #0071e3;
+      color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#3a9bff")};
     }
 
     &.inline-link {

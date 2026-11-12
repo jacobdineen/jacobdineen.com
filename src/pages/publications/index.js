@@ -11,7 +11,7 @@ import { Icon } from "@components/icons"
 const StyledMainContainer = styled.main`
   max-width: 760px;
   margin: 0 auto;
-  padding: 48px 24px;
+  padding: 24px 24px 48px;
 
   @media (max-width: 768px) {
     padding: 32px 16px;
@@ -30,7 +30,7 @@ const StyledMainContainer = styled.main`
     }
 
     .subtitle {
-      color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
+      color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
       font-size: 0.88rem;
       font-weight: 400;
     }
@@ -44,11 +44,13 @@ const StyledFilters = styled.div`
   margin: 0 0 32px 0;
 
   @media (max-width: 768px) {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   input[type="search"],
   select {
+    width: 100%;
+    min-width: 0;
     background: ${({ theme }) =>
       theme.mode === "light" ? "#f5f5f7" : "#161616"};
     color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
@@ -65,7 +67,7 @@ const StyledFilters = styled.div`
     }
 
     &::placeholder {
-      color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
+      color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
     }
   }
 
@@ -107,7 +109,8 @@ const StyledPublication = styled.article`
       text-decoration: none;
 
       &:hover {
-        color: #0071e3;
+        color: ${({ theme }) =>
+          theme.mode === "light" ? "#0071e3" : "#3a9bff"};
       }
 
       &:after {
@@ -117,7 +120,10 @@ const StyledPublication = styled.article`
   }
 
   .authors {
-    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
+    a {
+      display: inline;
+    }
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
     font-size: 0.8rem;
     margin-bottom: 6px;
     line-height: 1.5;
@@ -137,7 +143,7 @@ const StyledPublication = styled.article`
     }
 
     a:hover {
-      color: #0071e3;
+      color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#3a9bff")};
     }
   }
 
@@ -159,7 +165,7 @@ const StyledPublication = styled.article`
     }
 
     .date {
-      color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
+      color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
     }
   }
 
@@ -206,14 +212,16 @@ const StyledPublication = styled.article`
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
+      min-height: 28px;
+      color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
       font-family: var(--font-mono);
       font-size: 0.7rem;
       text-decoration: none;
       transition: color 0.15s ease;
 
       &:hover {
-        color: #0071e3;
+        color: ${({ theme }) =>
+          theme.mode === "light" ? "#0071e3" : "#3a9bff"};
       }
 
       &:after {
@@ -230,7 +238,8 @@ const StyledPublication = styled.article`
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
+      min-height: 28px;
+      color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
       background: transparent;
       border: none;
       padding: 0;
@@ -240,7 +249,8 @@ const StyledPublication = styled.article`
       transition: color 0.15s ease;
 
       &:hover {
-        color: #0071e3;
+        color: ${({ theme }) =>
+          theme.mode === "light" ? "#0071e3" : "#3a9bff"};
       }
 
       svg {

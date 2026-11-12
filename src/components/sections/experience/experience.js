@@ -82,7 +82,7 @@ const ContentTypeButton = styled.button`
         : "#f5f5f7"
       : theme.mode === "light"
       ? "#6e6e73"
-      : "#6e6e73"};
+      : "#a1a1a6"};
   border: none;
   border-radius: 0;
   padding: 6px 0;
@@ -94,6 +94,13 @@ const ContentTypeButton = styled.button`
   text-transform: uppercase;
   transition: color 0.15s ease;
   cursor: ${props => (props.isActive ? "default" : "pointer")};
+
+  /* Tablet: the sidebar leaves a narrow column, keep the three tabs on one row */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    margin: 0 8px;
+    font-size: 0.72rem;
+    letter-spacing: 0.02em;
+  }
 
   &::after {
     content: "";
@@ -128,7 +135,7 @@ const ContentTypeButton = styled.button`
 
 const StyledFilters = styled.div`
   display: grid;
-  grid-template-columns: 1fr 130px 150px 130px;
+  grid-template-columns: minmax(0, 1fr) 130px 150px 130px;
   gap: 10px;
   margin: 10px auto 20px auto;
   width: 100%;
@@ -141,8 +148,18 @@ const StyledFilters = styled.div`
     box-sizing: border-box;
   }
 
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
+  /* Below wide desktop the column is too narrow for four controls in a row:
+     search gets its own row and the three selects share the next one */
+  @media (max-width: 1439px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    input[type="search"] {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (max-width: 767px) {
+    grid-template-columns: minmax(0, 1fr);
   }
 
   input[type="search"],
@@ -163,7 +180,7 @@ const StyledFilters = styled.div`
     }
 
     &::placeholder {
-      color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
+      color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
     }
   }
 
@@ -216,7 +233,7 @@ const ShowAllButton = styled.button`
   margin: 12px auto 4px;
   background: none;
   border: none;
-  color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
+  color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
   font-size: 0.78rem;
   font-family: var(--font-mono);
   cursor: pointer;
@@ -525,7 +542,7 @@ const Experience = () => {
   const pubTags = useMemo(() => {
     const set = new Set()
     publicationsData.forEach(({ node }) => {
-      (node.frontmatter.tags || []).forEach(t => t && set.add(t))
+      ;(node.frontmatter.tags || []).forEach(t => t && set.add(t))
     })
     return Array.from(set).sort()
   }, [publicationsData])
