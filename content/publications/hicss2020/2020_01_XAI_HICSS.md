@@ -15,11 +15,14 @@ collection: publications
 tags: [interpretability, evaluation]
 abstract: Explainable AI has a counterpart in analytical modeling which we refer to as model explainability. We tackle the issue of model explainability in the context of prediction models. We analyze a dataset of loans from a credit card company and apply three stages; Execute and compare four different prediction methods, apply the best known explainability techniques in the current literature to the model training sets to identify feature importance (FI)(static case), and finally to cross-check whether the FI set holds up under “what if” prediction scenarios for continuous and categorical variables (dynamic case). We found inconsistency in FI identification between the static and dynamic cases. We summarize the “state of the art” in model explainability and suggest further research to advance the field.
 bibtex: |
-  @article{kridel2024model,
-  title={Model interpretation and Explainability: towards creating transparency in prediction models},
-  author={Kridel, Donald and Dineen, Jacob and Dolk, Daniel and Castillo, David},
-  journal={arXiv preprint arXiv:2405.20794},
-  year={2024}
+  @inproceedings{dolk2020model,
+      title={Model Interpretation and Explainability: Towards Creating Transparency in Prediction Models},
+      author={Dolk, Daniel and Kridel, Donald and Dineen, Jacob and Castillo, David},
+      booktitle={Proceedings of the 53rd Hawaii International Conference on System Sciences},
+      year={2020},
+      doi={10.24251/HICSS.2020.120},
+      isbn={978-0-9981331-3-3},
+      url={https://hdl.handle.net/10125/63859}
   }
 
 # technologies:
