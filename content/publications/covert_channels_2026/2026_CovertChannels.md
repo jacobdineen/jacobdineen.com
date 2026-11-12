@@ -6,7 +6,7 @@ authors: Jacob Dineen, Silei Ren, Muhao Chen, Dan Roth, Ben Zhou
 date: 2026-09-26
 venue: "Under Review, ICLR 2027"
 arxiv: https://arxiv.org/abs/2609.32701
-paperurl: "https://arxiv.org/pdf/2609.32701.pdf"
+paperurl: "/papers/covert-channels-2026.pdf"
 featured: 1
 teaser: "/teasers/covert-channels-2026.webp"
 collection: publications

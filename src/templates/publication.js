@@ -481,7 +481,18 @@ const PublicationTemplate = ({ data, location }) => {
   // Scholar: only real venues get a conference title. Preprints and
   // under-review papers are indexed through their arXiv id instead.
   const isPublishedVenue = venue && tier !== "tier-pre"
-  const pdfUrl = arxivId
+  // A PDF hosted on this site (paperurl like "/papers/x.pdf") takes priority
+  // over arXiv for citation_pdf_url: Google Scholar only treats this page as
+  // its own version of the paper when the full text lives on the same site.
+  const paperUrlAbs =
+    paperurl && paperurl.startsWith("/") ? `${siteUrl}${paperurl}` : paperurl
+  const localPdf =
+    paperurl && paperurl.startsWith("/") && /\.pdf($|\?)/i.test(paperurl)
+      ? paperUrlAbs
+      : null
+  const pdfUrl = localPdf
+    ? localPdf
+    : arxivId
     ? `https://arxiv.org/pdf/${arxivId}`
     : paperurl && /\.pdf($|\?)/i.test(paperurl)
     ? paperurl
@@ -662,9 +673,12 @@ const PublicationTemplate = ({ data, location }) => {
             url: `${siteUrl}${slug}`,
             mainEntityOfPage: `${siteUrl}${slug}`,
             ...((arxiv || semanticscholar || googlescholar || paperurl) && {
-              sameAs: [arxiv, semanticscholar, googlescholar, paperurl].filter(
-                Boolean
-              ),
+              sameAs: [
+                arxiv,
+                semanticscholar,
+                googlescholar,
+                paperUrlAbs,
+              ].filter(Boolean),
             }),
             ...(arxivId && {
               identifier: {
