@@ -17,7 +17,7 @@ abstract: "Benchmarks are central to measuring the capabilities of large languag
 bibtex: |
   @misc{liu2025arenabencherautomaticbenchmarkevolution,
     title={ArenaBencher: Automatic Benchmark Evolution via Multi-Model Competitive Evaluation}, 
-    author={Qin Liu and Jacob Dineen and Yuxi Huang and Sheng Zhang and Hoifung Poon and Ben Zhou and Muhao Chen},
+    author={Qin Liu and Jacob Dineen and Yuxi Huang and Sheng Zhang and Hoifung Poon and Chaowei Xiao and Ben Zhou and Muhao Chen},
     year={2025},
     eprint={2510.08569},
     archivePrefix={arXiv},
