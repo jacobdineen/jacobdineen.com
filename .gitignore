@@ -89,3 +89,6 @@ yarn-error.log
 polymarket_*.jsonl
 polymarket_*.jsonl.gz
 polymarket_*.zip
+
+# Claude Code local state (worktrees, settings)
+.claude/
