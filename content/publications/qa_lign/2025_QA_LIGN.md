@@ -7,7 +7,7 @@ date: 2025-06-09
 venue: "EMNLP 2025 Findings"
 arxiv: https://arxiv.org/abs/2506.08123
 paperurl: "https://arxiv.org/pdf/2506.08123.pdf"
-pdf: "/papers/qa-lign-2025.pdf"
+pdf: "/publications/qa-lign-2025.pdf"
 googlescholar: https://scholar.google.com/citations?view_op=view_citation&hl=en&user=2sYaEtQAAAAJ&citation_for_view=2sYaEtQAAAAJ:9yKSN-GCB0IC
 semanticscholar: https://www.semanticscholar.org/paper/QA-LIGN%3A-Aligning-LLMs-through-Constitutionally-QA-Dineen-Rrv/706b4a2e443aaf81039aa1f531ad75a4e53c7ab6
 teaser: "/teasers/qa-lign.webp"

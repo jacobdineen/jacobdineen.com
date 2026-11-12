@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/papers/:file",
+      "destination": "/publications/:file",
+      "permanent": true
+    }
+  ]
+}
