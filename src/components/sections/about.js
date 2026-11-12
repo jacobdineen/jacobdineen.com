@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react"
+import PropTypes from "prop-types"
 import { Link } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
 import styled from "styled-components"
@@ -35,7 +36,7 @@ const SidebarIcons = styled.aside`
     background: transparent;
     border: none;
     border-radius: 6px;
-    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
     transition: color 0.2s ease;
 
     &:hover {
@@ -106,7 +107,7 @@ const StyledText = styled.div`
     text-align: left;
   }
 
-  h1 {
+  .site-name {
     font-family: var(--font-serif);
     font-size: 1.35rem;
     font-weight: 500;
@@ -131,7 +132,8 @@ const StyledText = styled.div`
       }
 
       &:hover {
-        color: #0071e3;
+        color: ${({ theme }) =>
+          theme.mode === "light" ? "#0071e3" : "#3a9bff"};
       }
     }
   }
@@ -139,7 +141,7 @@ const StyledText = styled.div`
   h2 {
     font-size: 0.82rem;
     font-weight: 400;
-    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
     margin: 0 0 10px 0;
     line-height: 1.4;
     letter-spacing: 0;
@@ -196,7 +198,8 @@ const StyledPic = styled.div`
   }
 `
 
-const About = () => {
+const About = ({ isHome = true }) => {
+  const NameTag = isHome ? "h1" : "div"
   const revealContainer = useRef(null)
   const prefersReducedMotion = usePrefersReducedMotion()
 
@@ -225,9 +228,9 @@ const About = () => {
             </Link>
           </StyledPic>
           <StyledText>
-            <h1>
+            <NameTag className="site-name">
               <Link to="/">Jacob Dineen</Link>
-            </h1>
+            </NameTag>
             <h2>PhD Student, ASU &middot; AI/ML Engineer &amp; Researcher</h2>
             <SidebarIcons>
               <a href="https://github.com/jacobdineen" aria-label="GitHub">
@@ -276,6 +279,10 @@ const About = () => {
       </StyledAboutSection>
     </>
   )
+}
+
+About.propTypes = {
+  isHome: PropTypes.bool,
 }
 
 export default About

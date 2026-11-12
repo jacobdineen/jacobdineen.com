@@ -15,7 +15,7 @@ const StyledFooter = styled.footer`
   gap: 8px;
   font-family: var(--font-mono);
   font-size: 0.7rem;
-  color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
+  color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
 
   a {
     color: inherit;

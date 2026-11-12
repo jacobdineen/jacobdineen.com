@@ -36,7 +36,7 @@ const StyledNewsSection = styled.section`
 
   .news-date {
     font-family: var(--font-mono);
-    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
     font-size: 0.72rem;
     font-weight: 400;
     white-space: nowrap;
@@ -48,7 +48,7 @@ const StyledNewsSection = styled.section`
     line-height: 1.5;
 
     a {
-      color: #0071e3;
+      color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#3a9bff")};
       font-weight: 500;
       text-decoration: none;
 

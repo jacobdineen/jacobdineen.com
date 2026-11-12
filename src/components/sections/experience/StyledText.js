@@ -37,7 +37,7 @@ const StyledText = styled.div`
   }
 
   a {
-    color: #0071e3;
+    color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#3a9bff")};
     text-decoration: none;
     transition: color 0.15s ease;
 

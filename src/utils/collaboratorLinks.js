@@ -24,7 +24,7 @@ const collaboratorLinks = {
   "zhaonan li": "https://lzn87.github.io/",
   "zhikun xu": "https://jerrrrykun.github.io/",
   "zhikun zu": "https://jerrrrykun.github.io/", // fallback for common typo
-  "shijie lu": "https://shijie-lu.com/",
+  "shijie lu": "https://heisstorm.github.io/",
   "yuxi huang": "https://yuxihh.github.io/",
   "weiyu chen": "https://search.asu.edu/profile/5051358",
   "muhammad umar afzal":

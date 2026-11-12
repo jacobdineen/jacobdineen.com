@@ -20,7 +20,7 @@ const StyledCVSection = styled.section`
     margin-bottom: 12px;
     font-family: var(--font-mono);
     font-size: 0.72rem;
-    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
   }
 
   .cv-toolbar-actions {
@@ -46,7 +46,7 @@ const StyledCVSection = styled.section`
     transition: color 0.1s ease, border-color 0.1s ease;
 
     &:hover {
-      color: #0071e3;
+      color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#3a9bff")};
       border-color: #0071e3;
     }
 

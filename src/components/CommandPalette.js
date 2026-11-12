@@ -29,12 +29,6 @@ const SECTION_ITEMS = [
     title: "Contact",
     path: "/#contact",
   },
-  {
-    id: "section-pensieve",
-    type: "section",
-    title: "Pensieve (blog)",
-    path: "/pensieve",
-  },
 ]
 
 const Backdrop = styled.div`
@@ -80,7 +74,7 @@ const Input = styled.input`
     ${({ theme }) => (theme.mode === "light" ? "#e5e5ea" : "#2d2d2d")};
 
   &::placeholder {
-    color: ${({ theme }) => (theme.mode === "light" ? "#a1a1a6" : "#6e6e73")};
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
   }
 `
 
@@ -131,7 +125,7 @@ const ResultItem = styled.li`
 
   .meta {
     font-size: 0.74rem;
-    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
     line-height: 1.4;
   }
 `
@@ -140,7 +134,7 @@ const Empty = styled.div`
   padding: 28px 20px;
   text-align: center;
   font-size: 0.85rem;
-  color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
+  color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
 `
 
 const Footer = styled.div`
@@ -152,7 +146,7 @@ const Footer = styled.div`
     ${({ theme }) => (theme.mode === "light" ? "#e5e5ea" : "#2d2d2d")};
   font-family: var(--font-mono);
   font-size: 0.65rem;
-  color: ${({ theme }) => (theme.mode === "light" ? "#86868b" : "#6e6e73")};
+  color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
 
   kbd {
     font-family: var(--font-mono);
@@ -188,7 +182,7 @@ const HintButton = styled.button`
   transition: color 0.15s ease, border-color 0.15s ease;
 
   &:hover {
-    color: #0071e3;
+    color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#3a9bff")};
     border-color: #0071e3;
   }
 

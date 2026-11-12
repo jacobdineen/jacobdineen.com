@@ -45,7 +45,6 @@ const isDetailPage = pathname => {
   // Publication detail pages, post pages, etc.
   const detailPatterns = [
     /^\/publications\/[^/]+/, // /publications/something
-    /^\/pensieve\/[^/]+/, // /pensieve/something (blog posts)
   ]
   return detailPatterns.some(pattern => pattern.test(pathname))
 }
@@ -72,6 +71,7 @@ const StyledMinimalHeader = styled.header`
     display: flex;
     align-items: center;
     gap: 6px;
+    min-height: 32px;
     color: #005bb5; /* WCAG AA on #f5f5f7 (was #0071e3 — 4.31:1, now 6.05:1) */
     font-size: 0.9rem;
     font-weight: 500;
@@ -233,8 +233,9 @@ const StyledSidebar = styled.aside`
 
       ul {
         flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: flex-start;
+        flex-wrap: wrap;
+        justify-content: center;
+        max-width: none;
         gap: 2px;
         overflow-x: auto;
         overflow-y: hidden;
@@ -242,21 +243,6 @@ const StyledSidebar = styled.aside`
         scrollbar-width: none;
         -ms-overflow-style: none;
         padding: 0 4px;
-        /* Soft fade at edges so it reads as scrollable */
-        mask-image: linear-gradient(
-          to right,
-          transparent,
-          black 12px,
-          black calc(100% - 12px),
-          transparent
-        );
-        -webkit-mask-image: linear-gradient(
-          to right,
-          transparent,
-          black 12px,
-          black calc(100% - 12px),
-          transparent
-        );
 
         &::-webkit-scrollbar {
           display: none;
@@ -326,7 +312,7 @@ const StyledMainContent = styled.main`
     }
 
     .numbered-heading::before {
-      color: #0071e3;
+      color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#3a9bff")};
     }
   `}
 `
@@ -348,7 +334,7 @@ const ToggleWrapper = styled.div`
     font-weight: 500;
     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
       "Helvetica Neue", sans-serif;
-    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#6e6e73")};
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
 
     @media (max-width: 767px) {
       font-size: 0.75rem;
@@ -483,8 +469,8 @@ const StyledTabButton = styled.button`
         ? "#1d1d1f"
         : "#f5f5f7"
       : theme.mode === "light"
-      ? "#86868b"
-      : "#6e6e73"};
+      ? "#6e6e73"
+      : "#a1a1a6"};
 
   /* Thin animated accent rule that slides in on the active row. Slim
      enough to read as a typographic mark rather than a UI chrome bar. */
@@ -574,7 +560,7 @@ const ToggleSwitch = ({ label, onChange, initialChecked }) => {
     <ToggleWrapper>
       <span
         style={{
-          color: "#6e6e73",
+          color: label === "Dark" ? "#a1a1a6" : "#6e6e73",
           fontSize: "0.7rem",
         }}
       >
@@ -603,18 +589,34 @@ ToggleSwitch.defaultProps = {
   initialChecked: true,
 }
 
+let hasHydrated = false
+
+const readSavedTheme = () => {
+  try {
+    return localStorage.getItem("theme") === "dark" ? "dark" : "light"
+  } catch (e) {
+    return "light"
+  }
+}
+
 const Layout = ({ children, location }) => {
   const [activeSection, setActiveSection] = useState("")
   const [showBackToTop, setShowBackToTop] = useState(false)
 
-  // Get initial theme preference from localStorage if available
-  const [themeMode, setThemeMode] = useState(() => {
-    if (typeof window !== "undefined") {
-      const savedTheme = localStorage.getItem("theme")
-      return savedTheme || "light" // Default to light if no preference saved
-    }
-    return "light"
-  })
+  // The server always renders light. The first client render must match it,
+  // so the saved theme is applied after hydration. Later client-side
+  // navigations remount Layout and can read the saved theme directly.
+  const [themeMode, setThemeMode] = useState(() =>
+    hasHydrated ? readSavedTheme() : "light"
+  )
+  const skipThemeSave = useRef(!hasHydrated)
+
+  useEffect(() => {
+    if (hasHydrated) return
+    hasHydrated = true
+    const saved = readSavedTheme()
+    if (saved !== "light") setThemeMode(saved)
+  }, [])
 
   // Track scroll position for Back to Top button (mobile only)
   useEffect(() => {
@@ -689,7 +691,15 @@ const Layout = ({ children, location }) => {
   // Save theme preference
   useEffect(() => {
     if (typeof window !== "undefined") {
-      localStorage.setItem("theme", themeMode)
+      if (skipThemeSave.current) {
+        skipThemeSave.current = false
+      } else {
+        try {
+          localStorage.setItem("theme", themeMode)
+        } catch (e) {
+          // Storage can be unavailable (private mode, blocked site data)
+        }
+      }
       // Apply a class to the body for additional styling hooks
       if (themeMode === "dark") {
         document.body.classList.add("dark-mode")
@@ -830,7 +840,7 @@ const Layout = ({ children, location }) => {
             aria-label="Main navigation"
             hideOnMobile={isDetailPage(location?.pathname)}
           >
-            <About />
+            <About isHome={location?.pathname === "/"} />
             <nav>
               <ul>
                 {sectionGroups.map((group, gi) => (
