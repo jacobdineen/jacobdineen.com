@@ -196,7 +196,8 @@ const HintButton = styled.button`
     color: inherit;
   }
 
-  @media (max-width: 768px) {
+  /* Only where the content column leaves room; the shortcut works anywhere */
+  @media (max-width: 1279px) {
     display: none;
   }
 `
@@ -297,6 +298,11 @@ const CommandPalette = () => {
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState("")
   const [activeIndex, setActiveIndex] = useState(0)
+  // Server HTML says "Ctrl"; switch to ⌘ after mount so hydration matches
+  const [modKey, setModKey] = useState("Ctrl")
+  useEffect(() => {
+    if (/Mac/.test(navigator.platform)) setModKey("⌘")
+  }, [])
   const inputRef = useRef(null)
   const listRef = useRef(null)
 
@@ -381,10 +387,6 @@ const CommandPalette = () => {
       close()
     }
   }
-
-  const isMac =
-    typeof navigator !== "undefined" && /Mac/.test(navigator.platform)
-  const modKey = isMac ? "⌘" : "Ctrl"
 
   return (
     <>
