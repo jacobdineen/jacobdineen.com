@@ -24,7 +24,15 @@ module.exports = {
         excludes: [`/pensieve`, `/pensieve/**`, `/404`, `/404.html`],
       },
     },
-    `gatsby-plugin-robots-txt`,
+    {
+      // gatsby-plugin-sitemap writes to /sitemap/ (output above), so point
+      // robots.txt there; the plugin default (/sitemap-index.xml) 404s.
+      resolve: `gatsby-plugin-robots-txt`,
+      options: {
+        sitemap: `https://www.jacobdineen.com/sitemap/sitemap-index.xml`,
+        policy: [{ userAgent: `*`, allow: `/` }],
+      },
+    },
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
