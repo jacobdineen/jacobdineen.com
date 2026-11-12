@@ -2,15 +2,12 @@ import React from "react"
 
 const IconArxiv = () => (
   <svg
-    id="primary_logo"
-    data-name="primary logo"
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 246.978 111.119"
     aria-hidden="true"
-    fill="currentColor" // This will allow you to control the color via CSS or inline styles
-    className="icon-arxiv" // Custom class for additional styling
+    fill="currentColor"
+    className="icon-arxiv"
   >
-    <title>ArXiv</title>
     <path
       d="M427.571,255.154c1.859,0,3.1,1.24,3.985,3.453,1.062-2.213,2.568-3.453,4.694-3.453h14.878a4.062,4.062,0,0,1,4.074,4.074v7.828c0,2.656-1.327,4.074-4.074,4.074-2.656,0-4.074-1.418-4.074-4.074V263.3H436.515a2.411,2.411,0,0,0-2.656,2.745v27.188h10.007c2.658,0,4.074,1.329,4.074,4.074s-1.416,4.074-4.074,4.074h-26.39c-2.659,0-3.986-1.328-3.986-4.074s1.327-4.074,3.986-4.074h8.236V263.3h-7.263c-2.656,0-3.985-1.329-3.985-4.074,0-2.658,1.329-4.074,3.985-4.074Z"
       transform="translate(-358.165 -222.27)"

@@ -76,7 +76,7 @@ const StyledMinimalHeader = styled.header`
     font-size: 0.9rem;
     font-weight: 500;
     text-decoration: none;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+    font-family: var(--font-sans);
 
     &:hover {
       opacity: 0.8;
@@ -93,7 +93,7 @@ const StyledMinimalHeader = styled.header`
     color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
     font-family: var(--font-serif);
     letter-spacing: -0.015em;
-    font-variation-settings: "opsz" 96;
+    font-optical-sizing: auto;
   }
 `
 
@@ -109,8 +109,7 @@ const StyledSkipLink = styled.a`
   border-radius: 8px;
   font-weight: 600;
   font-size: 0.9rem;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
-    "Helvetica Neue", sans-serif;
+  font-family: var(--font-sans);
   transition: top 0.2s ease;
 
   &:focus {
@@ -332,8 +331,7 @@ const ToggleWrapper = styled.div`
   span {
     font-size: 0.85rem;
     font-weight: 500;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
-      "Helvetica Neue", sans-serif;
+    font-family: var(--font-sans);
     color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
 
     @media (max-width: 767px) {

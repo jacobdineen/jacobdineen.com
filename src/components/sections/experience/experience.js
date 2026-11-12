@@ -542,7 +542,8 @@ const Experience = () => {
   const pubTags = useMemo(() => {
     const set = new Set()
     publicationsData.forEach(({ node }) => {
-      ;(node.frontmatter.tags || []).forEach(t => t && set.add(t))
+      const tags = node.frontmatter.tags || []
+      tags.forEach(t => t && set.add(t))
     })
     return Array.from(set).sort()
   }, [publicationsData])

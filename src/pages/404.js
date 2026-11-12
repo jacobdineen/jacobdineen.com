@@ -35,7 +35,7 @@ const Header = styled.header`
     letter-spacing: -0.02em;
     margin-bottom: 14px;
     line-height: 1.15;
-    font-variation-settings: "opsz" 96;
+    font-optical-sizing: auto;
   }
 
   .attempted {

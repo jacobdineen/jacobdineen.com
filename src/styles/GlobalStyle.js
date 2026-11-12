@@ -223,7 +223,7 @@ body {
     font-weight: 500;
     letter-spacing: -0.02em;
     line-height: 1.2;
-    font-variation-settings: "opsz" 96;
+    font-optical-sizing: auto;
   }
 
   h4, h5, h6 {
