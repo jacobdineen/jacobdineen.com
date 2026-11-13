@@ -17,10 +17,11 @@ const variables = css`
     --green: #0071e3;
     --green-tint: rgba(0, 113, 227, 0.1);
 
-    --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Display",
-      "SF Pro Text", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
-    --font-serif: "Fraunces", "Iowan Old Style", "Apple Garamond", "Baskerville",
-      "Times New Roman", serif;
+    --font-sans: "Inter", "Inter Fallback", -apple-system, BlinkMacSystemFont,
+      "SF Pro Display", "SF Pro Text", "Helvetica Neue", "Helvetica", "Arial",
+      sans-serif;
+    --font-serif: "Fraunces", "Fraunces Fallback", "Iowan Old Style",
+      "Apple Garamond", "Baskerville", "Times New Roman", serif;
     --font-mono: "JetBrains Mono", "SF Mono", "Fira Code", "Consolas", monospace;
 
     --fz-xxs: 11px;

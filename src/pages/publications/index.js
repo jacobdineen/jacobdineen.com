@@ -7,6 +7,8 @@ import PropTypes from "prop-types"
 import styled from "styled-components"
 import { Layout } from "@components"
 import { Icon } from "@components/icons"
+import venueTier from "@utils/venueTier"
+import venueTierStyles from "@styles/venueTierStyles"
 
 const StyledMainContainer = styled.main`
   max-width: 760px;
@@ -26,7 +28,7 @@ const StyledMainContainer = styled.main`
       font-weight: 500;
       letter-spacing: -0.02em;
       margin-bottom: 8px;
-      font-variation-settings: "opsz" 96;
+      font-optical-sizing: auto;
     }
 
     .subtitle {
@@ -102,7 +104,7 @@ const StyledPublication = styled.article`
     margin-bottom: 6px;
     letter-spacing: -0.015em;
     line-height: 1.3;
-    font-variation-settings: "opsz" 96;
+    font-optical-sizing: auto;
 
     a {
       color: ${({ theme }) => (theme.mode === "light" ? "#1d1d1f" : "#f5f5f7")};
@@ -162,6 +164,8 @@ const StyledPublication = styled.article`
         ${({ theme }) => (theme.mode === "light" ? "#e5e5ea" : "#2d2d2d")};
       padding: 2px 8px;
       border-radius: 4px;
+
+      ${venueTierStyles}
     }
 
     .date {
@@ -215,7 +219,7 @@ const StyledPublication = styled.article`
       min-height: 28px;
       color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
       font-family: var(--font-mono);
-      font-size: 0.7rem;
+      font-size: 0.74rem;
       text-decoration: none;
       transition: color 0.15s ease;
 
@@ -244,7 +248,7 @@ const StyledPublication = styled.article`
       border: none;
       padding: 0;
       font-family: var(--font-mono);
-      font-size: 0.7rem;
+      font-size: 0.74rem;
       cursor: pointer;
       transition: color 0.15s ease;
 
@@ -442,7 +446,11 @@ const PublicationsPage = ({ location, data }) => {
                   </h2>
                   <p className="authors">{renderAuthors(authors)}</p>
                   <div className="meta">
-                    {venue && <span className="venue">{venue}</span>}
+                    {venue && (
+                      <span className={`venue ${venueTier(venue)}`}>
+                        {venue}
+                      </span>
+                    )}
                     <span className="date">{formattedDate}</span>
                   </div>
                   {abstract && <p className="abstract">{abstract}</p>}

@@ -87,6 +87,8 @@ const PublicationListItem = styled.div`
     }
 
     img {
+      width: auto;
+      height: auto;
       max-width: 100%;
       max-height: 100%;
       object-fit: contain;
@@ -188,7 +190,7 @@ const PublicationListItem = styled.div`
     margin-bottom: 6px;
     line-height: 1.3;
     letter-spacing: -0.015em;
-    font-variation-settings: "opsz" 96;
+    font-optical-sizing: auto;
 
     a {
       color: inherit;

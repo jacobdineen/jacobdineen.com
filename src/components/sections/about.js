@@ -8,14 +8,16 @@ import sr from "@utils/sr"
 import { usePrefersReducedMotion } from "@hooks"
 import {
   IconGitHub,
-  IconLinkedin,
-  IconGmail,
-  IconGScholar,
   IconSemanticScholar,
   IconOrcid,
   IconAlphaxiv,
   IconTwitter,
 } from "@components/icons"
+import {
+  IconLinkedinMono,
+  IconMail,
+  IconGScholarMono,
+} from "@components/icons/mono"
 
 const SidebarIcons = styled.aside`
   display: flex;
@@ -115,7 +117,7 @@ const StyledText = styled.div`
     margin: 0 0 4px 0;
     line-height: 1.15;
     letter-spacing: -0.02em;
-    font-variation-settings: "opsz" 96;
+    font-optical-sizing: auto;
 
     @media (min-width: 768px) {
       font-size: clamp(1.85rem, 3.2vw, 2.3rem);
@@ -138,8 +140,10 @@ const StyledText = styled.div`
     }
   }
 
-  h2 {
-    font-size: 0.82rem;
+  .tagline {
+    font-family: var(--font-serif);
+    font-optical-sizing: auto;
+    font-size: 0.76rem;
     font-weight: 400;
     color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
     margin: 0 0 10px 0;
@@ -231,7 +235,9 @@ const About = ({ isHome = true }) => {
             <NameTag className="site-name">
               <Link to="/">Jacob Dineen</Link>
             </NameTag>
-            <h2>PhD Student, ASU &middot; AI/ML Engineer &amp; Researcher</h2>
+            <div className="tagline">
+              PhD Student, ASU &middot; AI/ML Engineer &amp; Researcher
+            </div>
             <SidebarIcons>
               <a href="https://github.com/jacobdineen" aria-label="GitHub">
                 <IconGitHub />
@@ -240,7 +246,7 @@ const About = ({ isHome = true }) => {
                 href="https://www.linkedin.com/in/jacobdineen/"
                 aria-label="Linkedin"
               >
-                <IconLinkedin />
+                <IconLinkedinMono />
               </a>
               <a href="https://x.com/jakedineenasu" aria-label="Twitter">
                 <IconTwitter />
@@ -249,7 +255,7 @@ const About = ({ isHome = true }) => {
                 href="https://scholar.google.com/citations?user=2sYaEtQAAAAJ&hl=en"
                 aria-label="Google Scholar"
               >
-                <IconGScholar />
+                <IconGScholarMono />
               </a>
               <a
                 href="https://www.semanticscholar.org/author/Jacob-Dineen/1576998836"
@@ -271,7 +277,7 @@ const About = ({ isHome = true }) => {
               </a>
 
               <a href="mailto:jdineen@asu.edu" aria-label="Send email">
-                <IconGmail />
+                <IconMail />
               </a>
             </SidebarIcons>
           </StyledText>

@@ -61,7 +61,7 @@ const StyledPublicationHeader = styled.header`
     font-weight: 500;
     letter-spacing: -0.02em;
     line-height: 1.15;
-    font-variation-settings: "opsz" 96;
+    font-optical-sizing: auto;
   }
 
   .authors {
@@ -180,6 +180,7 @@ const StyledFigure = styled.figure`
   img {
     display: block;
     width: 100%;
+    height: auto;
     max-height: 420px;
     object-fit: contain;
   }
@@ -307,39 +308,46 @@ const StyledLinks = styled.div`
       height: 18px;
     }
   }
+
+  /* Phones: tighter pills so the five actions fit on two rows */
+  @media (max-width: 480px) {
+    gap: 8px;
+
+    > a,
+    > button.bib-btn,
+    > .share-wrapper > button.share-btn {
+      padding: 8px 13px;
+      gap: 6px;
+    }
+  }
 `
 
 const StyledAbstract = styled.div`
   margin: 48px 0;
-  padding: 32px;
-  background: ${({ theme }) =>
-    theme.mode === "light" ? "#f5f5f7" : "#161616"};
-  border-radius: var(--border-radius);
-  border: 1px solid ${({ theme }) => theme.colors[theme.mode].border};
+  max-width: 68ch;
 
   h2 {
     font-size: var(--fz-xl);
-    margin-bottom: 16px;
+    margin-bottom: 14px;
     color: ${({ theme }) => theme.colors[theme.mode].text};
     font-weight: 600;
     letter-spacing: -0.01em;
   }
 
+  /* The abstract is the main text on this page, so it reads as body copy */
   p {
-    font-size: var(--fz-md);
-    line-height: 1.8;
-    color: ${({ theme }) => theme.colors[theme.mode].textSecondary};
+    font-size: var(--fz-lg);
+    line-height: 1.7;
+    color: ${({ theme }) => (theme.mode === "light" ? "#3a3a3c" : "#d1d1d6")};
     text-align: left;
     margin: 0;
   }
 
   @media (max-width: 768px) {
-    padding: 24px 20px;
     margin: 32px 0;
 
     p {
-      font-size: var(--fz-sm);
-      line-height: 1.7;
+      font-size: var(--fz-md);
     }
   }
 `
@@ -443,7 +451,8 @@ const StyledSlides = styled.div`
 `
 
 const PublicationTemplate = ({ data, location }) => {
-  const { frontmatter, html } = data.markdownRemark
+  const { frontmatter, html, fields } = data.markdownRemark
+  const teaserInfo = (fields && fields.teaser) || {}
   const { siteUrl } = data.site.siteMetadata
   const {
     title,
@@ -899,6 +908,16 @@ const PublicationTemplate = ({ data, location }) => {
           <StyledFigure>
             <img
               src={withPrefix(teaser)}
+              srcSet={
+                teaserInfo.small
+                  ? `${withPrefix(teaserInfo.small)} 560w, ${withPrefix(
+                      teaser
+                    )} ${teaserInfo.width}w`
+                  : undefined
+              }
+              sizes="(max-width: 767px) 92vw, 800px"
+              width={teaserInfo.width}
+              height={teaserInfo.height}
               alt={`Overview figure for ${title}`}
               loading="eager"
               decoding="async"
@@ -954,6 +973,13 @@ export const pageQuery = graphql`
     }
     markdownRemark(frontmatter: { slug: { eq: $path } }) {
       html
+      fields {
+        teaser {
+          width
+          height
+          small
+        }
+      }
       frontmatter {
         title
         slug

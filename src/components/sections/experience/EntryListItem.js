@@ -28,7 +28,7 @@ const EntryListItem = styled.div`
     line-height: 1.3;
     letter-spacing: -0.015em;
     margin-bottom: 4px;
-    font-variation-settings: "opsz" 96;
+    font-optical-sizing: auto;
   }
 
   .subtitle {

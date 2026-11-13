@@ -2,12 +2,12 @@
   "redirects": [
     {
       "source": "/pensieve/:path*",
-      "destination": "/publications/",
+      "destination": "/publications",
       "permanent": true
     },
     {
       "source": "/pensieve",
-      "destination": "/publications/",
+      "destination": "/publications",
       "permanent": true
     },
     {

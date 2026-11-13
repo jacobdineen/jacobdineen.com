@@ -35,7 +35,7 @@ const StyledMain = styled.main`
       font-weight: 500;
       letter-spacing: -0.02em;
       margin-bottom: 8px;
-      font-variation-settings: "opsz" 96;
+      font-optical-sizing: auto;
     }
 
     .subtitle {

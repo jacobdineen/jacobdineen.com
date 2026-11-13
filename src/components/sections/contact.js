@@ -54,8 +54,7 @@ const StyledContactSection = styled.section`
     color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
     font-size: 0.9rem;
     font-weight: 500;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
-      "Helvetica Neue", sans-serif;
+    font-family: var(--font-sans);
   }
 
   input,
@@ -71,8 +70,7 @@ const StyledContactSection = styled.section`
     margin-top: 8px;
     text-align: left;
     transition: border-color 0.15s ease, background-color 0.15s ease;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
-      "Helvetica Neue", sans-serif;
+    font-family: var(--font-sans);
     border-radius: 12px;
 
     &:focus {
@@ -111,8 +109,7 @@ const StyledContactSection = styled.section`
     background: transparent;
     border: 1px solid #0071e3;
     color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#3a9bff")};
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
-      "Helvetica Neue", sans-serif;
+    font-family: var(--font-sans);
     font-size: 0.95rem;
     font-weight: 500;
     padding: 12px 24px;
@@ -160,8 +157,7 @@ const StyledContactSection = styled.section`
     color: ${({ theme }) => (theme.mode === "light" ? "#248a3d" : "#30d158")};
     font-size: 0.9rem;
     font-weight: 500;
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
-      "Helvetica Neue", sans-serif;
+    font-family: var(--font-sans);
     border-radius: 12px;
     border: 1px solid
       ${({ theme }) =>
