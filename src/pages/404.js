@@ -237,7 +237,9 @@ const NotFoundPage = ({ location, data }) => {
 
   return (
     <Layout location={location}>
-      <Helmet title="Page Not Found" />
+      <Helmet title="Page Not Found">
+        <meta name="robots" content="noindex, follow" />
+      </Helmet>
 
       <StyledMain>
         <Header>
