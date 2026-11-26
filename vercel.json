@@ -1,6 +1,21 @@
 {
   "redirects": [
     {
+      "source": "/JacobDineen_CV.pdf",
+      "destination": "/cv/JacobDineen_CV.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/JacobDineen_CV_latest.pdf",
+      "destination": "/cv/JacobDineen_CV.pdf",
+      "permanent": true
+    },
+    {
+      "source": "/JacobDineen_CV_Latest.pdf",
+      "destination": "/cv/JacobDineen_CV.pdf",
+      "permanent": true
+    },
+    {
       "source": "/pensieve/:path*",
       "destination": "/publications",
       "permanent": true
@@ -14,6 +29,32 @@
       "source": "/papers/:file",
       "destination": "/publications/:file",
       "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": ".*\\.vercel\\.app"
+        }
+      ],
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
+      ]
+    },
+    {
+      "source": "/cv/JacobDineen_CV.pdf",
+      "headers": [
+        {
+          "key": "Link",
+          "value": "<https://www.jacobdineen.com/cv/JacobDineen_CV.pdf>; rel=\"canonical\""
+        }
+      ]
     }
   ]
 }
