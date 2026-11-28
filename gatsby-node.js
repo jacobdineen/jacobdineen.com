@@ -8,24 +8,20 @@ const fs = require("fs")
 const path = require("path")
 const sharp = require("sharp")
 const slideDir = require("./scripts/slide-dir")
+const pdfPages = require("./scripts/pdf-pages-lookup")
 
 // Record each teaser's pixel size (so pages can reserve its box and avoid a
 // layout shift) and the 560px card variant from scripts/teaser-variants.js.
-exports.onCreateNode = async ({ node, actions }) => {
+exports.onCreateNode = async ({ node, actions, reporter }) => {
   if (node.internal.type !== "MarkdownRemark") return
-  // Page images of a slides PDF, from scripts/slide-images.js.
+  // Page images of a slides PDF, from scripts/pdf-pages.js.
   const slides = node.frontmatter && node.frontmatter.slides
   if (slides && slides.toLowerCase().endsWith(".pdf")) {
-    const dir = slideDir(slides)
-    const abs = path.join(__dirname, "static", dir)
-    const pages = fs.existsSync(abs)
-      ? fs
-          .readdirSync(abs)
-          .filter(f => f.endsWith(".webp"))
-          .sort()
-          .map(f => `${dir}/${f}`)
-      : []
-    actions.createNodeField({ node, name: "slidePages", value: pages })
+    actions.createNodeField({
+      node,
+      name: "slidePages",
+      value: pdfPages(slides, slideDir(slides), reporter),
+    })
   }
   const teaser = node.frontmatter && node.frontmatter.teaser
   if (!teaser) return
@@ -43,10 +39,29 @@ exports.onCreateNode = async ({ node, actions }) => {
   })
 }
 
+// Page images of the CV for the home page preview (scripts/pdf-pages.js).
+exports.sourceNodes = ({
+  actions,
+  createNodeId,
+  createContentDigest,
+  reporter,
+}) => {
+  const pages = pdfPages("/cv/JacobDineen_CV.pdf", "/cv/pages", reporter)
+  const data = { pages }
+  actions.createNode({
+    ...data,
+    id: createNodeId("cv-preview"),
+    internal: { type: "CvPreview", contentDigest: createContentDigest(data) },
+  })
+}
+
 exports.createSchemaCustomization = ({ actions }) => {
   actions.createTypes(`
     type MarkdownRemark implements Node {
       frontmatter: MarkdownRemarkFrontmatter
+    }
+    type CvPreview implements Node {
+      pages: [String]
     }
     type MarkdownRemarkFields {
       slidePages: [String]

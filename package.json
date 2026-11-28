@@ -25,7 +25,7 @@
     "prepare": "husky install",
     "lint-staged": "lint-staged",
     "teasers": "node scripts/teaser-variants.js",
-    "slides": "node scripts/slide-images.js"
+    "pdf-pages": "node scripts/pdf-pages.js"
   },
   "lint-staged": {
     "*.{js,css,json,md}": [
