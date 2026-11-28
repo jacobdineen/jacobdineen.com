@@ -47,7 +47,6 @@ const Head = ({ title, description, image }) => {
     >
       <html lang="en" />
       <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-      {/* Google Fonts load non-blocking from gatsby-ssr.js */}
 
       {/* Warm DNS for the external hosts every paper page links out to.
           Cuts ~50-150ms off the first click for many visitors. */}
