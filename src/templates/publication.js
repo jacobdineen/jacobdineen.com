@@ -3,9 +3,8 @@ import useOnClickOutside from "@hooks/useOnClickOutside"
 import { graphql, Link, withPrefix } from "gatsby"
 import collaboratorLinks from "@utils/collaboratorLinks"
 import PropTypes from "prop-types"
-import { Helmet } from "react-helmet"
 import styled from "styled-components"
-import { Layout, ReadingProgress } from "@components"
+import { Layout, ReadingProgress, Seo } from "@components"
 import { Icon } from "@components/icons"
 import venueTier from "@utils/venueTier"
 
@@ -659,50 +658,17 @@ SlideViewer.propTypes = {
   pdfHref: PropTypes.string.isRequired,
 }
 
-const PublicationTemplate = ({ data, location }) => {
-  const { frontmatter, html, fields } = data.markdownRemark
-  const teaserInfo = (fields && fields.teaser) || {}
+// Values derived from a paper's front matter, shared by the page and its
+// <head> (Gatsby's Head API renders separately from the page component).
+const paperMeta = data => {
+  const { frontmatter } = data.markdownRemark
   const { siteUrl } = data.site.siteMetadata
-  const slidePages = (fields && fields.slidePages) || []
-  const allPubs = (data.allMarkdownRemark && data.allMarkdownRemark.nodes) || []
-  const {
-    title,
-    authors,
-    date,
-    venue,
-    abstract,
-    bibtex,
-    arxiv,
-    googlescholar,
-    semanticscholar,
-    paperurl,
-    pdf,
-    code,
-    slug,
-    slides,
-    tags,
-    teaser,
-    tldr,
-  } = frontmatter
+  const { authors, date, venue, abstract, arxiv, paperurl, pdf, slug, tldr } =
+    frontmatter
   const pageSlug = (slug || "").split("/").filter(Boolean).pop()
   const ogImage = pageSlug ? `${siteUrl}/og/${pageSlug}.png` : null
   const tier = venueTier(venue)
   const summary = tldr || (abstract ? abstract.substring(0, 200) : null)
-
-  // Up to 4 other papers, ranked by shared tags, then by recency.
-  const myTags = new Set(tags || [])
-  const related = allPubs
-    .map(n => n.frontmatter)
-    .filter(f => f.slug && f.slug !== slug)
-    .map(f => ({
-      ...f,
-      shared: (f.tags || []).filter(t => myTags.has(t)).length,
-    }))
-    .sort(
-      (a, b) =>
-        b.shared - a.shared || String(b.date).localeCompare(String(a.date))
-    )
-    .slice(0, 4)
 
   // Parse authors for meta tags
   const authorList = authors ? authors.split(",").map(a => a.trim()) : []
@@ -746,6 +712,65 @@ const PublicationTemplate = ({ data, location }) => {
     : paperurl && /\.pdf($|\?)/i.test(paperurl)
     ? paperurl
     : null
+
+  return {
+    pageSlug,
+    ogImage,
+    tier,
+    summary,
+    authorList,
+    arxivId,
+    publicationDate,
+    citationDate,
+    displayDate,
+    isPublishedVenue,
+    paperUrlAbs,
+    pdfUrl,
+    sitePdfPath,
+  }
+}
+
+const PublicationTemplate = ({ data, location }) => {
+  const { frontmatter, html, fields } = data.markdownRemark
+  const teaserInfo = (fields && fields.teaser) || {}
+  const { siteUrl } = data.site.siteMetadata
+  const slidePages = (fields && fields.slidePages) || []
+  const allPubs = (data.allMarkdownRemark && data.allMarkdownRemark.nodes) || []
+  const {
+    title,
+    authors,
+    date,
+    venue,
+    abstract,
+    bibtex,
+    arxiv,
+    googlescholar,
+    semanticscholar,
+    paperurl,
+    code,
+    slug,
+    slides,
+    tags,
+    teaser,
+    tldr,
+  } = frontmatter
+
+  // Up to 4 other papers, ranked by shared tags, then by recency.
+  const myTags = new Set(tags || [])
+  const related = allPubs
+    .map(n => n.frontmatter)
+    .filter(f => f.slug && f.slug !== slug)
+    .map(f => ({
+      ...f,
+      shared: (f.tags || []).filter(t => myTags.has(t)).length,
+    }))
+    .sort(
+      (a, b) =>
+        b.shared - a.shared || String(b.date).localeCompare(String(a.date))
+    )
+    .slice(0, 4)
+
+  const { tier, displayDate, sitePdfPath } = paperMeta(data)
 
   const [bibCopied, setBibCopied] = useState(false)
   const copyBibtex = () => {
@@ -862,123 +887,6 @@ const PublicationTemplate = ({ data, location }) => {
   return (
     <Layout location={location}>
       <ReadingProgress />
-      <Helmet title={title}>
-        {/* Google Scholar Meta Tags */}
-        <meta name="citation_title" content={title} />
-        {authorList.map((author, i) => (
-          <meta key={i} name="citation_author" content={author} />
-        ))}
-        <meta name="citation_publication_date" content={citationDate} />
-        {isPublishedVenue && (
-          <meta name="citation_conference_title" content={venue} />
-        )}
-        {arxivId && <meta name="citation_arxiv_id" content={arxivId} />}
-        {pdfUrl && <meta name="citation_pdf_url" content={pdfUrl} />}
-        {slug && (
-          <meta
-            name="citation_abstract_html_url"
-            content={`${siteUrl}${slug}`}
-          />
-        )}
-        {summary && <meta name="description" content={summary} />}
-
-        {/* Open Graph */}
-        <meta property="og:title" content={title} />
-        <meta property="og:type" content="article" />
-        {ogImage && <meta property="og:image" content={ogImage} />}
-        {ogImage && <meta property="og:image:width" content="1200" />}
-        {ogImage && <meta property="og:image:height" content="630" />}
-        {ogImage && <meta property="og:image:alt" content={title} />}
-        <meta property="og:url" content={`${siteUrl}${slug}`} />
-        {summary && <meta property="og:description" content={summary} />}
-        <meta
-          property="article:published_time"
-          content={publicationDate.toISOString()}
-        />
-        {authorList.map((author, i) => (
-          <meta
-            key={`og-author-${i}`}
-            property="article:author"
-            content={author}
-          />
-        ))}
-        {(tags || []).map((t, i) => (
-          <meta key={`og-tag-${i}`} property="article:tag" content={t} />
-        ))}
-
-        {/* Twitter card per-pub overrides (site defaults set in head.js) */}
-        <meta name="twitter:title" content={title} />
-        {ogImage && <meta name="twitter:image" content={ogImage} />}
-        {summary && <meta name="twitter:description" content={summary} />}
-
-        {/* Schema.org Structured Data */}
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "ScholarlyArticle",
-            headline: title,
-            name: title,
-            author: authorList.map(name => {
-              const isMe = /jacob\s+dineen/i.test(name)
-              const url = isMe
-                ? `${siteUrl}/`
-                : collaboratorLinks[name.toLowerCase()]
-              return { "@type": "Person", name, ...(url && { url }) }
-            }),
-            ...(ogImage && { image: ogImage }),
-            datePublished: publicationDate.toISOString(),
-            inLanguage: "en",
-            ...(venue && {
-              publisher: { "@type": "Organization", name: venue },
-            }),
-            ...(abstract && { abstract }),
-            ...(tags && tags.length > 0 && { keywords: tags }),
-            url: `${siteUrl}${slug}`,
-            mainEntityOfPage: `${siteUrl}${slug}`,
-            ...((arxiv || semanticscholar || googlescholar || paperurl) && {
-              sameAs: [
-                arxiv,
-                semanticscholar,
-                googlescholar,
-                paperUrlAbs,
-              ].filter(Boolean),
-            }),
-            ...(arxivId && {
-              identifier: {
-                "@type": "PropertyValue",
-                propertyID: "arXiv",
-                value: arxivId,
-              },
-            }),
-          })}
-        </script>
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "BreadcrumbList",
-            itemListElement: [
-              {
-                "@type": "ListItem",
-                position: 1,
-                name: "Jacob Dineen",
-                item: `${siteUrl}/`,
-              },
-              {
-                "@type": "ListItem",
-                position: 2,
-                name: "Publications",
-                item: `${siteUrl}/publications`,
-              },
-              {
-                "@type": "ListItem",
-                position: 3,
-                name: title,
-                item: `${siteUrl}${slug}`,
-              },
-            ],
-          })}
-        </script>
-      </Helmet>
 
       <StyledPublicationContainer>
         <span className="breadcrumb">
@@ -1251,6 +1159,147 @@ const PublicationTemplate = ({ data, location }) => {
 }
 
 export default PublicationTemplate
+
+export const Head = ({ data, location }) => {
+  const { frontmatter } = data.markdownRemark
+  const { siteUrl } = data.site.siteMetadata
+  const {
+    title,
+    venue,
+    abstract,
+    arxiv,
+    googlescholar,
+    semanticscholar,
+    paperurl,
+    slug,
+    tags,
+  } = frontmatter
+  const {
+    ogImage,
+    summary,
+    authorList,
+    arxivId,
+    publicationDate,
+    citationDate,
+    isPublishedVenue,
+    paperUrlAbs,
+    pdfUrl,
+  } = paperMeta(data)
+
+  return (
+    <Seo
+      title={title}
+      description={summary}
+      image={ogImage}
+      ogType="article"
+      pathname={location.pathname}
+    >
+      {/* Google Scholar Meta Tags */}
+      <meta name="citation_title" content={title} />
+      {authorList.map((author, i) => (
+        <meta key={i} name="citation_author" content={author} />
+      ))}
+      <meta name="citation_publication_date" content={citationDate} />
+      {isPublishedVenue && (
+        <meta name="citation_conference_title" content={venue} />
+      )}
+      {arxivId && <meta name="citation_arxiv_id" content={arxivId} />}
+      {pdfUrl && <meta name="citation_pdf_url" content={pdfUrl} />}
+      {slug && (
+        <meta name="citation_abstract_html_url" content={`${siteUrl}${slug}`} />
+      )}
+
+      {/* Open Graph */}
+      {ogImage && <meta property="og:image:width" content="1200" />}
+      {ogImage && <meta property="og:image:height" content="630" />}
+      {ogImage && <meta property="og:image:alt" content={title} />}
+      <meta
+        property="article:published_time"
+        content={publicationDate.toISOString()}
+      />
+      {authorList.map((author, i) => (
+        <meta
+          key={`og-author-${i}`}
+          property="article:author"
+          content={author}
+        />
+      ))}
+      {(tags || []).map((t, i) => (
+        <meta key={`og-tag-${i}`} property="article:tag" content={t} />
+      ))}
+
+      {/* Schema.org Structured Data */}
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ScholarlyArticle",
+          headline: title,
+          name: title,
+          author: authorList.map(name => {
+            const isMe = /jacob\s+dineen/i.test(name)
+            const url = isMe
+              ? `${siteUrl}/`
+              : collaboratorLinks[name.toLowerCase()]
+            return { "@type": "Person", name, ...(url && { url }) }
+          }),
+          ...(ogImage && { image: ogImage }),
+          datePublished: publicationDate.toISOString(),
+          inLanguage: "en",
+          ...(venue && {
+            publisher: { "@type": "Organization", name: venue },
+          }),
+          ...(abstract && { abstract }),
+          ...(tags && tags.length > 0 && { keywords: tags }),
+          url: `${siteUrl}${slug}`,
+          mainEntityOfPage: `${siteUrl}${slug}`,
+          ...((arxiv || semanticscholar || googlescholar || paperurl) && {
+            sameAs: [arxiv, semanticscholar, googlescholar, paperUrlAbs].filter(
+              Boolean
+            ),
+          }),
+          ...(arxivId && {
+            identifier: {
+              "@type": "PropertyValue",
+              propertyID: "arXiv",
+              value: arxivId,
+            },
+          }),
+        })}
+      </script>
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            {
+              "@type": "ListItem",
+              position: 1,
+              name: "Jacob Dineen",
+              item: `${siteUrl}/`,
+            },
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: "Publications",
+              item: `${siteUrl}/publications`,
+            },
+            {
+              "@type": "ListItem",
+              position: 3,
+              name: title,
+              item: `${siteUrl}${slug}`,
+            },
+          ],
+        })}
+      </script>
+    </Seo>
+  )
+}
+
+Head.propTypes = {
+  data: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+}
 
 PublicationTemplate.propTypes = {
   data: PropTypes.object,

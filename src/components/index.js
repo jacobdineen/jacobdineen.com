@@ -1,4 +1,4 @@
-export { default as Head } from "./head"
+export { default as Seo } from "./head"
 export { default as Layout } from "./layout"
 export { default as About } from "./sections/about"
 export { default as Experience } from "./sections/experience/experience"

@@ -10,7 +10,6 @@ module.exports = {
     image: "/og.png", // Path to your image you placed in the 'static' folder
   },
   plugins: [
-    `gatsby-plugin-react-helmet`,
     `gatsby-plugin-styled-components`,
     `gatsby-plugin-image`,
     `gatsby-plugin-sharp`,
@@ -39,6 +38,9 @@ module.exports = {
         start_url: "/",
         background_color: "#000000",
         theme_color: "#000000",
+        // Seo sets the page's theme-color (and Layout keeps it in step
+        // with the light/dark toggle); don't add a second one.
+        theme_color_in_head: false,
         display: "minimal-ui",
         icon: "src/images/icon.png",
       },
