@@ -408,12 +408,12 @@ const Slider = styled.span`
 
 const BackToTopButton = styled.button`
   position: fixed;
-  bottom: 24px;
-  right: 24px;
-  width: 48px;
-  height: 48px;
+  bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  right: 16px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background: #0071e3;
+  background: rgba(0, 113, 227, 0.92);
   color: white;
   border: none;
   cursor: pointer;
@@ -616,12 +616,19 @@ const Layout = ({ children, location }) => {
     if (saved !== "light") setThemeMode(saved)
   }, [])
 
-  // Track scroll position for Back to Top button (mobile only)
+  // Back to Top (mobile only): show it once the reader is 400px down and
+  // scrolling back up. While reading downward it stays hidden so it never
+  // sits over the text being read.
   useEffect(() => {
+    let lastY = window.scrollY
     const handleScroll = () => {
+      const y = window.scrollY
       if (window.innerWidth < 768) {
-        setShowBackToTop(window.scrollY > 400)
+        if (y <= 400) setShowBackToTop(false)
+        else if (y < lastY - 4) setShowBackToTop(true)
+        else if (y > lastY + 4) setShowBackToTop(false)
       }
+      lastY = y
     }
     window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
