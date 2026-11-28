@@ -352,6 +352,63 @@ const StyledAbstract = styled.div`
   }
 `
 
+// Related papers: gives every paper page crawlable links to its siblings
+// (the page used to link only back to the home page).
+const StyledRelated = styled.nav`
+  margin: 48px 0 0;
+  padding-top: 32px;
+  border-top: 1px solid ${({ theme }) => theme.colors[theme.mode].border};
+
+  h2 {
+    font-size: var(--fz-xl);
+    margin-bottom: 16px;
+    color: ${({ theme }) => theme.colors[theme.mode].text};
+    font-weight: 600;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0 0 20px;
+    padding: 0;
+    display: grid;
+    gap: 14px;
+  }
+
+  li a {
+    color: ${({ theme }) => theme.colors[theme.mode].text};
+    font-weight: 500;
+    text-decoration: none;
+
+    &:hover {
+      color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#3a9bff")};
+    }
+  }
+
+  li p {
+    margin: 4px 0 0;
+    font-size: var(--fz-sm);
+    color: ${({ theme }) => theme.colors[theme.mode].textSecondary};
+    line-height: 1.5;
+  }
+
+  .venue {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: ${({ theme }) => theme.colors[theme.mode].textSecondary};
+  }
+
+  .index-links a {
+    color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#3a9bff")};
+    font-size: var(--fz-sm);
+    text-decoration: none;
+    margin-right: 20px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+`
+
 const StyledBibtex = styled.div`
   margin: 48px 0;
 
@@ -454,6 +511,7 @@ const PublicationTemplate = ({ data, location }) => {
   const { frontmatter, html, fields } = data.markdownRemark
   const teaserInfo = (fields && fields.teaser) || {}
   const { siteUrl } = data.site.siteMetadata
+  const allPubs = (data.allMarkdownRemark && data.allMarkdownRemark.nodes) || []
   const {
     title,
     authors,
@@ -477,6 +535,21 @@ const PublicationTemplate = ({ data, location }) => {
   const ogImage = pageSlug ? `${siteUrl}/og/${pageSlug}.png` : null
   const tier = venueTier(venue)
   const summary = tldr || (abstract ? abstract.substring(0, 200) : null)
+
+  // Up to 4 other papers, ranked by shared tags, then by recency.
+  const myTags = new Set(tags || [])
+  const related = allPubs
+    .map(n => n.frontmatter)
+    .filter(f => f.slug && f.slug !== slug)
+    .map(f => ({
+      ...f,
+      shared: (f.tags || []).filter(t => myTags.has(t)).length,
+    }))
+    .sort(
+      (a, b) =>
+        b.shared - a.shared || String(b.date).localeCompare(String(a.date))
+    )
+    .slice(0, 4)
 
   // Parse authors for meta tags
   const authorList = authors ? authors.split(",").map(a => a.trim()) : []
@@ -712,12 +785,38 @@ const PublicationTemplate = ({ data, location }) => {
             }),
           })}
         </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            itemListElement: [
+              {
+                "@type": "ListItem",
+                position: 1,
+                name: "Jacob Dineen",
+                item: `${siteUrl}/`,
+              },
+              {
+                "@type": "ListItem",
+                position: 2,
+                name: "Publications",
+                item: `${siteUrl}/publications`,
+              },
+              {
+                "@type": "ListItem",
+                position: 3,
+                name: title,
+                item: `${siteUrl}${slug}`,
+              },
+            ],
+          })}
+        </script>
       </Helmet>
 
       <StyledPublicationContainer>
         <span className="breadcrumb">
           <span className="arrow">&larr;</span>
-          <Link to="/#experience">All publications</Link>
+          <Link to="/publications">All publications</Link>
         </span>
 
         <StyledPublicationHeader>
@@ -952,6 +1051,25 @@ const PublicationTemplate = ({ data, location }) => {
             </button>
           </StyledBibtex>
         )}
+
+        {related.length > 0 && (
+          <StyledRelated aria-label="Related papers">
+            <h2>Related papers</h2>
+            <ul>
+              {related.map(r => (
+                <li key={r.slug}>
+                  <Link to={r.slug}>{r.title}</Link>
+                  {r.venue && <span className="venue"> · {r.venue}</span>}
+                  {r.tldr && <p>{r.tldr}</p>}
+                </li>
+              ))}
+            </ul>
+            <p className="index-links">
+              <Link to="/publications">All publications</Link>
+              <Link to="/collaborators">Collaborators</Link>
+            </p>
+          </StyledRelated>
+        )}
       </StyledPublicationContainer>
     </Layout>
   )
@@ -969,6 +1087,21 @@ export const pageQuery = graphql`
     site {
       siteMetadata {
         siteUrl
+      }
+    }
+    allMarkdownRemark(
+      filter: { fileAbsolutePath: { regex: "/content/publications/" } }
+      sort: { frontmatter: { date: DESC } }
+    ) {
+      nodes {
+        frontmatter {
+          title
+          slug
+          date
+          venue
+          tags
+          tldr
+        }
       }
     }
     markdownRemark(frontmatter: { slug: { eq: $path } }) {

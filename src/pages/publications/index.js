@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect } from "react"
-import { graphql, withPrefix } from "gatsby"
+import { graphql, Link, withPrefix } from "gatsby"
 import TransitionLink from "@utils/TransitionLink"
 import collaboratorLinks from "@utils/collaboratorLinks"
 import { Helmet } from "react-helmet"
@@ -35,6 +35,16 @@ const StyledMainContainer = styled.main`
       color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
       font-size: 0.88rem;
       font-weight: 400;
+
+      a {
+        color: ${({ theme }) =>
+          theme.mode === "light" ? "#0071e3" : "#3a9bff"};
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
     }
   }
 `
@@ -328,12 +338,20 @@ const PublicationsPage = ({ location, data }) => {
 
   return (
     <Layout location={location}>
-      <Helmet title="Publications" />
+      <Helmet title="Publications">
+        <meta
+          name="description"
+          content={`All ${publications.length} papers by Jacob Dineen on LLM post-training, reinforcement learning for reasoning, evaluation and AI safety, with abstracts, PDFs and BibTeX.`}
+        />
+      </Helmet>
 
       <StyledMainContainer>
         <header>
           <h1>Publications</h1>
-          <p className="subtitle">Research papers and academic work</p>
+          <p className="subtitle">
+            Research papers and academic work.{" "}
+            <Link to="/collaborators">See co-authors</Link>
+          </p>
         </header>
 
         <StyledFilters>
