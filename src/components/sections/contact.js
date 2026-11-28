@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
-// import { usePrefersReducedMotion } from "@hooks"
 
 const StyledContactSection = styled.section`
   max-width: 700px;
@@ -35,6 +34,38 @@ const StyledContactSection = styled.section`
     opacity: 1;
   }
 
+  .lede {
+    margin: 0 auto 28px;
+    max-width: 560px;
+    color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
+    font-family: var(--font-sans);
+    font-size: 0.95rem;
+    line-height: 1.6;
+
+    a {
+      color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#3a9bff")};
+    }
+  }
+
+  .row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0 16px;
+    width: 100%;
+
+    @media (min-width: 600px) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .gotcha {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+
   form {
     display: flex;
     flex-direction: column;
@@ -50,7 +81,7 @@ const StyledContactSection = styled.section`
     flex-direction: column;
     width: 100%;
     text-align: left;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     color: ${({ theme }) => (theme.mode === "light" ? "#6e6e73" : "#a1a1a6")};
     font-size: 0.9rem;
     font-weight: 500;
@@ -96,7 +127,7 @@ const StyledContactSection = styled.section`
     display: flex;
     justify-content: center;
     gap: 12px;
-    margin-top: 24px;
+    margin-top: 8px;
     width: 100%;
     flex-wrap: wrap;
 
@@ -167,6 +198,17 @@ const StyledContactSection = styled.section`
     text-align: center;
     opacity: 0;
     animation: slideUpFadeIn 0.4s ease forwards;
+
+    &.error {
+      background: rgba(255, 59, 48, 0.1);
+      color: ${({ theme }) => (theme.mode === "light" ? "#c9341f" : "#ff6961")};
+      border-color: rgba(255, 59, 48, 0.3);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: underline;
+    }
   }
 
   @keyframes slideUpFadeIn {
@@ -181,179 +223,108 @@ const StyledContactSection = styled.section`
   }
 `
 
-const useTypewriterEffect = (text, trigger, delay = 100) => {
-  const [displayedText, setDisplayedText] = useState("")
-
-  useEffect(() => {
-    if (!trigger) return
-
-    setDisplayedText("") // Reset displayed text when trigger changes
-    let index = 0
-    const intervalId = setInterval(() => {
-      setDisplayedText(prev => prev + text[index])
-      index++
-      if (index >= text.length) {
-        clearInterval(intervalId)
-      }
-    }, delay)
-
-    return () => clearInterval(intervalId)
-  }, [trigger, text, delay])
-
-  return displayedText
-}
-
-const useInView = (ref, options) => {
-  const [isInView, setIsInView] = useState(false)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      setIsInView(entry.isIntersecting)
-    }, options)
-
-    if (ref.current) {
-      observer.observe(ref.current)
-    }
-
-    return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current)
-      }
-    }
-  }, [ref, options])
-
-  return isInView
-}
+const ENDPOINT = "https://formspree.io/f/xkgwgjqn"
+const EMPTY = { name: "", email: "", message: "" }
 
 const Contact = () => {
-  const revealContainer = useRef(null)
-  const [formStatus, setFormStatus] = useState("")
-  const [currentStep, setCurrentStep] = useState(1)
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  })
-
-  const formRef = useRef(null)
-  const isInView = useInView(formRef, { threshold: 0.1 })
-
-  const namePlaceholder = useTypewriterEffect(
-    "Please enter your name",
-    isInView && currentStep === 1
-  )
-  const emailPlaceholder = useTypewriterEffect(
-    "Please enter your email",
-    isInView && currentStep === 2
-  )
-  const messagePlaceholder = useTypewriterEffect(
-    "Please enter your message",
-    isInView && currentStep === 3
-  )
-
-  // Commented out ScrollReveal to fix visibility issue
-  // useEffect(() => {
-  //   if (prefersReducedMotion) {
-  //     return
-  //   }
-  //   sr.reveal(revealContainer.current, srConfig())
-  // }, [prefersReducedMotion])
+  const [fields, setFields] = useState(EMPTY)
+  // idle | sending | sent | error
+  const [status, setStatus] = useState("idle")
 
   const handleChange = e => {
     const { name, value } = e.target
-    setFormData({
-      ...formData,
-      [name]: value,
-    })
+    setFields(prev => ({ ...prev, [name]: value }))
   }
 
-  const handleNext = e => {
-    e.preventDefault()
-    setCurrentStep(currentStep + 1)
-  }
-
-  const handlePrev = e => {
-    e.preventDefault()
-    setCurrentStep(currentStep - 1)
-  }
-
+  // All three fields are always in the form, so Formspree receives the
+  // sender's name and email (it uses "email" as the Reply-To) along with
+  // the message.
   const handleSubmit = async e => {
     e.preventDefault()
-    const form = e.target
-    const data = new FormData(form)
-    const endpoint = "https://formspree.io/f/xkgwgjqn"
-
-    const response = await fetch(endpoint, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-      },
-      body: data,
-    })
-
-    if (response.ok) {
-      form.reset()
-      setFormStatus("Thank you! Your message has been sent.")
-    } else {
-      setFormStatus("Oops! There was a problem submitting your form.")
+    setStatus("sending")
+    const data = new FormData(e.target)
+    data.append("_subject", `jacobdineen.com: message from ${fields.name}`)
+    try {
+      const res = await fetch(ENDPOINT, {
+        method: "POST",
+        headers: { Accept: "application/json" },
+        body: data,
+      })
+      if (!res.ok) throw new Error(String(res.status))
+      setFields(EMPTY)
+      setStatus("sent")
+    } catch (err) {
+      setStatus("error")
     }
   }
 
   return (
-    <StyledContactSection id="contact" ref={revealContainer}>
+    <StyledContactSection id="contact">
       <h2 className="numbered-heading">Get In Touch</h2>
-      <form ref={formRef} onSubmit={handleSubmit}>
-        {currentStep === 1 && (
-          <div style={{ width: "100%" }}>
+      <p className="lede">
+        Questions about a paper, or interested in working together? Send a note
+        here or email <a href="mailto:jdineen@asu.edu">jdineen@asu.edu</a>.
+      </p>
+      <form onSubmit={handleSubmit}>
+        <div className="row">
+          <label>
+            Name
             <input
               type="text"
               name="name"
-              value={formData.name}
+              autoComplete="name"
+              value={fields.name}
               onChange={handleChange}
-              placeholder={namePlaceholder}
-              aria-label="Your name"
               required
             />
-            <div className="button-group">
-              <button onClick={handleNext}>Next →</button>
-            </div>
-          </div>
-        )}
-        {currentStep === 2 && (
-          <div style={{ width: "100%" }}>
+          </label>
+          <label>
+            Email
             <input
               type="email"
               name="email"
-              value={formData.email}
+              autoComplete="email"
+              value={fields.email}
               onChange={handleChange}
-              placeholder={emailPlaceholder}
-              aria-label="Your email address"
               required
             />
-            <div className="button-group">
-              <button onClick={handlePrev}>← Back</button>
-              <button onClick={handleNext}>Next →</button>
-            </div>
-          </div>
-        )}
-        {currentStep === 3 && (
-          <div style={{ width: "100%" }}>
-            <textarea
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              placeholder={messagePlaceholder}
-              aria-label="Your message"
-              required
-            />
-            <div className="button-group">
-              <button onClick={handlePrev}>← Back</button>
-              <button type="submit">Send Message ↗</button>
-            </div>
-          </div>
-        )}
+          </label>
+        </div>
+        <label>
+          Message
+          <textarea
+            name="message"
+            value={fields.message}
+            onChange={handleChange}
+            required
+          />
+        </label>
+        {/* Honeypot: hidden from people, filled in by bots; Formspree drops those. */}
+        <input
+          type="text"
+          name="_gotcha"
+          tabIndex={-1}
+          autoComplete="off"
+          aria-hidden="true"
+          className="gotcha"
+        />
+        <div className="button-group">
+          <button type="submit" disabled={status === "sending"}>
+            {status === "sending" ? "Sending…" : "Send message"}
+          </button>
+        </div>
       </form>
-      {formStatus && <p className="form-status">{formStatus}</p>}
+      <div role="status" aria-live="polite">
+        {status === "sent" && (
+          <p className="form-status">Thanks, your message was sent.</p>
+        )}
+        {status === "error" && (
+          <p className="form-status error">
+            The message didn&apos;t go through. Please email{" "}
+            <a href="mailto:jdineen@asu.edu">jdineen@asu.edu</a> instead.
+          </p>
+        )}
+      </div>
     </StyledContactSection>
   )
 }
