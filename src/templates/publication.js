@@ -489,6 +489,70 @@ const StyledSlides = styled.div`
     border: 1px solid ${({ theme }) => theme.colors[theme.mode].border};
   }
 
+  .viewer {
+    border-radius: var(--border-radius);
+    outline: none;
+
+    &:focus-visible .frame {
+      box-shadow: 0 0 0 2px #0071e3;
+    }
+  }
+
+  .frame {
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    border-radius: var(--border-radius);
+    border: 1px solid ${({ theme }) => theme.colors[theme.mode].border};
+    background: #ffffff;
+
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 12px;
+    font-family: var(--font-mono);
+    font-size: var(--fz-sm);
+    color: ${({ theme }) => theme.colors[theme.mode].textSecondary};
+
+    button {
+      min-width: 44px;
+      min-height: 36px;
+      border-radius: 999px;
+      border: 1px solid ${({ theme }) => theme.colors[theme.mode].border};
+      background: transparent;
+      color: ${({ theme }) => theme.colors[theme.mode].text};
+      font-size: 1rem;
+      cursor: pointer;
+
+      &:disabled {
+        opacity: 0.35;
+        cursor: default;
+      }
+
+      &:not(:disabled):hover {
+        border-color: #0071e3;
+      }
+    }
+
+    .count {
+      min-width: 4.5em;
+      text-align: center;
+    }
+
+    .pdf {
+      margin-left: auto;
+      color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#3a9bff")};
+    }
+  }
+
   .fallback {
     margin-top: 12px;
     font-family: var(--font-sans);
@@ -509,10 +573,97 @@ const StyledSlides = styled.div`
   }
 `
 
+// Shows a deck one slide at a time from the page images that
+// scripts/slide-images.js renders from the PDF. Browsers render a
+// multi-page PDF in a frame unreliably (blank in Chrome for these decks,
+// first page only on phones); plain images work everywhere and each slide
+// is about 30 KB instead of the 4 MB PDF.
+const SlideViewer = ({ pages, title, pdfHref }) => {
+  const [index, setIndex] = useState(0)
+  const count = pages.length
+  const go = step => setIndex(i => Math.min(count - 1, Math.max(0, i + step)))
+
+  // Fetch the next slide ahead of time so paging forward is instant.
+  useEffect(() => {
+    if (index + 1 < count) {
+      const img = new Image()
+      img.src = withPrefix(pages[index + 1])
+    }
+  }, [index, count, pages])
+
+  const onKeyDown = e => {
+    if (e.key === "ArrowRight") {
+      e.preventDefault()
+      go(1)
+    } else if (e.key === "ArrowLeft") {
+      e.preventDefault()
+      go(-1)
+    }
+  }
+
+  return (
+    <div
+      className="viewer"
+      role="region"
+      aria-roledescription="slide deck"
+      aria-label={`Slides for ${title}`}
+      tabIndex={0}
+      onKeyDown={onKeyDown}
+    >
+      <div className="frame">
+        <img
+          src={withPrefix(pages[index])}
+          alt={`Slide ${index + 1} of ${count}`}
+          width="1200"
+          height="675"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <div className="controls">
+        <button
+          type="button"
+          onClick={() => go(-1)}
+          disabled={index === 0}
+          aria-label="Previous slide"
+        >
+          ←
+        </button>
+        <span className="count" aria-live="polite">
+          {index + 1} / {count}
+        </span>
+        <button
+          type="button"
+          onClick={() => go(1)}
+          disabled={index === count - 1}
+          aria-label="Next slide"
+        >
+          →
+        </button>
+        <a
+          className="pdf"
+          href={pdfHref}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          PDF ↗
+        </a>
+      </div>
+    </div>
+  )
+}
+
+SlideViewer.propTypes = {
+  pages: PropTypes.arrayOf(PropTypes.string).isRequired,
+  title: PropTypes.string,
+  pdfHref: PropTypes.string.isRequired,
+}
+
 const PublicationTemplate = ({ data, location }) => {
   const { frontmatter, html, fields } = data.markdownRemark
   const teaserInfo = (fields && fields.teaser) || {}
   const { siteUrl } = data.site.siteMetadata
+  const slidePages = (fields && fields.slidePages) || []
   const allPubs = (data.allMarkdownRemark && data.allMarkdownRemark.nodes) || []
   const {
     title,
@@ -630,6 +781,12 @@ const PublicationTemplate = ({ data, location }) => {
     const lower = slides.toLowerCase()
     const isPdf = lower.endsWith(".pdf")
     const isPpt = [".ppt", ".pptx", ".pwpt"].some(ext => lower.endsWith(ext))
+
+    if (isPdf && slidePages.length > 0) {
+      return (
+        <SlideViewer pages={slidePages} title={title} pdfHref={slidesPath} />
+      )
+    }
 
     if (isPdf) {
       return (
@@ -1125,6 +1282,7 @@ export const pageQuery = graphql`
     markdownRemark(frontmatter: { slug: { eq: $path } }) {
       html
       fields {
+        slidePages
         teaser {
           width
           height

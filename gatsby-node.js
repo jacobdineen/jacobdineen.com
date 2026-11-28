@@ -7,11 +7,26 @@
 const fs = require("fs")
 const path = require("path")
 const sharp = require("sharp")
+const slideDir = require("./scripts/slide-dir")
 
 // Record each teaser's pixel size (so pages can reserve its box and avoid a
 // layout shift) and the 560px card variant from scripts/teaser-variants.js.
 exports.onCreateNode = async ({ node, actions }) => {
   if (node.internal.type !== "MarkdownRemark") return
+  // Page images of a slides PDF, from scripts/slide-images.js.
+  const slides = node.frontmatter && node.frontmatter.slides
+  if (slides && slides.toLowerCase().endsWith(".pdf")) {
+    const dir = slideDir(slides)
+    const abs = path.join(__dirname, "static", dir)
+    const pages = fs.existsSync(abs)
+      ? fs
+          .readdirSync(abs)
+          .filter(f => f.endsWith(".webp"))
+          .sort()
+          .map(f => `${dir}/${f}`)
+      : []
+    actions.createNodeField({ node, name: "slidePages", value: pages })
+  }
   const teaser = node.frontmatter && node.frontmatter.teaser
   if (!teaser) return
   const file = path.join(__dirname, "static", teaser)
@@ -32,6 +47,9 @@ exports.createSchemaCustomization = ({ actions }) => {
   actions.createTypes(`
     type MarkdownRemark implements Node {
       frontmatter: MarkdownRemarkFrontmatter
+    }
+    type MarkdownRemarkFields {
+      slidePages: [String]
     }
     type MarkdownRemarkFrontmatter {
       description: String

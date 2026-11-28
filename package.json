@@ -24,7 +24,8 @@
     "clean": "gatsby clean",
     "prepare": "husky install",
     "lint-staged": "lint-staged",
-    "teasers": "node scripts/teaser-variants.js"
+    "teasers": "node scripts/teaser-variants.js",
+    "slides": "node scripts/slide-images.js"
   },
   "lint-staged": {
     "*.{js,css,json,md}": [
