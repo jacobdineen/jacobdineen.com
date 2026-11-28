@@ -9,9 +9,8 @@ Run `gatsby develop` to start the development server.
   the images it writes. The site shows these page images instead of
   embedding the PDF. If a PDF changes without them, the build warns and the
   page falls back to embedding the PDF.
-- **A paper teaser** (`static/teasers/*.webp`): run `npm run teasers`, then
-  restore the size variants of teasers you didn't change, e.g.
-  `git checkout -- 'static/teasers/*-400.webp' 'static/teasers/*-560.webp' 'static/teasers/*-820.webp'`
-  and then re-add the new teaser's variants (the script rewrites them all).
+- **A paper teaser** (`static/teasers/*.webp`): run `npm run teasers`. It
+  writes the 400, 560 and 820px versions for teasers that are new or newer
+  than their versions, and leaves the rest alone.
 
 Install packages with `yarn` (the repo uses `yarn.lock`).
