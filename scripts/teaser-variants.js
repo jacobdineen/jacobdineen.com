@@ -1,7 +1,7 @@
 // Writes 400px, 560px and 820px copies of each teaser
 // (static/teasers/<name>-400.webp, -560, -820): 400 and 560 for card
-// thumbnails, 820 for the paper-page figure on phones. Run after adding or
-// replacing a teaser:
+// thumbnails, 820 for the paper-page figure on phones. Variants newer than
+// their teaser are left alone. Run after adding or replacing a teaser:
 //   npm run teasers
 const fs = require("fs")
 const path = require("path")
@@ -17,10 +17,19 @@ const run = async () => {
       f => f.endsWith(".webp") && !WIDTHS.some(w => f.endsWith(`-${w}.webp`))
     )
   for (const f of files) {
-    const { width } = await sharp(path.join(dir, f)).metadata()
+    const src = path.join(dir, f)
+    const { width } = await sharp(src).metadata()
     for (const w of WIDTHS) {
       if (width <= w) continue
       const out = path.join(dir, f.replace(/\.webp$/, `-${w}.webp`))
+      // Only new or replaced teasers: re-encoding an existing variant
+      // changes its bytes even when the teaser didn't change.
+      if (
+        fs.existsSync(out) &&
+        fs.statSync(out).mtimeMs >= fs.statSync(src).mtimeMs
+      ) {
+        continue
+      }
       await sharp(path.join(dir, f))
         .resize({ width: w })
         .webp({ quality: 82 })
