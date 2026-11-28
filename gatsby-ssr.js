@@ -5,9 +5,17 @@
  */
 
 const React = require("react")
+const FACES = require("./src/utils/fontFaces")
 
-const FONTS_HREF =
-  "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap"
+// Inter, Fraunces and JetBrains Mono are self-hosted from static/fonts (the
+// Latin and Latin Extended subsets Google Fonts serves, SIL OFL). Loading
+// them from fonts.googleapis.com cost a stylesheet round trip to another
+// origin before any font could start downloading. The @font-face rules are
+// inlined so the browser knows the files at first parse. unicode-range means
+// a page only fetches the subsets its text uses.
+
+// Fonts used above the fold on every page.
+const PRELOAD = ["/fonts/inter-latin.woff2", "/fonts/fraunces-latin.woff2"]
 
 /**
  * @type {import('gatsby').GatsbySSR['onRenderBody']}
@@ -15,35 +23,17 @@ const FONTS_HREF =
 exports.onRenderBody = ({ setHtmlAttributes, setHeadComponents }) => {
   setHtmlAttributes({ lang: `en` })
 
-  // Google Fonts was a render-blocking stylesheet (~750 ms on PageSpeed
-  // mobile). Load it as media="print" so it doesn't block first paint, then
-  // switch it to "all" once it has loaded. display=swap in the URL keeps
-  // text visible in the fallback font meanwhile. React drops string onload
-  // handlers in SSR, so a tiny inline script does the switch.
   setHeadComponents([
-    <link key="gf-pc1" rel="preconnect" href="https://fonts.googleapis.com" />,
-    <link
-      key="gf-pc2"
-      rel="preconnect"
-      href="https://fonts.gstatic.com"
-      crossOrigin="anonymous"
-    />,
-    <link
-      key="gf-css"
-      id="gf-css"
-      rel="stylesheet"
-      href={FONTS_HREF}
-      media="print"
-    />,
-    <script
-      key="gf-swap"
-      dangerouslySetInnerHTML={{
-        __html:
-          "(function(){var l=document.getElementById('gf-css');if(!l)return;var on=function(){l.media='all'};if(l.sheet){on()}else{l.addEventListener('load',on)}})()",
-      }}
-    />,
-    <noscript key="gf-noscript">
-      <link rel="stylesheet" href={FONTS_HREF} />
-    </noscript>,
+    ...PRELOAD.map(href => (
+      <link
+        key={href}
+        rel="preload"
+        href={href}
+        as="font"
+        type="font/woff2"
+        crossOrigin="anonymous"
+      />
+    )),
+    <style key="font-faces" dangerouslySetInnerHTML={{ __html: FACES }} />,
   ])
 }

@@ -1,7 +1,7 @@
 import { css } from "styled-components"
 
-// Site fonts come from Google Fonts (Inter, Fraunces, JetBrains Mono) via
-// <link> in components/head.js with display=swap. Until they arrive the page
+// Site fonts (Inter, Fraunces, JetBrains Mono) are self-hosted from
+// static/fonts with font-display: swap; see gatsby-ssr.js. Until they arrive the page
 // renders in a local fallback. These fallback faces are scaled to the web
 // fonts' widths so lines don't rewrap (and shift the page) on swap.
 // Ratios measured against Times New Roman / Arial metrics (Liberation fonts
