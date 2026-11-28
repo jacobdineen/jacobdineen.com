@@ -83,8 +83,22 @@ const Head = ({ title, description, image }) => {
           "@context": "https://schema.org",
           "@type": "Person",
           name: "Jacob Dineen",
+          alternateName: "Jake Dineen",
           jobTitle: "CS PhD Student / ML Engineer",
-          url: siteUrl,
+          url: `${siteUrl}/`,
+          affiliation: {
+            "@type": "CollegeOrUniversity",
+            name: "Arizona State University",
+            url: "https://www.asu.edu",
+          },
+          knowsAbout: [
+            "Large language models",
+            "Reinforcement learning",
+            "LLM post-training",
+            "AI alignment",
+            "AI safety",
+            "LLM evaluation",
+          ],
           sameAs: [
             "https://github.com/jacobdineen",
             "https://www.linkedin.com/in/jacobdineen/",
@@ -101,8 +115,10 @@ const Head = ({ title, description, image }) => {
               name: "University of Virginia",
             },
           ],
-          description: seo.description,
-          image: seo.image,
+          // Site-wide, not the current page's: on a paper page seo.description
+          // is that paper's summary, which would mis-describe the person.
+          description: defaultDescription,
+          image: `${siteUrl}${defaultImage}`,
         })}
       </script>
 
