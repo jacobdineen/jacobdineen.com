@@ -763,7 +763,7 @@ const PublicationTemplate = ({ data, location }) => {
               return { "@type": "Person", name, ...(url && { url }) }
             }),
             ...(ogImage && { image: ogImage }),
-            datePublished: publicationDate.toISOString().split("T")[0],
+            datePublished: publicationDate.toISOString(),
             inLanguage: "en",
             ...(venue && {
               publisher: { "@type": "Organization", name: venue },
