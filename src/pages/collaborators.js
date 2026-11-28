@@ -310,7 +310,7 @@ const CollaboratorsPage = ({ location, data }) => {
   return (
     <Layout location={location}>
       <Helmet>
-        <title>Collaborators — Jacob Dineen</title>
+        <title>Collaborators</title>
         <meta
           name="description"
           content={`${collaborators.length} co-authors across Jacob Dineen's publications, with shared paper counts and links to their pages.`}

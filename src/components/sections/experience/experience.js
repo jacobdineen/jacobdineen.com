@@ -245,6 +245,25 @@ const ShowAllButton = styled.button`
   }
 `
 
+// A real link (not a JS toggle) so crawlers reach the full paper index
+// from the home page; the in-page list only renders PUB_LIMIT papers.
+const PubIndexLink = styled.div`
+  align-self: center;
+  margin: 0 auto 4px;
+  text-align: center;
+  font-size: 0.78rem;
+  font-family: var(--font-mono);
+
+  a {
+    color: ${({ theme }) => (theme.mode === "light" ? "#0071e3" : "#3a9bff")};
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+`
+
 const ResearchMap = styled.nav`
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1114,6 +1133,13 @@ const Experience = () => {
                 ? "Show less"
                 : `Show all ${filteredPublications.length} publications`}
             </ShowAllButton>
+          )}
+          {activeContentType === "publications" && (
+            <PubIndexLink>
+              <TransitionLink to="/publications">
+                Publication index, with abstracts &rarr;
+              </TransitionLink>
+            </PubIndexLink>
           )}
         </div>
       </StyledText>
