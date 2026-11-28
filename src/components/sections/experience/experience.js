@@ -471,6 +471,7 @@ const Experience = () => {
                 width
                 height
                 small
+                medium
               }
             }
           }
@@ -739,9 +740,14 @@ const Experience = () => {
               src={teaserSmall || withPrefix(frontmatter.teaser)}
               srcSet={
                 teaserSmall
-                  ? `${teaserSmall} 560w, ${withPrefix(frontmatter.teaser)} ${
-                      teaserInfo.width
-                    }w`
+                  ? [
+                      `${teaserSmall} 560w`,
+                      teaserInfo.medium &&
+                        `${withPrefix(teaserInfo.medium)} 820w`,
+                      `${withPrefix(frontmatter.teaser)} ${teaserInfo.width}w`,
+                    ]
+                      .filter(Boolean)
+                      .join(", ")
                   : undefined
               }
               sizes="280px"

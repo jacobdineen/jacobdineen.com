@@ -17,14 +17,14 @@ exports.onCreateNode = async ({ node, actions }) => {
   const file = path.join(__dirname, "static", teaser)
   if (!fs.existsSync(file)) return
   const { width, height } = await sharp(file).metadata()
-  const smallPath = teaser.replace(/\.webp$/, "-560.webp")
-  const small = fs.existsSync(path.join(__dirname, "static", smallPath))
-    ? smallPath
-    : null
+  const variant = w => {
+    const p = teaser.replace(/\.webp$/, `-${w}.webp`)
+    return fs.existsSync(path.join(__dirname, "static", p)) ? p : null
+  }
   actions.createNodeField({
     node,
     name: "teaser",
-    value: { width, height, small },
+    value: { width, height, small: variant(560), medium: variant(820) },
   })
 }
 

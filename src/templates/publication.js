@@ -1013,9 +1013,14 @@ const PublicationTemplate = ({ data, location }) => {
               src={withPrefix(teaser)}
               srcSet={
                 teaserInfo.small
-                  ? `${withPrefix(teaserInfo.small)} 560w, ${withPrefix(
-                      teaser
-                    )} ${teaserInfo.width}w`
+                  ? [
+                      `${withPrefix(teaserInfo.small)} 560w`,
+                      teaserInfo.medium &&
+                        `${withPrefix(teaserInfo.medium)} 820w`,
+                      `${withPrefix(teaser)} ${teaserInfo.width}w`,
+                    ]
+                      .filter(Boolean)
+                      .join(", ")
                   : undefined
               }
               sizes="(max-width: 767px) 92vw, 800px"
@@ -1115,6 +1120,7 @@ export const pageQuery = graphql`
           width
           height
           small
+          medium
         }
       }
       frontmatter {
