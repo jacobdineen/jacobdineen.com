@@ -47,16 +47,7 @@ const Head = ({ title, description, image }) => {
     >
       <html lang="en" />
       <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-      <link rel="preconnect" href="https://fonts.googleapis.com" />
-      <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossOrigin="anonymous"
-      />
-      <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fraunces:opsz,wght@9..144,500;9..144,600&family=JetBrains+Mono:wght@400;500&display=swap"
-        rel="stylesheet"
-      />
+      {/* Google Fonts load non-blocking from gatsby-ssr.js */}
 
       {/* Warm DNS for the external hosts every paper page links out to.
           Cuts ~50-150ms off the first click for many visitors. */}
