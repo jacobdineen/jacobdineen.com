@@ -572,6 +572,12 @@ const StyledSlides = styled.div`
   }
 `
 
+// Rendered widths, so browsers fetch the smallest file that is sharp
+// enough. On phones the paper column is inset 36px a side (plus a 1px
+// border on slides) and the figure frame adds 12px of padding.
+const SLIDE_SIZES = "(max-width: 767px) calc(100vw - 74px), 800px"
+const FIGURE_SIZES = "(max-width: 767px) calc(100vw - 98px), 760px"
+
 // Shows a deck one slide at a time from the page images that
 // scripts/slide-images.js renders from the PDF. Browsers render a
 // multi-page PDF in a frame unreliably (blank in Chrome for these decks,
@@ -586,7 +592,7 @@ const SlideViewer = ({ pages, title, pdfHref }) => {
   useEffect(() => {
     if (index + 1 < count) {
       const img = new Image()
-      img.sizes = "(max-width: 767px) 92vw, 800px"
+      img.sizes = SLIDE_SIZES
       img.srcset = `${withPrefix(
         pages[index + 1].replace(/\.webp$/, "-600.webp")
       )} 600w, ${withPrefix(pages[index + 1])} 1200w`
@@ -618,7 +624,7 @@ const SlideViewer = ({ pages, title, pdfHref }) => {
           srcSet={`${withPrefix(
             pages[index].replace(/\.webp$/, "-600.webp")
           )} 600w, ${withPrefix(pages[index])} 1200w`}
-          sizes="(max-width: 767px) 92vw, 800px"
+          sizes={SLIDE_SIZES}
           alt={`Slide ${index + 1} of ${count}`}
           width="1200"
           height="675"
@@ -1101,7 +1107,7 @@ const PublicationTemplate = ({ data, location }) => {
                       .join(", ")
                   : undefined
               }
-              sizes="(max-width: 767px) 92vw, 800px"
+              sizes={FIGURE_SIZES}
               width={teaserInfo.width}
               height={teaserInfo.height}
               alt={`Overview figure for ${title}`}
