@@ -1,4 +1,5 @@
 import React, { useState } from "react"
+import { graphql, useStaticQuery } from "gatsby"
 import styled from "styled-components"
 
 const StyledCVSection = styled.section`
@@ -80,6 +81,31 @@ const StyledCVSection = styled.section`
     }
   }
 
+  .cv-pages {
+    height: 100%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: ${({ theme }) =>
+      theme.mode === "light" ? "#e5e5ea" : "#1d1d1f"};
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    outline: none;
+
+    &:focus-visible {
+      box-shadow: inset 0 0 0 2px #0071e3;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: #ffffff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    }
+  }
+
   .cv-frame iframe {
     width: 100%;
     height: 100%;
@@ -101,6 +127,16 @@ const StyledCVSection = styled.section`
 const Cv = () => {
   const [expanded, setExpanded] = useState(false)
   const cvUrl = "/cv/JacobDineen_CV.pdf"
+  // Page images from scripts/pdf-pages.js; empty if they are missing or
+  // older than the PDF, and then the PDF itself is embedded.
+  const { cvPreview } = useStaticQuery(graphql`
+    query {
+      cvPreview {
+        pages
+      }
+    }
+  `)
+  const pages = (cvPreview && cvPreview.pages) || []
 
   return (
     <StyledCVSection id="cv">
@@ -129,11 +165,38 @@ const Cv = () => {
         </div>
       </div>
       <div className={`cv-frame${expanded ? " expanded" : ""}`}>
-        <iframe
-          src={`${cvUrl}#view=FitH`}
-          title="Jacob Dineen CV"
-          loading="lazy"
-        />
+        {pages.length > 0 ? (
+          <div
+            className="cv-pages"
+            role="region"
+            aria-label="CV preview"
+            // Scrollable with the keyboard as well as the mouse.
+            tabIndex={0}
+          >
+            {pages.map((page, i) => (
+              <img
+                key={page}
+                src={page}
+                srcSet={`${page.replace(
+                  /\.webp$/,
+                  "-600.webp"
+                )} 600w, ${page} 1200w`}
+                sizes="(max-width: 767px) 92vw, 700px"
+                width="1200"
+                height="1553"
+                alt={`CV, page ${i + 1} of ${pages.length}`}
+                loading="lazy"
+                decoding="async"
+              />
+            ))}
+          </div>
+        ) : (
+          <iframe
+            src={`${cvUrl}#view=FitH`}
+            title="Jacob Dineen CV"
+            loading="lazy"
+          />
+        )}
       </div>
     </StyledCVSection>
   )

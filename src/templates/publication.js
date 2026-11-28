@@ -462,7 +462,7 @@ const StyledBibtex = styled.div`
       padding: 16px;
 
       code {
-        font-size: 11px;
+        font-size: 12px; /* Lighthouse flags text under 12px as illegible on phones */
       }
     }
   }
@@ -586,7 +586,10 @@ const SlideViewer = ({ pages, title, pdfHref }) => {
   useEffect(() => {
     if (index + 1 < count) {
       const img = new Image()
-      img.src = withPrefix(pages[index + 1])
+      img.sizes = "(max-width: 767px) 92vw, 800px"
+      img.srcset = `${withPrefix(
+        pages[index + 1].replace(/\.webp$/, "-600.webp")
+      )} 600w, ${withPrefix(pages[index + 1])} 1200w`
     }
   }, [index, count, pages])
 
@@ -612,6 +615,10 @@ const SlideViewer = ({ pages, title, pdfHref }) => {
       <div className="frame">
         <img
           src={withPrefix(pages[index])}
+          srcSet={`${withPrefix(
+            pages[index].replace(/\.webp$/, "-600.webp")
+          )} 600w, ${withPrefix(pages[index])} 1200w`}
+          sizes="(max-width: 767px) 92vw, 800px"
           alt={`Slide ${index + 1} of ${count}`}
           width="1200"
           height="675"
