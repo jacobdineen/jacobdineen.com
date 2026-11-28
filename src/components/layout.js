@@ -587,6 +587,30 @@ ToggleSwitch.defaultProps = {
   initialChecked: true,
 }
 
+// Scrolls a home-page section to the top of the view. On desktop the
+// main column is the scroller. On phones the sidebar becomes a sticky bar
+// across the top, and scrollIntoView would leave the section's heading
+// underneath it, so the bar's height is taken off.
+const scrollToSection = element => {
+  const mainContent = document.getElementById("content")
+  if (window.innerWidth >= 768 && mainContent) {
+    mainContent.scrollTo({
+      top: element.offsetTop - mainContent.offsetTop - 20,
+      behavior: "smooth",
+    })
+    return
+  }
+  const bar = document.querySelector("aside")
+  const barHeight =
+    bar && getComputedStyle(bar).position === "sticky"
+      ? bar.getBoundingClientRect().height
+      : 0
+  window.scrollTo({
+    top: element.getBoundingClientRect().top + window.scrollY - barHeight - 12,
+    behavior: "smooth",
+  })
+}
+
 let hasHydrated = false
 
 const readSavedTheme = () => {
@@ -753,18 +777,7 @@ const Layout = ({ children, location }) => {
       const timeoutId = setTimeout(() => {
         const element = document.getElementById(targetId)
         if (element) {
-          const mainContent = document.getElementById("content")
-          const isDesktop = window.innerWidth >= 768
-
-          if (isDesktop && mainContent) {
-            const offsetTop = element.offsetTop - mainContent.offsetTop
-            mainContent.scrollTo({
-              top: offsetTop - 20,
-              behavior: "smooth",
-            })
-          } else {
-            element.scrollIntoView({ behavior: "smooth", block: "start" })
-          }
+          scrollToSection(element)
           setActiveSection(sectionId)
           if (tabConfig) {
             window.dispatchEvent(
@@ -812,20 +825,7 @@ const Layout = ({ children, location }) => {
       }
 
       const element = document.getElementById(targetSection)
-      if (element) {
-        const mainContent = document.getElementById("content")
-        const isDesktop = window.innerWidth >= 768
-
-        if (isDesktop && mainContent) {
-          const offsetTop = element.offsetTop - mainContent.offsetTop
-          mainContent.scrollTo({
-            top: offsetTop - 20,
-            behavior: "smooth",
-          })
-        } else {
-          element.scrollIntoView({ behavior: "smooth", block: "start" })
-        }
-      }
+      if (element) scrollToSection(element)
 
       // Re-enable scroll observer after scroll finishes
       setTimeout(() => {
