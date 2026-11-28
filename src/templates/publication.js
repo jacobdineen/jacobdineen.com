@@ -1030,7 +1030,9 @@ const PublicationTemplate = ({ data, location }) => {
               height={teaserInfo.height}
               alt={`Overview figure for ${title}`}
               loading="eager"
-              decoding="async"
+              // The figure is the page's largest paint on phones: fetch it
+              // ahead of other images.
+              fetchPriority="high"
             />
           </StyledFigure>
         )}
