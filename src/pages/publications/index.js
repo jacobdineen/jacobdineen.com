@@ -2,10 +2,9 @@ import React, { useMemo, useState, useEffect } from "react"
 import { graphql, Link, withPrefix } from "gatsby"
 import TransitionLink from "@utils/TransitionLink"
 import collaboratorLinks from "@utils/collaboratorLinks"
-import { Helmet } from "react-helmet"
 import PropTypes from "prop-types"
 import styled from "styled-components"
-import { Layout } from "@components"
+import { Layout, Seo } from "@components"
 import { Icon } from "@components/icons"
 import venueTier from "@utils/venueTier"
 import venueTierStyles from "@styles/venueTierStyles"
@@ -338,13 +337,6 @@ const PublicationsPage = ({ location, data }) => {
 
   return (
     <Layout location={location}>
-      <Helmet title="Publications">
-        <meta
-          name="description"
-          content={`All ${publications.length} papers by Jacob Dineen on LLM post-training, reinforcement learning for reasoning, evaluation and AI safety, with abstracts, PDFs and BibTeX.`}
-        />
-      </Helmet>
-
       <StyledMainContainer>
         <header>
           <h1>Publications</h1>
@@ -651,3 +643,16 @@ export const pageQuery = graphql`
     }
   }
 `
+
+export const Head = ({ location, data }) => (
+  <Seo
+    title="Publications"
+    description={`All ${data.allMarkdownRemark.edges.length} papers by Jacob Dineen on LLM post-training, reinforcement learning for reasoning, evaluation and AI safety, with abstracts, PDFs and BibTeX.`}
+    pathname={location.pathname}
+  />
+)
+
+Head.propTypes = {
+  location: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
+}

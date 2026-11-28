@@ -1,9 +1,8 @@
 import React, { useMemo, useState } from "react"
 import { graphql } from "gatsby"
 import PropTypes from "prop-types"
-import { Helmet } from "react-helmet"
 import styled from "styled-components"
-import { Layout } from "@components"
+import { Layout, Seo } from "@components"
 import collaboratorLinks from "@utils/collaboratorLinks"
 import { canonicalKey, canonicalDisplay } from "@utils/normalizeAuthor"
 import TransitionLink from "@utils/TransitionLink"
@@ -239,6 +238,47 @@ const TIER_LABEL = {
 
 const PAPER_PREVIEW_LIMIT = 4
 
+// Everyone Jacob has co-authored with, most shared papers first.
+const buildCollaborators = publications => {
+  const map = new Map() // canonicalKey -> { id, name, papers: [] }
+  for (const { node } of publications) {
+    const fm = node.frontmatter
+    const authorList = (fm.authors || "")
+      .split(",")
+      .map(s => s.trim())
+      .filter(Boolean)
+    if (!authorList.some(n => canonicalKey(n) === ME_KEY)) continue
+    const paper = {
+      slug: fm.slug,
+      title: fm.title,
+      year: fm.date ? new Date(fm.date).getFullYear() : null,
+    }
+    for (const name of authorList) {
+      const key = canonicalKey(name)
+      if (key === ME_KEY) continue
+      if (!map.has(key)) {
+        map.set(key, {
+          id: key,
+          name: canonicalDisplay(name, name),
+          papers: [],
+        })
+      }
+      map.get(key).papers.push(paper)
+    }
+  }
+  return Array.from(map.values())
+    .map(c => ({
+      ...c,
+      url: collaboratorLinks[c.id] || null,
+    }))
+    .sort((a, b) => {
+      if (b.papers.length !== a.papers.length) {
+        return b.papers.length - a.papers.length
+      }
+      return a.name.localeCompare(b.name)
+    })
+}
+
 const CollaboratorsPage = ({ location, data }) => {
   const publications = data.allMarkdownRemark.edges
   const [filter, setFilter] = useState("all")
@@ -247,45 +287,10 @@ const CollaboratorsPage = ({ location, data }) => {
   const toggleExpanded = id =>
     setExpanded(prev => ({ ...prev, [id]: !prev[id] }))
 
-  const collaborators = useMemo(() => {
-    const map = new Map() // canonicalKey -> { id, name, papers: [] }
-    for (const { node } of publications) {
-      const fm = node.frontmatter
-      const authorList = (fm.authors || "")
-        .split(",")
-        .map(s => s.trim())
-        .filter(Boolean)
-      if (!authorList.some(n => canonicalKey(n) === ME_KEY)) continue
-      const paper = {
-        slug: fm.slug,
-        title: fm.title,
-        year: fm.date ? new Date(fm.date).getFullYear() : null,
-      }
-      for (const name of authorList) {
-        const key = canonicalKey(name)
-        if (key === ME_KEY) continue
-        if (!map.has(key)) {
-          map.set(key, {
-            id: key,
-            name: canonicalDisplay(name, name),
-            papers: [],
-          })
-        }
-        map.get(key).papers.push(paper)
-      }
-    }
-    return Array.from(map.values())
-      .map(c => ({
-        ...c,
-        url: collaboratorLinks[c.id] || null,
-      }))
-      .sort((a, b) => {
-        if (b.papers.length !== a.papers.length) {
-          return b.papers.length - a.papers.length
-        }
-        return a.name.localeCompare(b.name)
-      })
-  }, [publications])
+  const collaborators = useMemo(
+    () => buildCollaborators(publications),
+    [publications]
+  )
 
   const tiers = useMemo(() => {
     const groups = { frequent: [], recurring: [], single: [] }
@@ -309,14 +314,6 @@ const CollaboratorsPage = ({ location, data }) => {
 
   return (
     <Layout location={location}>
-      <Helmet>
-        <title>Collaborators</title>
-        <meta
-          name="description"
-          content={`${collaborators.length} co-authors across Jacob Dineen's publications, with shared paper counts and links to their pages.`}
-        />
-      </Helmet>
-
       <StyledMain>
         <header>
           <h1>Collaborators</h1>
@@ -456,3 +453,19 @@ export const pageQuery = graphql`
     }
   }
 `
+
+export const Head = ({ location, data }) => {
+  const count = buildCollaborators(data.allMarkdownRemark.edges).length
+  return (
+    <Seo
+      title="Collaborators"
+      description={`${count} co-authors across Jacob Dineen's publications, with shared paper counts and links to their pages.`}
+      pathname={location.pathname}
+    />
+  )
+}
+
+Head.propTypes = {
+  location: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
+}

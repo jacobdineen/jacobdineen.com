@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import styled from "styled-components"
-import { Layout, Experience, News, Cv, Contact, Footer } from "@components"
+import { Layout, Experience, News, Cv, Contact, Footer, Seo } from "@components"
 
 const StyledMainContainer = styled.main`
   counter-reset: section;
@@ -38,3 +38,9 @@ IndexPage.propTypes = {
 }
 
 export default IndexPage
+
+export const Head = ({ location }) => <Seo pathname={location.pathname} />
+
+Head.propTypes = {
+  location: PropTypes.object.isRequired,
+}

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react"
 import { navigate, Link } from "gatsby"
 import PropTypes from "prop-types"
 import styled, { ThemeProvider } from "styled-components"
-import { Head, CommandPalette } from "@components"
+import { CommandPalette } from "@components"
 import theme from "@styles/theme"
 import GlobalStyle from "@styles/GlobalStyle"
 import About from "@components/sections/about"
@@ -693,6 +693,23 @@ const Layout = ({ children, location }) => {
     }
   }, [])
 
+  // Match the phone's browser bar to the page background. Gatsby's Head
+  // API writes the server value (light) into <head> after this component's
+  // effects run, and again on every navigation, so re-apply on each change.
+  useEffect(() => {
+    const color = themeMode === "dark" ? "#11100f" : "#ffffff"
+    const apply = () => {
+      const bar = document.querySelector('meta[name="theme-color"]')
+      if (bar && bar.getAttribute("content") !== color) {
+        bar.setAttribute("content", color)
+      }
+    }
+    apply()
+    const observer = new MutationObserver(apply)
+    observer.observe(document.head, { childList: true })
+    return () => observer.disconnect()
+  }, [themeMode])
+
   // Save theme preference
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -823,7 +840,6 @@ const Layout = ({ children, location }) => {
 
   return (
     <>
-      <Head />
       <StyledSkipLink href="#content">Skip to main content</StyledSkipLink>
       <ThemeProvider theme={{ ...theme, mode: themeMode }}>
         <GlobalStyle />

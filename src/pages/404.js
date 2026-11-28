@@ -1,9 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react"
 import { Link, graphql } from "gatsby"
-import { Helmet } from "react-helmet"
 import PropTypes from "prop-types"
 import styled from "styled-components"
-import { Layout } from "@components"
+import { Layout, Seo } from "@components"
 import TransitionLink from "@utils/TransitionLink"
 
 const StyledMain = styled.main`
@@ -237,10 +236,6 @@ const NotFoundPage = ({ location, data }) => {
 
   return (
     <Layout location={location}>
-      <Helmet title="Page Not Found">
-        <meta name="robots" content="noindex, follow" />
-      </Helmet>
-
       <StyledMain>
         <Header>
           <div className="code">404</div>
@@ -346,3 +341,11 @@ export const pageQuery = graphql`
     }
   }
 `
+
+export const Head = ({ location }) => (
+  <Seo title="Page Not Found" pathname={location.pathname} noindex />
+)
+
+Head.propTypes = {
+  location: PropTypes.object.isRequired,
+}
