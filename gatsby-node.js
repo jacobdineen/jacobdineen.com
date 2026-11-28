@@ -35,7 +35,13 @@ exports.onCreateNode = async ({ node, actions, reporter }) => {
   actions.createNodeField({
     node,
     name: "teaser",
-    value: { width, height, small: variant(560), medium: variant(820) },
+    value: {
+      width,
+      height,
+      tiny: variant(400),
+      small: variant(560),
+      medium: variant(820),
+    },
   })
 }
 

@@ -1,5 +1,5 @@
-// Writes 560px and 820px copies of each teaser
-// (static/teasers/<name>-560.webp, <name>-820.webp): 560 for card
+// Writes 400px, 560px and 820px copies of each teaser
+// (static/teasers/<name>-400.webp, -560, -820): 400 and 560 for card
 // thumbnails, 820 for the paper-page figure on phones. Run after adding or
 // replacing a teaser:
 //   npm run teasers
@@ -8,7 +8,7 @@ const path = require("path")
 const sharp = require("sharp")
 
 const dir = path.join(__dirname, "..", "static", "teasers")
-const WIDTHS = [560, 820]
+const WIDTHS = [400, 560, 820]
 
 const run = async () => {
   const files = fs

@@ -21,6 +21,13 @@ import {
 import collaboratorLinks from "@utils/collaboratorLinks"
 import venueTier from "@utils/venueTier"
 
+const thumbSizes = ({ width, height }) => {
+  const aspect = width && height ? width / height : 16 / 9
+  const phone = Math.round(Math.min(106 * aspect, 340))
+  const wide = Math.round(Math.min(126 * aspect, 280))
+  return `(max-width: 480px) ${phone}px, ${wide}px`
+}
+
 const RESEARCH_THREADS = [
   {
     id: "post-training",
@@ -470,6 +477,7 @@ const Experience = () => {
               teaser {
                 width
                 height
+                tiny
                 small
                 medium
               }
@@ -741,6 +749,7 @@ const Experience = () => {
               srcSet={
                 teaserSmall
                   ? [
+                      teaserInfo.tiny && `${withPrefix(teaserInfo.tiny)} 400w`,
                       `${teaserSmall} 560w`,
                       teaserInfo.medium &&
                         `${withPrefix(teaserInfo.medium)} 820w`,
@@ -750,7 +759,10 @@ const Experience = () => {
                       .join(", ")
                   : undefined
               }
-              sizes="280px"
+              // The thumbnail box is a fixed height (106px inside on
+              // phones, 126px otherwise), so a wide figure is as wide as
+              // that height allows, capped by the 280px card.
+              sizes={thumbSizes(teaserInfo)}
               width={teaserInfo.width}
               height={teaserInfo.height}
               alt={`Key figure from ${title}`}
