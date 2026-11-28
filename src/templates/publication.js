@@ -392,6 +392,8 @@ const StyledRelated = styled.nav`
   }
 
   .venue {
+    display: block;
+    margin-top: 2px;
     font-family: var(--font-mono);
     font-size: 0.72rem;
     color: ${({ theme }) => theme.colors[theme.mode].textSecondary};
@@ -1068,7 +1070,7 @@ const PublicationTemplate = ({ data, location }) => {
               {related.map(r => (
                 <li key={r.slug}>
                   <Link to={r.slug}>{r.title}</Link>
-                  {r.venue && <span className="venue"> · {r.venue}</span>}
+                  {r.venue && <span className="venue">{r.venue}</span>}
                   {r.tldr && <p>{r.tldr}</p>}
                 </li>
               ))}
