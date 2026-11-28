@@ -634,16 +634,20 @@ const PublicationTemplate = ({ data, location }) => {
     if (isPdf) {
       return (
         <>
-          <object
+          {/* An <object> stayed blank in Chrome and fetched the whole PDF
+              with the page; a lazy iframe renders like the CV preview and
+              only loads once it is near the viewport. */}
+          <iframe
             className="embed"
-            data={slidesPath}
-            type="application/pdf"
-            aria-label={`Slides for ${title}`}
-          >
-            <p className="fallback">
-              PDF preview unavailable. <a href={slidesPath}>Download PDF</a>
-            </p>
-          </object>
+            src={`${slidesPath}#view=FitH`}
+            title={`Slides for ${title}`}
+            loading="lazy"
+          />
+          <p className="fallback">
+            <a href={slidesPath} target="_blank" rel="noopener noreferrer">
+              Open the slides (PDF) in a new tab
+            </a>
+          </p>
         </>
       )
     }
