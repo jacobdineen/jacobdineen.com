@@ -755,10 +755,14 @@ const PublicationTemplate = ({ data, location }) => {
             "@type": "ScholarlyArticle",
             headline: title,
             name: title,
-            author: authorList.map(name => ({
-              "@type": "Person",
-              name,
-            })),
+            author: authorList.map(name => {
+              const isMe = /jacob\s+dineen/i.test(name)
+              const url = isMe
+                ? `${siteUrl}/`
+                : collaboratorLinks[name.toLowerCase()]
+              return { "@type": "Person", name, ...(url && { url }) }
+            }),
+            ...(ogImage && { image: ogImage }),
             datePublished: publicationDate.toISOString().split("T")[0],
             inLanguage: "en",
             ...(venue && {
