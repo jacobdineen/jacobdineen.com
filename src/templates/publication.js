@@ -1033,6 +1033,7 @@ const PublicationTemplate = ({ data, location }) => {
               // The figure is the page's largest paint on phones: fetch it
               // ahead of other images.
               fetchPriority="high"
+              decoding="async"
             />
           </StyledFigure>
         )}
